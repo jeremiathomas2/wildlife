@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Tanzania Daily Tours & Safari')</title>
     <meta name="description" content="Experience the best of Tanzania with expert-guided safaris, cultural tours, and Kilimanjaro adventures.">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -281,9 +285,15 @@
 <body>
     <!-- Loading Screen -->
     <div id="loadingScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center" style="background: #f8f4f0; opacity: 1; transition: opacity 0.5s ease;">
-        <img src="{{ asset('images/safari-logo-brown.png') }}" alt="Tanzania Daily Tours & Safari" style="height: 100px; object-fit: contain; margin-bottom: 20px; animation: zoomInOut 2s ease-in-out infinite;">
+        <img src="{{ asset('images/safari-logo-brown.png') }}" alt="Tanzania Daily Tours & Safari" style="height: 120px; width: auto; object-fit: contain; margin-bottom: 20px; animation: zoomInOut 2s ease-in-out infinite;">
         <h2 class="text-2xl font-bold italic mb-6" style="font-family: 'Playfair Display', serif; color: #854208;">Tanzania Daily Tour and Safari</h2>
         <span class="w-2 h-2 rounded-full animate-pulse" style="background: #ff9729;"></span>
+        <style>
+            @keyframes zoomInOut {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.2); }
+            }
+        </style>
     </div>
 
     <!-- Navbar -->
@@ -599,20 +609,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Loading screen
             const loadingScreen = document.getElementById('loadingScreen');
-            const splashShown = localStorage.getItem('splashShown');
-            if (splashShown) {
-                // Skip splash screen if already shown
-                loadingScreen.style.display = 'none';
-            } else {
-                // Show splash screen and mark as shown
+            // Show splash screen
+            setTimeout(function() {
+                loadingScreen.style.opacity = '0';
                 setTimeout(function() {
-                    loadingScreen.style.opacity = '0';
-                    setTimeout(function() {
-                        loadingScreen.style.display = 'none';
-                    }, 500);
-                }, 5000);
-                localStorage.setItem('splashShown', 'true');
-            }
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 5000);
             
             // Page transition animation
             const pageContent = document.getElementById('pageContent');

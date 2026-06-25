@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+
     @php
         $tours = App\Helpers\TourData::tours();
         $featuredTours = array_slice($tours, 0, 4);
@@ -89,7 +96,8 @@
                 max-width: 900px;
                 line-height: 1.05;
             ">
-                The Best African Safari Experience
+                <span id="typewriter"></span>
+                <span id="cursor" style="border-right: 3px solid #ff9729; padding-right: 3px; animation: blink 0.75s infinite;">&nbsp;</span>
             </h1>
 
             <p class="text-lg mb-10 max-w-[560px]" style="color: rgba(255, 255, 255, 0.9); font-family: 'Lato', sans-serif; pointer-events: auto;">
@@ -884,6 +892,47 @@
             heroAutoplayInterval = setInterval(nextHeroSlide, 6000);
             testimonialInterval = setInterval(nextTestimonial, 6000);
             initDrapingSilk();
+
+            // Typewriter effect
+            const messages = [
+                "The Best African Safari Experience",
+                "Discover Tanzania's Hidden Gems",
+                "Adventures That Last a Lifetime",
+                "Witness the Great Migration",
+                "Connect with Nature's Beauty"
+            ];
+            let messageIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            const typewriter = document.getElementById('typewriter');
+
+            function type() {
+                const currentMessage = messages[messageIndex];
+                
+                if (isDeleting) {
+                    typewriter.textContent = currentMessage.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typewriter.textContent = currentMessage.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                let typeSpeed = isDeleting ? 50 : 100;
+
+                if (!isDeleting && charIndex === currentMessage.length) {
+                    typeSpeed = 2000; // Pause at end
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    messageIndex = (messageIndex + 1) % messages.length;
+                    typeSpeed = 500;
+                }
+
+                setTimeout(type, typeSpeed);
+            }
+
+            // Start typewriter
+            type();
 
             // Hide silk on scroll
             window.addEventListener('scroll', function() {
