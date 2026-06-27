@@ -285,6 +285,12 @@
 <body>
     <!-- Loading Screen -->
     <div id="loadingScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center" style="background: #f8f4f0; opacity: 1; transition: opacity 0.5s ease;">
+    <script>
+        // Hide immediately if splash already seen
+        if (localStorage.getItem('hasSeenSplash')) {
+            document.getElementById('loadingScreen').style.display = 'none';
+        }
+    </script>
         <img src="{{ asset('images/safari-logo-brown.png') }}" alt="Tanzania Daily Tours & Safari" style="height: 120px; width: auto; object-fit: contain; margin-bottom: 20px; animation: zoomInOut 2s ease-in-out infinite;">
         <h2 class="text-2xl font-bold italic mb-6" style="font-family: 'Playfair Display', serif; color: #854208;">Tanzania Daily Tour and Safari</h2>
         <span class="w-2 h-2 rounded-full animate-pulse" style="background: #ff9729;"></span>
