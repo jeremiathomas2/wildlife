@@ -609,13 +609,24 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Loading screen
             const loadingScreen = document.getElementById('loadingScreen');
-            // Show splash screen
-            setTimeout(function() {
+            
+            // Check if splash screen has been shown before
+            const hasSeenSplash = localStorage.getItem('hasSeenSplash');
+            
+            if (hasSeenSplash) {
+                // Hide immediately if already seen
                 loadingScreen.style.opacity = '0';
+                loadingScreen.style.display = 'none';
+            } else {
+                // Show splash screen and set flag
                 setTimeout(function() {
-                    loadingScreen.style.display = 'none';
-                }, 500);
-            }, 5000);
+                    loadingScreen.style.opacity = '0';
+                    setTimeout(function() {
+                        loadingScreen.style.display = 'none';
+                        localStorage.setItem('hasSeenSplash', 'true');
+                    }, 500);
+                }, 5000);
+            }
             
             // Page transition animation
             const pageContent = document.getElementById('pageContent');
