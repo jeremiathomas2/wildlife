@@ -540,7 +540,7 @@
 
                     <!-- Social Icons -->
                     <div class="flex items-center gap-4 mt-6">
-                        <a href="#" class="transition-opacity duration-300 hover:opacity-70" aria-label="Instagram">
+                        <a href="https://www.instagram.com/tanzania_dailytours_and_safari/" target="_blank" rel="noopener noreferrer" class="transition-opacity duration-300 hover:opacity-70" aria-label="Instagram">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" color="#ffffff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                                 <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
