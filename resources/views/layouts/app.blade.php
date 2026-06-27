@@ -283,7 +283,8 @@
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
+    <!-- Loading Screen - Only show on home page -->
+    @if(Route::currentRouteName() === 'home')
     <div id="loadingScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center" style="background: #f8f4f0; opacity: 1; transition: opacity 0.5s ease;">
     <script>
         // Hide immediately if splash already seen
@@ -301,6 +302,7 @@
             }
         </style>
     </div>
+    @endif
 
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-400" id="mainNav">
@@ -616,22 +618,24 @@
             // Loading screen
             const loadingScreen = document.getElementById('loadingScreen');
             
-            // Check if splash screen has been shown before
-            const hasSeenSplash = localStorage.getItem('hasSeenSplash');
-            
-            if (hasSeenSplash) {
-                // Hide immediately if already seen
-                loadingScreen.style.opacity = '0';
-                loadingScreen.style.display = 'none';
-            } else {
-                // Show splash screen and set flag
-                setTimeout(function() {
+            if (loadingScreen) {
+                // Check if splash screen has been shown before
+                const hasSeenSplash = localStorage.getItem('hasSeenSplash');
+                
+                if (hasSeenSplash) {
+                    // Hide immediately if already seen
                     loadingScreen.style.opacity = '0';
+                    loadingScreen.style.display = 'none';
+                } else {
+                    // Show splash screen and set flag
                     setTimeout(function() {
-                        loadingScreen.style.display = 'none';
-                        localStorage.setItem('hasSeenSplash', 'true');
-                    }, 500);
-                }, 5000);
+                        loadingScreen.style.opacity = '0';
+                        setTimeout(function() {
+                            loadingScreen.style.display = 'none';
+                            localStorage.setItem('hasSeenSplash', 'true');
+                        }, 500);
+                    }, 5000);
+                }
             }
             
             // Page transition animation
