@@ -332,11 +332,13 @@
             <!-- Desktop Nav -->
             <div class="hidden lg:flex items-center gap-8">
                 @foreach($navLinks as $link)
-                    <a href="{{ route($link['route']) }}" class="text-sm font-semibold relative py-1 transition-colors duration-300" style="color: {{ $currentRoute === $link['route'] ? '#ff9729' : '#ffffff' }}; font-family: 'Lato', sans-serif;">
+                    <a href="{{ route($link['route']) }}" class="text-sm font-semibold relative py-1 transition-all duration-300 group" style="color: {{ $currentRoute === $link['route'] ? '#ff9729' : '#ffffff' }}; font-family: 'Lato', sans-serif;">
                         {{ $link['label'] }}
-                        @if($currentRoute === $link['route'])
-                            <span class="absolute bottom-0 left-0 right-0 h-0.5" style="background: #ff9729;"></span>
-                        @endif
+                        <span class="absolute bottom-0 h-0.5 transition-all duration-300 group-hover:w-full group-hover:left-0" style="
+                            background: #ff9729;
+                            left: {{ $currentRoute === $link['route'] ? '0' : '50%' }};
+                            width: {{ $currentRoute === $link['route'] ? '100%' : '0' }};
+                        "></span>
                     </a>
                 @endforeach
             </div>
