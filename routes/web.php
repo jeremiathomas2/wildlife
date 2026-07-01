@@ -47,11 +47,11 @@ Route::get('/reviews', function () {
 
 Route::get('/gallery', function () {
     $gallery = App\Models\Gallery::all();
-    $galleryData = $gallery->map(function($item) {
+    $galleryData = collect($gallery)->map(function($item) {
         return [
-            'src' => asset($item->url),
-            'title' => $item->caption,
-            'category' => $item->category,
+            'src' => is_object($item) ? $item->url : (is_array($item) ? $item['url'] : ''),
+            'title' => is_object($item) ? $item->caption : (is_array($item) ? $item['caption'] : ''),
+            'category' => is_object($item) ? $item->category : (is_array($item) ? $item['category'] : ''),
         ];
     });
     $contents = App\Models\SiteContent::all()->keyBy('key');
