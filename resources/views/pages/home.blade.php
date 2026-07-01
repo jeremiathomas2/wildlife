@@ -266,11 +266,14 @@
                 <!-- Right - Cards -->
                 <div class="space-y-6">
                     @php
-                        $multiDayTours = $tours->filter(fn($t) => $t->category === 'Multi-Day Safari')->take(3);
+                        $multiDayTours = collect($tours)->filter(function($t) {
+                            $cat = is_object($t) ? ($t->category ?? '') : ($t['category'] ?? '');
+                            return $cat === 'Multi-Day Safari';
+                        })->take(3);
                     @endphp
                     @foreach($multiDayTours as $pkg)
                         <a
-                            href="{{ route('destination.detail', Str::slug($pkg->name)) }}"
+                            href="{{ route('destination.detail', Str::slug( is_object($pkg) ? ($pkg->name ?? '') : ($pkg['name'] ?? '') )) }}"
                             class="flex flex-col sm:flex-row gap-5 p-5 rounded-2xl transition-all duration-350 hover:-translate-y-1 group"
                             style="
                                 background: #ffffff;
@@ -282,8 +285,8 @@
                                 style="aspect-ratio: 3/2;"
                             >
                                 <img
-                                    src="{{ $pkg->image }}"
-                                    alt="{{ $pkg->name }}"
+                                    src="{{ is_object($pkg) ? ($pkg->image ?? '') : ($pkg['image'] ?? '') }}"
+                                    alt="{{ is_object($pkg) ? ($pkg->name ?? '') : ($pkg['name'] ?? '') }}"
                                     class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
                                     loading="lazy"
                                 />
@@ -293,20 +296,20 @@
                                     class="font-bold text-xl mb-2"
                                     style="font-family: 'Playfair Display', serif; color: #854208;"
                                 >
-                                    {{ $pkg->name }}
+                                    {{ is_object($pkg) ? ($pkg->name ?? '') : ($pkg['name'] ?? '') }}
                                 </h3>
                                 <p class="text-sm mb-3 line-clamp-2" style="color: #111111;">
-                                    {{ $pkg->desc }}
+                                    {{ is_object($pkg) ? ($pkg->desc ?? '') : ($pkg['desc'] ?? '') }}
                                 </p>
                                 <div class="flex flex-wrap items-center gap-3">
                                     <span
                                         class="inline-block px-3 py-1 rounded-full text-xs font-semibold text-white"
                                         style="background: #ff9729;"
                                     >
-                                        {{ $pkg->duration }}
+                                        {{ is_object($pkg) ? ($pkg->duration ?? '') : ($pkg['duration'] ?? '') }}
                                     </span>
                                     <span class="text-sm font-bold" style="color: #088529;">
-                                        From ${{ $pkg->price_adult ?? $pkg->price }}
+                                        From ${{ is_object($pkg) ? ($pkg->price_adult ?? $pkg->price ?? 0) : ($pkg['price_adult'] ?? $pkg['price'] ?? 0) }}
                                     </span>
                                     <span class="text-sm font-semibold" style="color: #ff9729;">
                                         Learn More &rarr;
