@@ -171,35 +171,35 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     @foreach($featuredTours as $tour)
                         <a
-                            href="{{ route('destination.detail', Str::slug(is_object($tour) ? $tour->name : $tour['name'])) }}"
-                            class="group block rounded-xl overflow-hidden transition-all duration-350"
-                            style="
-                                background: #ffffff;
-                                box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-                            "
-                        >
-                            <div class="overflow-hidden" style="aspect-ratio: 16/10;">
-                                <img
-                                    src="{{ is_object($tour) ? $tour->image : $tour['image'] }}"
-                                    alt="{{ is_object($tour) ? $tour->name : $tour['name'] }}"
-                                    class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
-                                    loading="lazy"
-                                />
-                            </div>
-                            <div class="p-4">
-                                <h3
-                                    class="font-bold text-lg mb-1.5"
-                                    style="font-family: 'Playfair Display', serif; color: #854208;"
-                                >
-                                    {{ is_object($tour) ? $tour->name : $tour['name'] }}
-                                </h3>
-                                <p class="text-sm mb-3 line-clamp-2" style="color: #111111;">
-                                    {{ is_object($tour) ? $tour->desc : $tour['desc'] }}
-                                </p>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm font-bold" style="color: #088529;">
-                                        From ${{ is_object($tour) ? ($tour->price_adult ?? $tour->price) : ($tour['price_adult'] ?? $tour['price']) }}
-                                    </span>
+                                        href="{{ route('destination.detail', Str::slug( (is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '')) )) }}"
+                                        class="group block rounded-xl overflow-hidden transition-all duration-350"
+                                        style="
+                                            background: #ffffff;
+                                            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+                                        "
+                                    >
+                                        <div class="overflow-hidden" style="aspect-ratio: 16/10;">
+                                            <img
+                                                src="{{ is_object($tour) ? ($tour->image ?? '') : ($tour['image'] ?? '') }}"
+                                                alt="{{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}"
+                                                class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
+                                                loading="lazy"
+                                            />
+                                        </div>
+                                        <div class="p-4">
+                                            <h3
+                                                class="font-bold text-lg mb-1.5"
+                                                style="font-family: 'Playfair Display', serif; color: #854208;"
+                                            >
+                                                {{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}
+                                            </h3>
+                                            <p class="text-sm mb-3 line-clamp-2" style="color: #111111;">
+                                                {{ is_object($tour) ? ($tour->desc ?? '') : ($tour['desc'] ?? '') }}
+                                            </p>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm font-bold" style="color: #088529;">
+                                                    From ${{ is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0) }}
+                                                </span>
                                     <span
                                         class="inline-flex items-center gap-1 text-sm font-semibold transition-colors duration-300"
                                         style="color: #ff9729;"

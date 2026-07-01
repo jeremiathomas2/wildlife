@@ -3,7 +3,7 @@
 @section('content')
     <!-- Hero -->
     <section class="relative" style="height: 60vh; min-height: 400px;">
-        <img src="{{ is_object($tour) ? $tour->image : $tour['image'] }}" alt="{{ is_object($tour) ? $tour->name : $tour['name'] }}" class="w-full h-full object-cover">
+        <img src="{{ is_object($tour) ? ($tour->image ?? '') : ($tour['image'] ?? '') }}" alt="{{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}" class="w-full h-full object-cover">
         <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(17,17,17,0.7), transparent 60%);"></div>
         <div class="absolute bottom-0 left-0 right-0 z-10 max-w-7xl mx-auto px-6 pb-10">
             <a href="{{ route('destinations') }}" class="inline-flex items-center gap-1 text-sm mb-4 transition-colors hover:text-white" style="color: rgba(255,255,255,0.8);">
@@ -13,10 +13,10 @@
                 {{ $contents['destination_back_text']->value ?? 'Back to Destinations' }}
             </a>
             <span class="inline-block px-3 py-0.5 rounded-full text-xs font-semibold text-white mb-3" style="background: #ff9729;">
-                {{ is_object($tour) ? $tour->category : $tour['category'] }}
+                {{ is_object($tour) ? ($tour->category ?? '') : ($tour['category'] ?? '') }}
             </span>
             <h1 class="font-bold" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.5rem); color: #ffffff; line-height: 1.15;">
-                {{ is_object($tour) ? $tour->name : $tour['name'] }}
+                {{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}
             </h1>
             <div class="flex items-center gap-4 mt-3">
                 <div class="flex items-center gap-1.5 text-sm" style="color: rgba(255,255,255,0.8);">
@@ -24,9 +24,9 @@
                         <circle cx="12" cy="12" r="10"/>
                         <polyline points="12 6 12 12 16 14"/>
                     </svg>
-                    {{ is_object($tour) ? $tour->duration : $tour['duration'] }}
+                    {{ is_object($tour) ? ($tour->duration ?? '') : ($tour['duration'] ?? '') }}
                 </div>
-                <span class="text-sm font-bold" style="color: #ff9729;">From ${{ is_object($tour) ? ($tour->price_adult ?? $tour->price) : ($tour['price_adult'] ?? $tour['price']) }}</span>
+                <span class="text-sm font-bold" style="color: #ff9729;">From ${{ is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0) }}</span>
             </div>
         </div>
     </section>
@@ -42,7 +42,7 @@
                             {{ $contents['destination_about_title']->value ?? 'About This Tour' }}
                         </h2>
                         <p class="text-base leading-relaxed" style="color: #111111;">
-                            {{ is_object($tour) ? $tour->desc : $tour['desc'] }}
+                            {{ is_object($tour) ? ($tour->desc ?? '') : ($tour['desc'] ?? '') }}
                         </p>
                     </div>
 
@@ -54,15 +54,15 @@
                             </h2>
                             <div class="space-y-4">
                                 @foreach($relatedTours as $related)
-                                    <a href="{{ route('destination.detail', Str::slug(is_object($related) ? $related->name : $related['name'])) }}" class="flex items-center gap-4 group">
+                                    <a href="{{ route('destination.detail', Str::slug( (is_object($related) ? ($related->name ?? '') : ($related['name'] ?? '')) )) }}" class="flex items-center gap-4 group">
                                         <div class="w-20 h-14 rounded-lg overflow-hidden flex-shrink-0">
-                                            <img src="{{ is_object($related) ? $related->image : $related['image'] }}" alt="{{ is_object($related) ? $related->name : $related['name'] }}" class="w-full h-full object-cover">
+                                            <img src="{{ is_object($related) ? ($related->image ?? '') : ($related['image'] ?? '') }}" alt="{{ is_object($related) ? ($related->name ?? '') : ($related['name'] ?? '') }}" class="w-full h-full object-cover">
                                         </div>
                                         <div>
                                             <h4 class="font-bold text-sm group-hover:underline" style="color: #854208;">
-                                                {{ is_object($related) ? $related->name : $related['name'] }}
+                                                {{ is_object($related) ? ($related->name ?? '') : ($related['name'] ?? '') }}
                                             </h4>
-                                            <p class="text-xs" style="color: #5a3e2b;">{{ is_object($related) ? $related->duration : $related['duration'] }} • From ${{ is_object($related) ? ($related->price_adult ?? $related->price) : ($related['price_adult'] ?? $related['price']) }}</p>
+                                            <p class="text-xs" style="color: #5a3e2b;">{{ is_object($related) ? ($related->duration ?? '') : ($related['duration'] ?? '') }} • From ${{ is_object($related) ? ($related->price_adult ?? $related->price ?? 0) : ($related['price_adult'] ?? $related['price'] ?? 0) }}</p>
                                         </div>
                                     </a>
                                 @endforeach
@@ -86,10 +86,10 @@
 
                         <form id="booking-form" method="POST" action="{{ route('bookings.store') }}">
                             @csrf
-                            <input type="hidden" name="tour_name" value="{{ is_object($tour) ? $tour->name : $tour['name'] }}">
-                            <input type="hidden" name="base_price" value="{{ is_object($tour) ? ($tour->price_adult ?? $tour->price) : ($tour['price_adult'] ?? $tour['price']) }}">
-                            <input type="hidden" name="price_adult" value="{{ is_object($tour) ? ($tour->price_adult ?? $tour->price) : ($tour['price_adult'] ?? $tour['price']) }}">
-                            <input type="hidden" name="price_child" value="{{ is_object($tour) ? ($tour->price_child ?? (($tour->price_adult ?? $tour->price) / 2)) : ($tour['price_child'] ?? (($tour['price_adult'] ?? $tour['price']) / 2)) }}">
+                            <input type="hidden" name="tour_name" value="{{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}">
+                            <input type="hidden" name="base_price" value="{{ is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0) }}">
+                            <input type="hidden" name="price_adult" value="{{ is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0) }}">
+                            <input type="hidden" name="price_child" value="{{ is_object($tour) ? ($tour->price_child ?? (($tour->price_adult ?? $tour->price ?? 0) / 2)) : ($tour['price_child'] ?? (($tour['price_adult'] ?? $tour['price'] ?? 0) / 2)) }}">
 
                             <div class="space-y-4 mb-6">
                                 <!-- Currency Selector -->
@@ -168,7 +168,7 @@
                             </div>
 
                             @php
-                                $adultPrice = is_object($tour) ? ($tour->price_adult ?? $tour->price) : ($tour['price_adult'] ?? $tour['price']);
+                                $adultPrice = is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0);
                                 $childPrice = is_object($tour) ? ($tour->price_child ?? ($adultPrice / 2)) : ($tour['price_child'] ?? ($adultPrice / 2));
                             @endphp
                             <div class="border-t pt-4 mb-6 space-y-2" style="border-color: rgba(133,66,8,0.1);">
@@ -214,8 +214,8 @@
 
 @section('scripts')
     <script>
-        const basePriceUSD = {{ is_object($tour) ? ($tour->price_adult ?? $tour->price) : ($tour['price_adult'] ?? $tour['price']) }};
-        const baseChildPriceUSD = {{ is_object($tour) ? ($tour->price_child ?? (($tour->price_adult ?? $tour->price) / 2)) : ($tour['price_child'] ?? (($tour['price_adult'] ?? $tour['price']) / 2)) }};
+        const basePriceUSD = {{ is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0) }};
+        const baseChildPriceUSD = {{ is_object($tour) ? ($tour->price_child ?? (($tour->price_adult ?? $tour->price ?? 0) / 2)) : ($tour['price_child'] ?? (($tour['price_adult'] ?? $tour['price'] ?? 0) / 2)) }};
         
         function updatePrice() {
             // Get selected currency
