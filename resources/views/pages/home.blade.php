@@ -12,7 +12,16 @@
         $testimonials = App\Helpers\TourData::testimonials();
         $featuredTestimonials = array_slice($testimonials, 0, 3);
         $previewImages = collect($gallery)->map(function($item) {
-            return ['src' => is_object($item) ? $item->url : (is_array($item) ? $item['url'] : ''), 'title' => is_object($item) ? $item->caption : (is_array($item) ? $item['caption'] : '')];
+            $src = '';
+            $title = '';
+            if (is_object($item)) {
+                $src = $item->url ?? '';
+                $title = $item->caption ?? '';
+            } elseif (is_array($item)) {
+                $src = $item['url'] ?? ($item[0] ?? '');
+                $title = $item['caption'] ?? ($item[1] ?? '');
+            }
+            return ['src' => $src, 'title' => $title];
         })->take(10);
     @endphp
     <!-- Hero Section -->

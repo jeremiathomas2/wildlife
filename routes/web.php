@@ -48,10 +48,22 @@ Route::get('/reviews', function () {
 Route::get('/gallery', function () {
     $gallery = App\Models\Gallery::all();
     $galleryData = collect($gallery)->map(function($item) {
+        $src = '';
+        $title = '';
+        $category = '';
+        if (is_object($item)) {
+            $src = $item->url ?? '';
+            $title = $item->caption ?? '';
+            $category = $item->category ?? '';
+        } elseif (is_array($item)) {
+            $src = $item['url'] ?? ($item[0] ?? '');
+            $title = $item['caption'] ?? ($item[1] ?? '');
+            $category = $item['category'] ?? ($item[2] ?? '');
+        }
         return [
-            'src' => is_object($item) ? $item->url : (is_array($item) ? $item['url'] : ''),
-            'title' => is_object($item) ? $item->caption : (is_array($item) ? $item['caption'] : ''),
-            'category' => is_object($item) ? $item->category : (is_array($item) ? $item['category'] : ''),
+            'src' => $src,
+            'title' => $title,
+            'category' => $category,
         ];
     });
     $contents = App\Models\SiteContent::all()->keyBy('key');
