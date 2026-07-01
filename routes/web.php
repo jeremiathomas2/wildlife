@@ -8,7 +8,7 @@ Route::get('/', function () {
     $tours = App\Models\Destination::where('status', 'Published')->get();
     $featuredTours = $tours->take(4);
     $testimonials = App\Helpers\TourData::testimonials();
-    $gallery = App\Models\Gallery::take(6)->get();
+    $gallery = App\Models\Gallery::take(6)->get() ?? [];
     $contents = App\Models\SiteContent::all()->keyBy('key');
     return view('pages.home', compact('featuredTours', 'tours', 'testimonials', 'gallery', 'contents'));
 })->name('home');
