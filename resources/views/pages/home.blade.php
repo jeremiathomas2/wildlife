@@ -592,7 +592,7 @@
                     "
                 >
                     <img
-                        src="{{ asset($img['src']) }}"
+                        src="{{ $img['src'] }}"
                         alt="{{ $img['title'] }}"
                         class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
                         loading="lazy"
