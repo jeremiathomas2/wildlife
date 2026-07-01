@@ -11,8 +11,9 @@
     @php
         $testimonials = App\Helpers\TourData::testimonials();
         $featuredTestimonials = array_slice($testimonials, 0, 3);
-        $galleryImages = App\Helpers\TourData::gallery();
-        $previewImages = array_slice($galleryImages, 0, 10);
+        $previewImages = $gallery->map(function($item) {
+            return ['src' => $item->url, 'title' => $item->caption];
+        })->take(10);
     @endphp
     <!-- Hero Section -->
     <section id="hero-section" class="relative overflow-hidden" style="height: 100vh; min-height: 600px;">

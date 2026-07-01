@@ -8,7 +8,7 @@ Route::get('/', function () {
     $tours = App\Models\Destination::where('status', 'Published')->get();
     $featuredTours = $tours->take(4);
     $testimonials = App\Helpers\TourData::testimonials();
-    $gallery = array_slice(App\Helpers\TourData::gallery(), 0, 6);
+    $gallery = App\Models\Gallery::take(6)->get();
     $contents = App\Models\SiteContent::all()->keyBy('key');
     return view('pages.home', compact('featuredTours', 'tours', 'testimonials', 'gallery', 'contents'));
 })->name('home');
@@ -46,7 +46,7 @@ Route::get('/reviews', function () {
 })->name('reviews');
 
 Route::get('/gallery', function () {
-    $gallery = App\Helpers\TourData::gallery();
+    $gallery = App\Models\Gallery::all();
     $contents = App\Models\SiteContent::all()->keyBy('key');
     return view('pages.gallery', compact('gallery', 'contents'));
 })->name('gallery');
