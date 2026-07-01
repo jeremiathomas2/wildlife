@@ -38,25 +38,25 @@
             <!-- Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="destinations-grid">
                 @foreach($tours as $tour)
-                    <a href="{{ route('destination.detail', Str::slug($tour->name)) }}" class="destination-card group block rounded-xl overflow-hidden transition-all duration-350 hover:-translate-y-1" data-category="{{ $tour->category }}" style="background: #ffffff; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                    <a href="{{ route('destination.detail', Str::slug(is_object($tour) ? $tour->name : $tour['name'])) }}" class="destination-card group block rounded-xl overflow-hidden transition-all duration-350 hover:-translate-y-1" data-category="{{ is_object($tour) ? $tour->category : $tour['category'] }}" style="background: #ffffff; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                         <div class="overflow-hidden" style="aspect-ratio: 3/2;">
-                            <img src="{{ $tour->image }}" alt="{{ $tour->name }}" class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105" loading="lazy">
+                            <img src="{{ is_object($tour) ? $tour->image : $tour['image'] }}" alt="{{ is_object($tour) ? $tour->name : $tour['name'] }}" class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105" loading="lazy">
                         </div>
                         <div class="p-5">
-                            <span class="inline-block px-3 py-0.5 rounded-full text-xs font-semibold text-white mb-3" style="background: {{ $tour->category === 'Day Trip' ? '#ff9729' : ($tour->category === 'Multi-Day Safari' ? '#088529' : '#854208') }};">
-                                {{ $tour->category }}
+                            <span class="inline-block px-3 py-0.5 rounded-full text-xs font-semibold text-white mb-3" style="background: {{ (is_object($tour) ? $tour->category : $tour['category']) === 'Day Trip' ? '#ff9729' : ((is_object($tour) ? $tour->category : $tour['category']) === 'Multi-Day Safari' ? '#088529' : '#854208') }};">
+                                {{ is_object($tour) ? $tour->category : $tour['category'] }}
                             </span>
-                            <h3 class="font-bold text-xl mb-2" style="font-family: 'Playfair Display', serif; color: #854208;">{{ $tour->name }}</h3>
-                            <p class="text-sm mb-4 line-clamp-2" style="color: #111111;">{{ $tour->desc }}</p>
+                            <h3 class="font-bold text-xl mb-2" style="font-family: 'Playfair Display', serif; color: #854208;">{{ is_object($tour) ? $tour->name : $tour['name'] }}</h3>
+                            <p class="text-sm mb-4 line-clamp-2" style="color: #111111;">{{ is_object($tour) ? $tour->desc : $tour['desc'] }}</p>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-1.5 text-xs" style="color: #5a3e2b;">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="12" cy="12" r="10"/>
                                         <polyline points="12 6 12 12 16 14"/>
                                     </svg>
-                                    {{ $tour->duration }}
+                                    {{ is_object($tour) ? $tour->duration : $tour['duration'] }}
                                 </div>
-                                <span class="text-sm font-bold" style="color: #088529;">From ${{ $tour->price_adult ?? $tour->price }}</span>
+                                <span class="text-sm font-bold" style="color: #088529;">From ${{ is_object($tour) ? ($tour->price_adult ?? $tour->price) : ($tour['price_adult'] ?? $tour['price']) }}</span>
                                 <span class="inline-flex items-center gap-1 text-sm font-semibold transition-colors duration-300" style="color: #ff9729;">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M5 12h14M12 5l7 7-7 7"/>
