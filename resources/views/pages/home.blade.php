@@ -11,6 +11,7 @@
     @php
         $testimonials = App\Helpers\TourData::testimonials();
         $featuredTestimonials = array_slice($testimonials, 0, 3);
+        $gallery = $gallery ?? [];
         $previewImages = collect($gallery)->map(function($item) {
             $src = '';
             $title = '';
