@@ -14,7 +14,7 @@
                 <span style="color: #ffffff;">Gallery</span>
             </nav>
             <h1 class="font-bold" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
-                Photo Gallery
+                {{ $contents['gallery_page_title']->value ?? 'Photo Gallery' }}
             </h1>
         </div>
     </section>

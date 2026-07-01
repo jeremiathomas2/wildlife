@@ -14,7 +14,7 @@
                 <span style="color: #ffffff;">Reviews</span>
             </nav>
             <h1 class="font-bold mb-2" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
-                Traveler Reviews
+                {{ $contents['reviews_page_title']->value ?? 'Traveler Reviews' }}
             </h1>
             <div class="flex items-center gap-2">
                 <div class="flex">
@@ -88,10 +88,10 @@
             <div class="mt-12 text-center">
                 <div class="bg-white rounded-2xl p-8 inline-block max-w-md" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                     <p class="text-base mb-4" style="color: #111111;">
-                        Traveled with us? Share your experience!
+                        {{ $contents['reviews_cta_text']->value ?? 'Traveled with us? Share your experience!' }}
                     </p>
                     <button onclick="alert('Review submission coming soon! Thank you for your feedback.')" class="px-8 py-3 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90" style="background: #088529;">
-                        Write a Review
+                        {{ $contents['reviews_cta_button']->value ?? 'Write a Review' }}
                     </button>
                 </div>
             </div>

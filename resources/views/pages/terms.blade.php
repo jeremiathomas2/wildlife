@@ -7,7 +7,7 @@
     <section class="relative flex items-end" style="height: 50vh; min-height: 400px; background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(101, 30, 8, 0.7)), url('{{ asset('images/tour-5.jpg') }}') center/cover no-repeat;">
         <div class="max-w-[1280px] mx-auto px-6 pb-12">
             <h1 class="text-3xl md:text-5xl font-bold" style="font-family: 'Playfair Display', serif; color: #ffffff;">
-                Terms and Conditions
+                {{ $contents['terms_page_title']->value ?? 'Terms and Conditions' }}
             </h1>
         </div>
     </section>
@@ -17,11 +17,11 @@
         <div class="max-w-4xl mx-auto px-6">
             <div class="mb-8">
                 <h2 class="text-2xl font-bold mb-2" style="font-family: 'Playfair Display', serif; color: #854208;">
-                    Tanzania Daily Tours & Safaris
+                    {{ $contents['terms_company_name']->value ?? 'Tanzania Daily Tours & Safaris' }}
                 </h2>
                 <p class="text-sm" style="color: #666666;">
-                    <strong>Effective Date:</strong> June 2026<br>
-                    <strong>Last Updated:</strong> June 2026
+                    <strong>Effective Date:</strong> {{ $contents['terms_effective_date']->value ?? 'June 2026' }}<br>
+                    <strong>Last Updated:</strong> {{ $contents['terms_effective_date']->value ?? 'June 2026' }}
                 </p>
             </div>
 
@@ -44,14 +44,12 @@
 
                 <div>
                     <h3 class="text-xl font-bold mb-4" style="color: #854208;">2. Company Information</h3>
-                    <p class="mb-2"><strong>Company Name:</strong> Tanzania Daily Tours & Safaris</p>
+                    <p class="mb-2"><strong>Company Name:</strong> {{ $contents['terms_company_name']->value ?? 'Tanzania Daily Tours & Safaris' }}</p>
                     <p class="mb-2"><strong>Address:</strong><br>
-                        Wakala wa Vipimo Building,<br>
-                        Moshi, Kilimanjaro,<br>
-                        United Republic of Tanzania
+                        {{ nl2br($contents['terms_company_address']->value ?? "Wakala wa Vipimo Building,\nMoshi, Kilimanjaro,\nUnited Republic of Tanzania") }}
                     </p>
-                    <p class="mb-2"><strong>Email:</strong> <a href="mailto:info@tanzaniadailytours.com" style="color: #088529;">info@tanzaniadailytours.com</a></p>
-                    <p class="mb-2"><strong>Phone/WhatsApp:</strong> <a href="tel:+255623975934" style="color: #088529;">+255 623 975 934</a></p>
+                    <p class="mb-2"><strong>Email:</strong> <a href="mailto:{{ $contents['contact_email']->value ?? 'info@tanzaniadailytours.com' }}" style="color: #088529;">{{ $contents['contact_email']->value ?? 'info@tanzaniadailytours.com' }}</a></p>
+                    <p class="mb-2"><strong>Phone/WhatsApp:</strong> <a href="tel:{{ $contents['contact_phone']->value ?? '+255 623 975 934' }}" style="color: #088529;">{{ $contents['contact_phone']->value ?? '+255 623 975 934' }}</a></p>
                 </div>
 
                 <div>

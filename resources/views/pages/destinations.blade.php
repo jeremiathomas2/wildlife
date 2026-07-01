@@ -14,7 +14,7 @@
                 <span style="color: #ffffff;">Destinations</span>
             </nav>
             <h1 class="font-bold" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
-                Our Destinations
+                {{ $contents['destinations_page_title']->value ?? 'Our Destinations' }}
             </h1>
         </div>
     </section>
@@ -27,45 +27,36 @@
                 <button class="filter-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300" data-filter="all" style="background: #088529; color: #ffffff;">
                     All
                 </button>
-                <button class="filter-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300" data-filter="day" style="background: transparent; color: #854208; border: 1px solid #854208;">
+                <button class="filter-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300" data-filter="Day Trip" style="background: transparent; color: #854208; border: 1px solid #854208;">
                     Day Trips
                 </button>
-                <button class="filter-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300" data-filter="multi" style="background: transparent; color: #854208; border: 1px solid #854208;">
+                <button class="filter-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300" data-filter="Multi-Day Safari" style="background: transparent; color: #854208; border: 1px solid #854208;">
                     Multi-Day
-                </button>
-                <button class="filter-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300" data-filter="cultural" style="background: transparent; color: #854208; border: 1px solid #854208;">
-                    Cultural
-                </button>
-                <button class="filter-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300" data-filter="adventure" style="background: transparent; color: #854208; border: 1px solid #854208;">
-                    Adventure
-                </button>
-                <button class="filter-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300" data-filter="wildlife" style="background: transparent; color: #854208; border: 1px solid #854208;">
-                    Wildlife
                 </button>
             </div>
 
             <!-- Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="destinations-grid">
                 @foreach($tours as $tour)
-                    <a href="{{ route('destination.detail', $tour['slug']) }}" class="destination-card group block rounded-xl overflow-hidden transition-all duration-350 hover:-translate-y-1" data-category="{{ $tour['category'] }}" style="background: #ffffff; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                    <a href="{{ route('destination.detail', Str::slug($tour->name)) }}" class="destination-card group block rounded-xl overflow-hidden transition-all duration-350 hover:-translate-y-1" data-category="{{ $tour->category }}" style="background: #ffffff; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                         <div class="overflow-hidden" style="aspect-ratio: 3/2;">
-                            <img src="{{ asset($tour['image']) }}" alt="{{ $tour['name'] }}" class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105" loading="lazy">
+                            <img src="{{ $tour->image }}" alt="{{ $tour->name }}" class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105" loading="lazy">
                         </div>
                         <div class="p-5">
-                            <span class="inline-block px-3 py-0.5 rounded-full text-xs font-semibold text-white mb-3" style="background: {{ $tour['category'] === 'day' ? '#ff9729' : ($tour['category'] === 'multi' ? '#088529' : '#854208') }};">
-                                {{ $tour['category'] === 'day' ? 'Day Trip' : ($tour['category'] === 'multi' ? 'Multi-Day' : ucfirst($tour['category'])) }}
+                            <span class="inline-block px-3 py-0.5 rounded-full text-xs font-semibold text-white mb-3" style="background: {{ $tour->category === 'Day Trip' ? '#ff9729' : ($tour->category === 'Multi-Day Safari' ? '#088529' : '#854208') }};">
+                                {{ $tour->category }}
                             </span>
-                            <h3 class="font-bold text-xl mb-2" style="font-family: 'Playfair Display', serif; color: #854208;">{{ $tour['name'] }}</h3>
-                            <p class="text-sm mb-4 line-clamp-2" style="color: #111111;">{{ $tour['description'] }}</p>
+                            <h3 class="font-bold text-xl mb-2" style="font-family: 'Playfair Display', serif; color: #854208;">{{ $tour->name }}</h3>
+                            <p class="text-sm mb-4 line-clamp-2" style="color: #111111;">{{ $tour->desc }}</p>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-1.5 text-xs" style="color: #5a3e2b;">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="12" cy="12" r="10"/>
                                         <polyline points="12 6 12 12 16 14"/>
                                     </svg>
-                                    {{ $tour['duration'] }}
+                                    {{ $tour->duration }}
                                 </div>
-                                <span class="text-sm font-bold" style="color: #088529;">From ${{ $tour['price'] }}</span>
+                                <span class="text-sm font-bold" style="color: #088529;">From ${{ $tour->price_adult ?? $tour->price }}</span>
                                 <span class="inline-flex items-center gap-1 text-sm font-semibold transition-colors duration-300" style="color: #ff9729;">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -83,10 +74,10 @@
     <section class="py-14" style="background: #ff9729;">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <p class="text-lg font-bold mb-5" style="color: #ffffff;">
-                Can't find what you're looking for? We create custom itineraries!
+                {{ $contents['destinations_cta_text']->value ?? "Can't find what you're looking for? We create custom itineraries!" }}
             </p>
             <a href="{{ route('contact') }}" class="inline-flex items-center px-10 py-4 rounded-full text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg" style="background: #ffffff; color: #854208;">
-                Plan a Custom Trip
+                {{ $contents['destinations_cta_button']->value ?? 'Plan a Custom Trip' }}
             </a>
         </div>
     </section>

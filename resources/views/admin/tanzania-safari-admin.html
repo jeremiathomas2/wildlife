@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safari Admin · Tanzania Daily Tours &amp; Safari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================= TOKENS ============================= */
+:root{
+  --sand-50:#FBF7EF;
+  --sand-100:#F4ECDC;
+  --sand-200:#E9DCC0;
+  --coffee-900:#2A1B10;
+  --coffee-800:#3B2718;
+  --coffee-700:#4D3422;
+  --coffee-500:#7A5C42;
+  --coffee-300:#A98968;
+  --terracotta-600:#C2592B;
+  --terracotta-500:#D06B3A;
+  --terracotta-100:#F6E1D3;
+  --acacia-600:#5E6E3F;
+  --acacia-500:#7A8450;
+  --acacia-100:#E2E7D4;
+  --gold-500:#D4A24C;
+  --gold-100:#F7E9CB;
+  --ink:#241408;
+  --ink-soft:#6B5A48;
+  --line:#E4D7C2;
+  --white:#FFFFFF;
+  --danger:#B33A3A;
+  --danger-100:#F6DCDA;
+  --success:#3F6B3F;
+  --radius-sm:8px;
+  --radius-md:14px;
+  --radius-lg:20px;
+  --shadow-sm:0 1px 2px rgba(42,27,16,.08);
+  --shadow-md:0 8px 24px rgba(42,27,16,.10);
+  --shadow-lg:0 20px 48px rgba(42,27,16,.18);
+  --sidebar-w:264px;
+  --sidebar-w-collapsed:76px;
+  --topbar-h:72px;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:var(--sand-50);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--terracotta-100);color:var(--coffee-900);}
+h1,h2,h3,h4{font-family:'Fraunces',serif;margin:0;color:var(--coffee-900);letter-spacing:-0.01em;}
+p{margin:0;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+input,select,textarea{font-family:inherit;}
+.mono{font-family:'JetBrains Mono',monospace;}
+
+/* scrollbar */
+::-webkit-scrollbar{width:9px;height:9px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--coffee-300);border-radius:10px;}
+::-webkit-scrollbar-thumb:hover{background:var(--coffee-500);}
+
+/* ============================= LOGIN ============================= */
+#loginScreen{
+  position:fixed;inset:0;z-index:500;
+  display:flex;align-items:center;justify-content:center;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(212,162,76,.18), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(122,132,80,.18), transparent 45%),
+    var(--coffee-900);
+  padding:24px;
+}
+#loginScreen::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(115deg, rgba(255,255,255,.025) 0 2px, transparent 2px 64px);
+  pointer-events:none;
+}
+.login-card{
+  position:relative;
+  width:100%;max-width:392px;
+  background:var(--sand-50);
+  border-radius:var(--radius-lg);
+  padding:40px 36px 32px;
+  box-shadow:var(--shadow-lg);
+  animation:riseIn .5s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes riseIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.login-mark{
+  width:52px;height:52px;border-radius:14px;
+  background:linear-gradient(155deg,var(--terracotta-600),var(--gold-500));
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;box-shadow:var(--shadow-sm);
+}
+.login-mark svg{width:28px;height:28px;}
+.login-card h1{font-size:26px;margin-bottom:6px;}
+.login-sub{color:var(--ink-soft);font-size:14px;margin-bottom:26px;line-height:1.5;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:12.5px;font-weight:600;color:var(--coffee-700);margin-bottom:7px;text-transform:uppercase;letter-spacing:.04em;}
+.field input,.field select,.field textarea{
+  width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:var(--radius-sm);
+  background:var(--white);font-size:14.5px;color:var(--ink);transition:border-color .15s, box-shadow .15s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:var(--terracotta-500);box-shadow:0 0 0 3px var(--terracotta-100);
+}
+.field-hint{font-size:12px;color:var(--ink-soft);margin-top:6px;}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 20px;border-radius:var(--radius-sm);border:none;
+  font-weight:600;font-size:14.5px;transition:transform .12s, box-shadow .12s, background .15s;
+}
+.btn:active{transform:translateY(1px);}
+.btn-primary{background:var(--terracotta-600);color:#fff;box-shadow:0 6px 16px rgba(194,89,43,.32);}
+.btn-primary:hover{background:var(--terracotta-500);}
+.btn-block{width:100%;}
+.btn-ghost{background:transparent;color:var(--coffee-700);border:1.5px solid var(--line);}
+.btn-ghost:hover{background:var(--sand-100);}
+.btn-soft{background:var(--sand-100);color:var(--coffee-800);}
+.btn-soft:hover{background:var(--sand-200);}
+.btn-danger{background:var(--danger-100);color:var(--danger);}
+.btn-danger:hover{background:#efc6c2;}
+.btn-sm{padding:8px 13px;font-size:13px;}
+.btn-icon{width:38px;height:38px;padding:0;border-radius:10px;}
+.login-demo{
+  margin-top:18px;padding:12px 14px;background:var(--sand-100);border:1px dashed var(--coffee-300);
+  border-radius:var(--radius-sm);font-size:12.5px;color:var(--ink-soft);line-height:1.6;
+}
+.login-error{
+  display:none;background:var(--danger-100);color:var(--danger);font-size:13px;font-weight:600;
+  padding:10px 12px;border-radius:var(--radius-sm);margin-bottom:14px;
+}
+
+/* ============================= APP SHELL ============================= */
+#app{display:none;min-height:100vh;}
+#app.show{display:block;}
+
+.sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);z-index:200;
+  background:var(--coffee-900);
+  background-image:radial-gradient(circle at 0% 0%, rgba(212,162,76,.10), transparent 55%);
+  display:flex;flex-direction:column;
+  transition:width .25s ease, transform .25s ease;
+  border-right:1px solid rgba(255,255,255,.06);
+}
+.sidebar.collapsed{width:var(--sidebar-w-collapsed);}
+.sb-brand{
+  display:flex;align-items:center;gap:12px;padding:22px 20px;
+  border-bottom:1px solid rgba(255,255,255,.08);min-height:var(--topbar-h);
+}
+.sb-mark{
+  width:38px;height:38px;border-radius:10px;flex:none;
+  background:linear-gradient(155deg,var(--terracotta-600),var(--gold-500));
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);
+}
+.sb-mark svg{width:21px;height:21px;}
+.sb-brand-text{overflow:hidden;white-space:nowrap;}
+.sb-brand-text strong{display:block;color:#fff;font-family:'Fraunces',serif;font-size:15.5px;line-height:1.2;}
+.sb-brand-text span{display:block;color:var(--gold-500);font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;}
+.sidebar.collapsed .sb-brand-text{display:none;}
+
+.sb-nav{flex:1;overflow-y:auto;padding:16px 12px;}
+.sb-section-label{
+  color:rgba(255,255,255,.32);font-size:10.5px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;padding:14px 12px 8px;
+}
+.sidebar.collapsed .sb-section-label{display:none;}
+.sb-item{
+  display:flex;align-items:center;gap:13px;padding:11px 12px;border-radius:10px;
+  color:rgba(255,255,255,.62);font-size:14px;font-weight:500;margin-bottom:2px;
+  position:relative;transition:background .15s,color .15s;white-space:nowrap;
+}
+.sb-item:hover{background:rgba(255,255,255,.06);color:#fff;}
+.sb-item.active{background:rgba(212,162,76,.16);color:var(--gold-500);}
+.sb-item.active::before{
+  content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:3px;
+  background:var(--gold-500);
+}
+.sb-item svg{width:19px;height:19px;flex:none;}
+.sb-item .badge{
+  margin-left:auto;background:var(--terracotta-600);color:#fff;font-size:11px;font-weight:700;
+  padding:1px 7px;border-radius:20px;
+}
+.sidebar.collapsed .sb-item span:not(.badge){display:none;}
+.sidebar.collapsed .sb-item .badge{display:none;}
+.sidebar.collapsed .sb-item{justify-content:center;}
+
+.sb-footer{padding:14px 20px 20px;border-top:1px solid rgba(255,255,255,.08);}
+.sb-user{display:flex;align-items:center;gap:11px;}
+.sb-avatar{
+  width:36px;height:36px;border-radius:50%;flex:none;
+  background:linear-gradient(155deg,var(--acacia-500),var(--acacia-600));
+  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;
+}
+.sb-user-text{overflow:hidden;white-space:nowrap;}
+.sb-user-text strong{display:block;color:#fff;font-size:13.5px;}
+.sb-user-text span{display:block;color:rgba(255,255,255,.5);font-size:11.5px;}
+.sidebar.collapsed .sb-user-text{display:none;}
+
+.main{margin-left:var(--sidebar-w);transition:margin-left .25s ease;min-height:100vh;display:flex;flex-direction:column;}
+.sidebar.collapsed ~ .main{margin-left:var(--sidebar-w-collapsed);}
+
+.topbar{
+  position:sticky;top:0;z-index:100;height:var(--topbar-h);
+  background:rgba(251,247,239,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:16px;padding:0 28px;
+}
+.tb-toggle{
+  width:38px;height:38px;border-radius:10px;border:1.5px solid var(--line);background:var(--white);
+  display:flex;align-items:center;justify-content:center;flex:none;
+}
+.tb-toggle svg{width:18px;height:18px;color:var(--coffee-700);}
+.tb-toggle:hover{background:var(--sand-100);}
+.tb-search{
+  flex:1;max-width:420px;display:flex;align-items:center;gap:10px;
+  background:var(--white);border:1.5px solid var(--line);border-radius:11px;padding:9px 14px;
+}
+.tb-search svg{width:17px;height:17px;color:var(--ink-soft);flex:none;}
+.tb-search input{border:none;outline:none;background:transparent;font-size:14px;width:100%;color:var(--ink);}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.tb-iconbtn{
+  width:40px;height:40px;border-radius:11px;border:1.5px solid var(--line);background:var(--white);
+  display:flex;align-items:center;justify-content:center;position:relative;color:var(--coffee-700);
+}
+.tb-iconbtn:hover{background:var(--sand-100);}
+.tb-iconbtn svg{width:18px;height:18px;}
+.tb-dot{
+  position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;
+  background:var(--terracotta-600);border:2px solid var(--sand-50);
+}
+.tb-live{
+  display:flex;align-items:center;gap:7px;background:var(--acacia-100);color:var(--acacia-600);
+  padding:7px 13px;border-radius:20px;font-size:12.5px;font-weight:700;
+}
+.tb-live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--acacia-600);box-shadow:0 0 0 0 rgba(94,110,63,.5);animation:pulse 2s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(94,110,63,.45);}70%{box-shadow:0 0 0 7px rgba(94,110,63,0);}100%{box-shadow:0 0 0 0 rgba(94,110,63,0);}}
+
+.view-wrap{padding:28px;flex:1;}
+.view{display:none;animation:fadeUp .35s ease;}
+.view.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+.view-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
+.view-head h2{font-size:27px;}
+.view-head .sub{color:var(--ink-soft);font-size:14px;margin-top:5px;}
+.view-actions{display:flex;gap:10px;flex-wrap:wrap;}
+
+/* ============================= CARDS / STATS ============================= */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:24px;}
+.stat-card{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);
+  padding:20px 20px 18px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;
+}
+.stat-card::after{content:"";position:absolute;right:-20px;top:-20px;width:90px;height:90px;border-radius:50%;background:var(--stat-tint,var(--terracotta-100));opacity:.5;}
+.stat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.stat-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:var(--stat-tint,var(--terracotta-100));color:var(--stat-fg,var(--terracotta-600));position:relative;}
+.stat-icon svg{width:20px;height:20px;}
+.stat-trend{font-size:12px;font-weight:700;padding:3px 8px;border-radius:20px;}
+.stat-trend.up{color:var(--success);background:var(--acacia-100);}
+.stat-trend.down{color:var(--danger);background:var(--danger-100);}
+.stat-value{font-family:'Fraunces',serif;font-size:30px;color:var(--coffee-900);position:relative;}
+.stat-label{font-size:13px;color:var(--ink-soft);margin-top:4px;position:relative;}
+
+.panel-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:18px;margin-bottom:24px;}
+.panel{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);overflow:hidden;}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 14px;border-bottom:1px solid var(--line);}
+.panel-head h3{font-size:16.5px;}
+.panel-head .link{font-size:12.5px;font-weight:700;color:var(--terracotta-600);}
+.panel-body{padding:18px 20px 20px;}
+
+/* bar chart */
+.bars{display:flex;align-items:flex-end;gap:10px;height:170px;padding-top:10px;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end;}
+.bar{
+  width:100%;max-width:30px;border-radius:6px 6px 2px 2px;
+  background:linear-gradient(180deg,var(--terracotta-500),var(--terracotta-600));
+  transition:height .6s cubic-bezier(.2,.8,.2,1);position:relative;
+}
+.bar-col:nth-child(even) .bar{background:linear-gradient(180deg,var(--gold-500),#bb8636);}
+.bar-label{font-size:11px;color:var(--ink-soft);font-weight:600;}
+
+.donut-wrap{display:flex;align-items:center;gap:18px;}
+.legend{display:flex;flex-direction:column;gap:10px;flex:1;}
+.legend-item{display:flex;align-items:center;gap:9px;font-size:13px;}
+.legend-dot{width:10px;height:10px;border-radius:3px;flex:none;}
+.legend-item b{margin-left:auto;color:var(--coffee-900);}
+
+.activity-list{display:flex;flex-direction:column;gap:3px;}
+.activity-row{display:flex;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line);}
+.activity-row:last-child{border-bottom:none;}
+.activity-ico{width:34px;height:34px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--sand-100);color:var(--coffee-700);}
+.activity-ico svg{width:16px;height:16px;}
+.activity-text{font-size:13.5px;line-height:1.4;}
+.activity-text b{color:var(--coffee-900);}
+.activity-time{font-size:11.5px;color:var(--ink-soft);margin-top:2px;}
+
+/* ============================= TABLES ============================= */
+.table-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);overflow:hidden;}
+.table-toolbar{display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.chip-filters{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{padding:7px 14px;border-radius:20px;font-size:12.5px;font-weight:600;background:var(--sand-100);color:var(--coffee-700);border:1px solid transparent;}
+.chip.active{background:var(--coffee-900);color:#fff;}
+.table-search{display:flex;align-items:center;gap:8px;background:var(--sand-50);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;margin-left:auto;min-width:200px;}
+.table-search svg{width:15px;height:15px;color:var(--ink-soft);}
+.table-search input{border:none;background:transparent;outline:none;font-size:13.5px;width:100%;}
+.table-scroll{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;min-width:680px;}
+thead th{
+  text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);
+  padding:12px 18px;border-bottom:1px solid var(--line);background:var(--sand-50);font-weight:700;white-space:nowrap;
+}
+tbody td{padding:14px 18px;border-bottom:1px solid var(--line);font-size:13.8px;color:var(--coffee-800);vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr{transition:background .12s;}
+tbody tr:hover{background:var(--sand-50);}
+.cell-main{display:flex;align-items:center;gap:11px;}
+.thumb{width:42px;height:42px;border-radius:9px;object-fit:cover;flex:none;background:var(--sand-200);}
+.cell-title{font-weight:600;color:var(--coffee-900);}
+.cell-sub{font-size:12px;color:var(--ink-soft);margin-top:1px;}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;font-size:11.5px;font-weight:700;white-space:nowrap;}
+.tag-green{background:var(--acacia-100);color:var(--acacia-600);}
+.tag-gold{background:var(--gold-100);color:#8a6418;}
+.tag-red{background:var(--danger-100);color:var(--danger);}
+.tag-grey{background:var(--sand-200);color:var(--ink-soft);}
+.row-actions{display:flex;gap:6px;justify-content:flex-end;}
+.row-actions button{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--white);display:flex;align-items:center;justify-content:center;color:var(--coffee-700);}
+.row-actions button:hover{background:var(--sand-100);}
+.row-actions button svg{width:14.5px;height:14.5px;}
+.row-actions .danger:hover{background:var(--danger-100);color:var(--danger);border-color:var(--danger-100);}
+.empty-state{padding:60px 20px;text-align:center;color:var(--ink-soft);}
+.empty-state svg{width:46px;height:46px;color:var(--coffee-300);margin-bottom:12px;}
+.empty-state h4{margin-bottom:5px;color:var(--coffee-800);}
+.empty-state p{font-size:13.5px;}
+.stars{color:var(--gold-500);letter-spacing:1px;font-size:13px;}
+
+/* ============================= GALLERY GRID ============================= */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px;}
+.gallery-card{position:relative;border-radius:var(--radius-md);overflow:hidden;aspect-ratio:1/1;box-shadow:var(--shadow-sm);border:1px solid var(--line);background:var(--sand-200);}
+.gallery-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s;}
+.gallery-card:hover img{transform:scale(1.06);}
+.gallery-overlay{
+  position:absolute;inset:0;background:linear-gradient(180deg,rgba(36,20,8,0) 45%,rgba(36,20,8,.82));
+  display:flex;flex-direction:column;justify-content:flex-end;padding:12px;opacity:0;transition:opacity .2s;
+}
+.gallery-card:hover .gallery-overlay{opacity:1;}
+.gallery-cap{color:#fff;font-size:12.5px;font-weight:600;margin-bottom:8px;line-height:1.3;}
+.gallery-actions{display:flex;gap:6px;}
+.gallery-actions button{flex:1;padding:6px;border-radius:7px;border:none;background:rgba(255,255,255,.18);color:#fff;backdrop-filter:blur(4px);font-size:11.5px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:5px;}
+.gallery-actions button:hover{background:rgba(255,255,255,.3);}
+.gallery-actions button svg{width:13px;height:13px;}
+.gallery-badge{position:absolute;top:10px;left:10px;background:rgba(36,20,8,.65);color:#fff;font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.04em;backdrop-filter:blur(4px);}
+.add-tile{
+  border:2px dashed var(--coffee-300);border-radius:var(--radius-md);aspect-ratio:1/1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--coffee-500);
+  background:var(--sand-100);font-size:12.5px;font-weight:600;
+}
+.add-tile:hover{background:var(--sand-200);border-color:var(--terracotta-500);color:var(--terracotta-600);}
+.add-tile svg{width:26px;height:26px;}
+
+/* ============================= REVIEWS ============================= */
+.review-card{display:flex;gap:14px;background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);padding:18px;box-shadow:var(--shadow-sm);margin-bottom:14px;}
+.review-avatar{width:44px;height:44px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;}
+.review-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px;flex-wrap:wrap;}
+.review-name{font-weight:700;color:var(--coffee-900);font-size:14.5px;}
+.review-tour{font-size:12px;color:var(--ink-soft);margin-top:1px;}
+.review-text{font-size:13.8px;color:var(--coffee-800);line-height:1.55;margin:8px 0 10px;}
+.review-actions{display:flex;gap:8px;}
+
+/* ============================= MESSAGES ============================= */
+.msg-layout{display:grid;grid-template-columns:340px 1fr;gap:18px;align-items:start;}
+.msg-list{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm);}
+.msg-item{display:flex;gap:11px;padding:14px 16px;border-bottom:1px solid var(--line);cursor:pointer;position:relative;}
+.msg-item:hover{background:var(--sand-50);}
+.msg-item.active{background:var(--terracotta-100);}
+.msg-item.unread::before{content:"";position:absolute;left:6px;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:var(--terracotta-600);}
+.msg-item-name{font-weight:700;font-size:13.5px;color:var(--coffee-900);}
+.msg-item-prev{font-size:12px;color:var(--ink-soft);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:230px;}
+.msg-item-time{font-size:10.5px;color:var(--ink-soft);margin-left:auto;flex:none;}
+.msg-detail{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);padding:24px;min-height:420px;display:flex;flex-direction:column;}
+.msg-detail-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:16px;}
+.msg-detail-body{font-size:14.5px;line-height:1.7;color:var(--coffee-800);flex:1;}
+.msg-detail-foot{display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);}
+
+/* ============================= SETTINGS ============================= */
+.settings-grid{display:grid;grid-template-columns:240px 1fr;gap:24px;align-items:start;}
+.settings-nav{display:flex;flex-direction:column;gap:3px;background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);padding:10px;box-shadow:var(--shadow-sm);}
+.settings-nav button{
+  display:flex;align-items:center;gap:10px;text-align:left;padding:11px 13px;border-radius:9px;border:none;background:transparent;
+  font-size:13.8px;font-weight:600;color:var(--coffee-700);
+}
+.settings-nav button.active{background:var(--sand-100);color:var(--terracotta-600);}
+.settings-nav button svg{width:17px;height:17px;}
+.settings-panel{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);padding:26px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.color-swatch-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;}
+.color-swatch{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.swatch{width:46px;height:46px;border-radius:12px;border:2px solid var(--white);box-shadow:0 0 0 1.5px var(--line);cursor:pointer;}
+.swatch-label{font-size:10.5px;color:var(--ink-soft);font-weight:600;}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);}
+.toggle-row:last-child{border-bottom:none;}
+.toggle-text strong{display:block;font-size:14px;color:var(--coffee-900);margin-bottom:2px;}
+.toggle-text span{font-size:12.5px;color:var(--ink-soft);}
+.switch{width:42px;height:24px;border-radius:20px;background:var(--sand-200);position:relative;flex:none;border:none;transition:background .2s;}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s;}
+.switch.on{background:var(--acacia-500);}
+.switch.on::after{transform:translateX(18px);}
+
+/* ============================= MODAL ============================= */
+.modal-backdrop{
+  position:fixed;inset:0;background:rgba(36,20,8,.5);backdrop-filter:blur(2px);
+  display:none;align-items:flex-start;justify-content:center;z-index:400;padding:40px 20px;overflow-y:auto;
+}
+.modal-backdrop.show{display:flex;}
+.modal{
+  background:var(--sand-50);border-radius:var(--radius-lg);width:100%;max-width:560px;
+  box-shadow:var(--shadow-lg);animation:riseIn .3s cubic-bezier(.2,.8,.2,1);margin:auto;
+}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;border-bottom:1px solid var(--line);}
+.modal-head h3{font-size:19px;}
+.modal-close{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--white);display:flex;align-items:center;justify-content:center;}
+.modal-close svg{width:16px;height:16px;}
+.modal-body{padding:22px 24px;max-height:60vh;overflow-y:auto;}
+.modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:18px 24px;border-top:1px solid var(--line);}
+
+/* toast */
+#toastHost{position:fixed;bottom:24px;right:24px;z-index:600;display:flex;flex-direction:column;gap:10px;}
+.toast{
+  background:var(--coffee-900);color:#fff;padding:13px 18px;border-radius:11px;font-size:13.5px;font-weight:600;
+  box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:10px;min-width:240px;animation:toastIn .3s ease;
+}
+.toast.success{background:var(--acacia-600);}
+.toast.error{background:var(--danger);}
+.toast svg{width:17px;height:17px;flex:none;}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+
+/* ============================= RESPONSIVE ============================= */
+.mobile-overlay{position:fixed;inset:0;background:rgba(36,20,8,.45);z-index:190;display:none;}
+.mobile-overlay.show{display:block;}
+
+@media (max-width:1180px){
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  .panel-grid{grid-template-columns:1fr;}
+  .settings-grid{grid-template-columns:1fr;}
+  .msg-layout{grid-template-columns:1fr;}
+}
+@media (max-width:900px){
+  .sidebar{transform:translateX(-100%);width:var(--sidebar-w);z-index:300;}
+  .sidebar.mobile-open{transform:translateX(0);}
+  .main{margin-left:0 !important;}
+  .tb-search{display:none;}
+}
+@media (max-width:640px){
+  .stat-grid{grid-template-columns:1fr;}
+  .view-wrap{padding:16px;}
+  .topbar{padding:0 14px;gap:10px;}
+  .form-row{grid-template-columns:1fr;}
+  .tb-live span{display:none;}
+  .view-head h2{font-size:22px;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================= LOGIN SCREEN ============================= -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 21h16L12 2Z"/><path d="m12 9-3 7"/><path d="m12 9 3 7"/></svg>
+    </div>
+    <h1>Safari Admin</h1>
+    <p class="login-sub">Sign in to manage Tanzania Daily Tours &amp; Safari — destinations, bookings, gallery and more.</p>
+    <div class="login-error" id="loginError">Incorrect email or password. Try the demo credentials below.</div>
+    <form id="loginForm" onsubmit="return handleLogin(event)">
+      <div class="field">
+        <label>Email address</label>
+        <input type="email" id="loginEmail" placeholder="you@tanzaniadailytours.com" value="admin@tanzaniadailytours.com" required>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" value="safari2026" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Sign in to dashboard</button>
+    </form>
+    <div class="login-demo">Demo credentials are pre-filled — just click <strong>Sign in</strong>. This panel runs entirely in your browser; no data leaves this page.</div>
+  </div>
+</div>
+
+<!-- ============================= APP SHELL ============================= -->
+<div id="app">
+  <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-brand">
+      <div class="sb-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 21h16L12 2Z"/><path d="m12 9-3 7"/><path d="m12 9 3 7"/></svg>
+      </div>
+      <div class="sb-brand-text">
+        <strong>Tanzania Daily</strong>
+        <span>Tours &amp; Safari · CMS</span>
+      </div>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-section-label">Overview</div>
+      <div class="sb-item active" data-view="dashboard" onclick="switchView('dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        <span>Dashboard</span>
+      </div>
+
+      <div class="sb-section-label">Content</div>
+      <div class="sb-item" data-view="destinations" onclick="switchView('destinations')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+        <span>Destinations</span>
+        <span class="badge" id="navDestCount">0</span>
+      </div>
+      <div class="sb-item" data-view="gallery" onclick="switchView('gallery')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.8"/><path d="m21 15-5-5L5 21"/></svg>
+        <span>Gallery</span>
+      </div>
+      <div class="sb-item" data-view="reviews" onclick="switchView('reviews')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2.5 15.1 9 22 10 17 15 18.2 22 12 18.6 5.8 22 7 15 2 10 8.9 9"/></svg>
+        <span>Reviews</span>
+        <span class="badge" id="navReviewCount">0</span>
+      </div>
+
+      <div class="sb-section-label">Operations</div>
+      <div class="sb-item" data-view="bookings" onclick="switchView('bookings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 9h18"/><path d="m9 14 2 2 4-4"/></svg>
+        <span>Bookings</span>
+        <span class="badge" id="navBookingCount">0</span>
+      </div>
+      <div class="sb-item" data-view="messages" onclick="switchView('messages')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>
+        <span>Messages</span>
+        <span class="badge" id="navMsgCount">0</span>
+      </div>
+
+      <div class="sb-section-label">System</div>
+      <div class="sb-item" data-view="settings" onclick="switchView('settings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1.04-1.56V3a2 2 0 0 1 4 0v.09A1.7 1.7 0 0 0 15 4.6a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.56 1.04H21a2 2 0 0 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15Z"/></svg>
+        <span>Site Settings</span>
+      </div>
+    </nav>
+
+    <div class="sb-footer">
+      <div class="sb-user">
+        <div class="sb-avatar">AD</div>
+        <div class="sb-user-text">
+          <strong>Admin User</strong>
+          <span>admin@tanzaniadailytours.com</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main" id="mainArea">
+    <header class="topbar">
+      <button class="tb-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      </button>
+      <div class="tb-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Search tours, bookings, guests…" oninput="globalSearch(this.value)">
+      </div>
+      <div class="tb-right">
+        <div class="tb-live"><span>Site live</span></div>
+        <button class="tb-iconbtn" onclick="switchView('messages')" aria-label="Messages">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>
+          <span class="tb-dot" id="msgDotTop"></span>
+        </button>
+        <a class="tb-iconbtn" href="https://tanzaniadailytoursandsafari.com" target="_blank" rel="noopener" aria-label="View live site" title="View live site">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+        </a>
+        <button class="tb-iconbtn" onclick="logout()" aria-label="Log out" title="Log out">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="view-wrap">
+
+      <!-- ===================== DASHBOARD ===================== -->
+      <section class="view active" id="view-dashboard">
+        <div class="view-head">
+          <div>
+            <h2>Karibu back, Admin 🌍</h2>
+            <p class="sub">Here's what's happening across Tanzania Daily Tours &amp; Safari today.</p>
+          </div>
+          <div class="view-actions">
+            <button class="btn btn-soft" onclick="switchView('bookings')">View bookings</button>
+            <button class="btn btn-primary" onclick="openDestinationModal()">+ Add destination</button>
+          </div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-icon" style="--stat-tint:var(--terracotta-100);--stat-fg:var(--terracotta-600);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 9h18"/></svg>
+              </div>
+              <span class="stat-trend up">+12.4%</span>
+            </div>
+            <div class="stat-value" id="statBookings">0</div>
+            <div class="stat-label">Total bookings</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-icon" style="--stat-tint:var(--acacia-100);--stat-fg:var(--acacia-600);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <span class="stat-trend up">+8.1%</span>
+            </div>
+            <div class="stat-value" id="statRevenue">$0</div>
+            <div class="stat-label">Revenue (this month)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-icon" style="--stat-tint:var(--gold-100);--stat-fg:#8a6418;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg>
+              </div>
+              <span class="stat-trend up">+2</span>
+            </div>
+            <div class="stat-value" id="statDestinations">0</div>
+            <div class="stat-label">Active destinations</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-icon" style="--stat-tint:#F6DCDA;--stat-fg:var(--danger);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>
+              </div>
+              <span class="stat-trend down" id="statMsgTrend">New</span>
+            </div>
+            <div class="stat-value" id="statMessages">0</div>
+            <div class="stat-label">Unread messages</div>
+          </div>
+        </div>
+
+        <div class="panel-grid">
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Bookings — last 7 months</h3>
+              <span class="link">+ 18% vs prior period</span>
+            </div>
+            <div class="panel-body">
+              <div class="bars" id="bookingsChart"></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3>Bookings by category</h3></div>
+            <div class="panel-body">
+              <div class="donut-wrap">
+                <svg width="120" height="120" viewBox="0 0 120 120" id="donutChart"></svg>
+                <div class="legend" id="donutLegend"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-grid">
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Recent bookings</h3>
+              <span class="link" onclick="switchView('bookings')" style="cursor:pointer;">View all →</span>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Guest</th><th>Tour</th><th>Date</th><th>Status</th></tr></thead>
+                <tbody id="recentBookingsBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3>Recent activity</h3></div>
+            <div class="panel-body">
+              <div class="activity-list" id="activityList"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== DESTINATIONS ===================== -->
+      <section class="view" id="view-destinations">
+        <div class="view-head">
+          <div>
+            <h2>Destinations &amp; Tours</h2>
+            <p class="sub">Manage day trips and multi-day safari packages shown on the live site.</p>
+          </div>
+          <div class="view-actions">
+            <button class="btn btn-primary" onclick="openDestinationModal()">+ Add destination</button>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-toolbar">
+            <div class="chip-filters" id="destFilterChips">
+              <button class="chip active" data-filter="all" onclick="setDestFilter('all')">All</button>
+              <button class="chip" data-filter="Day Trip" onclick="setDestFilter('Day Trip')">Day Trips</button>
+              <button class="chip" data-filter="Multi-Day Safari" onclick="setDestFilter('Multi-Day Safari')">Multi-Day Safaris</button>
+              <button class="chip" data-filter="Published" onclick="setDestFilter('Published')">Published</button>
+              <button class="chip" data-filter="Draft" onclick="setDestFilter('Draft')">Draft</button>
+            </div>
+            <div class="table-search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" placeholder="Search destinations…" oninput="destSearch=this.value;renderDestinations();">
+            </div>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Destination</th><th>Category</th><th>Duration</th><th>Price from</th><th>Status</th><th></th></tr></thead>
+              <tbody id="destinationsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== BOOKINGS ===================== -->
+      <section class="view" id="view-bookings">
+        <div class="view-head">
+          <div>
+            <h2>Bookings</h2>
+            <p class="sub">Track and manage every safari and tour booking request.</p>
+          </div>
+          <div class="view-actions">
+            <button class="btn btn-primary" onclick="openBookingModal()">+ New booking</button>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-toolbar">
+            <div class="chip-filters" id="bookingFilterChips">
+              <button class="chip active" data-filter="all" onclick="setBookingFilter('all')">All</button>
+              <button class="chip" data-filter="Pending" onclick="setBookingFilter('Pending')">Pending</button>
+              <button class="chip" data-filter="Confirmed" onclick="setBookingFilter('Confirmed')">Confirmed</button>
+              <button class="chip" data-filter="Completed" onclick="setBookingFilter('Completed')">Completed</button>
+              <button class="chip" data-filter="Cancelled" onclick="setBookingFilter('Cancelled')">Cancelled</button>
+            </div>
+            <div class="table-search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" placeholder="Search guest or tour…" oninput="bookingSearch=this.value;renderBookings();">
+            </div>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Guest</th><th>Tour</th><th>Travel date</th><th>Guests</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+              <tbody id="bookingsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== GALLERY ===================== -->
+      <section class="view" id="view-gallery">
+        <div class="view-head">
+          <div>
+            <h2>Photo Gallery</h2>
+            <p class="sub">Curate the wildlife, landscape, and culture photos shown across the site.</p>
+          </div>
+          <div class="view-actions">
+            <button class="btn btn-primary" onclick="openGalleryModal()">+ Add photo</button>
+          </div>
+        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
+      </section>
+
+      <!-- ===================== REVIEWS ===================== -->
+      <section class="view" id="view-reviews">
+        <div class="view-head">
+          <div>
+            <h2>Traveler Reviews</h2>
+            <p class="sub">Approve, feature, or remove reviews submitted by guests.</p>
+          </div>
+          <div class="view-actions">
+            <div class="chip-filters">
+              <button class="chip active" data-filter="all" onclick="setReviewFilter('all')">All</button>
+              <button class="chip" data-filter="Pending" onclick="setReviewFilter('Pending')">Pending</button>
+              <button class="chip" data-filter="Published" onclick="setReviewFilter('Published')">Published</button>
+            </div>
+          </div>
+        </div>
+        <div id="reviewsList"></div>
+      </section>
+
+      <!-- ===================== MESSAGES ===================== -->
+      <section class="view" id="view-messages">
+        <div class="view-head">
+          <div>
+            <h2>Contact Messages</h2>
+            <p class="sub">Inquiries submitted through the website contact form.</p>
+          </div>
+        </div>
+        <div class="msg-layout">
+          <div class="msg-list" id="msgList"></div>
+          <div class="msg-detail" id="msgDetail"></div>
+        </div>
+      </section>
+
+      <!-- ===================== SETTINGS ===================== -->
+      <section class="view" id="view-settings">
+        <div class="view-head">
+          <div>
+            <h2>Site Settings</h2>
+            <p class="sub">Update business details, brand colors, and integrations.</p>
+          </div>
+          <div class="view-actions">
+            <button class="btn btn-primary" onclick="saveSettings()">Save changes</button>
+          </div>
+        </div>
+
+        <div class="settings-grid">
+          <div class="settings-nav" id="settingsNav">
+            <button class="active" data-pane="general" onclick="setSettingsPane('general')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+              General
+            </button>
+            <button data-pane="brand" onclick="setSettingsPane('brand')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C22 6.012 17.461 2 12 2Z"/></svg>
+              Brand &amp; Colors
+            </button>
+            <button data-pane="contact" onclick="setSettingsPane('contact')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+              Contact &amp; Social
+            </button>
+            <button data-pane="notifications" onclick="setSettingsPane('notifications')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+              Notifications
+            </button>
+            <button data-pane="users" onclick="setSettingsPane('users')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Admin Users
+            </button>
+          </div>
+
+          <div class="settings-panel">
+            <!-- GENERAL -->
+            <div class="settings-pane active" id="pane-general">
+              <h3 style="font-size:17px;margin-bottom:18px;">General information</h3>
+              <div class="form-row">
+                <div class="field"><label>Site name</label><input type="text" id="setSiteName" value="Tanzania Daily Tours &amp; Safari"></div>
+                <div class="field"><label>Tagline</label><input type="text" id="setTagline" value="Authentic African safari experiences since 2012"></div>
+              </div>
+              <div class="field"><label>Site description</label><textarea id="setDesc" rows="3">Experience the best of Tanzania with expert-guided safaris, cultural tours, and Kilimanjaro adventures.</textarea></div>
+              <div class="form-row">
+                <div class="field"><label>Default currency</label>
+                  <select id="setCurrency"><option>USD ($)</option><option>TZS (TSh)</option><option>EUR (€)</option></select>
+                </div>
+                <div class="field"><label>Timezone</label>
+                  <select id="setTimezone"><option selected>Africa/Dar es Salaam (EAT)</option><option>UTC</option></select>
+                </div>
+              </div>
+            </div>
+
+            <!-- BRAND -->
+            <div class="settings-pane" id="pane-brand" style="display:none;">
+              <h3 style="font-size:17px;margin-bottom:6px;">Brand colors</h3>
+              <p class="field-hint" style="margin-bottom:16px;">These mirror the live site's safari palette — sandy neutrals with terracotta, gold and acacia-green accents.</p>
+              <div class="color-swatch-row">
+                <div class="color-swatch"><div class="swatch" style="background:#C2592B;"></div><span class="swatch-label">Terracotta</span></div>
+                <div class="color-swatch"><div class="swatch" style="background:#2A1B10;"></div><span class="swatch-label">Coffee</span></div>
+                <div class="color-swatch"><div class="swatch" style="background:#D4A24C;"></div><span class="swatch-label">Savanna Gold</span></div>
+                <div class="color-swatch"><div class="swatch" style="background:#7A8450;"></div><span class="swatch-label">Acacia Green</span></div>
+                <div class="color-swatch"><div class="swatch" style="background:#FBF7EF;"></div><span class="swatch-label">Sand</span></div>
+              </div>
+              <div class="field" style="margin-top:22px;"><label>Logo (brown — light backgrounds)</label><input type="text" value="/images/safari-logo-brown.png"></div>
+              <div class="field"><label>Logo (white — dark backgrounds)</label><input type="text" value="/images/safari-logo-white.png"></div>
+            </div>
+
+            <!-- CONTACT -->
+            <div class="settings-pane" id="pane-contact" style="display:none;">
+              <h3 style="font-size:17px;margin-bottom:18px;">Contact &amp; social</h3>
+              <div class="form-row">
+                <div class="field"><label>Phone</label><input type="text" id="setPhone" value="+255 623 975 934"></div>
+                <div class="field"><label>WhatsApp</label><input type="text" id="setWhatsapp" value="+255 623 975 934"></div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label>Email</label><input type="email" id="setEmail" value="info@tanzaniadailytours.com"></div>
+                <div class="field"><label>Location</label><input type="text" id="setLocation" value="Tanzania, East Africa"></div>
+              </div>
+              <div class="field"><label>Instagram URL</label><input type="text" id="setInstagram" value="https://www.instagram.com/tanzania_dailytours_and_safari/"></div>
+            </div>
+
+            <!-- NOTIFICATIONS -->
+            <div class="settings-pane" id="pane-notifications" style="display:none;">
+              <h3 style="font-size:17px;margin-bottom:6px;">Notification preferences</h3>
+              <div class="toggle-row">
+                <div class="toggle-text"><strong>New booking alerts</strong><span>Email the team when a new booking is submitted</span></div>
+                <button class="switch on" onclick="this.classList.toggle('on')"></button>
+              </div>
+              <div class="toggle-row">
+                <div class="toggle-text"><strong>New message alerts</strong><span>Notify when a contact form is submitted</span></div>
+                <button class="switch on" onclick="this.classList.toggle('on')"></button>
+              </div>
+              <div class="toggle-row">
+                <div class="toggle-text"><strong>Review moderation</strong><span>Require approval before reviews go live</span></div>
+                <button class="switch on" onclick="this.classList.toggle('on')"></button>
+              </div>
+              <div class="toggle-row">
+                <div class="toggle-text"><strong>Weekly summary</strong><span>Send a performance digest every Monday</span></div>
+                <button class="switch" onclick="this.classList.toggle('on')"></button>
+              </div>
+            </div>
+
+            <!-- USERS -->
+            <div class="settings-pane" id="pane-users" style="display:none;">
+              <h3 style="font-size:17px;margin-bottom:18px;">Admin users</h3>
+              <div class="table-scroll">
+                <table>
+                  <thead><tr><th>Name</th><th>Role</th><th>Email</th><th>Status</th></tr></thead>
+                  <tbody>
+                    <tr><td class="cell-title">Admin User</td><td>Owner</td><td>admin@tanzaniadailytours.com</td><td><span class="tag tag-green">Active</span></td></tr>
+                    <tr><td class="cell-title">Joseph Mushi</td><td>Tour Manager</td><td>joseph@tanzaniadailytours.com</td><td><span class="tag tag-green">Active</span></td></tr>
+                    <tr><td class="cell-title">Grace Mollel</td><td>Support</td><td>grace@tanzaniadailytours.com</td><td><span class="tag tag-grey">Invited</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <button class="btn btn-soft" style="margin-top:16px;">+ Invite team member</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============================= MODALS ============================= -->
+<div class="modal-backdrop" id="destModalBackdrop">
+  <div class="modal">
+    <div class="modal-head"><h3 id="destModalTitle">Add destination</h3><button class="modal-close" onclick="closeModal('destModalBackdrop')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="destId">
+      <div class="field"><label>Destination name</label><input type="text" id="destName" placeholder="e.g. Materuni Waterfall &amp; Coffee Tour"></div>
+      <div class="form-row">
+        <div class="field"><label>Category</label>
+          <select id="destCategory"><option>Day Trip</option><option>Multi-Day Safari</option></select>
+        </div>
+        <div class="field"><label>Status</label>
+          <select id="destStatus"><option>Published</option><option>Draft</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Duration</label><input type="text" id="destDuration" placeholder="e.g. Full day or 3-5 Days"></div>
+        <div class="field"><label>Price from (USD)</label><input type="number" id="destPrice" placeholder="80"></div>
+      </div>
+      <div class="field"><label>Cover image URL</label><input type="text" id="destImage" placeholder="https://…/tour-materuni.jpg"></div>
+      <div class="field"><label>Short description</label><textarea id="destDesc" rows="3" placeholder="Hike through lush forests to a stunning waterfall…"></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('destModalBackdrop')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveDestination()">Save destination</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="bookingModalBackdrop">
+  <div class="modal">
+    <div class="modal-head"><h3 id="bookingModalTitle">New booking</h3><button class="modal-close" onclick="closeModal('bookingModalBackdrop')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="bookingId">
+      <div class="form-row">
+        <div class="field"><label>Guest name</label><input type="text" id="bookingGuest" placeholder="e.g. Sarah Mitchell"></div>
+        <div class="field"><label>Guest email</label><input type="email" id="bookingEmail" placeholder="sarah@email.com"></div>
+      </div>
+      <div class="field"><label>Tour / destination</label>
+        <select id="bookingTour"></select>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Travel date</label><input type="date" id="bookingDate"></div>
+        <div class="field"><label>Guests</label><input type="number" id="bookingGuests" value="2" min="1"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Amount (USD)</label><input type="number" id="bookingAmount" placeholder="800"></div>
+        <div class="field"><label>Status</label>
+          <select id="bookingStatus"><option>Pending</option><option>Confirmed</option><option>Completed</option><option>Cancelled</option></select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('bookingModalBackdrop')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveBooking()">Save booking</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="galleryModalBackdrop">
+  <div class="modal">
+    <div class="modal-head"><h3>Add photo</h3><button class="modal-close" onclick="closeModal('galleryModalBackdrop')">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>Image URL</label><input type="text" id="galleryUrl" placeholder="https://…/gallery-wildlife-1.jpg"></div>
+      <div class="field"><label>Caption</label><input type="text" id="galleryCaption" placeholder="e.g. Lion Portrait, Serengeti"></div>
+      <div class="field"><label>Category</label>
+        <select id="galleryCategory"><option>Wildlife</option><option>Landscape</option><option>Culture</option><option>People</option><option>Tours</option></select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('galleryModalBackdrop')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveGalleryImage()">Add to gallery</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="confirmModalBackdrop">
+  <div class="modal" style="max-width:400px;">
+    <div class="modal-head"><h3>Delete item?</h3><button class="modal-close" onclick="closeModal('confirmModalBackdrop')">✕</button></div>
+    <div class="modal-body"><p style="font-size:14px;color:var(--ink-soft);line-height:1.6;" id="confirmText">This action cannot be undone.</p></div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('confirmModalBackdrop')">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div id="toastHost"></div>
+
+<script>
+/* ======================================================================
+   STATE  (in-memory only — resets on reload; no backend in this preview)
+====================================================================== */
+const state = {
+  destinations: [
+    {id:'d1', name:'Materuni Waterfall & Coffee Tour', category:'Day Trip', duration:'Full day', price:80, status:'Published', image:'https://tanzaniadailytoursandsafari.com/images/tour-materuni.jpg', desc:'Hike through lush forests to a stunning waterfall, then experience traditional coffee making.'},
+    {id:'d2', name:'Chemka Hot Springs', category:'Day Trip', duration:'Full day', price:90, status:'Published', image:'https://tanzaniadailytoursandsafari.com/images/tour-chemka.jpg', desc:'Crystal-clear natural hot springs surrounded by jungle. Swim, swing, and relax.'},
+    {id:'d3', name:'Marangu Cultural Tour', category:'Day Trip', duration:'Full day', price:70, status:'Published', image:'https://tanzaniadailytoursandsafari.com/images/tour-maasai.jpg', desc:'Visit the historic Chagga tribe caves, waterfalls, and learn about local culture.'},
+    {id:'d4', name:'Kilimanjaro Day Hike', category:'Day Trip', duration:'Full day', price:250, status:'Published', image:'https://tanzaniadailytoursandsafari.com/images/tour-arusha.jpg', desc:"Trek through Kilimanjaro's rainforest zone to Mandara Hut."},
+    {id:'d5', name:'Serengeti Safari', category:'Multi-Day Safari', duration:'3-5 Days', price:800, status:'Published', image:'https://tanzaniadailytoursandsafari.com/images/gallery-landscape-1.jpg', desc:"3-5 days of unparalleled wildlife viewing in the world's most famous savanna."},
+    {id:'d6', name:'Ngorongoro Crater', category:'Multi-Day Safari', duration:'2-3 Days', price:600, status:'Published', image:'https://tanzaniadailytoursandsafari.com/images/gallery-landscape-2.jpg', desc:"Descend into the world's largest inactive volcanic caldera teeming with wildlife."},
+    {id:'d7', name:'Mikumi & Selous Safari', category:'Multi-Day Safari', duration:'3-4 Days', price:700, status:'Draft', image:'https://tanzaniadailytoursandsafari.com/images/gallery-wildlife-2.jpg', desc:"Explore southern Tanzania's hidden gems with fewer crowds."}
+  ],
+  bookings: [
+    {id:'b1', guest:'Sarah Mitchell', email:'sarah@email.com', tour:'Serengeti Safari', date:'2026-07-14', guests:2, amount:1600, status:'Confirmed'},
+    {id:'b2', guest:'James King', email:'james@email.com', tour:'Ngorongoro Crater', date:'2026-07-09', guests:4, amount:2400, status:'Pending'},
+    {id:'b3', guest:'Elena Rossi', email:'elena@email.com', tour:'Kilimanjaro Day Hike', date:'2026-07-03', guests:1, amount:250, status:'Completed'},
+    {id:'b4', guest:'David Otieno', email:'david@email.com', tour:'Materuni Waterfall & Coffee Tour', date:'2026-07-22', guests:3, amount:240, status:'Pending'},
+    {id:'b5', guest:'Hannah Becker', email:'hannah@email.com', tour:'Chemka Hot Springs', date:'2026-06-28', guests:2, amount:180, status:'Cancelled'},
+    {id:'b6', guest:'Liu Wei', email:'liuwei@email.com', tour:'Mikumi & Selous Safari', date:'2026-08-02', guests:2, amount:1400, status:'Confirmed'},
+    {id:'b7', guest:'Amara Bello', email:'amara@email.com', tour:'Marangu Cultural Tour', date:'2026-07-11', guests:5, amount:350, status:'Completed'}
+  ],
+  gallery: [
+    {id:'g1', url:'https://tanzaniadailytoursandsafari.com/images/gallery-wildlife-1.jpg', caption:'Lion Portrait', category:'Wildlife'},
+    {id:'g2', url:'https://tanzaniadailytoursandsafari.com/images/gallery-wildlife-2.jpg', caption:'Elephant Family at Sunset', category:'Wildlife'},
+    {id:'g3', url:'https://tanzaniadailytoursandsafari.com/images/gallery-landscape-1.jpg', caption:'Serengeti Dawn', category:'Landscape'},
+    {id:'g4', url:'https://tanzaniadailytoursandsafari.com/images/gallery-landscape-2.jpg', caption:'Ngorongoro Aerial', category:'Landscape'},
+    {id:'g5', url:'https://tanzaniadailytoursandsafari.com/images/gallery-people-1.jpg', caption:'Safari Excitement', category:'People'},
+    {id:'g6', url:'https://tanzaniadailytoursandsafari.com/images/gallery-culture-1.jpg', caption:'Maasai Village', category:'Culture'},
+    {id:'g7', url:'https://tanzaniadailytoursandsafari.com/images/tour-materuni.jpg', caption:'Materuni Waterfall', category:'Tours'},
+    {id:'g8', url:'https://tanzaniadailytoursandsafari.com/images/tour-chemka.jpg', caption:'Chemka Hot Springs', category:'Tours'}
+  ],
+  reviews: [
+    {id:'r1', name:'Sarah M.', tour:'Serengeti Safari', rating:5, status:'Published', text:'An absolutely magical experience. Our guide spotted a leopard in a tree within the first hour! The accommodations were perfect and every meal was delicious.'},
+    {id:'r2', name:'James K.', tour:'Family Safari', rating:5, status:'Published', text:'We took our entire family including our 8-year-old. The team was so accommodating and patient. The kids still talk about the elephants every day.'},
+    {id:'r3', name:'Elena R.', tour:'Kilimanjaro Trek', rating:5, status:'Published', text:"Climbing Kilimanjaro was a life-changing experience. The porters and guides were incredibly supportive. I couldn't have done it without their encouragement."},
+    {id:'r4', name:'Tom B.', tour:'Chemka Hot Springs', rating:4, status:'Pending', text:'Beautiful spot, very relaxing day out. Pickup was a little late but the team kept us updated the whole time.'},
+    {id:'r5', name:'Priya N.', tour:'Ngorongoro Crater', rating:5, status:'Pending', text:'Best wildlife day of our trip — saw all of the Big Five before lunch! Guide was incredibly knowledgeable.'}
+  ],
+  messages: [
+    {id:'m1', name:'Michael Chen', email:'michael.chen@email.com', subject:'Group safari for 8 people', date:'Today, 9:24 AM', read:false, body:"Hi there, we're a group of 8 friends looking to do a 5-day Serengeti and Ngorongoro safari in late August. Could you send a quote and availability? We'd also like to know if the vehicles have charging ports."},
+    {id:'m2', name:'Olivia Bennett', email:'olivia.b@email.com', subject:'Kilimanjaro day hike question', date:'Today, 7:02 AM', read:false, body:"Hello, is the Kilimanjaro Day Hike suitable for someone with moderate fitness but no prior hiking experience? Also, what should we pack?"},
+    {id:'m3', name:'Daniel Mwangi', email:'d.mwangi@email.com', subject:'Custom honeymoon itinerary', date:'Yesterday, 6:40 PM', read:true, body:"We're celebrating our honeymoon in September and want something special — a mix of a short safari and a relaxing day at Chemka Hot Springs. What would you recommend?"},
+    {id:'m4', name:'Grace Oduya', email:'grace.oduya@email.com', subject:'Payment / deposit question', date:'2 days ago', read:true, body:"Hi, I just booked the Materuni Waterfall tour. Can you confirm how the deposit works and whether it's refundable if we need to reschedule?"},
+    {id:'m5', name:'Felix Bauer', email:'felix.bauer@email.com', subject:'WhatsApp not responding', date:'3 days ago', read:false, body:"I messaged your WhatsApp number twice this week about the Mikumi & Selous Safari and haven't heard back. Could someone follow up please?"}
+  ],
+  settings:{}
+};
+
+let destFilter='all', destSearch='', bookingFilter='all', bookingSearch='', reviewFilter='all', activeMsgId=null, sidebarCollapsed=false;
+
+/* ======================================================================
+   LOGIN
+====================================================================== */
+function handleLogin(e){
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPassword').value.trim();
+  const err = document.getElementById('loginError');
+  if(email.length > 3 && pass.length >= 4){
+    err.style.display='none';
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('app').classList.add('show');
+    initApp();
+  } else {
+    err.style.display='block';
+  }
+  return false;
+}
+function logout(){
+  document.getElementById('app').classList.remove('show');
+  document.getElementById('loginScreen').style.display='flex';
+}
+
+/* ======================================================================
+   INIT / NAVIGATION
+====================================================================== */
+function initApp(){
+  renderDashboard();
+  renderDestinations();
+  renderBookings(true);
+  renderGallery();
+  renderReviews();
+  renderMessages();
+  updateNavBadges();
+  populateBookingTourSelect();
+}
+
+function switchView(view){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+view).classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  const item = document.querySelector('.sb-item[data-view="'+view+'"]');
+  if(item) item.classList.add('active');
+  closeMobileSidebar();
+  if(view==='dashboard') renderDashboard();
+  document.querySelector('.view-wrap').scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleSidebar(){
+  if(window.innerWidth <= 900){
+    document.getElementById('sidebar').classList.toggle('mobile-open');
+    document.getElementById('mobileOverlay').classList.toggle('show');
+  } else {
+    sidebarCollapsed = !sidebarCollapsed;
+    document.getElementById('sidebar').classList.toggle('collapsed', sidebarCollapsed);
+  }
+}
+function closeMobileSidebar(){
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('mobileOverlay').classList.remove('show');
+}
+
+function updateNavBadges(){
+  document.getElementById('navDestCount').textContent = state.destinations.length;
+  document.getElementById('navReviewCount').textContent = state.reviews.filter(r=>r.status==='Pending').length;
+  document.getElementById('navBookingCount').textContent = state.bookings.filter(b=>b.status==='Pending').length;
+  const unread = state.messages.filter(m=>!m.read).length;
+  document.getElementById('navMsgCount').textContent = unread;
+  document.getElementById('msgDotTop').style.display = unread ? 'block':'none';
+}
+
+/* ======================================================================
+   TOAST
+====================================================================== */
+function toast(msg, type='default'){
+  const host = document.getElementById('toastHost');
+  const el = document.createElement('div');
+  el.className = 'toast ' + (type==='success'?'success':type==='error'?'error':'');
+  el.innerHTML = (type==='success' ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : '') + '<span>'+msg+'</span>';
+  host.appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transform='translateX(20px)'; el.style.transition='all .25s'; setTimeout(()=>el.remove(),250); }, 2600);
+}
+
+/* ======================================================================
+   MODAL HELPERS
+====================================================================== */
+function openModal(id){ document.getElementById(id).classList.add('show'); }
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+let pendingDelete = null;
+function confirmDelete(text, onConfirm){
+  document.getElementById('confirmText').textContent = text;
+  pendingDelete = onConfirm;
+  openModal('confirmModalBackdrop');
+}
+document.getElementById('confirmDeleteBtn').addEventListener('click', ()=>{
+  if(pendingDelete) pendingDelete();
+  closeModal('confirmModalBackdrop');
+});
+
+/* ======================================================================
+   DASHBOARD
+====================================================================== */
+function renderDashboard(){
+  const totalBookings = state.bookings.length;
+  const revenue = state.bookings.filter(b=>b.status!=='Cancelled').reduce((s,b)=>s+b.amount,0);
+  const activeDest = state.destinations.filter(d=>d.status==='Published').length;
+  const unread = state.messages.filter(m=>!m.read).length;
+
+  animateNumber('statBookings', totalBookings);
+  document.getElementById('statRevenue').textContent = '$' + revenue.toLocaleString();
+  animateNumber('statDestinations', activeDest);
+  animateNumber('statMessages', unread);
+
+  // bar chart - last 7 months mock distribution based on bookings count
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
+  const vals = [14,18,12,22,19,27,Math.max(8,totalBookings)];
+  const max = Math.max(...vals);
+  const chart = document.getElementById('bookingsChart');
+  chart.innerHTML = months.map((m,i)=>{
+    const h = Math.round((vals[i]/max)*140)+10;
+    return '<div class="bar-col"><div class="bar" style="height:'+h+'px;" title="'+vals[i]+' bookings"></div><div class="bar-label">'+m+'</div></div>';
+  }).join('');
+
+  // donut chart by category
+  const cats = {};
+  state.bookings.forEach(b=>{
+    const dest = state.destinations.find(d=>d.name===b.tour);
+    const cat = dest ? dest.category : 'Other';
+    cats[cat] = (cats[cat]||0)+1;
+  });
+  const colors = {'Day Trip':'#C2592B','Multi-Day Safari':'#D4A24C','Other':'#7A8450'};
+  const total = Object.values(cats).reduce((a,b)=>a+b,0) || 1;
+  let offset = 0;
+  const r = 50, c = 2*Math.PI*r;
+  let circles = '<circle cx="60" cy="60" r="'+r+'" fill="none" stroke="#E9DCC0" stroke-width="14"/>';
+  Object.keys(cats).forEach(k=>{
+    const frac = cats[k]/total;
+    const dash = frac*c;
+    circles += '<circle cx="60" cy="60" r="'+r+'" fill="none" stroke="'+(colors[k]||'#7A8450')+'" stroke-width="14" stroke-dasharray="'+dash+' '+c+'" stroke-dashoffset="'+(-offset)+'" transform="rotate(-90 60 60)" stroke-linecap="round"/>';
+    offset += dash;
+  });
+  document.getElementById('donutChart').innerHTML = circles;
+  document.getElementById('donutLegend').innerHTML = Object.keys(cats).map(k=>{
+    return '<div class="legend-item"><span class="legend-dot" style="background:'+(colors[k]||'#7A8450')+';"></span>'+k+'<b>'+cats[k]+'</b></div>';
+  }).join('') || '<div class="legend-item">No bookings yet</div>';
+
+  // recent bookings
+  const recent = [...state.bookings].slice(-5).reverse();
+  document.getElementById('recentBookingsBody').innerHTML = recent.map(b=>`
+    <tr>
+      <td class="cell-title">${b.guest}</td>
+      <td>${b.tour}</td>
+      <td>${formatDate(b.date)}</td>
+      <td>${statusTag(b.status)}</td>
+    </tr>`).join('') || emptyRow(4);
+
+  // activity feed (derived)
+  const acts = [
+    {icon:iconCalendar(), text:`<b>${state.bookings[state.bookings.length-1]?.guest||'A guest'}</b> booked ${state.bookings[state.bookings.length-1]?.tour||'a tour'}`, time:'2 hours ago'},
+    {icon:iconStar(), text:`New review submitted for <b>${state.reviews.find(r=>r.status==='Pending')?.tour || 'a tour'}</b>`, time:'5 hours ago'},
+    {icon:iconMail(), text:`<b>${state.messages[0]?.name||'A traveler'}</b> sent a message`, time:'Today, 9:24 AM'},
+    {icon:iconMap(), text:`Destination <b>${state.destinations[0]?.name}</b> updated`, time:'Yesterday'},
+  ];
+  document.getElementById('activityList').innerHTML = acts.map(a=>`
+    <div class="activity-row">
+      <div class="activity-ico">${a.icon}</div>
+      <div><div class="activity-text">${a.text}</div><div class="activity-time">${a.time}</div></div>
+    </div>`).join('');
+}
+
+function animateNumber(id, target){
+  const el = document.getElementById(id);
+  let cur = 0;
+  const step = Math.max(1, Math.round(target/24));
+  const t = setInterval(()=>{
+    cur += step;
+    if(cur >= target){ cur = target; clearInterval(t); }
+    el.textContent = cur;
+  }, 18);
+}
+
+function iconCalendar(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 9h18"/></svg>';}
+function iconStar(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2.5 15.1 9 22 10 17 15 18.2 22 12 18.6 5.8 22 7 15 2 10 8.9 9"/></svg>';}
+function iconMail(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>';}
+function iconMap(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg>';}
+
+function formatDate(d){
+  const dt = new Date(d+'T00:00:00');
+  if(isNaN(dt)) return d;
+  return dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+function statusTag(status){
+  const map = {Confirmed:'tag-green',Pending:'tag-gold',Completed:'tag-grey',Cancelled:'tag-red',Published:'tag-green',Draft:'tag-grey'};
+  return `<span class="tag ${map[status]||'tag-grey'}">${status}</span>`;
+}
+function emptyRow(cols){
+  return `<tr><td colspan="${cols}" style="text-align:center;color:var(--ink-soft);padding:30px;">Nothing here yet.</td></tr>`;
+}
+
+/* ======================================================================
+   DESTINATIONS
+====================================================================== */
+function setDestFilter(f){
+  destFilter = f;
+  document.querySelectorAll('#destFilterChips .chip').forEach(c=>c.classList.toggle('active', c.dataset.filter===f));
+  renderDestinations();
+}
+function renderDestinations(){
+  let list = state.destinations.filter(d=>{
+    const matchFilter = destFilter==='all' || d.category===destFilter || d.status===destFilter;
+    const matchSearch = d.name.toLowerCase().includes(destSearch.toLowerCase());
+    return matchFilter && matchSearch;
+  });
+  const body = document.getElementById('destinationsBody');
+  if(!list.length){ body.innerHTML = `<tr><td colspan="6"><div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg><h4>No destinations found</h4><p>Try a different filter or add a new destination.</p></div></td></tr>`; return; }
+  body.innerHTML = list.map(d=>`
+    <tr>
+      <td><div class="cell-main"><img class="thumb" src="${d.image}" alt="" onerror="this.style.background='var(--sand-200)';this.src='';"><div><div class="cell-title">${d.name}</div><div class="cell-sub">${truncate(d.desc,46)}</div></div></div></td>
+      <td>${d.category}</td>
+      <td>${d.duration}</td>
+      <td>$${d.price}</td>
+      <td>${statusTag(d.status)}</td>
+      <td><div class="row-actions">
+        <button onclick="openDestinationModal('${d.id}')" title="Edit">${iconEdit()}</button>
+        <button class="danger" onclick="deleteDestination('${d.id}')" title="Delete">${iconTrash()}</button>
+      </div></td>
+    </tr>`).join('');
+}
+function truncate(s,n){ return s && s.length>n ? s.slice(0,n)+'…' : (s||''); }
+function iconEdit(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>';}
+function iconTrash(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>';}
+
+function openDestinationModal(id){
+  document.getElementById('destModalTitle').textContent = id ? 'Edit destination' : 'Add destination';
+  if(id){
+    const d = state.destinations.find(x=>x.id===id);
+    document.getElementById('destId').value = d.id;
+    document.getElementById('destName').value = d.name;
+    document.getElementById('destCategory').value = d.category;
+    document.getElementById('destStatus').value = d.status;
+    document.getElementById('destDuration').value = d.duration;
+    document.getElementById('destPrice').value = d.price;
+    document.getElementById('destImage').value = d.image;
+    document.getElementById('destDesc').value = d.desc;
+  } else {
+    document.getElementById('destId').value = '';
+    ['destName','destDuration','destPrice','destImage','destDesc'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('destCategory').value = 'Day Trip';
+    document.getElementById('destStatus').value = 'Published';
+  }
+  openModal('destModalBackdrop');
+}
+function saveDestination(){
+  const name = document.getElementById('destName').value.trim();
+  if(!name){ toast('Please enter a destination name.','error'); return; }
+  const id = document.getElementById('destId').value;
+  const data = {
+    name,
+    category: document.getElementById('destCategory').value,
+    status: document.getElementById('destStatus').value,
+    duration: document.getElementById('destDuration').value || 'Full day',
+    price: Number(document.getElementById('destPrice').value) || 0,
+    image: document.getElementById('destImage').value || 'https://tanzaniadailytoursandsafari.com/images/about-story.jpg',
+    desc: document.getElementById('destDesc').value
+  };
+  if(id){
+    const d = state.destinations.find(x=>x.id===id);
+    Object.assign(d, data);
+    toast('Destination updated','success');
+  } else {
+    state.destinations.push({id:'d'+Date.now(), ...data});
+    toast('Destination added','success');
+  }
+  closeModal('destModalBackdrop');
+  renderDestinations(); renderDashboard(); updateNavBadges(); populateBookingTourSelect();
+}
+function deleteDestination(id){
+  const d = state.destinations.find(x=>x.id===id);
+  confirmDelete(`Delete "${d.name}"? This will remove it from the live site listings.`, ()=>{
+    state.destinations = state.destinations.filter(x=>x.id!==id);
+    renderDestinations(); renderDashboard(); updateNavBadges(); populateBookingTourSelect();
+    toast('Destination deleted','success');
+  });
+}
+
+/* ======================================================================
+   BOOKINGS
+====================================================================== */
+function populateBookingTourSelect(){
+  const sel = document.getElementById('bookingTour');
+  sel.innerHTML = state.destinations.map(d=>`<option value="${d.name}">${d.name}</option>`).join('');
+}
+function setBookingFilter(f){
+  bookingFilter = f;
+  document.querySelectorAll('#bookingFilterChips .chip').forEach(c=>c.classList.toggle('active', c.dataset.filter===f));
+  renderBookings();
+}
+function renderBookings(skipBadge){
+  let list = state.bookings.filter(b=>{
+    const matchFilter = bookingFilter==='all' || b.status===bookingFilter;
+    const s = bookingSearch.toLowerCase();
+    const matchSearch = b.guest.toLowerCase().includes(s) || b.tour.toLowerCase().includes(s);
+    return matchFilter && matchSearch;
+  });
+  const body = document.getElementById('bookingsBody');
+  if(!list.length){ body.innerHTML = `<tr><td colspan="7"><div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 9h18"/></svg><h4>No bookings found</h4><p>Try a different filter or search term.</p></div></td></tr>`; return; }
+  body.innerHTML = list.slice().reverse().map(b=>`
+    <tr>
+      <td><div class="cell-title">${b.guest}</div><div class="cell-sub">${b.email}</div></td>
+      <td>${b.tour}</td>
+      <td>${formatDate(b.date)}</td>
+      <td>${b.guests}</td>
+      <td>$${b.amount.toLocaleString()}</td>
+      <td>${statusTag(b.status)}</td>
+      <td><div class="row-actions">
+        <button onclick="openBookingModal('${b.id}')" title="Edit">${iconEdit()}</button>
+        <button class="danger" onclick="deleteBooking('${b.id}')" title="Delete">${iconTrash()}</button>
+      </div></td>
+    </tr>`).join('');
+}
+function openBookingModal(id){
+  populateBookingTourSelect();
+  document.getElementById('bookingModalTitle').textContent = id ? 'Edit booking' : 'New booking';
+  if(id){
+    const b = state.bookings.find(x=>x.id===id);
+    document.getElementById('bookingId').value = b.id;
+    document.getElementById('bookingGuest').value = b.guest;
+    document.getElementById('bookingEmail').value = b.email;
+    document.getElementById('bookingTour').value = b.tour;
+    document.getElementById('bookingDate').value = b.date;
+    document.getElementById('bookingGuests').value = b.guests;
+    document.getElementById('bookingAmount').value = b.amount;
+    document.getElementById('bookingStatus').value = b.status;
+  } else {
+    document.getElementById('bookingId').value = '';
+    document.getElementById('bookingGuest').value = '';
+    document.getElementById('bookingEmail').value = '';
+    document.getElementById('bookingDate').value = '';
+    document.getElementById('bookingGuests').value = 2;
+    document.getElementById('bookingAmount').value = '';
+    document.getElementById('bookingStatus').value = 'Pending';
+  }
+  openModal('bookingModalBackdrop');
+}
+function saveBooking(){
+  const guest = document.getElementById('bookingGuest').value.trim();
+  if(!guest){ toast('Please enter the guest name.','error'); return; }
+  const id = document.getElementById('bookingId').value;
+  const data = {
+    guest,
+    email: document.getElementById('bookingEmail').value,
+    tour: document.getElementById('bookingTour').value,
+    date: document.getElementById('bookingDate').value || new Date().toISOString().slice(0,10),
+    guests: Number(document.getElementById('bookingGuests').value)||1,
+    amount: Number(document.getElementById('bookingAmount').value)||0,
+    status: document.getElementById('bookingStatus').value
+  };
+  if(id){
+    Object.assign(state.bookings.find(x=>x.id===id), data);
+    toast('Booking updated','success');
+  } else {
+    state.bookings.push({id:'b'+Date.now(), ...data});
+    toast('Booking created','success');
+  }
+  closeModal('bookingModalBackdrop');
+  renderBookings(); renderDashboard(); updateNavBadges();
+}
+function deleteBooking(id){
+  const b = state.bookings.find(x=>x.id===id);
+  confirmDelete(`Delete booking for "${b.guest}"?`, ()=>{
+    state.bookings = state.bookings.filter(x=>x.id!==id);
+    renderBookings(); renderDashboard(); updateNavBadges();
+    toast('Booking deleted','success');
+  });
+}
+
+/* ======================================================================
+   GALLERY
+====================================================================== */
+function renderGallery(){
+  const grid = document.getElementById('galleryGrid');
+  grid.innerHTML = state.gallery.map(g=>`
+    <div class="gallery-card">
+      <span class="gallery-badge">${g.category}</span>
+      <img src="${g.url}" alt="${g.caption}" loading="lazy" onerror="this.parentElement.style.background='var(--sand-200)';this.style.display='none';">
+      <div class="gallery-overlay">
+        <div class="gallery-cap">${g.caption}</div>
+        <div class="gallery-actions">
+          <button onclick="deleteGalleryImage('${g.id}')">${iconTrash()} Remove</button>
+        </div>
+      </div>
+    </div>`).join('') + `<div class="add-tile" onclick="openGalleryModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add photo
+    </div>`;
+}
+function openGalleryModal(){
+  ['galleryUrl','galleryCaption'].forEach(i=>document.getElementById(i).value='');
+  openModal('galleryModalBackdrop');
+}
+function saveGalleryImage(){
+  const url = document.getElementById('galleryUrl').value.trim();
+  const caption = document.getElementById('galleryCaption').value.trim() || 'Untitled photo';
+  if(!url){ toast('Please paste an image URL.','error'); return; }
+  state.gallery.unshift({id:'g'+Date.now(), url, caption, category: document.getElementById('galleryCategory').value});
+  closeModal('galleryModalBackdrop');
+  renderGallery();
+  toast('Photo added to gallery','success');
+}
+function deleteGalleryImage(id){
+  confirmDelete('Remove this photo from the gallery?', ()=>{
+    state.gallery = state.gallery.filter(x=>x.id!==id);
+    renderGallery();
+    toast('Photo removed','success');
+  });
+}
+
+/* ======================================================================
+   REVIEWS
+====================================================================== */
+function setReviewFilter(f){
+  reviewFilter = f;
+  document.querySelectorAll('#view-reviews .chip').forEach(c=>c.classList.toggle('active', c.dataset.filter===f));
+  renderReviews();
+}
+function renderReviews(){
+  let list = state.reviews.filter(r=> reviewFilter==='all' || r.status===reviewFilter);
+  const wrap = document.getElementById('reviewsList');
+  if(!list.length){ wrap.innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2.5 15.1 9 22 10 17 15 18.2 22 12 18.6 5.8 22 7 15 2 10 8.9 9"/></svg><h4>No reviews here</h4><p>Reviews matching this filter will appear here.</p></div>`; return; }
+  const initials = n => n.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase();
+  const avatarColors = ['var(--terracotta-600)','var(--acacia-600)','#8a6418'];
+  wrap.innerHTML = list.map((r,i)=>`
+    <div class="review-card">
+      <div class="review-avatar" style="background:${avatarColors[i%3]};">${initials(r.name)}</div>
+      <div style="flex:1;">
+        <div class="review-top">
+          <div><div class="review-name">${r.name}</div><div class="review-tour">${r.tour}</div></div>
+          ${statusTag(r.status)}
+        </div>
+        <div class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+        <div class="review-text">"${r.text}"</div>
+        <div class="review-actions">
+          ${r.status==='Pending' ? `<button class="btn btn-sm btn-primary" onclick="setReviewStatus('${r.id}','Published')">Approve</button>` : `<button class="btn btn-sm btn-soft" onclick="setReviewStatus('${r.id}','Pending')">Unpublish</button>`}
+          <button class="btn btn-sm btn-danger" onclick="deleteReview('${r.id}')">Delete</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function setReviewStatus(id,status){
+  const r = state.reviews.find(x=>x.id===id);
+  r.status = status;
+  renderReviews(); updateNavBadges();
+  toast(status==='Published' ? 'Review approved & published' : 'Review unpublished','success');
+}
+function deleteReview(id){
+  confirmDelete('Delete this review permanently?', ()=>{
+    state.reviews = state.reviews.filter(x=>x.id!==id);
+    renderReviews(); updateNavBadges();
+    toast('Review deleted','success');
+  });
+}
+
+/* ======================================================================
+   MESSAGES
+====================================================================== */
+function renderMessages(){
+  const list = document.getElementById('msgList');
+  list.innerHTML = state.messages.slice().reverse().map(m=>`
+    <div class="msg-item ${!m.read?'unread':''} ${activeMsgId===m.id?'active':''}" onclick="openMessage('${m.id}')">
+      <div class="sb-avatar" style="width:34px;height:34px;font-size:11.5px;background:linear-gradient(155deg,var(--terracotta-500),var(--gold-500));">${m.name.split(' ').map(p=>p[0]).join('').slice(0,2)}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;"><span class="msg-item-name">${m.name}</span><span class="msg-item-time">${m.date}</span></div>
+        <div class="msg-item-prev">${m.subject}</div>
+      </div>
+    </div>`).join('');
+  if(!activeMsgId && state.messages.length) activeMsgId = state.messages[state.messages.length-1].id;
+  renderMessageDetail();
+}
+function openMessage(id){
+  activeMsgId = id;
+  const m = state.messages.find(x=>x.id===id);
+  if(m) m.read = true;
+  renderMessages();
+  updateNavBadges();
+}
+function renderMessageDetail(){
+  const detail = document.getElementById('msgDetail');
+  const m = state.messages.find(x=>x.id===activeMsgId);
+  if(!m){ detail.innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg><h4>No messages</h4><p>Contact form submissions will appear here.</p></div>`; return; }
+  detail.innerHTML = `
+    <div class="msg-detail-head">
+      <div>
+        <h3 style="font-size:18px;margin-bottom:4px;">${m.subject}</h3>
+        <p style="font-size:13px;color:var(--ink-soft);">From <strong style="color:var(--coffee-900);">${m.name}</strong> · ${m.email}</p>
+      </div>
+      <span class="cell-sub">${m.date}</span>
+    </div>
+    <div class="msg-detail-body">${m.body}</div>
+    <div class="msg-detail-foot">
+      <button class="btn btn-primary" onclick="replyMessage('${m.id}')">Reply by email</button>
+      <button class="btn btn-soft" onclick="replyWhatsapp('${m.id}')">Reply on WhatsApp</button>
+      <button class="btn btn-danger" onclick="deleteMessage('${m.id}')" style="margin-left:auto;">Delete</button>
+    </div>`;
+}
+function replyMessage(id){
+  const m = state.messages.find(x=>x.id===id);
+  toast('Opening email reply to '+m.email,'success');
+}
+function replyWhatsapp(id){
+  toast('Opening WhatsApp reply window…','success');
+}
+function deleteMessage(id){
+  confirmDelete('Delete this message?', ()=>{
+    state.messages = state.messages.filter(x=>x.id!==id);
+    if(activeMsgId===id) activeMsgId = null;
+    renderMessages(); updateNavBadges();
+    toast('Message deleted','success');
+  });
+}
+
+/* ======================================================================
+   SETTINGS
+====================================================================== */
+function setSettingsPane(pane){
+  document.querySelectorAll('#settingsNav button').forEach(b=>b.classList.toggle('active', b.dataset.pane===pane));
+  document.querySelectorAll('.settings-pane').forEach(p=>p.style.display = (p.id==='pane-'+pane) ? 'block':'none');
+}
+function saveSettings(){
+  toast('Settings saved successfully','success');
+}
+
+/* ======================================================================
+   GLOBAL SEARCH (simple cross-section helper)
+====================================================================== */
+function globalSearch(q){
+  if(!q) return;
+  q = q.toLowerCase();
+  const destHit = state.destinations.some(d=>d.name.toLowerCase().includes(q));
+  const bookHit = state.bookings.some(b=>b.guest.toLowerCase().includes(q) || b.tour.toLowerCase().includes(q));
+  if(destHit){ destSearch=q; switchView('destinations'); document.querySelector('#view-destinations .table-search input').value=q; renderDestinations(); }
+  else if(bookHit){ bookingSearch=q; switchView('bookings'); document.querySelector('#view-bookings .table-search input').value=q; renderBookings(); }
+}
+
+/* ======================================================================
+   KEYBOARD: ESC closes modals
+====================================================================== */
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape'){
+    document.querySelectorAll('.modal-backdrop.show').forEach(m=>m.classList.remove('show'));
+  }
+});
+document.querySelectorAll('.modal-backdrop').forEach(bd=>{
+  bd.addEventListener('click', e=>{ if(e.target===bd) bd.classList.remove('show'); });
+});
+
+setSettingsPane('general');
+</script>
+</body>
+</html>

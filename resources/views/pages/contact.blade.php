@@ -4,7 +4,7 @@
     <!-- Page Header -->
     <section class="relative h-[40vh] min-h-[280px] flex items-end pb-16">
         <div class="absolute inset-0">
-            <img src="{{ asset('images/safari-big-5.jpg') }}" alt="Contact" class="w-full h-full object-cover">
+            <img src="{{ asset('images/contact-header.jpg') }}" alt="Contact" class="w-full h-full object-cover">
             <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(26,18,8,0.4), rgba(99,30,8,0.8));"></div>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-6 w-full">
@@ -14,7 +14,7 @@
                 <span style="color: #ffffff;">Contact</span>
             </nav>
             <h1 class="font-bold" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
-                Get in Touch
+                {{ $contents['contact_page_title']->value ?? 'Get in Touch' }}
             </h1>
         </div>
     </section>
@@ -27,10 +27,10 @@
                 <div>
                     <span class="text-sm font-semibold uppercase tracking-wider mb-3 block" style="color: #ff9729;">Contact Us</span>
                     <h2 class="font-bold mb-6" style="font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2.5rem); color: #854208; line-height: 1.15;">
-                        Plan Your Perfect Safari
+                        {{ $contents['contact_subtitle']->value ?? 'Plan Your Perfect Safari' }}
                     </h2>
                     <p class="text-base leading-relaxed mb-8" style="color: #111111;">
-                        Ready to start your adventure? Send us a message and we'll get back to you within 24 hours to help plan your personalized Tanzanian experience.
+                        {{ $contents['contact_description']->value ?? 'Ready to start your adventure? Send us a message and we\'ll get back to you within 24 hours to help plan your personalized Tanzanian experience.' }}
                     </p>
 
                     <div class="space-y-6">
@@ -43,7 +43,7 @@
                             </div>
                             <div>
                                 <h3 class="font-bold text-lg mb-1" style="font-family: 'Playfair Display', serif; color: #854208;">Location</h3>
-                                <p class="text-sm" style="color: #111111;">Arusha, Tanzania</p>
+                                <p class="text-sm" style="color: #111111;">{{ $contents['contact_location']->value ?? 'Arusha, Tanzania' }}</p>
                             </div>
                         </div>
 
@@ -55,7 +55,7 @@
                             </div>
                             <div>
                                 <h3 class="font-bold text-lg mb-1" style="font-family: 'Playfair Display', serif; color: #854208;">Phone</h3>
-                                <p class="text-sm" style="color: #111111;">+255 700 000 000</p>
+                                <p class="text-sm" style="color: #111111;">{{ $contents['contact_phone']->value ?? '+255 700 000 000' }}</p>
                             </div>
                         </div>
 
@@ -68,7 +68,7 @@
                             </div>
                             <div>
                                 <h3 class="font-bold text-lg mb-1" style="font-family: 'Playfair Display', serif; color: #854208;">Email</h3>
-                                <p class="text-sm" style="color: #111111;">info@tanzaniadailytours.com</p>
+                                <p class="text-sm" style="color: #111111;">{{ $contents['contact_email']->value ?? 'info@tanzaniadailytours.com' }}</p>
                             </div>
                         </div>
                     </div>

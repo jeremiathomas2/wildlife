@@ -14,7 +14,7 @@
                 <span style="color: #ffffff;">About</span>
             </nav>
             <h1 class="font-bold" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
-                About Tanzania Daily Tours
+                {{ $contents['about_page_title']->value ?? 'About Tanzania Daily Tours' }}
             </h1>
         </div>
     </section>
@@ -27,19 +27,13 @@
                     <img src="{{ asset('images/about-story.jpg') }}" alt="Story" class="w-full h-full object-cover" loading="lazy">
                 </div>
                 <div>
-                    <span class="text-sm font-semibold uppercase tracking-wider mb-3 block" style="color: #ff9729;">Our Story</span>
+                    <span class="text-sm font-semibold uppercase tracking-wider mb-3 block" style="color: #ff9729;">{{ $contents['about_story_label']->value ?? 'Our Story' }}</span>
                     <h2 class="font-bold mb-4" style="font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2.5rem); color: #854208; line-height: 1.15;">
-                        Passionate About Tanzania's Natural Heritage
+                        {{ $contents['about_story_title']->value ?? 'Passionate About Tanzania\'s Natural Heritage' }}
                     </h2>
-                    <p class="text-base leading-relaxed mb-4" style="color: #111111;">
-                        Founded by local guides with deep knowledge of Tanzania's parks and cultures, Tanzania Daily Tours was born from a love of sharing our incredible homeland with visitors from around the world.
-                    </p>
-                    <p class="text-base leading-relaxed mb-4" style="color: #111111;">
-                        What started as a small team of passionate safari guides has grown into one of the most trusted tour operators in the region. We've spent over a decade crafting unforgettable experiences, from Kilimanjaro's summit to the Serengeti's endless plains.
-                    </p>
-                    <p class="text-base leading-relaxed" style="color: #111111;">
-                        Our mission is simple: to show you the real Tanzania. Not just the postcard views, but the warmth of our people, the depth of our cultures, and the raw beauty of our wilderness.
-                    </p>
+                    <div class="text-base leading-relaxed" style="color: #111111;">
+                        {!! $contents['about_story_text']->value ?? '<p>Founded by local guides with deep knowledge of Tanzania\'s parks and cultures, Tanzania Daily Tours was born from a love of sharing our incredible homeland with visitors from around the world.</p><p>What started as a small team of passionate safari guides has grown into one of the most trusted tour operators in the region. We\'ve spent over a decade crafting unforgettable experiences, from Kilimanjaro\'s summit to the Serengeti\'s endless plains.</p><p>Our mission is simple: to show you the real Tanzania. Not just the postcard views, but the warmth of our people, the depth of our cultures, and the raw beauty of our wilderness.</p>' !!}
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,9 +43,9 @@
     <section class="py-16 lg:py-20" style="background: #ffffff;">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-12">
-                <span class="text-sm font-semibold uppercase tracking-wider mb-3 block" style="color: #ff9729;">Our Values</span>
+                <span class="text-sm font-semibold uppercase tracking-wider mb-3 block" style="color: #ff9729;">{{ $contents['about_values_label']->value ?? 'Our Values' }}</span>
                 <h2 class="font-bold" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #854208;">
-                    What Drives Us
+                    {{ $contents['about_values_title']->value ?? 'What Drives Us' }}
                 </h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -93,9 +87,9 @@
     <section class="py-16 lg:py-20" style="background: #f8f4f0;">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-12">
-                <span class="text-sm font-semibold uppercase tracking-wider mb-3 block" style="color: #ff9729;">Our Team</span>
+                <span class="text-sm font-semibold uppercase tracking-wider mb-3 block" style="color: #ff9729;">{{ $contents['about_team_label']->value ?? 'Our Team' }}</span>
                 <h2 class="font-bold" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #854208;">
-                    Meet the Experts
+                    {{ $contents['about_team_title']->value ?? 'Meet the Experts' }}
                 </h2>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

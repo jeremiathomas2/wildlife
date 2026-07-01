@@ -9,8 +9,6 @@
     </style>
 
     @php
-        $tours = App\Helpers\TourData::tours();
-        $featuredTours = array_slice($tours, 0, 4);
         $testimonials = App\Helpers\TourData::testimonials();
         $featuredTestimonials = array_slice($testimonials, 0, 3);
         $galleryImages = App\Helpers\TourData::gallery();
@@ -85,7 +83,7 @@
         <!-- Hero Content -->
         <div class="relative z-10 flex flex-col items-center justify-center h-full px-6 text-center" style="pointer-events: none;">
             <span class="text-sm font-semibold uppercase tracking-wider mb-5" style="color: #ff9729; font-family: 'Lato', sans-serif; pointer-events: auto;">
-                Discover Tanzania's Wilderness
+                {{ $contents['hero_tagline']->value ?? 'Discover Tanzania\'s Wilderness' }}
             </span>
 
             <h1 class="font-bold mb-6" style="
@@ -101,7 +99,7 @@
             </h1>
 
             <p class="text-lg mb-10 max-w-[560px]" style="color: rgba(255, 255, 255, 0.9); font-family: 'Lato', sans-serif; pointer-events: auto;">
-                We offer a variety of safari packages to suit every budget and interest, from luxury lodges to budget camping trips.
+                {{ $contents['hero_subtitle']->value ?? 'We offer a variety of safari packages to suit every budget and interest, from luxury lodges to budget camping trips.' }}
             </p>
 
             <div class="flex flex-wrap items-center justify-center gap-4" style="pointer-events: auto;">
@@ -142,7 +140,7 @@
                     class="text-sm font-semibold uppercase tracking-[0.15em] mb-3 block"
                     style="color: #ff9729; font-family: 'Lato', sans-serif;"
                 >
-                    Popular Destinations
+                    {{ $contents['popular_tours_label']->value ?? 'Popular Destinations' }}
                 </span>
                 <h2
                     class="font-bold mb-3"
@@ -153,16 +151,16 @@
                         line-height: 1.15;
                     "
                 >
-                    Day Trip Adventures
+                    {{ $contents['popular_tours_title']->value ?? 'Day Trip Adventures' }}
                 </h2>
                 <p class="text-base mb-8" style="color: #111111; font-family: 'Lato', sans-serif;">
-                    Explore Tanzania's most beloved natural wonders in a single day
+                    {{ $contents['popular_tours_subtitle']->value ?? 'Explore Tanzania\'s most beloved natural wonders in a single day' }}
                 </p>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     @foreach($featuredTours as $tour)
                         <a
-                            href="{{ route('destination.detail', $tour['slug']) }}"
+                            href="{{ route('destination.detail', Str::slug($tour->name)) }}"
                             class="group block rounded-xl overflow-hidden transition-all duration-350"
                             style="
                                 background: #ffffff;
@@ -171,8 +169,8 @@
                         >
                             <div class="overflow-hidden" style="aspect-ratio: 16/10;">
                                 <img
-                                    src="{{ asset($tour['image']) }}"
-                                    alt="{{ $tour['name'] }}"
+                                    src="{{ $tour->image }}"
+                                    alt="{{ $tour->name }}"
                                     class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
                                     loading="lazy"
                                 />
@@ -182,14 +180,14 @@
                                     class="font-bold text-lg mb-1.5"
                                     style="font-family: 'Playfair Display', serif; color: #854208;"
                                 >
-                                    {{ $tour['name'] }}
+                                    {{ $tour->name }}
                                 </h3>
                                 <p class="text-sm mb-3 line-clamp-2" style="color: #111111;">
-                                    {{ $tour['description'] }}
+                                    {{ $tour->desc }}
                                 </p>
                                 <div class="flex items-center justify-between">
                                     <span class="text-sm font-bold" style="color: #088529;">
-                                        From ${{ $tour['price'] }}
+                                        From ${{ $tour->price_adult ?? $tour->price }}
                                     </span>
                                     <span
                                         class="inline-flex items-center gap-1 text-sm font-semibold transition-colors duration-300"
@@ -229,7 +227,7 @@
                         class="text-sm font-semibold uppercase tracking-[0.15em] mb-3 block"
                         style="color: #ff9729; font-family: 'Lato', sans-serif;"
                     >
-                        Extended Adventures
+                        {{ $contents['multi_day_label']->value ?? 'Extended Adventures' }}
                     </span>
                     <h2
                         class="font-bold mb-5"
@@ -240,10 +238,10 @@
                             line-height: 1.15;
                         "
                     >
-                        Multi-Day Safari Packages
+                        {{ $contents['multi_day_title']->value ?? 'Multi-Day Safari Packages' }}
                     </h2>
                     <p class="text-base mb-8 leading-relaxed" style="color: #111111;">
-                        Immerse yourself in Tanzania's wilderness with our carefully crafted multi-day itineraries. Witness the Great Migration, explore the Ngorongoro Crater, and sleep under the African stars.
+                        {{ $contents['multi_day_description']->value ?? 'Immerse yourself in Tanzania\'s wilderness with our carefully crafted multi-day itineraries. Witness the Great Migration, explore the Ngorongoro Crater, and sleep under the African stars.' }}
                     </p>
                     <a
                         href="{{ route('destinations') }}"
@@ -257,12 +255,11 @@
                 <!-- Right - Cards -->
                 <div class="space-y-6">
                     @php
-                        $multiDayTours = array_filter($tours, fn($t) => $t['category'] === 'multi');
-                        $multiDayTours = array_slice($multiDayTours, 0, 3);
+                        $multiDayTours = $tours->filter(fn($t) => $t->category === 'Multi-Day Safari')->take(3);
                     @endphp
                     @foreach($multiDayTours as $pkg)
                         <a
-                            href="{{ route('destination.detail', $pkg['slug']) }}"
+                            href="{{ route('destination.detail', Str::slug($pkg->name)) }}"
                             class="flex flex-col sm:flex-row gap-5 p-5 rounded-2xl transition-all duration-350 hover:-translate-y-1 group"
                             style="
                                 background: #ffffff;
@@ -274,8 +271,8 @@
                                 style="aspect-ratio: 3/2;"
                             >
                                 <img
-                                    src="{{ asset($pkg['image']) }}"
-                                    alt="{{ $pkg['name'] }}"
+                                    src="{{ $pkg->image }}"
+                                    alt="{{ $pkg->name }}"
                                     class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
                                     loading="lazy"
                                 />
@@ -285,20 +282,20 @@
                                     class="font-bold text-xl mb-2"
                                     style="font-family: 'Playfair Display', serif; color: #854208;"
                                 >
-                                    {{ $pkg['name'] }}
+                                    {{ $pkg->name }}
                                 </h3>
                                 <p class="text-sm mb-3 line-clamp-2" style="color: #111111;">
-                                    {{ $pkg['description'] }}
+                                    {{ $pkg->desc }}
                                 </p>
                                 <div class="flex flex-wrap items-center gap-3">
                                     <span
                                         class="inline-block px-3 py-1 rounded-full text-xs font-semibold text-white"
                                         style="background: #ff9729;"
                                     >
-                                        {{ $pkg['duration'] }}
+                                        {{ $pkg->duration }}
                                     </span>
                                     <span class="text-sm font-bold" style="color: #088529;">
-                                        From ${{ $pkg['price'] }}
+                                        From ${{ $pkg->price_adult ?? $pkg->price }}
                                     </span>
                                     <span class="text-sm font-semibold" style="color: #ff9729;">
                                         Learn More &rarr;
@@ -336,7 +333,7 @@
                         class="text-sm font-semibold uppercase tracking-[0.15em] mb-3 block"
                         style="color: #ff9729; font-family: 'Lato', sans-serif;"
                     >
-                        Why Travel With Us
+                        {{ $contents['why_choose_label']->value ?? 'Why Travel With Us' }}
                     </span>
                     <h2
                         class="font-bold mb-4"
@@ -347,10 +344,10 @@
                             line-height: 1.15;
                         "
                     >
-                        Your Trusted Safari Partner
+                        {{ $contents['why_choose_title']->value ?? 'Your Trusted Safari Partner' }}
                     </h2>
                     <p class="text-base mb-8 leading-relaxed" style="color: #111111;">
-                        With over a decade of experience, we craft safari experiences that go beyond the ordinary. Our expert guides, comfortable 4x4 vehicles, and deep local knowledge ensure every moment is unforgettable.
+                        {{ $contents['why_choose_description']->value ?? 'With over a decade of experience, we craft safari experiences that go beyond the ordinary. Our expert guides, comfortable 4x4 vehicles, and deep local knowledge ensure every moment is unforgettable.' }}
                     </p>
 
                     <div class="space-y-5">
@@ -413,62 +410,118 @@
             "
         ></div>
 
-        <div class="relative z-10 max-w-[900px] mx-auto px-6 text-center">
-            <h2 class="mb-12">
-                <span class="glow-text">What Our Travelers Say</span>
-            </h2>
-
-            <div class="relative min-h-[220px]">
-                @foreach($featuredTestimonials as $index => $t)
-                    <div
-                        id="testimonial-{{ $index }}"
-                        class="absolute inset-0 flex flex-col items-center justify-center transition-all duration-700"
-                        style="
-                            opacity: {{ $index === 0 ? 1 : 0 }};
-                            transform: {{ $index === 0 ? 'translateY(0)' : 'translateY(20px)' }};
-                            pointer-events: {{ $index === 0 ? 'auto' : 'none' }};
-                        "
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" style="color: #ff9729; opacity: 0.3;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 21v-6c0-4.418 3.582-8 8-8h3c4.418 0 8 3.582 8 8v6h-5v-6h-3a5 5 0 00-5 5v1H3zM18 21v-6c0-2.761 2.239-5 5-5h1v6h-6z"/>
-                        </svg>
-                        <p
-                            class="text-lg lg:text-xl italic my-6 leading-relaxed max-w-[700px]"
-                            style="font-family: 'Playfair Display', serif; color: #ffffff;"
-                        >
-                            &ldquo;{{ $t['text'] }}&rdquo;
-                        </p>
-                        <div class="flex items-center gap-1 mb-3">
-                            @for($i = 0; $i < $t['rating']; $i++)
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="#ff9729" stroke="#ff9729">
-                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                                </svg>
-                            @endfor
-                        </div>
-                        <p class="text-sm font-bold" style="color: #ffffff;">
-                            {{ $t['name'] }}
-                        </p>
-                        <p class="text-sm" style="color: rgba(255,255,255,0.7);">
-                            {{ $t['trip'] }}
-                        </p>
-                    </div>
-                @endforeach
+        <div class="relative z-10 max-w-[1280px] mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-sm font-semibold uppercase tracking-[0.15em] mb-3 block" style="color: #ff9729; font-family: 'Lato', sans-serif;">
+                    {{ $contents['testimonials_label']->value ?? 'Testimonials' }}
+                </span>
+                <h2
+                    class="font-bold mb-4"
+                    style="
+                        font-family: 'Playfair Display', serif;
+                        font-size: clamp(1.8rem, 4vw, 3.2rem);
+                        color: #ffffff;
+                        line-height: 1.15;
+                    "
+                >
+                    {{ $contents['testimonials_title']->value ?? 'What Our Travelers Say' }}
+                </h2>
+                <p class="text-base" style="color: rgba(255,255,255,0.8); font-family: 'Lato', sans-serif;">
+                    {{ $contents['testimonials_subtitle']->value ?? 'Real experiences from real adventurers' }}
+                </p>
             </div>
 
-            <!-- Dot Indicators -->
-            <div class="flex items-center justify-center gap-3 mt-8">
-                @foreach($featuredTestimonials as $index => $_)
-                    <button
-                        onclick="goToTestimonial({{ $index }})"
-                        id="testimonial-indicator-{{ $index }}"
-                        class="w-2.5 h-2.5 rounded-full transition-all duration-300"
+            <div class="relative">
+                <!-- Navigation Arrows -->
+                <button
+                    onclick="prevTestimonial()"
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white hover:bg-opacity-20"
+                    style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3);"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" style="color: #ffffff;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+
+                <button
+                    onclick="nextTestimonial()"
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white hover:bg-opacity-20"
+                    style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3);"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" style="color: #ffffff;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+
+                <!-- Testimonial Card -->
+                <div class="max-w-[800px] mx-auto">
+                    <div
+                        class="rounded-3xl p-8 lg:p-12 relative overflow-hidden"
                         style="
-                            background: {{ $index === 0 ? '#ff9729' : 'rgba(255,255,255,0.3)' }};
-                            transform: {{ $index === 0 ? 'scale(1.3)' : 'scale(1)' }};
+                            background: rgba(255,255,255,0.08);
+                            backdrop-filter: blur(16px);
+                            border: 1px solid rgba(255,255,255,0.15);
+                            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
                         "
-                        aria-label="Go to testimonial {{ $index + 1 }}"
-                    ></button>
-                @endforeach
+                    >
+                        <!-- Decorative quote mark -->
+                        <div class="absolute top-6 left-6 opacity-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="#ff9729">
+                                <path d="M3 21v-6c0-4.418 3.582-8 8-8h3c4.418 0 8 3.582 8 8v6h-5v-6h-3a5 5 0 00-5 5v1H3zM18 21v-6c0-2.761 2.239-5 5-5h1v6h-6z"/>
+                            </svg>
+                        </div>
+
+                        <div class="relative min-h-[220px] flex flex-col items-center justify-center">
+                            @foreach($featuredTestimonials as $index => $t)
+                                <div
+                                    id="testimonial-{{ $index }}"
+                                    class="absolute inset-0 flex flex-col items-center justify-center transition-all duration-700"
+                                    style="
+                                        opacity: {{ $index === 0 ? 1 : 0 }};
+                                        transform: {{ $index === 0 ? 'translateX(0)' : 'translateX(30px)' }};
+                                        pointer-events: {{ $index === 0 ? 'auto' : 'none' }};
+                                    "
+                                >
+                                    <p
+                                        class="text-lg lg:text-2xl italic leading-relaxed max-w-[700px] text-center mb-8"
+                                        style="font-family: 'Playfair Display', serif; color: #ffffff;"
+                                    >
+                                        &ldquo;{{ $t['text'] }}&rdquo;
+                                    </p>
+                                    <div class="flex items-center gap-1 mb-4">
+                                        @for($i = 0; $i < $t['rating']; $i++)
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="#ff9729" stroke="#ff9729">
+                                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                            </svg>
+                                        @endfor
+                                    </div>
+                                    <p class="text-lg font-bold" style="color: #ffffff; font-family: 'Lato', sans-serif;">
+                                        {{ $t['name'] }}
+                                    </p>
+                                    <p class="text-sm" style="color: #ff9729; font-family: 'Lato', sans-serif;">
+                                        {{ $t['trip'] }}
+                                    </p>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dot Indicators -->
+                <div class="flex items-center justify-center gap-3 mt-8">
+                    @foreach($featuredTestimonials as $index => $_)
+                        <button
+                            onclick="goToTestimonial({{ $index }})"
+                            id="testimonial-indicator-{{ $index }}"
+                            class="w-3 h-3 rounded-full transition-all duration-300"
+                            style="
+                                background: {{ $index === 0 ? '#ff9729' : 'rgba(255,255,255,0.3)' }};
+                                transform: {{ $index === 0 ? 'scale(1.4)' : 'scale(1)' }};
+                            "
+                            aria-label="Go to testimonial {{ $index + 1 }}"
+                        ></button>
+                    @endforeach
+                </div>
             </div>
         </div>
     </section>
@@ -482,7 +535,7 @@
                         class="text-sm font-semibold uppercase tracking-[0.15em] mb-3 block"
                         style="color: #ff9729; font-family: 'Lato', sans-serif;"
                     >
-                        Photo Gallery
+                        {{ $contents['gallery_label']->value ?? 'Photo Gallery' }}
                     </span>
                     <h2
                         class="font-bold"
@@ -493,7 +546,7 @@
                             line-height: 1.15;
                         "
                     >
-                        Moments from the Wild
+                        {{ $contents['gallery_title']->value ?? 'Moments from the Wild' }}
                     </h2>
                 </div>
                 <a
@@ -553,13 +606,13 @@
                     line-height: 1.15;
                 "
             >
-                Ready for Your African Adventure?
+                {{ $contents['cta_title']->value ?? 'Ready for Your African Adventure?' }}
             </h2>
             <p
                 class="text-lg mb-10"
                 style="color: rgba(255,255,255,0.9);"
             >
-                Let our experts craft the perfect safari itinerary for you. From day trips to multi-week expeditions, we make your dream trip a reality.
+                {{ $contents['cta_description']->value ?? 'Let our experts craft the perfect safari itinerary for you. From day trips to multi-week expeditions, we make your dream trip a reality.' }}
             </p>
             <div class="flex flex-wrap items-center justify-center gap-4">
                 <a
@@ -634,10 +687,10 @@
                 const indicator = document.getElementById('testimonial-indicator-' + i);
                 if (testimonial && indicator) {
                     testimonial.style.opacity = i === currentTestimonial ? 1 : 0;
-                    testimonial.style.transform = i === currentTestimonial ? 'translateY(0)' : 'translateY(20px)';
+                    testimonial.style.transform = i === currentTestimonial ? 'translateX(0)' : 'translateX(30px)';
                     testimonial.style.pointerEvents = i === currentTestimonial ? 'auto' : 'none';
                     indicator.style.background = i === currentTestimonial ? '#ff9729' : 'rgba(255,255,255,0.3)';
-                    indicator.style.transform = i === currentTestimonial ? 'scale(1.3)' : 'scale(1)';
+                    indicator.style.transform = i === currentTestimonial ? 'scale(1.4)' : 'scale(1)';
                 }
             }
         }
@@ -651,12 +704,22 @@
         function nextTestimonial() {
             currentTestimonial = (currentTestimonial + 1) % totalTestimonials;
             updateTestimonials();
+            resetTestimonialAutoplay();
+        }
+
+        function prevTestimonial() {
+            currentTestimonial = (currentTestimonial - 1 + totalTestimonials) % totalTestimonials;
+            updateTestimonials();
+            resetTestimonialAutoplay();
         }
 
         function resetTestimonialAutoplay() {
             clearInterval(testimonialInterval);
             testimonialInterval = setInterval(nextTestimonial, 6000);
         }
+
+        // Start testimonial autoplay
+        resetTestimonialAutoplay();
 
         // Draping Silk Shader
         function initDrapingSilk() {
