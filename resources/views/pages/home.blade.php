@@ -20,12 +20,12 @@
         <!-- Carousel Images -->
         @php
             $heroImages = [
-                asset('images/safari-serengeti.jpg'),
-                asset('images/safari-kilimanjaro.jpg'),
-                asset('images/safari-ngorongoro.jpg'),
-                asset('images/gallery-landscape-1.jpg'),
-                asset('images/gallery-wildlife-1.jpg'),
-                asset('images/tour-zanzibar.jpg'),
+                'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg',
+                'https://res.cloudinary.com/aenplcpl/image/upload/v1782890322/safari-kilimanjaro_rnqbaj.jpg',
+                'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-ngorongoro_j04gqg.jpg',
+                'https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/gallery-landscape-1_dxdd6x.jpg',
+                'https://res.cloudinary.com/aenplcpl/image/upload/v1782890321/gallery-wildlife-1_tzfe6e.jpg',
+                'https://res.cloudinary.com/aenplcpl/image/upload/v1782890319/tour-zanzibar_y2syxk.jpg',
             ];
         @endphp
         @foreach($heroImages as $index => $src)
@@ -317,7 +317,7 @@
                 <!-- Left - Image -->
                 <div class="relative overflow-hidden rounded-2xl" style="aspect-ratio: 4/3;">
                     <img
-                        src="{{ asset('images/about-story.jpg') }}"
+                        src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/about-story_of4wth.jpg"
                         alt="Safari guides with vehicle in the Serengeti"
                         class="w-full h-full object-cover"
                         loading="lazy"

@@ -295,7 +295,7 @@
             }
         })();
     </script>
-        <img src="{{ asset('images/safari-logo-brown.png') }}" alt="Tanzania Daily Tours & Safari" style="height: 120px; width: auto; object-fit: contain; margin-bottom: 20px; animation: zoomInOut 2s ease-in-out infinite;">
+        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-brown_d1vgxe.png" alt="Tanzania Daily Tours & Safari" style="height: 120px; width: auto; object-fit: contain; margin-bottom: 20px; animation: zoomInOut 2s ease-in-out infinite;">
         <h2 class="text-2xl font-bold italic mb-6" style="font-family: 'Playfair Display', serif; color: #854208;">Tanzania Daily Tour and Safari</h2>
         <span class="w-2 h-2 rounded-full animate-pulse" style="background: #ff9729;"></span>
         <style>
@@ -323,7 +323,7 @@
             @endphp
             
             <a href="{{ route('home') }}" class="flex items-center gap-3" style="transition: all 0.4s ease;">
-            <img src="{{ asset('images/safari-logo-white.png') }}" id="navLogo" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
+            <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" id="navLogo" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
             <span class="text-xl font-bold italic hidden sm:block" id="navTitle" style="font-family: 'Playfair Display', serif; color: #ffffff; transition: color 0.4s ease;">
                 Tanzania Daily Tours and Safari
             </span>
@@ -378,7 +378,7 @@
         <!-- Mobile menu header -->
         <div class="absolute top-0 left-0 right-0 px-6 flex items-center justify-between" style="height: 72px; background: #854208;">
             <a href="{{ route('home') }}" class="flex items-center gap-3" onclick="closeMobileMenu()">
-                <img src="{{ asset('images/safari-logo-white.png') }}" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
+                <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
                 <span class="text-xl font-bold italic" style="font-family: 'Playfair Display', serif; color: #ffffff;">
                     Tanzania Daily Tours and Safari
                 </span>
@@ -436,7 +436,7 @@
                 <!-- Brand -->
                 <div>
                     <a href="{{ route('home') }}" class="inline-flex items-center gap-3 mb-4">
-                        <img src="{{ asset('images/safari-logo-white.png') }}" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
+                        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
                         <span class="text-xl font-bold italic" style="font-family: 'Playfair Display', serif; color: #ffffff;">
                             Tanzania Daily Tours and Safari
                         </span>
@@ -598,7 +598,7 @@
                 nav.style.backdropFilter = 'blur(12px)';
                 nav.style.borderBottom = '1px solid rgba(133, 66, 8, 0.08)';
                 
-                navLogo.src = "{{ asset('images/safari-logo-brown.png') }}";
+                navLogo.src = "https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-brown_d1vgxe.png";
                 navTitle.style.color = '#854208';
                 
                 hamburger1.style.background = '#854208';
@@ -617,7 +617,7 @@
                 nav.style.backdropFilter = 'none';
                 nav.style.borderBottom = '1px solid transparent';
                 
-                navLogo.src = "{{ asset('images/safari-logo-white.png') }}";
+                navLogo.src = "https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png";
                 navTitle.style.color = '#ffffff';
                 
                 hamburger1.style.background = '#ffffff';

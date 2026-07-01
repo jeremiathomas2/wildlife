@@ -4,7 +4,7 @@
     <!-- Page Header -->
     <section class="relative h-[40vh] min-h-[280px] flex items-end pb-16">
         <div class="absolute inset-0">
-            <img src="{{ asset('images/gallery-landscape-1.jpg') }}" alt="Gallery" class="w-full h-full object-cover">
+            <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/gallery-landscape-1_dxdd6x.jpg" alt="Gallery" class="w-full h-full object-cover">
             <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(26,18,8,0.4), rgba(99,30,8,0.8));"></div>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-6 w-full">

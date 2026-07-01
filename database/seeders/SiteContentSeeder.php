@@ -81,12 +81,12 @@ class SiteContentSeeder extends Seeder
         // Settings - Brand
         SiteContent::updateOrCreate(
             ['key' => 'logo_brown'],
-            ['label' => 'Logo (Brown)', 'type' => 'image', 'group' => 'brand', 'value' => '/images/safari-logo-brown.png']
+            ['label' => 'Logo (Brown)', 'type' => 'image', 'group' => 'brand', 'value' => 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-brown_d1vgxe.png']
         );
 
         SiteContent::updateOrCreate(
             ['key' => 'logo_white'],
-            ['label' => 'Logo (White)', 'type' => 'image', 'group' => 'brand', 'value' => '/images/safari-logo-white.png']
+            ['label' => 'Logo (White)', 'type' => 'image', 'group' => 'brand', 'value' => 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png']
         );
 
         // Settings - Contact

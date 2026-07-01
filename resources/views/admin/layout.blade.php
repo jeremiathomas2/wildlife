@@ -436,7 +436,7 @@
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sb-brand">
-                <img src="{{ asset('images/safari-logo-white.png') }}" alt="Tanzania Daily Tours & Safari" style="width: 38px; height: 38px; border-radius: 10px; flex: none;">
+                <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="width: 38px; height: 38px; border-radius: 10px; flex: none;">
                 <div class="sb-brand-text">
                     <strong>Tanzania Daily</strong>
                     <span>Tours & Safari · CMS</span>
@@ -513,10 +513,12 @@
             </nav>
             <div class="sb-footer">
                 <a href="{{ route('admin.profile') }}" class="sb-user" style="text-decoration:none;">
-                    <div class="sb-avatar">AD</div>
+                    <div class="sb-avatar">
+                        {{ $currentAdminUser ? strtoupper(substr($currentAdminUser->name, 0, 2)) : 'AD' }}
+                    </div>
                     <div class="sb-user-text">
-                        <strong>Admin User</strong>
-                        <span>info.tanzaniadailytours@gmail.com</span>
+                        <strong>{{ $currentAdminUser ? $currentAdminUser->name : 'Admin User' }}</strong>
+                        <span>{{ $currentAdminUser ? $currentAdminUser->email : 'admin@example.com' }}</span>
                     </div>
                 </a>
             </div>

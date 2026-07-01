@@ -4,7 +4,7 @@
     <!-- Page Header -->
     <section class="relative h-[50vh] min-h-[320px] flex items-end pb-16">
         <div class="absolute inset-0">
-            <img src="{{ asset('images/about-hero.jpg') }}" alt="About" class="w-full h-full object-cover">
+            <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890320/about-hero_dbeshf.jpg" alt="About" class="w-full h-full object-cover">
             <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(26,18,8,0.4), rgba(99,30,8,0.8));"></div>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-6 w-full">
@@ -24,7 +24,7 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                 <div class="overflow-hidden rounded-2xl" style="aspect-ratio: 4/3;">
-                    <img src="{{ asset('images/about-story.jpg') }}" alt="Story" class="w-full h-full object-cover" loading="lazy">
+                    <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/about-story_of4wth.jpg" alt="Story" class="w-full h-full object-cover" loading="lazy">
                 </div>
                 <div>
                     <span class="text-sm font-semibold uppercase tracking-wider mb-3 block" style="color: #ff9729;">{{ $contents['about_story_label']->value ?? 'Our Story' }}</span>
