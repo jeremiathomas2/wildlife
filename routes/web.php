@@ -47,8 +47,15 @@ Route::get('/reviews', function () {
 
 Route::get('/gallery', function () {
     $gallery = App\Models\Gallery::all();
+    $galleryData = $gallery->map(function($item) {
+        return [
+            'src' => asset($item->url),
+            'title' => $item->caption,
+            'category' => $item->category,
+        ];
+    });
     $contents = App\Models\SiteContent::all()->keyBy('key');
-    return view('pages.gallery', compact('gallery', 'contents'));
+    return view('pages.gallery', compact('gallery', 'galleryData', 'contents'));
 })->name('gallery');
 
 Route::get('/contact', function () {

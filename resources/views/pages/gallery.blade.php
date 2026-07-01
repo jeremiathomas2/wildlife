@@ -85,13 +85,7 @@
 
 @section('scripts')
     <script>
-        const galleryData = @json($gallery->map(function($item) {
-            return [
-                'src' => asset($item->url),
-                'title' => $item->caption,
-                'category' => $item->category,
-            ];
-        }));
+        const galleryData = @json($galleryData);
         let currentIndex = 0;
 
         const filterBtns = document.querySelectorAll('.gallery-filter-btn');
