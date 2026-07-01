@@ -85,7 +85,7 @@
 
 @section('scripts')
     <script>
-        const galleryData = @json($galleryData);
+        const galleryData = @json($galleryData ?? []);
         let currentIndex = 0;
 
         const filterBtns = document.querySelectorAll('.gallery-filter-btn');
