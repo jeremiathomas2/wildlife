@@ -77,20 +77,26 @@
                 <!-- Contact Form -->
                 <div>
                     <div class="bg-white rounded-2xl p-8" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
-                        <form onsubmit="event.preventDefault(); alert('Thank you! We will get back to you soon.');">
+                        @if(session('success'))
+                            <div class="mb-4 p-4 rounded-lg text-sm text-center" style="background: rgba(8,133,41,0.1); color: #088529;">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        <form method="POST" action="{{ route('contact.submit') }}">
+                            @csrf
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                 <div>
                                     <label for="name" class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">Full Name</label>
-                                    <input type="text" id="name" required class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;">
+                                    <input type="text" id="name" name="name" required class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;">
                                 </div>
                                 <div>
                                     <label for="email" class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">Email</label>
-                                    <input type="email" id="email" required class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;">
+                                    <input type="email" id="email" name="email" required class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;">
                                 </div>
                             </div>
                             <div class="mb-4">
                                 <label for="interest" class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">What interests you?</label>
-                                <select id="interest" class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;">
+                                <select id="interest" name="interest" class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;">
                                     <option>Serengeti Safari</option>
                                     <option>Kilimanjaro Trek</option>
                                     <option>Zanzibar Holiday</option>
@@ -100,7 +106,7 @@
                             </div>
                             <div class="mb-6">
                                 <label for="message" class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">Your Message</label>
-                                <textarea id="message" rows="4" required class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;"></textarea>
+                                <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;"></textarea>
                             </div>
                             <button type="submit" class="w-full py-3.5 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90" style="background: #088529;">
                                 Send Message

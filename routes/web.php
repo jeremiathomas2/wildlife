@@ -62,6 +62,24 @@ Route::get('/terms', function () {
 })->name('terms');
 
 Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+Route::post('/contact', function (Illuminate\Http\Request $request) {
+    $validated = $request->validate([
+        'name' => 'required|string',
+        'email' => 'required|email',
+        'interest' => 'required|string',
+        'message' => 'required|string',
+    ]);
+
+    App\Models\Message::create([
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'subject' => $validated['interest'],
+        'body' => $validated['message'],
+        'read' => false,
+    ]);
+
+    return back()->with('success', 'Thank you! We will get back to you soon.');
+})->name('contact.submit');
 
 // Admin Auth Routes
 Route::prefix('live')->name('admin.')->group(function () {
