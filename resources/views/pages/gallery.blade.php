@@ -44,12 +44,12 @@
             <!-- Masonry Grid -->
             <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4" id="gallery-grid">
                 @foreach($gallery as $index => $item)
-                    <div class="gallery-item break-inside-avoid rounded-xl overflow-hidden cursor-pointer group relative" data-category="{{ $item->category }}" onclick="openLightbox({{ $index }})" style="aspect-ratio: {{ $index % 3 === 0 ? '4/3' : ($index % 3 === 1 ? '3/4' : '1/1') }};">
-                        <img src="{{ asset($item->url) }}" alt="{{ $item->caption }}" class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105" loading="lazy">
+                    <div class="gallery-item break-inside-avoid rounded-xl overflow-hidden cursor-pointer group relative" data-category="{{ is_object($item) ? ($item->category ?? '') : ($item['category'] ?? '') }}" onclick="openLightbox({{ $index }})" style="aspect-ratio: {{ $index % 3 === 0 ? '4/3' : ($index % 3 === 1 ? '3/4' : '1/1') }};">
+                        <img src="{{ asset(is_object($item) ? ($item->url ?? '') : ($item['url'] ?? '')) }}" alt="{{ is_object($item) ? ($item->caption ?? '') : ($item['caption'] ?? '') }}" class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105" loading="lazy">
                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-end p-4">
                             <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <p class="text-sm font-bold text-white">{{ $item->caption }}</p>
-                                <p class="text-xs text-white text-opacity-70 capitalize">{{ $item->category }}</p>
+                                <p class="text-sm font-bold text-white">{{ is_object($item) ? ($item->caption ?? '') : ($item['caption'] ?? '') }}</p>
+                                <p class="text-xs text-white text-opacity-70 capitalize">{{ is_object($item) ? ($item->category ?? '') : ($item['category'] ?? '') }}</p>
                             </div>
                         </div>
                     </div>
