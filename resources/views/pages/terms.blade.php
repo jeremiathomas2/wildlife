@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="relative flex items-end" style="height: 50vh; min-height: 400px; background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(101, 30, 8, 0.7)), url('{{ asset('images/tour-5.jpg') }}') center/cover no-repeat;">
+    <section class="relative flex items-end" style="height: 50vh; min-height: 400px; background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(101, 30, 8, 0.7)), url('https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/tour-zanzibar_y2syxk.jpg') center/cover no-repeat;">
         <div class="max-w-[1280px] mx-auto px-6 pb-12">
             <h1 class="text-3xl md:text-5xl font-bold" style="font-family: 'Playfair Display', serif; color: #ffffff;">
                 {{ $contents['terms_page_title']->value ?? 'Terms and Conditions' }}

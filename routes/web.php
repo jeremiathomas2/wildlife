@@ -5,17 +5,17 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
-    $tours = App\Models\Destination::where('status', 'Published')->get();
-    $featuredTours = $tours->take(4);
+    $tours = App\Models\Destination::where('status', 'Published')->get() ?? [];
+    $featuredTours = collect($tours)->take(4);
     $testimonials = App\Helpers\TourData::testimonials();
     $gallery = App\Models\Gallery::take(6)->get() ?? [];
-    $contents = App\Models\SiteContent::all()->keyBy('key');
+    $contents = App\Models\SiteContent::all()->keyBy('key') ?? [];
     return view('pages.home', compact('featuredTours', 'tours', 'testimonials', 'gallery', 'contents'));
 })->name('home');
 
 Route::get('/destinations', function () {
-    $tours = App\Models\Destination::where('status', 'Published')->get();
-    $contents = App\Models\SiteContent::all()->keyBy('key');
+    $tours = App\Models\Destination::where('status', 'Published')->get() ?? [];
+    $contents = App\Models\SiteContent::all()->keyBy('key') ?? [];
     return view('pages.destinations', compact('tours', 'contents'));
 })->name('destinations');
 
@@ -25,28 +25,32 @@ Route::get('/destinations/{slug}', function ($slug) {
         $tour = App\Models\Destination::where('status', 'Published')->first();
         if (!$tour) abort(404);
     }
-    $tours = App\Models\Destination::where('status', 'Published')->get();
-    $relatedTours = $tours->filter(function($t) use ($tour) {
-        return $t->category === $tour->category && $t->id !== $tour->id;
+    $tours = App\Models\Destination::where('status', 'Published')->get() ?? [];
+    $relatedTours = collect($tours)->filter(function($t) use ($tour) {
+        $tCategory = is_object($t) ? ($t->category ?? '') : ($t['category'] ?? '');
+        $tourCategory = is_object($tour) ? ($tour->category ?? '') : ($tour['category'] ?? '');
+        $tId = is_object($t) ? ($t->id ?? null) : ($t['id'] ?? null);
+        $tourId = is_object($tour) ? ($tour->id ?? null) : ($tour['id'] ?? null);
+        return $tCategory === $tourCategory && $tId !== $tourId;
     });
-    $contents = App\Models\SiteContent::all()->keyBy('key');
+    $contents = App\Models\SiteContent::all()->keyBy('key') ?? [];
     return view('pages.destination-detail', compact('tour', 'relatedTours', 'contents'));
 })->name('destination.detail');
 
 Route::get('/about', function () {
     $team = App\Helpers\TourData::team();
-    $contents = App\Models\SiteContent::all()->keyBy('key');
+    $contents = App\Models\SiteContent::all()->keyBy('key') ?? [];
     return view('pages.about', compact('team', 'contents'));
 })->name('about');
 
 Route::get('/reviews', function () {
     $testimonials = App\Helpers\TourData::testimonials();
-    $contents = App\Models\SiteContent::all()->keyBy('key');
+    $contents = App\Models\SiteContent::all()->keyBy('key') ?? [];
     return view('pages.reviews', compact('testimonials', 'contents'));
 })->name('reviews');
 
 Route::get('/gallery', function () {
-    $gallery = App\Models\Gallery::all();
+    $gallery = App\Models\Gallery::all() ?? [];
     $galleryData = collect($gallery)->map(function($item) {
         $src = '';
         $title = '';
@@ -66,17 +70,17 @@ Route::get('/gallery', function () {
             'category' => $category,
         ];
     });
-    $contents = App\Models\SiteContent::all()->keyBy('key');
+    $contents = App\Models\SiteContent::all()->keyBy('key') ?? [];
     return view('pages.gallery', compact('gallery', 'galleryData', 'contents'));
 })->name('gallery');
 
 Route::get('/contact', function () {
-    $contents = App\Models\SiteContent::all()->keyBy('key');
+    $contents = App\Models\SiteContent::all()->keyBy('key') ?? [];
     return view('pages.contact', compact('contents'));
 })->name('contact');
 
 Route::get('/terms', function () {
-    $contents = App\Models\SiteContent::all()->keyBy('key');
+    $contents = App\Models\SiteContent::all()->keyBy('key') ?? [];
     return view('pages.terms', compact('contents'));
 })->name('terms');
 
