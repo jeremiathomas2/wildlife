@@ -9,7 +9,14 @@
             <h2>Karibu back, Admin 🌍</h2>
             <p class="sub">Here's what's happening across Tanzania Daily Tours & Safari today.</p>
         </div>
-        <div class="view-actions">
+        <div class="view-actions" style="gap: 12px;">
+            <div class="field" style="margin-bottom: 0;">
+                <select id="currencySwitcher" onchange="updateCurrencyDisplay(this.value)" style="min-width: 120px;">
+                    @foreach(\App\Helpers\CurrencyHelper::getSupportedCurrencies() as $currency)
+                    <option value="{{ $currency }}" {{ $currency === (session('admin_currency', 'USD')) ? 'selected' : '' }}>{{ $currency }}</option>
+                    @endforeach
+                </select>
+            </div>
             <a href="{{ route('admin.bookings') }}" class="btn btn-soft">View bookings</a>
             <a href="{{ route('admin.destinations') }}" class="btn btn-primary">+ Add destination</a>
         </div>
@@ -39,7 +46,7 @@
                 </div>
                 <span class="stat-trend up">+8.1%</span>
             </div>
-            <div class="stat-value" id="statRevenue">${{ number_format($totalRevenue, 0) }}</div>
+            <div class="stat-value" id="statRevenue" data-revenue-usd="{{ $totalRevenue }}">{!! \App\Helpers\CurrencyHelper::format(\App\Helpers\CurrencyHelper::convert($totalRevenue, 'USD', session('admin_currency', 'USD')), session('admin_currency', 'USD')) !!}</div>
             <div class="stat-label">Revenue (this month)</div>
         </div>
         <div class="stat-card" style="--stat-tint: var(--gold-100); --stat-fg: #8a6418;">
@@ -228,4 +235,32 @@
         </div>
     </div>
 </div>
+
+<script>
+const exchangeRates = @json(\App\Helpers\CurrencyHelper::$exchangeRates);
+const currencySymbols = @json(\App\Helpers\CurrencyHelper::$currencySymbols);
+
+function updateCurrencyDisplay(currency) {
+    // Save to session via AJAX
+    fetch("/live/currency-switch", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ currency: currency })
+    });
+
+    // Update revenue
+    const statRevenue = document.getElementById("statRevenue");
+    const revenueUSD = parseFloat(statRevenue.dataset.revenueUsd);
+    const converted = revenueUSD * exchangeRates[currency];
+    statRevenue.textContent = formatCurrency(converted, currency);
+}
+
+function formatCurrency(amount, currency) {
+    const symbol = currencySymbols[currency] || '$';
+    return symbol + amount.toLocaleString('en-US', { maximumFractionDigits: 0 });
+}
+</script>
 @endsection

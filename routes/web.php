@@ -177,5 +177,6 @@ Route::prefix('live')->name('admin.')->middleware(\App\Http\Middleware\AdminAuth
     Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
     Route::put('/profile', [AdminController::class, 'updateProfile'])->name('profile.update');
 
+    Route::post('/currency-switch', [AdminController::class, 'currencySwitch'])->name('currency.switch');
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
 });

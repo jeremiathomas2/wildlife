@@ -48,6 +48,15 @@ class AdminController extends Controller
         return redirect()->route('admin.login');
     }
 
+    public function currencySwitch(Request $request)
+    {
+        $validated = $request->validate([
+            'currency' => 'required|in:USD,EUR,GBP,KES,TZS,UGX,ZAR'
+        ]);
+        session(['admin_currency' => $validated['currency']]);
+        return response()->json(['success' => true, 'currency' => $validated['currency']]);
+    }
+
     public function dashboard()
     {
         $totalBookings = Booking::count();

@@ -9,7 +9,14 @@
             <h2>Bookings</h2>
             <p class="sub">Track and manage every safari and tour booking request.</p>
         </div>
-        <div class="view-actions">
+        <div class="view-actions" style="gap: 12px;">
+            <div class="field" style="margin-bottom: 0;">
+                <select id="bookingsCurrencySwitcher" onchange="updateBookingsCurrency(this.value)" style="min-width: 120px;">
+                    @foreach(\App\Helpers\CurrencyHelper::getSupportedCurrencies() as $currency)
+                    <option value="{{ $currency }}" {{ $currency === (session('admin_currency', 'USD')) ? 'selected' : '' }}>{{ $currency }}</option>
+                    @endforeach
+                </select>
+            </div>
             <button class="btn btn-primary" onclick="openBookingModal()">+ New booking</button>
         </div>
     </div>
@@ -63,7 +70,12 @@
                         <td>{{ \Carbon\Carbon::parse($booking->travel_date)->format('M d, Y') }}</td>
                         <td>{{ $booking->adults ?? ($booking->guests ?? 0) }}</td>
                         <td>{{ $booking->children ?? 0 }}</td>
-                        <td>{{ $booking->currency ?? '$' }}{{ number_format($booking->amount ?? $booking->total_price, 0) }}</td>
+                        <td data-amount="{{ $booking->amount ?? $booking->total_price }}" data-currency="{{ $booking->currency ?? 'USD' }}">
+                            <div>{!! \App\Helpers\CurrencyHelper::format($booking->amount ?? $booking->total_price, $booking->currency ?? 'USD') !!}</div>
+                            <div style="font-size: 12px; color: var(--ink-soft);" class="converted-amount">
+                                ~{!! \App\Helpers\CurrencyHelper::format(\App\Helpers\CurrencyHelper::convert($booking->amount ?? $booking->total_price, $booking->currency ?? 'USD', session('admin_currency', 'USD')), session('admin_currency', 'USD')) !!}
+                            </div>
+                        </td>
                         <td>{!! \App\Http\Controllers\AdminController::statusTag($booking->status) !!}</td>
                         <td>
                             <div class="row-actions">
@@ -190,6 +202,8 @@
 
 <script>
 const bookingsData = @json($bookings->items());
+const exchangeRates = @json(\App\Helpers\CurrencyHelper::$exchangeRates);
+const currencySymbols = @json(\App\Helpers\CurrencyHelper::$currencySymbols);
 let currentBookingFilter = 'all';
 let currentBookingSearch = '';
 
@@ -254,6 +268,50 @@ function openBookingModal(id = null) {
 
 function editBooking(id) {
     openBookingModal(id);
+}
+
+function formatCurrency(amount, currency) {
+    const symbol = currencySymbols[currency] || '$';
+    return symbol + amount.toLocaleString('en-US', { maximumFractionDigits: 0 });
+}
+
+function convertCurrency(amount, fromCurrency, toCurrency) {
+    const fromRate = exchangeRates[fromCurrency] || 1;
+    const toRate = exchangeRates[toCurrency] || 1;
+    const amountInUSD = amount / fromRate;
+    return amountInUSD * toRate;
+}
+
+function updateBookingsCurrency(currency) {
+    // Save to session via AJAX
+    fetch("/live/currency-switch", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ currency: currency })
+    });
+
+    // Update all converted amounts
+    document.querySelectorAll('#bookingsBody tr').forEach(tr => {
+        if (!tr.dataset.id) return;
+        const amountCell = tr.querySelector('[data-amount]');
+        if (!amountCell) return;
+        
+        const amount = parseFloat(amountCell.dataset.amount);
+        const fromCurrency = amountCell.dataset.currency;
+        const fromRate = exchangeRates[fromCurrency] || 1;
+        const toRate = exchangeRates[currency] || 1;
+        
+        const converted = (amount / fromRate) * toRate;
+        const symbol = currencySymbols[currency] || '$';
+        
+        const convertedDiv = amountCell.querySelector('.converted-amount');
+        if (convertedDiv) {
+            convertedDiv.textContent = '~' + symbol + converted.toLocaleString('en-US', { maximumFractionDigits: 0 });
+        }
+    });
 }
 
 function viewBooking(id) {
@@ -466,25 +524,34 @@ function viewBooking(id) {
                     </div>
                 </div>
                 <div style="
-                    display: flex; 
-                    align-items: center; 
-                    justify-content: space-between; 
-                    padding: 16px; 
-                    background: white; 
-                    border-radius: 8px; 
-                    border: 1px solid rgba(133, 66, 8, 0.1);">
+                        display: flex; 
+                        align-items: center; 
+                        justify-content: space-between; 
+                        padding: 16px; 
+                        background: white; 
+                        border-radius: 8px; 
+                        border: 1px solid rgba(133, 66, 8, 0.1);">
                     <div style="
                         font-size: 14px; 
                         color: #854208; 
                         font-weight: 600;">
                         Total Amount
                     </div>
-                    <div style="
-                        font-size: 28px; 
-                        color: #088529; 
-                        font-weight: 700; 
-                        font-family: 'Playfair Display', serif;">
-                        ${booking.currency ?? '$'}${(booking.amount ?? booking.total_price).toLocaleString()}
+                    <div>
+                        <div style="
+                            font-size: 28px; 
+                            color: #088529; 
+                            font-weight: 700; 
+                            font-family: 'Playfair Display', serif;">
+                            ${booking.currency ?? '$'}${(booking.amount ?? booking.total_price).toLocaleString()}
+                        </div>
+                        <div style="
+                            font-size: 14px; 
+                            color: var(--ink-soft); 
+                            margin-top: 4px;" 
+                            id="viewBookingConverted">
+                            ~${formatCurrency(convertCurrency((booking.amount ?? booking.total_price), booking.currency ?? 'USD', document.getElementById('bookingsCurrencySwitcher').value), document.getElementById('bookingsCurrencySwitcher').value)}
+                        </div>
                     </div>
                 </div>
             </div>
