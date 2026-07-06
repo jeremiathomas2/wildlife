@@ -84,6 +84,28 @@ Route::get('/terms', function () {
     return view('pages.terms', compact('contents'));
 })->name('terms');
 
+Route::get('/sitemap.xml', function () {
+    $tours = App\Models\Destination::where('status', 'Published')->get() ?? [];
+    $pages = [
+        ['url' => route('home'), 'priority' => '1.0', 'changefreq' => 'daily'],
+        ['url' => route('destinations'), 'priority' => '0.9', 'changefreq' => 'weekly'],
+        ['url' => route('about'), 'priority' => '0.8', 'changefreq' => 'monthly'],
+        ['url' => route('reviews'), 'priority' => '0.8', 'changefreq' => 'monthly'],
+        ['url' => route('gallery'), 'priority' => '0.8', 'changefreq' => 'weekly'],
+        ['url' => route('contact'), 'priority' => '0.7', 'changefreq' => 'monthly'],
+        ['url' => route('terms'), 'priority' => '0.6', 'changefreq' => 'yearly'],
+    ];
+    foreach ($tours as $tour) {
+        $slug = Str::slug(is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? ''));
+        $pages[] = [
+            'url' => route('destination.detail', $slug),
+            'priority' => '0.8',
+            'changefreq' => 'weekly'
+        ];
+    }
+    return response()->view('sitemap', compact('pages'))->header('Content-Type', 'text/xml');
+})->name('sitemap');
+
 Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
 Route::post('/contact', function (Illuminate\Http\Request $request) {
     $validated = $request->validate([
