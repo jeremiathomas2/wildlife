@@ -79,10 +79,12 @@
             to{opacity:1;transform:translateY(0);}
         }
         .login-mark{
-            width:52px;height:52px;border-radius:14px;
+            width:72px;height:72px;border-radius:14px;
             background:linear-gradient(155deg,var(--terracotta-600),var(--gold-500));
             display:flex;align-items:center;justify-content:center;
             margin-bottom:18px;box-shadow:var(--shadow-sm);
+            margin-left: auto;
+            margin-right: auto;
         }
         .login-mark svg{width:28px;height:28px;}
         .login-card h1{
@@ -126,10 +128,11 @@
 <body>
     <div class="login-card">
         <div class="login-mark">
-            <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="width: 40px; height: 40px; object-fit: contain;">
+            <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="width: 60px; height: 60px; object-fit: contain;">
         </div>
-        <h1>Safari Admin</h1>
-        <p class="login-sub">Managing Tanzania Daily Tours & Safari</p>
+        <h1 style="text-align: center;">Tanzania Daily Tours & Safari</h1>
+        <h2 style="font-family: 'Fraunces', serif; font-size: 20px; margin-bottom: 8px; color: var(--terracotta-600); text-align: center;">Safari Admin</h2>
+        <p class="login-sub" style="text-align: center;">Managing Tanzania Daily Tours & Safari</p>
 
         @if(session('error'))
             <div class="login-error" style="display:block;">
