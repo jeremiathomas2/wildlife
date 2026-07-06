@@ -131,7 +131,7 @@
             <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="width: 60px; height: 60px; object-fit: contain;">
         </div>
         <h1 style="text-align: center;">Tanzania Daily Tours & Safari</h1>
-        <h2 style="font-family: 'Fraunces', serif; font-size: 20px; margin-bottom: 8px; color: var(--terracotta-600); text-align: center;">Safari Admin</h2>
+        <h2 style="font-family: 'Fraunces', serif; font-size: 20px; margin-bottom: 8px; color: var(--terracotta-600); text-align: center;">Admin Control Panel</h2>
         <p class="login-sub" style="text-align: center;">Managing Tanzania Daily Tours & Safari</p>
 
         @if(session('error'))
@@ -152,6 +152,16 @@
             </div>
             <button type="submit" class="btn btn-primary btn-block">Login</button>
         </form>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{{ url('/') }}" style="color: var(--terracotta-600); text-decoration: none; font-size: 14px; display: inline-flex; align-items: center; gap: 6px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="M19 12H5"></path>
+                </svg>
+                Back to Website
+            </a>
+        </div>
 
          </div>
 </body>
