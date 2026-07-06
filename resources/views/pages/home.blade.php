@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('title', 'Tanzania Daily Tours & Safari - Best Safari & Tours in Tanzania')
+@section('meta_title', 'Tanzania Daily Tours & Safari - Best Safari & Tours in Tanzania')
+@section('meta_description', 'Experience the best of Tanzania with expert-guided safaris, cultural tours, and Kilimanjaro adventures. Explore Serengeti, Ngorongoro, Zanzibar & more!')
+@section('meta_keywords', 'Tanzania safaris, Kilimanjaro tours, Serengeti safari, Ngorongoro crater, Zanzibar tours, African wildlife, Tanzania travel, luxury safaris')
+@section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg')
+
 @section('content')
     <style>
         @keyframes blink {

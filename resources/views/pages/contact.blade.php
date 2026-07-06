@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('title', 'Contact Us - Tanzania Daily Tours & Safari')
+@section('meta_title', 'Contact Us - Tanzania Daily Tours & Safari')
+@section('meta_description', 'Get in touch with Tanzania Daily Tours & Safari for inquiries about safaris, Kilimanjaro treks, cultural tours, and custom travel packages in Tanzania.')
+@section('meta_keywords', 'contact Tanzania tours, safari inquiries, Kilimanjaro bookings, Tanzania travel questions')
+@section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/contact-header_uxkkku.jpg')
+
 @section('content')
     <!-- Page Header -->
     <section class="relative h-[40vh] min-h-[280px] flex items-end pb-16">

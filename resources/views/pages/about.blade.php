@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('title', 'About Us - Tanzania Daily Tours & Safari')
+@section('meta_title', 'About Us - Tanzania Daily Tours & Safari')
+@section('meta_description', 'Learn about Tanzania Daily Tours & Safari - your trusted local guide for authentic safaris, cultural experiences, and Kilimanjaro adventures since 2012.')
+@section('meta_keywords', 'about Tanzania tours, safari company, local guides, Tanzania travel experts')
+@section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/about-story_of4wth.jpg')
+
 @section('content')
     <!-- Page Header -->
     <section class="relative h-[50vh] min-h-[320px] flex items-end pb-16">

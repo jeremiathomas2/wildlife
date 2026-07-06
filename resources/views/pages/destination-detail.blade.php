@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('title', (is_object($tour) ? $tour->name ?? 'Tanzania Safari' : $tour['name'] ?? 'Tanzania Safari') . ' | Tanzania Daily Tours & Safari')
+@section('meta_title', (is_object($tour) ? $tour->name ?? 'Tanzania Safari' : $tour['name'] ?? 'Tanzania Safari') . ' | Tanzania Daily Tours & Safari')
+@section('meta_description', (is_object($tour) ? $tour->desc ?? 'Book this amazing Tanzania safari tour with expert guides. Experience the best of Tanzanian wildlife and culture.' : $tour['desc'] ?? 'Book this amazing Tanzania safari tour with expert guides. Experience the best of Tanzanian wildlife and culture.'))
+@section('meta_keywords', (is_object($tour) ? $tour->name ?? 'Tanzania safari' : $tour['name'] ?? 'Tanzania safari') . ', Tanzania tours, wildlife safari, ' . (is_object($tour) ? $tour->category ?? '' : $tour['category'] ?? ''))
+@section('meta_image', (is_object($tour) ? $tour->image ?? 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg' : $tour['image'] ?? 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg'))
+
 @section('content')
     <!-- Hero -->
     <section class="relative" style="height: 60vh; min-height: 400px;">

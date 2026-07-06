@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('title', 'Photo Gallery - Tanzania Daily Tours & Safari')
+@section('meta_title', 'Photo Gallery - Tanzania Daily Tours & Safari')
+@section('meta_description', 'Explore our stunning photo gallery featuring Tanzania wildlife, landscapes, cultural moments, and safari adventures with Tanzania Daily Tours & Safari.')
+@section('meta_keywords', 'Tanzania photos, safari gallery, wildlife images, Tanzania landscapes, cultural photos')
+@section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/gallery-landscape-1_dxdd6x.jpg')
+
 @section('content')
     <!-- Page Header -->
     <section class="relative h-[40vh] min-h-[280px] flex items-end pb-16">

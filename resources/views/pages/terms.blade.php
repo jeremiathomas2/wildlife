@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Terms and Conditions - Tanzania Daily Tours & Safaris')
+@section('title', 'Terms & Conditions - Tanzania Daily Tours & Safari')
+@section('meta_title', 'Terms & Conditions - Tanzania Daily Tours & Safari')
+@section('meta_description', 'Read our terms and conditions for booking safaris, tours, and Kilimanjaro treks with Tanzania Daily Tours & Safari.')
+@section('meta_keywords', 'terms and conditions, booking policy, Tanzania tours terms')
+@section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg')
 
 @section('content')
     <!-- Hero Section -->

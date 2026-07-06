@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('title', 'Reviews - Tanzania Daily Tours & Safari')
+@section('meta_title', 'Reviews - Tanzania Daily Tours & Safari')
+@section('meta_description', 'Read genuine reviews from our happy travelers about their Tanzania safari experiences with Tanzania Daily Tours & Safari.')
+@section('meta_keywords', 'Tanzania safari reviews, travel testimonials, customer feedback, Tanzania tours reviews')
+@section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890322/safari-ngorongoro_j04gqg.jpg')
+
 @section('content')
     <!-- Page Header -->
     <section class="relative h-[40vh] min-h-[280px] flex items-end pb-16">

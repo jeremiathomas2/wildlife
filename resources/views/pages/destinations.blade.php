@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('title', 'Tanzania Destinations - Best Safari Tours & Packages | Tanzania Daily Tours')
+@section('meta_title', 'Tanzania Destinations - Best Safari Tours & Packages | Tanzania Daily Tours')
+@section('meta_description', 'Explore our amazing Tanzania safari destinations and tour packages. Discover Serengeti, Ngorongoro, Kilimanjaro, Zanzibar & more with expert guides.')
+@section('meta_keywords', 'Tanzania destinations, safari tours, Tanzania packages, Serengeti, Ngorongoro, Kilimanjaro, Zanzibar tours')
+@section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890322/safari-kilimanjaro_rnqbaj.jpg')
+
 @section('content')
     <!-- Page Header -->
     <section class="relative h-[50vh] min-h-[320px] flex items-end pb-16">
