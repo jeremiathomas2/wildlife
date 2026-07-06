@@ -126,11 +126,7 @@
 <body>
     <div class="login-card">
         <div class="login-mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2 4 21h16L12 2Z"></path>
-                <path d="m12 9-3 7"></path>
-                <path d="m12 9 3 7"></path>
-            </svg>
+            <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="width: 40px; height: 40px; object-fit: contain;">
         </div>
         <h1>Safari Admin</h1>
         <p class="login-sub">Managing Tanzania Daily Tours & Safari</p>
@@ -145,7 +141,7 @@
             @csrf
             <div class="field">
                 <label>Email address</label>
-                <input type="email" name="email" placeholder="you@tanzaniadailytours.com" value="info.tanzaniadailytours@gmail.com" required>
+                <input type="email" name="email" placeholder="you@tanzaniadailytours.com" value="@gmail.com" required>
             </div>
             <div class="field">
                 <label>Password</label>
