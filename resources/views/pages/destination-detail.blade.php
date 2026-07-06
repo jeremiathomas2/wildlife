@@ -47,9 +47,9 @@
                         <h2 class="font-bold text-xl mb-4" style="font-family: 'Playfair Display', serif; color: #854208;">
                             {{ $contents['destination_about_title']->value ?? 'About This Tour' }}
                         </h2>
-                        <p class="text-base leading-relaxed" style="color: #111111;">
-                            {{ is_object($tour) ? ($tour->desc ?? '') : ($tour['desc'] ?? '') }}
-                        </p>
+                        <div class="text-base leading-relaxed" style="color: #111111; text-align: justify;">
+                            {!! nl2br(e(is_object($tour) ? ($tour->desc ?? '') : ($tour['desc'] ?? ''))) !!}
+                        </div>
                     </div>
 
                     <!-- Related Tours -->
