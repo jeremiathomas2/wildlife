@@ -61,7 +61,15 @@ class AdminController extends Controller
     {
         $totalBookings = Booking::count();
         $thisMonthBookings = Booking::whereYear('created_at', '>=', now()->startOfMonth())->count();
-        $totalRevenue = Booking::sum('total_price');
+        
+        // Calculate total revenue in USD by converting each booking's amount to USD
+        $totalRevenue = 0;
+        foreach (Booking::all() as $booking) {
+            $amount = $booking->amount ?? $booking->total_price ?? 0;
+            $currency = $booking->currency ?? 'USD';
+            $totalRevenue += \App\Helpers\CurrencyHelper::convert($amount, $currency, 'USD');
+        }
+        
         $recentBookings = Booking::latest()->take(5)->get();
         $activeDestinations = Destination::where('status', 'Published')->count();
         $unreadMessages = Message::where('read', false)->count();
