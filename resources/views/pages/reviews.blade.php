@@ -2,8 +2,8 @@
 
 @section('title', 'Reviews - Tanzania Daily Tours & Safari')
 @section('meta_title', 'Reviews - Tanzania Daily Tours & Safari')
-@section('meta_description', 'Read genuine reviews from our happy travelers about their Tanzania safari experiences with Tanzania Daily Tours & Safari.')
-@section('meta_keywords', 'Tanzania safari reviews, travel testimonials, customer feedback, Tanzania tours reviews')
+@section('meta_description', 'Read genuine reviews from our happy travelers about their Tanzania safari experiences. See what people say about Serengeti safari, Serengeti tours, Ngorongoro safari, and our Tanzania safari packages!')
+@section('meta_keywords', 'Tanzania Wild safari, daily tour, Best Tanzania Tourist, Tanzania safari, Tanzania safari packages, Serengeti safari, Serengeti tours, Mount Kilimanjaro climbing, Zanzibar holidays, Tanzania travel, Tanzania wildlife safari, Ngorongoro safari, Tarangire National Park, Mikumi safari, Ruaha safari, Tanzania honeymoon safari, Family safari Tanzania, Luxury safari Tanzania, Budget safari Tanzania')
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890322/safari-ngorongoro_j04gqg.jpg')
 
 @section('content')

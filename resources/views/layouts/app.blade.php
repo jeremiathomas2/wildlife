@@ -9,7 +9,7 @@
     <title>@yield('title', 'Tanzania Daily Tours & Safari - Best Safari & Tours in Tanzania')</title>
     <meta name="title" content="@yield('meta_title', 'Tanzania Daily Tours & Safari - Best Safari & Tours in Tanzania')">
     <meta name="description" content="@yield('meta_description', 'Experience the best of Tanzania with expert-guided safaris, cultural tours, and Kilimanjaro adventures. Explore Serengeti, Ngorongoro, Zanzibar & more!')">
-    <meta name="keywords" content="@yield('meta_keywords', 'Tanzania safaris, Kilimanjaro tours, Serengeti safari, Ngorongoro crater, Zanzibar tours, African wildlife, Tanzania travel, luxury safaris')">
+    <meta name="keywords" content="@yield('meta_keywords', 'Tanzania Wild safari, daily tour, Best Tanzania Tourist, Tanzania safari, Tanzania safari packages, Serengeti safari, Serengeti tours, Mount Kilimanjaro climbing, Zanzibar holidays, Tanzania travel, Tanzania wildlife safari, Ngorongoro safari, Tarangire National Park, Mikumi safari, Ruaha safari, Tanzania honeymoon safari, Family safari Tanzania, Luxury safari Tanzania, Budget safari Tanzania')">
     <meta name="author" content="Tanzania Daily Tours & Safari">
     <meta name="robots" content="index, follow">
     <meta name="language" content="English">

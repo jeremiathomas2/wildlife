@@ -2,8 +2,8 @@
 
 @section('title', 'Photo Gallery - Tanzania Daily Tours & Safari')
 @section('meta_title', 'Photo Gallery - Tanzania Daily Tours & Safari')
-@section('meta_description', 'Explore our stunning photo gallery featuring Tanzania wildlife, landscapes, cultural moments, and safari adventures with Tanzania Daily Tours & Safari.')
-@section('meta_keywords', 'Tanzania photos, safari gallery, wildlife images, Tanzania landscapes, cultural photos')
+@section('meta_description', 'Explore our stunning photo gallery featuring Tanzania wildlife, landscapes, cultural moments, and safari adventures. See photos from Serengeti safari, Serengeti tours, Ngorongoro safari, Tarangire National Park, Mikumi safari, Ruaha safari, Zanzibar holidays, and Mount Kilimanjaro climbing!')
+@section('meta_keywords', 'Tanzania Wild safari, daily tour, Best Tanzania Tourist, Tanzania safari, Tanzania safari packages, Serengeti safari, Serengeti tours, Mount Kilimanjaro climbing, Zanzibar holidays, Tanzania travel, Tanzania wildlife safari, Ngorongoro safari, Tarangire National Park, Mikumi safari, Ruaha safari, Tanzania honeymoon safari, Family safari Tanzania, Luxury safari Tanzania, Budget safari Tanzania')
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/gallery-landscape-1_dxdd6x.jpg')
 
 @section('content')

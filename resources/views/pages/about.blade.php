@@ -2,8 +2,8 @@
 
 @section('title', 'About Us - Tanzania Daily Tours & Safari')
 @section('meta_title', 'About Us - Tanzania Daily Tours & Safari')
-@section('meta_description', 'Learn about Tanzania Daily Tours & Safari - your trusted local guide for authentic safaris, cultural experiences, and Kilimanjaro adventures since 2012.')
-@section('meta_keywords', 'about Tanzania tours, safari company, local guides, Tanzania travel experts')
+@section('meta_description', 'Learn about Tanzania Daily Tours & Safari - your trusted local guide for authentic safaris, cultural experiences, and Kilimanjaro adventures since 2012. We offer Tanzania safari packages, Serengeti safari, Serengeti tours, Ngorongoro safari, and more!')
+@section('meta_keywords', 'Tanzania Wild safari, daily tour, Best Tanzania Tourist, Tanzania safari, Tanzania safari packages, Serengeti safari, Serengeti tours, Mount Kilimanjaro climbing, Zanzibar holidays, Tanzania travel, Tanzania wildlife safari, Ngorongoro safari, Tarangire National Park, Mikumi safari, Ruaha safari, Tanzania honeymoon safari, Family safari Tanzania, Luxury safari Tanzania, Budget safari Tanzania')
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/about-story_of4wth.jpg')
 
 @section('content')

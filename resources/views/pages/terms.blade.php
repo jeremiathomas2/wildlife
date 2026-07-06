@@ -2,8 +2,8 @@
 
 @section('title', 'Terms & Conditions - Tanzania Daily Tours & Safari')
 @section('meta_title', 'Terms & Conditions - Tanzania Daily Tours & Safari')
-@section('meta_description', 'Read our terms and conditions for booking safaris, tours, and Kilimanjaro treks with Tanzania Daily Tours & Safari.')
-@section('meta_keywords', 'terms and conditions, booking policy, Tanzania tours terms')
+@section('meta_description', 'Read our terms and conditions for booking Tanzania safari packages, Serengeti safari, Serengeti tours, Ngorongoro safari, Mount Kilimanjaro climbing, and Zanzibar holidays.')
+@section('meta_keywords', 'Tanzania Wild safari, daily tour, Best Tanzania Tourist, Tanzania safari, Tanzania safari packages, Serengeti safari, Serengeti tours, Mount Kilimanjaro climbing, Zanzibar holidays, Tanzania travel, Tanzania wildlife safari, Ngorongoro safari, Tarangire National Park, Mikumi safari, Ruaha safari, Tanzania honeymoon safari, Family safari Tanzania, Luxury safari Tanzania, Budget safari Tanzania')
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg')
 
 @section('content')
