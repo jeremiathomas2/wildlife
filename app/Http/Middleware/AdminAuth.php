@@ -20,11 +20,21 @@ class AdminAuth
             return redirect()->route('admin.login');
         }
 
+        // Check if last activity was more than 5 minutes (300 seconds) ago
+        $timeout = 300; // 5 minutes in seconds
+        if (session()->has('admin_last_activity') && (time() - session('admin_last_activity')) > $timeout) {
+            session()->forget(['admin_logged_in', 'admin_user_id', 'admin_last_activity']);
+            return redirect()->route('admin.login')->with('error', 'Session expired! Please login again.');
+        }
+
         $admin = AdminUser::find(session('admin_user_id'));
         if (!$admin || !$admin->is_active) {
-            session()->forget(['admin_logged_in', 'admin_user_id']);
+            session()->forget(['admin_logged_in', 'admin_user_id', 'admin_last_activity']);
             return redirect()->route('admin.login');
         }
+
+        // Update last activity time
+        session(['admin_last_activity' => time()]);
 
         return $next($request);
     }

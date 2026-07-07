@@ -584,6 +584,27 @@
     </div>
     <div id="toastHost"></div>
     <script>
+        // Auto-logout timer (5 minutes in milliseconds)
+        const AUTO_LOGOUT_TIME = 5 * 60 * 1000;
+        let autoLogoutTimer;
+
+        // Reset the auto-logout timer on user activity
+        function resetAutoLogoutTimer() {
+            clearTimeout(autoLogoutTimer);
+            autoLogoutTimer = setTimeout(() => {
+                // Clear the session on the server side by redirecting to login
+                window.location.href = "{{ route('admin.login') }}";
+            }, AUTO_LOGOUT_TIME);
+        }
+
+        // Add event listeners for user activity
+        ['click', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+            document.addEventListener(event, resetAutoLogoutTimer, true);
+        });
+
+        // Initialize the timer when the page loads
+        resetAutoLogoutTimer();
+
         function toggleSidebar(){
             if(window.innerWidth <= 900){
                 document.getElementById('sidebar').classList.toggle('mobile-open');

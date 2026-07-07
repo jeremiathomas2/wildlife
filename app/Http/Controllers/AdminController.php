@@ -35,7 +35,11 @@ class AdminController extends Controller
 
         if ($admin && $admin->checkPassword($credentials['password']) && $admin->is_active) {
             $admin->update(['last_login_at' => now()]);
-            session(['admin_logged_in' => true, 'admin_user_id' => $admin->id]);
+            session([
+                'admin_logged_in' => true,
+                'admin_user_id' => $admin->id,
+                'admin_last_activity' => time()
+            ]);
             return redirect()->route('admin.dashboard');
         }
 
