@@ -20,10 +20,9 @@ Route::get('/destinations', function () {
 })->name('destinations');
 
 Route::get('/destinations/{slug}', function ($slug) {
-    $tour = App\Models\Destination::where('name', ucwords(str_replace('-', ' ', $slug)))->where('status', 'Published')->first();
+    $tour = App\Models\Destination::where('slug', $slug)->where('status', 'Published')->first();
     if (!$tour) {
-        $tour = App\Models\Destination::where('status', 'Published')->first();
-        if (!$tour) abort(404);
+        abort(404);
     }
     $tours = App\Models\Destination::where('status', 'Published')->get() ?? [];
     $relatedTours = collect($tours)->filter(function($t) use ($tour) {
@@ -107,6 +106,7 @@ Route::get('/sitemap.xml', function () {
 })->name('sitemap');
 
 Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+
 Route::post('/contact', function (Illuminate\Http\Request $request) {
     $validated = $request->validate([
         'name' => 'required|string',
