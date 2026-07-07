@@ -279,7 +279,7 @@
                     @endphp
                     @foreach($multiDayTours as $pkg)
                         <a
-                            href="{{ route('destination.detail', Str::slug( is_object($pkg) ? ($pkg->name ?? '') : ($pkg['name'] ?? '') )) }}"
+                            href="{{ route('destination.detail', is_object($pkg) ? ($pkg->slug ?? Str::slug($pkg->name ?? '')) : ($pkg['slug'] ?? Str::slug($pkg['name'] ?? ''))) }}"
                             class="flex flex-col sm:flex-row gap-5 p-5 rounded-2xl transition-all duration-350 hover:-translate-y-1 group"
                             style="
                                 background: #ffffff;

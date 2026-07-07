@@ -95,13 +95,13 @@ Route::get('/sitemap.xml', function () {
         ['url' => route('terms'), 'priority' => '0.6', 'changefreq' => 'yearly'],
     ];
     foreach ($tours as $tour) {
-        $slug = Str::slug(is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? ''));
-        $pages[] = [
-            'url' => route('destination.detail', $slug),
-            'priority' => '0.8',
-            'changefreq' => 'weekly'
-        ];
-    }
+                $slug = is_object($tour) ? ($tour->slug ?? Str::slug($tour->name ?? '')) : ($tour['slug'] ?? Str::slug($tour['name'] ?? ''));
+                $pages[] = [
+                    'url' => route('destination.detail', $slug),
+                    'priority' => '0.8',
+                    'changefreq' => 'weekly'
+                ];
+            }
     return response()->view('sitemap', compact('pages'))->header('Content-Type', 'text/xml');
 })->name('sitemap');
 
