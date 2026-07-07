@@ -60,7 +60,7 @@
                             </h2>
                             <div class="space-y-4">
                                 @foreach($relatedTours as $related)
-                                    <a href="{{ route('destination.detail', Str::slug( (is_object($related) ? ($related->name ?? '') : ($related['name'] ?? '')) )) }}" class="flex items-center gap-4 group">
+                                    <a href="{{ route('destination.detail', is_object($related) ? ($related->slug ?? Str::slug($related->name ?? '')) : ($related['slug'] ?? Str::slug($related['name'] ?? ''))) }}" class="flex items-center gap-4 group:">
                                         <div class="w-20 h-14 rounded-lg overflow-hidden flex-shrink-0">
                                             <img src="{{ is_object($related) ? ($related->image ?? '') : ($related['image'] ?? '') }}" alt="{{ is_object($related) ? ($related->name ?? '') : ($related['name'] ?? '') }}" class="w-full h-full object-cover">
                                         </div>
@@ -98,6 +98,14 @@
                             <input type="hidden" name="price_child" value="{{ is_object($tour) ? ($tour->price_child ?? (($tour->price_adult ?? $tour->price ?? 0) / 2)) : ($tour['price_child'] ?? (($tour['price_adult'] ?? $tour['price'] ?? 0) / 2)) }}">
 
                             <div class="space-y-4 mb-6">
+                                <!-- Guest Name -->
+                                <div>
+                                    <label class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">
+                                        Your Name
+                                    </label>
+                                    <input type="text" name="name" id="name-input" required class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="e.g. Sarah Mitchell">
+                                </div>
+
                                 <!-- Currency Selector -->
                                 <div>
                                     <label class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">
