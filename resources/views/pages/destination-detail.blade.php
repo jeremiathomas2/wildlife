@@ -162,13 +162,16 @@
                                 <div class="flex gap-2 w-full overflow-hidden">
                                     <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg border flex-shrink-0" style="border-color: rgba(133,66,8,0.2);">
                                         <span id="country-flag" class="text-2xl">🇹🇿</span>
-                                        <select id="country-code-selector" name="country_code" onchange="updateFlag()" class="bg-transparent text-sm focus:outline-none min-w-0" style="color: #111111;">
+                                        <select id="country-code-selector" name="country_code" onchange="updateFlagAndPhonePrefix()" class="bg-transparent text-sm focus:outline-none min-w-0" style="color: #111111;">
                                             @foreach(\App\Helpers\CountryHelper::getCountries() as $country)
                                             <option value="{{ $country['code'] }}" data-flag="{{ $country['flag'] }}" {{ $country['code'] === '+255' ? 'selected' : '' }}>{{ $country['name'] }} ({{ $country['code'] }})</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <input type="tel" name="phone_number" id="phone-input" required class="flex-1 min-w-0 px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="+255 712 345 678" oninput="detectCountryCode()">
+                                    <div class="flex-1 relative">
+                                        <span id="phone-prefix" class="absolute left-4 top-1/2 -translate-y-1/2 text-sm" style="color: #111111;">+255</span>
+                                        <input type="tel" name="phone_number" id="phone-input" required class="w-full pl-24 pr-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="712 345 678">
+                                    </div>
                                 </div>
                             </div>
                             </div>
@@ -258,11 +261,12 @@
             }
         }
 
-        function updateFlag() {
+        function updateFlagAndPhonePrefix() {
             const countrySelect = document.getElementById('country-code-selector');
             const selectedOption = countrySelect.options[countrySelect.selectedIndex];
             const flag = selectedOption.dataset.flag;
             document.getElementById('country-flag').textContent = flag;
+            document.getElementById('phone-prefix').textContent = selectedOption.value;
         }
 
         function detectCountryCode() {
@@ -285,7 +289,7 @@
                     if (codePart.startsWith(optionCode)) {
                         // Match found!
                         countrySelect.value = option.value;
-                        updateFlag();
+                        updateFlagAndPhonePrefix();
                         
                         // Remove the country code from the phone input, keeping the rest
                         const remainingDigits = codePart.substring(optionCode.length);

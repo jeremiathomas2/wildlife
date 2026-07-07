@@ -249,4 +249,14 @@ class CountryHelper
     {
         return self::$countries;
     }
+
+    public static function getCountryByCode($code)
+    {
+        foreach (self::$countries as $country) {
+            if ($country['code'] === $code) {
+                return $country;
+            }
+        }
+        return null;
+    }
 }

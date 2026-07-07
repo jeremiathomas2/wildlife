@@ -57,12 +57,21 @@
                     <tr><td colspan="9" style="text-align:center;color:var(--ink-soft);padding:30px;">No bookings yet.</td></tr>
                     @else
                     @foreach($bookings as $booking)
+                    @php
+                        $country = \App\Helpers\CountryHelper::getCountryByCode($booking->country_code);
+                    @endphp
                     <tr data-id="{{ $booking->id }}" data-status="{{ $booking->status }}" data-search="{{ strtolower(($booking->name ?? '') . ' ' . $booking->email . ' ' . $booking->tour_name) }}">
                         <td>
                             <div class="cell-main">
                                 <div>
                                     <div class="cell-title">{{ $booking->name ?? $booking->email }}</div>
                                     <div class="cell-sub">{{ $booking->email }}</div>
+                                    @if($country)
+                                    <div class="cell-sub mt-1">
+                                        <span class="text-lg mr-1">{{ $country['flag'] }}</span>
+                                        {{ $country['name'] }} ({{ $country['code'] }}) {{ $booking->phone_number }}
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </td>
@@ -136,6 +145,20 @@
                     <div class="field">
                         <label>Guest email</label>
                         <input type="email" id="bookingEmail" name="email" placeholder="sarah@email.com" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Country</label>
+                        <select id="bookingCountryCode" name="country_code">
+                            @foreach(\App\Helpers\CountryHelper::getCountries() as $country)
+                            <option value="{{ $country['code'] }}" data-flag="{{ $country['flag'] }}" {{ $country['code'] === '+255' ? 'selected' : '' }}>{{ $country['flag'] }} {{ $country['name'] }} ({{ $country['code'] }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Phone Number</label>
+                        <input type="text" id="bookingPhone" name="phone_number" placeholder="712 345 678">
                     </div>
                 </div>
                 <div class="field">
@@ -244,6 +267,8 @@ function openBookingModal(id = null) {
         document.getElementById('bookingId').value = booking.id;
         document.getElementById('bookingName').value = booking.name ?? booking.email;
         document.getElementById('bookingEmail').value = booking.email;
+        document.getElementById('bookingCountryCode').value = booking.country_code;
+        document.getElementById('bookingPhone').value = booking.phone_number;
         document.getElementById('bookingTour').value = booking.tour_name;
         document.getElementById('bookingDate').value = booking.travel_date;
         document.getElementById('bookingAdults').value = booking.adults ?? (booking.guests ?? 0);
@@ -256,6 +281,8 @@ function openBookingModal(id = null) {
         document.getElementById('bookingId').value = '';
         document.getElementById('bookingName').value = '';
         document.getElementById('bookingEmail').value = '';
+        document.getElementById('bookingCountryCode').value = '+255';
+        document.getElementById('bookingPhone').value = '';
         document.getElementById('bookingTour').selectedIndex = 0;
         document.getElementById('bookingDate').value = '';
         document.getElementById('bookingAdults').value = 1;
@@ -317,6 +344,9 @@ function updateBookingsCurrency(currency) {
 function viewBooking(id) {
     const booking = bookingsData.find(b => b.id === id);
     if (!booking) return;
+
+    const countries = @json(\App\Helpers\CountryHelper::getCountries());
+    const country = countries.find(c => c.code === booking.country_code);
 
     const statusColors = {
         'Pending': '#ff9729',
@@ -399,23 +429,21 @@ function viewBooking(id) {
                             ${booking.email}
                         </div>
                     </div>
-                    ${booking.phone ? `
-                        <div>
-                            <div style="
-                                font-size: 12px; 
-                                color: #854208; 
-                                opacity: 0.7; 
-                                margin-bottom: 4px;">
-                                Phone
-                            </div>
-                            <div style="
-                                font-size: 15px; 
-                                color: #111111; 
-                                font-weight: 600;">
-                                ${booking.country_code ?? ''} ${booking.phone}
-                            </div>
+                    <div>
+                        <div style="
+                            font-size: 12px; 
+                            color: #854208; 
+                            opacity: 0.7; 
+                            margin-bottom: 4px;">
+                            Phone
                         </div>
-                    ` : ''}
+                        <div style="
+                            font-size: 15px; 
+                            color: #111111; 
+                            font-weight: 600;">
+                            ${country ? country.flag : ''} ${booking.country_code ?? ''} ${booking.phone_number}
+                        </div>
+                    </div>
                 </div>
             </div>
             
