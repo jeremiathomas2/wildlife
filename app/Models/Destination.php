@@ -14,7 +14,18 @@ class Destination extends Model
         parent::boot();
 
         static::saving(function ($destination) {
-            if (empty($destination->slug)) {
+            // Determine if we need to generate a new slug
+            $needsNewSlug = empty($destination->slug);
+            
+            // If slug exists, check if name has changed
+            if (!$needsNewSlug && $destination->exists) {
+                $originalName = $destination->getOriginal('name');
+                if ($originalName !== $destination->name) {
+                    $needsNewSlug = true;
+                }
+            }
+            
+            if ($needsNewSlug) {
                 $slug = Str::slug($destination->name);
                 $originalSlug = $slug;
                 $count = 1;
