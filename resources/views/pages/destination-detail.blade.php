@@ -170,7 +170,7 @@
                                     </div>
                                     <div class="flex-1 relative">
                                         <span id="phone-prefix" class="absolute left-4 top-1/2 -translate-y-1/2 text-sm" style="color: #111111;">+255</span>
-                                        <input type="tel" name="phone_number" id="phone-input" required class="w-full pl-24 pr-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="712 345 678">
+                                        <input type="tel" name="phone_number" id="phone-input" required class="w-full pl-24 pr-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="712 345 678" oninput="detectCountryCode()">
                                     </div>
                                 </div>
                             </div>
