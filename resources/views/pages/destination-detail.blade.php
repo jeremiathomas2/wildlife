@@ -95,7 +95,8 @@
                             <input type="hidden" name="tour_name" value="{{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}">
                             <input type="hidden" name="base_price" value="{{ is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0) }}">
                             <input type="hidden" name="price_adult" value="{{ is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0) }}">
-                            <input type="hidden" name="price_child" value="{{ is_object($tour) ? ($tour->price_child ?? (($tour->price_adult ?? $tour->price ?? 0) / 2)) : ($tour['price_child'] ?? (($tour['price_adult'] ?? $tour['price'] ?? 0) / 2)) }}">
+                            <input type="hidden" name="price_child" value="{{ is_object($tour) ? ($tour->price_child ?? (($tour->price_adult ?? $tour->price ?? 0) / 2)) : ($tour['price_child'] ?? (($tour->price_adult ?? $tour['price'] ?? 0) / 2)) }}">
+                            <input type="hidden" name="phone_number" id="phone-number-hidden">
 
                             <div class="space-y-4 mb-6">
                                 <!-- Name -->
@@ -168,9 +169,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="flex-1 relative">
-                                        <span id="phone-prefix" class="absolute left-4 top-1/2 -translate-y-1/2 text-sm" style="color: #111111;">+255</span>
-                                        <input type="tel" name="phone_number" id="phone-input" required class="w-full pl-24 pr-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="712 345 678" oninput="detectCountryCode()">
+                                    <div class="flex-1">
+                                        <input type="tel" name="phone_local" id="phone-local-input" required class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="712 345 678">
                                     </div>
                                 </div>
                             </div>
@@ -266,18 +266,17 @@
             const selectedOption = countrySelect.options[countrySelect.selectedIndex];
             const flag = selectedOption.dataset.flag;
             document.getElementById('country-flag').textContent = flag;
-            document.getElementById('phone-prefix').textContent = selectedOption.value;
         }
 
         function detectCountryCode() {
-            const phoneInput = document.getElementById('phone-input');
-            const phoneValue = phoneInput.value;
+            const phoneLocalInput = document.getElementById('phone-local-input');
+            const phoneLocalValue = phoneLocalInput.value;
             const countrySelect = document.getElementById('country-code-selector');
             
             // Check if starts with +
-            if (phoneValue.startsWith('+')) {
+            if (phoneLocalValue.startsWith('+')) {
                 // Extract the numeric part after +
-                let codePart = phoneValue.substring(1);
+                let codePart = phoneLocalValue.substring(1);
                 
                 // Try to match the longest possible country code first
                 // Sort options by code length descending
@@ -293,11 +292,22 @@
                         
                         // Remove the country code from the phone input, keeping the rest
                         const remainingDigits = codePart.substring(optionCode.length);
-                        phoneInput.value = remainingDigits.trim();
+                        phoneLocalInput.value = remainingDigits.trim();
                         break;
                     }
                 }
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookingForm = document.getElementById('booking-form');
+            
+            bookingForm.addEventListener('submit', function(e) {
+                const countryCode = document.getElementById('country-code-selector').value;
+                const phoneLocal = document.getElementById('phone-local-input').value.trim();
+                const fullPhoneNumber = countryCode + phoneLocal;
+                document.getElementById('phone-number-hidden').value = fullPhoneNumber;
+            });
+        });
     </script>
 @endsection
