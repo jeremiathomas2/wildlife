@@ -6,7 +6,7 @@
 <div class="view active">
     <div class="view-head">
         <div>
-            <h2>Karibu back, Admin 🌍</h2>
+            <h2>Welcome back, Admin 🌍</h2>
             <p class="sub">Here's what's happening across Tanzania Daily Tours & Safari today.</p>
         </div>
         <div class="view-actions" style="gap: 12px;">

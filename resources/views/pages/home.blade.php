@@ -177,7 +177,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     @foreach($featuredTours as $tour)
                         <a
-                                        href="{{ route('destination.detail', Str::slug( (is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '')) )) }}"
+                                        href="{{ route('destination.detail', is_object($tour) ? ($tour->slug ?? Str::slug($tour->name ?? '')) : ($tour['slug'] ?? Str::slug($tour['name'] ?? ''))) }}"
                                         class="group block rounded-xl overflow-hidden transition-all duration-350"
                                         style="
                                             background: #ffffff;

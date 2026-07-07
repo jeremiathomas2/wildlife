@@ -44,7 +44,7 @@
             <!-- Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="destinations-grid">
                 @foreach($tours as $tour)
-                    <a href="{{ route('destination.detail', Str::slug( (is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '')) )) }}" class="destination-card group block rounded-xl overflow-hidden transition-all duration-350 hover:-translate-y-1" data-category="{{ is_object($tour) ? ($tour->category ?? '') : ($tour['category'] ?? '') }}" style="background: #ffffff; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                    <a href="{{ route('destination.detail', is_object($tour) ? ($tour->slug ?? Str::slug($tour->name ?? '')) : ($tour['slug'] ?? Str::slug($tour['name'] ?? ''))) }}" class="destination-card group block rounded-xl overflow-hidden transition-all duration-350 hover:-translate-y-1" data-category="{{ is_object($tour) ? ($tour->category ?? '') : ($tour['category'] ?? '') }}" style="background: #ffffff; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                                 <div class="overflow-hidden" style="aspect-ratio: 3/2;">
                                     <img src="{{ is_object($tour) ? ($tour->image ?? '') : ($tour['image'] ?? '') }}" alt="{{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}" class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105" loading="lazy">
                                 </div>
