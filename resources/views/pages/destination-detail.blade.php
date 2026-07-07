@@ -98,6 +98,13 @@
                             <input type="hidden" name="price_child" value="{{ is_object($tour) ? ($tour->price_child ?? (($tour->price_adult ?? $tour->price ?? 0) / 2)) : ($tour['price_child'] ?? (($tour['price_adult'] ?? $tour['price'] ?? 0) / 2)) }}">
 
                             <div class="space-y-4 mb-6">
+                                <!-- Name -->
+                                <div>
+                                    <label class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">
+                                        Full Name
+                                    </label>
+                                    <input type="text" name="name" id="name-input" required class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="John Doe">
+                                </div>
                                 <!-- Currency Selector -->
                                 <div>
                                     <label class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">
@@ -149,28 +156,21 @@
 
                                 <!-- Phone Number -->
                                 <div>
-                                    <label class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">
-                                        Phone Number
-                                    </label>
-                                    <div class="flex gap-2 w-full overflow-hidden">
-                                        <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg border flex-shrink-0" style="border-color: rgba(133,66,8,0.2);">
-                                            <span id="country-flag" class="text-2xl">🇹🇿</span>
-                                            <select id="country-code-selector" name="country_code" onchange="updateFlag()" class="bg-transparent text-sm focus:outline-none min-w-0" style="color: #111111;">
-                                                <option value="+255" data-flag="🇹🇿">TZ (+255)</option>
-                                                <option value="+1" data-flag="🇺🇸">US (+1)</option>
-                                                <option value="+44" data-flag="🇬🇧">UK (+44)</option>
-                                                <option value="+49" data-flag="🇩🇪">DE (+49)</option>
-                                                <option value="+254" data-flag="🇰🇪">KE (+254)</option>
-                                                <option value="+27" data-flag="🇿🇦">ZA (+27)</option>
-                                                <option value="+91" data-flag="🇮🇳">IN (+91)</option>
-                                                <option value="+61" data-flag="🇦🇺">AU (+61)</option>
-                                                <option value="+1" data-flag="🇨🇦">CA (+1)</option>
-                                                <option value="+33" data-flag="🇫🇷">FR (+33)</option>
-                                            </select>
-                                        </div>
-                                        <input type="tel" name="phone_number" id="phone-input" required class="flex-1 min-w-0 px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="+255 712 345 678" oninput="detectCountryCode()">
+                                <label class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">
+                                    Phone Number
+                                </label>
+                                <div class="flex gap-2 w-full overflow-hidden">
+                                    <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg border flex-shrink-0" style="border-color: rgba(133,66,8,0.2);">
+                                        <span id="country-flag" class="text-2xl">🇹🇿</span>
+                                        <select id="country-code-selector" name="country_code" onchange="updateFlag()" class="bg-transparent text-sm focus:outline-none min-w-0" style="color: #111111;">
+                                            @foreach(\App\Helpers\CountryHelper::getCountries() as $country)
+                                            <option value="{{ $country['code'] }}" data-flag="{{ $country['flag'] }}" {{ $country['code'] === '+255' ? 'selected' : '' }}>{{ $country['name'] }} ({{ $country['code'] }})</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                    <input type="tel" name="phone_number" id="phone-input" required class="flex-1 min-w-0 px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="+255 712 345 678" oninput="detectCountryCode()">
                                 </div>
+                            </div>
                             </div>
 
                             @php

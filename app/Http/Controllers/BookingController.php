@@ -11,6 +11,7 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'name' => 'required|string',
             'tour_name' => 'required|string',
             'base_price' => 'required|numeric',
             'currency' => 'required|string',
