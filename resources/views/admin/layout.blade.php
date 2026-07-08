@@ -624,7 +624,7 @@
             el.className = 'toast ' + (type==='success'?'success':type==='error'?'error':'');
             el.innerHTML = (type==='success' ? '<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"></path></svg>' : '') + '<span>'+msg+'</span>';
             host.appendChild(el);
-            setTimeout(()=>{ el.style.opacity='0'; el.style.transform='translateX(20px)'; el.style.transition='all .25s'; setTimeout(()=>el.remove(),250); }, 2600);
+            setTimeout(()=>{ el.style.opacity='0'; el.style.transform='translateX(20px)'; el.style.transition='all .25s'; setTimeout(()=>el.remove(),250); }, 3000);
         }
 
         function openModal(id){ document.getElementById(id).classList.add('show'); }

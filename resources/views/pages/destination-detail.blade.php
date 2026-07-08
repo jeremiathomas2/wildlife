@@ -158,20 +158,23 @@
                                 <!-- Phone Number -->
                                 <div>
                                 <label class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">
-                                    Phone Number
+                                    Phone Number <span class="text-red-500">*</span>
                                 </label>
-                                <div class="flex gap-2 w-full overflow-hidden">
-                                    <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg border flex-shrink-0" style="border-color: rgba(133,66,8,0.2);">
-                                        <span id="country-flag" class="text-2xl">🇹🇿</span>
-                                        <select id="country-code-selector" name="country_code" onchange="updateFlagAndPhonePrefix()" class="bg-transparent text-sm focus:outline-none min-w-0" style="color: #111111;">
+                                <div class="flex gap-2 w-full items-stretch">
+                                    <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg border flex-shrink-0" style="border-color: rgba(133,66,8,0.2); min-width: 160px; max-width: 200px;">
+                                        <span id="country-flag" class="text-2xl flex-shrink-0">🇹🇿</span>
+                                        <select id="country-code-selector" name="country_code" onchange="updateFlagAndPhonePrefix()" class="bg-transparent text-sm focus:outline-none truncate" style="color: #111111; max-width: 120px;">
                                             @foreach(\App\Helpers\CountryHelper::getCountries() as $country)
                                             <option value="{{ $country['code'] }}" data-flag="{{ $country['flag'] }}" {{ $country['code'] === '+255' ? 'selected' : '' }}>{{ $country['name'] }} ({{ $country['code'] }})</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="flex-1">
-                                        <input type="tel" name="phone_local" id="phone-local-input" required class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="712 345 678">
+                                    <div class="flex-1 min-w-0">
+                                        <input type="tel" name="phone_local" id="phone-local-input" required class="w-full h-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="712 345 678" pattern="[0-9\s\-\(\)]+" oninput="detectCountryCode(); updateFullPhoneDisplay()">
                                     </div>
+                                </div>
+                                <div class="mt-1 text-xs" style="color: #5a3e2b;">
+                                    Full number: <span id="full-phone-display" class="font-semibold">+255 </span>
                                 </div>
                             </div>
                             </div>
@@ -266,6 +269,14 @@
             const selectedOption = countrySelect.options[countrySelect.selectedIndex];
             const flag = selectedOption.dataset.flag;
             document.getElementById('country-flag').textContent = flag;
+            updateFullPhoneDisplay();
+        }
+
+        function updateFullPhoneDisplay() {
+            const countryCode = document.getElementById('country-code-selector').value;
+            const phoneLocal = document.getElementById('phone-local-input').value.trim();
+            const fullPhoneDisplay = document.getElementById('full-phone-display');
+            fullPhoneDisplay.textContent = countryCode + ' ' + phoneLocal;
         }
 
         function detectCountryCode() {
@@ -297,6 +308,9 @@
                     }
                 }
             }
+            
+            // Update full phone display after any changes
+            updateFullPhoneDisplay();
         }
 
         document.addEventListener('DOMContentLoaded', function() {

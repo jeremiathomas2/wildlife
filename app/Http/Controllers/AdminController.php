@@ -138,16 +138,19 @@ class AdminController extends Controller
         $validated = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',
+            'country_code' => 'required|string',
+            'phone_number' => 'required|string',
             'tour_name' => 'required|string',
             'travel_date' => 'required|date',
-            'guests' => 'required|integer|min:1',
+            'adults' => 'required|integer|min:1',
+            'children' => 'nullable|integer|min:0',
             'amount' => 'required|numeric',
             'status' => 'required|string',
         ]);
 
         $booking = Booking::findOrFail($id);
         $booking->update($validated);
-        return back()->with('success', 'Booking updated!');
+        return redirect()->route('admin.bookings')->with('success', 'Booking updated successfully!');
     }
 
     public function destroyBooking($id)
