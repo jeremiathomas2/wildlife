@@ -99,7 +99,7 @@
                         <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1783677911/ally_h4ud4z.png" alt="Petro Mihambo" class="w-full h-full object-cover" loading="lazy">
                     </div>
                     <p class="text-sm font-semibold uppercase tracking-wider mb-2" style="color: #ff9729;">Senior Tour Guide</p>
-                    <h3 class="font-bold text-2xl lg:text-3xl mb-4" style="font-family: 'Playfair Display', serif; color: #854208;">Petro Mihambo</h3>
+                    <h3 class="font-bold text-2xl lg:text-3xl mb-4" style="font-family: 'Playfair Display', serif; color: #854208;">Ally Juma</h3>
                     <p class="text-lg mb-6" style="color: #111111;">Let us Plan your dream Safari Journey</p>
                     <p class="text-sm mb-8" style="color: #5a3e2b;">Enquire now and our Travel Expert will get back to you within 24 hours.</p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
