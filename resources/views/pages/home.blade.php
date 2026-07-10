@@ -269,61 +269,55 @@
                     </a>
                 </div>
 
-                <!-- Right - Cards -->
-                <div class="space-y-6">
-                    @php
-                        $multiDayTours = collect($tours)->filter(function($t) {
-                            $cat = is_object($t) ? ($t->category ?? '') : ($t['category'] ?? '');
-                            return $cat === 'Multi-Day Safari';
-                        })->take(3);
-                    @endphp
-                    @foreach($multiDayTours as $pkg)
-                        <a
-                            href="{{ route('destination.detail', is_object($pkg) ? ($pkg->slug ?? Str::slug($pkg->name ?? '')) : ($pkg['slug'] ?? Str::slug($pkg['name'] ?? ''))) }}"
-                            class="flex flex-col sm:flex-row gap-5 p-5 rounded-2xl transition-all duration-350 hover:-translate-y-1 group"
-                            style="
-                                background: #ffffff;
-                                box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-                            "
-                        >
-                            <div
-                                class="sm:w-[40%] flex-shrink-0 overflow-hidden rounded-xl"
-                                style="aspect-ratio: 3/2;"
-                            >
-                                <img
-                                    src="{{ is_object($pkg) ? ($pkg->image ?? '') : ($pkg['image'] ?? '') }}"
-                                    alt="{{ is_object($pkg) ? ($pkg->name ?? '') : ($pkg['name'] ?? '') }}"
-                                    class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
-                                    loading="lazy"
-                                />
-                            </div>
-                            <div class="flex flex-col justify-center sm:w-[60%]">
-                                <h3
-                                    class="font-bold text-xl mb-2"
-                                    style="font-family: 'Raleway', sans-serif; color: #854208;"
-                                >
-                                    {{ is_object($pkg) ? ($pkg->name ?? '') : ($pkg['name'] ?? '') }}
-                                </h3>
-                                <p class="text-sm mb-3 line-clamp-2" style="color: #111111;">
-                                    {{ is_object($pkg) ? ($pkg->desc ?? '') : ($pkg['desc'] ?? '') }}
-                                </p>
-                                <div class="flex flex-wrap items-center gap-3">
-                                    <span
-                                        class="inline-block px-3 py-1 rounded-full text-xs font-semibold text-white"
-                                        style="background: #ff9729;"
-                                    >
-                                        {{ is_object($pkg) ? ($pkg->duration ?? '') : ($pkg['duration'] ?? '') }}
-                                    </span>
-                                    <span class="text-sm font-bold" style="color: #088529;">
-                                        From ${{ is_object($pkg) ? ($pkg->price_adult ?? $pkg->price ?? 0) : ($pkg['price_adult'] ?? $pkg['price'] ?? 0) }}
-                                    </span>
-                                    <span class="text-sm font-semibold" style="color: #ff9729;">
-                                        Learn More &rarr;
-                                    </span>
+                <!-- Right - TripAdvisor Reviews -->
+                <div class="space-y-5">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://static.tacdn.com/img2/branding/rebrand/2024/Tripadvisor_lockup_horizontal_secondary.svg" alt="TripAdvisor" class="h-8" style="filter: brightness(0) saturate(100%);">
+                        <div class="flex items-center gap-1">
+                            @for($i = 0; $i < 5; $i++)
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="#00af87" stroke="#00af87">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                </svg>
+                            @endfor
+                            <span class="text-sm font-semibold" style="color: #00af87;">5.0</span>
+                        </div>
+                        <span class="text-sm" style="color: #666;">(2,847 reviews)</span>
+                    </div>
+
+                    @foreach($testimonials as $review)
+                        <div class="bg-white rounded-2xl p-5 transition-all duration-350 hover:-translate-y-1" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                            <div class="flex items-start gap-4 mb-3">
+                                <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0" style="background: #f0f0f0;">
+                                    <img src="https://ui-avatars.com/api/?name={{ urlencode($review['name']) }}&background=088529&color=fff&size=48" alt="{{ $review['name'] }}" class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <h4 class="font-bold text-sm" style="color: #854208;">{{ $review['name'] }}</h4>
+                                        <div class="flex">
+                                            @for($i = 0; $i < $review['rating']; $i++)
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="#00af87" stroke="#00af87">
+                                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                                </svg>
+                                            @endfor
+                                        </div>
+                                    </div>
+                                    <p class="text-xs" style="color: #666;">{{ $review['trip'] }}</p>
                                 </div>
                             </div>
-                        </a>
+                            <p class="text-sm leading-relaxed mb-3" style="color: #111111;">"{{ $review['text'] }}"</p>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs px-2 py-1 rounded-full" style="background: #e8f5e9; color: #00af87;">Verified Review</span>
+                                <span class="text-xs" style="color: #999;">2 weeks ago</span>
+                            </div>
+                        </div>
                     @endforeach
+
+                    <a href="{{ route('reviews') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:opacity-90" style="background: #00af87; color: #ffffff;">
+                        Read All Reviews
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
