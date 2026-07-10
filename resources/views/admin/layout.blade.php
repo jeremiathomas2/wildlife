@@ -7,7 +7,7 @@
     <title>@yield('title', 'Safari Admin') · Tanzania Daily Tours & Safari</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
         :root{
             --sand-50:#FBF7EF;
@@ -48,19 +48,19 @@
         html,body{height:100%;}
         body{
             margin:0;
-            font-family:'Inter',sans-serif;
+            font-family:'Raleway',sans-serif;
             background:var(--sand-50);
             color:var(--ink);
             -webkit-font-smoothing:antialiased;
             overflow-x:hidden;
         }
         ::selection{background:var(--terracotta-100);color:var(--coffee-900);}
-        h1,h2,h3,h4{font-family:'Fraunces',serif;margin:0;color:var(--coffee-900);letter-spacing:-0.01em;}
+        h1,h2,h3,h4{font-family:'Raleway',sans-serif;margin:0;color:var(--coffee-900);letter-spacing:-0.01em;}
         p{margin:0;}
         a{color:inherit;text-decoration:none;}
         button{font-family:inherit;cursor:pointer;}
         input,select,textarea{font-family:inherit;}
-        .mono{font-family:'JetBrains Mono',monospace;}
+        .mono{font-family:'Raleway',sans-serif;}
         ::-webkit-scrollbar{width:9px;height:9px;}
         ::-webkit-scrollbar-track{background:transparent;}
         ::-webkit-scrollbar-thumb{background:var(--coffee-300);border-radius:10px;}
@@ -88,7 +88,7 @@
         }
         .sb-mark svg{width:21px;height:21px;}
         .sb-brand-text{overflow:hidden;white-space:nowrap;}
-        .sb-brand-text strong{display:block;color:#fff;font-family:'Fraunces',serif;font-size:15.5px;line-height:1.2;}
+        .sb-brand-text strong{display:block;color:#fff;font-family:'Raleway',sans-serif;font-size:15.5px;line-height:1.2;}
         .sb-brand-text span{display:block;color:var(--gold-500);font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;}
         .sidebar.collapsed .sb-brand-text{display:none;}
         .sb-nav{flex:1;overflow-y:auto;padding:16px 12px;}
@@ -196,7 +196,7 @@
         .stat-trend{font-size:12px;font-weight:700;padding:3px 8px;border-radius:20px;}
         .stat-trend.up{color:var(--success);background:var(--acacia-100);}
         .stat-trend.down{color:var(--danger);background:var(--danger-100);}
-        .stat-value{font-family:'Fraunces',serif;font-size:30px;color:var(--coffee-900);position:relative;}
+        .stat-value{font-family:'Raleway',sans-serif;font-size:30px;color:var(--coffee-900);position:relative;}
         .stat-label{font-size:13px;color:var(--ink-soft);margin-top:4px;position:relative;}
 
         .panel-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:18px;margin-bottom:24px;}

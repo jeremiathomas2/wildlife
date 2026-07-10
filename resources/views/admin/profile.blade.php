@@ -65,7 +65,7 @@
                 </div>
 
                 <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--line);">
-                    <h4 style="margin-bottom:16px;font-family:'Fraunces',serif;color:var(--coffee-900);">Change Password</h4>
+                    <h4 style="margin-bottom:16px;font-family:'Raleway',sans-serif;color:var(--coffee-900);">Change Password</h4>
                     <p style="color:var(--ink-soft);margin-bottom:16px;font-size:13px;">Leave blank to keep current password</p>
                     
                     <div class="field">

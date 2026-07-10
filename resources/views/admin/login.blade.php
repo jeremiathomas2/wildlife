@@ -44,7 +44,7 @@
         html,body{height:100%;}
         body{
             margin:0;
-            font-family:'Inter',sans-serif;
+            font-family:'Raleway',sans-serif;
             background:
                 radial-gradient(circle at 15% 20%, rgba(212,162,76,.18), transparent 45%),
                 radial-gradient(circle at 85% 80%, rgba(122,132,80,.18), transparent 45%),
@@ -88,7 +88,7 @@
         }
         .login-mark svg{width:28px;height:28px;}
         .login-card h1{
-            font-family:'Fraunces',serif;
+            font-family:'Raleway',sans-serif;
             font-size:26px;margin-bottom:6px;color:var(--coffee-900);
         }
         .login-sub{
@@ -131,7 +131,7 @@
             <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="width: 60px; height: 60px; object-fit: contain;">
         </div>
         <h1 style="text-align: center;">Tanzania Daily Tours & Safari</h1>
-        <h2 style="font-family: 'Fraunces', serif; font-size: 20px; margin-bottom: 8px; color: var(--terracotta-600); text-align: center;">Admin Control Panel</h2>
+        <h2 style="font-family: 'Raleway', sans-serif; font-size: 20px; margin-bottom: 8px; color: var(--terracotta-600); text-align: center;">Admin Control Panel</h2>
         <p class="login-sub" style="text-align: center;">Managing Tanzania Daily Tours & Safari</p>
 
         @if(session('error'))

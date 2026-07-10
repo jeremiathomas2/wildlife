@@ -59,7 +59,7 @@
                     <tr data-id="{{ $user->id }}" data-status="{{ $user->is_active ? 'active' : 'inactive' }}" data-search="{{ strtolower($user->name.' '.$user->email) }}">
                         <td>
                             <div class="cell-main">
-                                <div class="thumb" style="display:flex;align-items:center;justify-content:center;background:var(--terracotta-100);color:var(--terracotta-600);font-weight:700;font-family:'Fraunces',serif;">
+                                <div class="thumb" style="display:flex;align-items:center;justify-content:center;background:var(--terracotta-100);color:var(--terracotta-600);font-weight:700;font-family:'Raleway',sans-serif;">
                                     {{ strtoupper(substr($user->name, 0, 1)) }}
                                 </div>
                                 <div>
