@@ -31,13 +31,22 @@
     <meta name="twitter:description" content="@yield('meta_description', 'Experience the best of Tanzania with expert-guided safaris, cultural tours, and Kilimanjaro adventures. Explore Serengeti, Ngorongoro, Zanzibar & more!')">
     <meta name="twitter:image" content="@yield('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg')">
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JS83PTXEYM"></script>
-    <script>
+    <!-- Google tag (gtag.js) - will load after cookie consent -->
+    <script id="google-analytics" data-consent="analytics">
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-JS83PTXEYM');
+    </script>
+    <script id="google-analytics-src" data-consent="analytics">
+        (function() {
+            if (localStorage.getItem('cookieConsent') === 'accepted') {
+                var script = document.createElement('script');
+                script.async = true;
+                script.src = 'https://www.googletagmanager.com/gtag/js?id=G-JS83PTXEYM';
+                document.head.appendChild(script);
+            }
+        })();
     </script>
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
@@ -567,7 +576,7 @@
                                 <circle cx="12" cy="10" r="3"/>
                             </svg>
                             <span class="text-sm" style="color: rgba(255, 255, 255, 0.7);">
-                                Tanzania, East Africa
+                                Wakala wa Vipimo - Moshi - Kilimanjaro
                             </span>
                         </li>
                     </ul>
@@ -760,18 +769,85 @@
     </script>
     @yield('scripts')
 
-    <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
-        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-        (function(){
-            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-            s1.async=true;
-            s1.src='https://embed.tawk.to/6a452b6d59a11c1d46cc69ff/1jsf339th';
-            s1.charset='UTF-8';
-            s1.setAttribute('crossorigin','*');
-            s0.parentNode.insertBefore(s1,s0);
+    <!--Start of Tawk.to Script - will load after cookie consent -->
+    <script id="tawk-to-script" data-consent="marketing">
+        (function() {
+            if (localStorage.getItem('cookieConsent') === 'accepted') {
+                var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+                (function(){
+                    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+                    s1.async=true;
+                    s1.src='https://embed.tawk.to/6a452b6d59a11c1d46cc69ff/1jsf339th';
+                    s1.charset='UTF-8';
+                    s1.setAttribute('crossorigin','*');
+                    s0.parentNode.insertBefore(s1,s0);
+                })();
+            }
         })();
     </script>
     <!--End of Tawk.to Script-->
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsentBanner" class="fixed bottom-0 left-0 right-0 z-50 p-4" style="background: #111111; display: none;">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="text-sm text-white flex-1">
+                <p class="mb-1" style="color: #ffffff;">We use cookies to enhance your experience and analyze site traffic.</p>
+                <p class="text-xs" style="color: rgba(255,255,255,0.7);">By clicking "Accept All", you consent to our use of cookies.</p>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="acceptCookies()" class="px-6 py-2 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90" style="background: #088529;">
+                    Accept All
+                </button>
+                <button onclick="declineCookies()" class="px-6 py-2 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90" style="background: rgba(255,255,255,0.2);">
+                    Decline
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cookie Consent Management
+        function initCookieConsent() {
+            const consent = localStorage.getItem('cookieConsent');
+            if (!consent) {
+                document.getElementById('cookieConsentBanner').style.display = 'block';
+            } else if (consent === 'accepted') {
+                loadConsentedScripts();
+            }
+        }
+
+        function acceptCookies() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.getElementById('cookieConsentBanner').style.display = 'none';
+            loadConsentedScripts();
+        }
+
+        function declineCookies() {
+            localStorage.setItem('cookieConsent', 'declined');
+            document.getElementById('cookieConsentBanner').style.display = 'none';
+        }
+
+        function loadConsentedScripts() {
+            // Load Google Analytics
+            const gaScript = document.createElement('script');
+            gaScript.async = true;
+            gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-JS83PTXEYM';
+            document.head.appendChild(gaScript);
+
+            // Load Tawk.to
+            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+            (function(){
+                var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+                s1.async=true;
+                s1.src='https://embed.tawk.to/6a452b6d59a11c1d46cc69ff/1jsf339th';
+                s1.charset='UTF-8';
+                s1.setAttribute('crossorigin','*');
+                s0.parentNode.insertBefore(s1,s0);
+            })();
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initCookieConsent);
+    </script>
 </body>
 </html>
