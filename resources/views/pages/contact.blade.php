@@ -49,7 +49,7 @@
                             </div>
                             <div>
                                 <h3 class="font-bold text-lg mb-1" style="font-family: 'Playfair Display', serif; color: #854208;">Location</h3>
-                                <p class="text-sm" style="color: #111111;">{{ $contents['contact_location']->value ?? 'Arusha, Tanzania' }}</p>
+                                <p class="text-sm" style="color: #111111;">{{ $contents['contact_location']->value ?? 'Wakala wa Vipimo - Moshi - Kilimanjaro' }}</p>
                             </div>
                         </div>
 
