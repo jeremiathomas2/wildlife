@@ -21,7 +21,7 @@
             <span class="inline-block px-3 py-0.5 rounded-full text-xs font-semibold text-white mb-3" style="background: #ff9729;">
                 {{ is_object($tour) ? ($tour->category ?? '') : ($tour['category'] ?? '') }}
             </span>
-            <h1 class="font-bold" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.5rem); color: #ffffff; line-height: 1.15;">
+            <h1 class="font-bold" style="font-family: 'Raleway', sans-serif; font-size: clamp(1.8rem, 4vw, 3.5rem); color: #ffffff; line-height: 1.15;">
                 {{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}
             </h1>
             <div class="flex items-center gap-4 mt-3">
@@ -44,7 +44,7 @@
                 <!-- Main Content -->
                 <div>
                     <div class="bg-white rounded-2xl p-6 lg:p-8 mb-8" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
-                        <h2 class="font-bold text-xl mb-4" style="font-family: 'Playfair Display', serif; color: #854208;">
+                        <h2 class="font-bold text-xl mb-4" style="font-family: 'Raleway', sans-serif; color: #854208;">
                             {{ $contents['destination_about_title']->value ?? 'About This Tour' }}
                         </h2>
                         <div class="text-base leading-relaxed" style="color: #111111; text-align: justify;">
@@ -55,7 +55,7 @@
                     <!-- Related Tours -->
                     @if((is_object($relatedTours) ? $relatedTours->count() : count($relatedTours)) > 0)
                         <div class="bg-white rounded-2xl p-6 lg:p-8" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
-                            <h2 class="font-bold text-xl mb-4" style="font-family: 'Playfair Display', serif; color: #854208;">
+                            <h2 class="font-bold text-xl mb-4" style="font-family: 'Raleway', sans-serif; color: #854208;">
                                 {{ $contents['destination_related_title']->value ?? 'You May Also Like' }}
                             </h2>
                             <div class="space-y-4">
@@ -86,7 +86,7 @@
                     @endif
 
                     <div class="bg-white rounded-2xl p-6 lg:p-8" style="box-shadow: 0 8px 32px rgba(0,0,0,0.08);">
-                        <h3 class="font-bold text-lg mb-5" style="font-family: 'Playfair Display', serif; color: #854208;">
+                        <h3 class="font-bold text-lg mb-5" style="font-family: 'Raleway', sans-serif; color: #854208;">
                             Book This Tour
                         </h3>
 

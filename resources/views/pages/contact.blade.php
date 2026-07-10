@@ -19,7 +19,7 @@
                 <span class="mx-2">/</span>
                 <span style="color: #ffffff;">Contact</span>
             </nav>
-            <h1 class="font-bold" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
+            <h1 class="font-bold" style="font-family: 'Raleway', sans-serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
                 {{ $contents['contact_page_title']->value ?? 'Get in Touch' }}
             </h1>
         </div>
@@ -32,7 +32,7 @@
                 <!-- Contact Info -->
                 <div>
                     <span class="text-sm font-semibold uppercase tracking-wider mb-3 block" style="color: #ff9729;">Contact Us</span>
-                    <h2 class="font-bold mb-6" style="font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2.5rem); color: #854208; line-height: 1.15;">
+                    <h2 class="font-bold mb-6" style="font-family: 'Raleway', sans-serif; font-size: clamp(1.5rem, 3vw, 2.5rem); color: #854208; line-height: 1.15;">
                         {{ $contents['contact_subtitle']->value ?? 'Plan Your Perfect Safari' }}
                     </h2>
                     <p class="text-base leading-relaxed mb-8" style="color: #111111;">
@@ -48,7 +48,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-bold text-lg mb-1" style="font-family: 'Playfair Display', serif; color: #854208;">Location</h3>
+                                <h3 class="font-bold text-lg mb-1" style="font-family: 'Raleway', sans-serif; color: #854208;">Location</h3>
                                 <p class="text-sm" style="color: #111111;">{{ $contents['contact_location']->value ?? 'Wakala wa Vipimo - Moshi - Kilimanjaro' }}</p>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-bold text-lg mb-1" style="font-family: 'Playfair Display', serif; color: #854208;">Phone</h3>
+                                <h3 class="font-bold text-lg mb-1" style="font-family: 'Raleway', sans-serif; color: #854208;">Phone</h3>
                                 <p class="text-sm" style="color: #111111;">{{ $contents['contact_phone']->value ?? '+255 700 000 000' }}</p>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-bold text-lg mb-1" style="font-family: 'Playfair Display', serif; color: #854208;">Email</h3>
+                                <h3 class="font-bold text-lg mb-1" style="font-family: 'Raleway', sans-serif; color: #854208;">Email</h3>
                                 <p class="text-sm" style="color: #111111;">{{ $contents['contact_email']->value ?? 'info@tanzaniadailytours.com' }}</p>
                             </div>
                         </div>

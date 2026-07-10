@@ -19,7 +19,7 @@
                 <span class="mx-2">/</span>
                 <span style="color: #ffffff;">About</span>
             </nav>
-            <h1 class="font-bold" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
+            <h1 class="font-bold" style="font-family: 'Raleway', sans-serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
                 {{ $contents['about_page_title']->value ?? 'About Our Story' }}
             </h1>
         </div>
@@ -34,7 +34,7 @@
                 </div>
                 <div>
                     <span class="text-sm font-semibold uppercase tracking-wider mb-3 block" style="color: #ff9729;">{{ $contents['about_story_label']->value ?? 'Our Story' }}</span>
-                    <h2 class="font-bold mb-4" style="font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2.5rem); color: #854208; line-height: 1.15;">
+                    <h2 class="font-bold mb-4" style="font-family: 'Raleway', sans-serif; font-size: clamp(1.5rem, 3vw, 2.5rem); color: #854208; line-height: 1.15;">
                         {{ $contents['about_story_title']->value ?? 'Passionate About Tanzania\'s Natural Heritage' }}
                     </h2>
                     <div class="text-base leading-relaxed" style="color: #111111; text-align: justify;">
@@ -50,7 +50,7 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-12">
                 <span class="text-sm font-semibold uppercase tracking-wider mb-3 block" style="color: #ff9729;">{{ $contents['about_values_label']->value ?? 'Our Values' }}</span>
-                <h2 class="font-bold" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #854208;">
+                <h2 class="font-bold" style="font-family: 'Raleway', sans-serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #854208;">
                     {{ $contents['about_values_title']->value ?? 'What Drives Us' }}
                 </h2>
             </div>
@@ -63,7 +63,7 @@
                             <path d="M2 12l10 5 10-5"/>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-lg mb-2" style="font-family: 'Playfair Display', serif; color: #854208;">Sustainability</h3>
+                    <h3 class="font-bold text-lg mb-2" style="font-family: 'Raleway', sans-serif; color: #854208;">Sustainability</h3>
                     <p class="text-sm" style="color: #111111;">We practice responsible tourism that protects wildlife and supports local communities.</p>
                 </div>
                 <div class="text-center p-6 rounded-2xl" style="background: #f8f4f0;">
@@ -72,7 +72,7 @@
                             <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-lg mb-2" style="font-family: 'Playfair Display', serif; color: #854208;">Authenticity</h3>
+                    <h3 class="font-bold text-lg mb-2" style="font-family: 'Raleway', sans-serif; color: #854208;">Authenticity</h3>
                     <p class="text-sm" style="color: #111111;">Real experiences with real people. No staged cultural performances.</p>
                 </div>
                 <div class="text-center p-6 rounded-2xl" style="background: #f8f4f0;">
@@ -82,7 +82,7 @@
                             <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-lg mb-2" style="font-family: 'Playfair Display', serif; color: #854208;">Excellence</h3>
+                    <h3 class="font-bold text-lg mb-2" style="font-family: 'Raleway', sans-serif; color: #854208;">Excellence</h3>
                     <p class="text-sm" style="color: #111111;">From our vehicles to our guides, we settle for nothing less than the best.</p>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                         <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1783677911/ally_h4ud4z.png" alt="Petro Mihambo" class="w-full h-full object-cover" loading="lazy">
                     </div>
                     <p class="text-sm font-semibold uppercase tracking-wider mb-2" style="color: #ff9729;">Senior Tour Guide</p>
-                    <h3 class="font-bold text-2xl lg:text-3xl mb-4" style="font-family: 'Playfair Display', serif; color: #854208;">Ally Juma</h3>
+                    <h3 class="font-bold text-2xl lg:text-3xl mb-4" style="font-family: 'Raleway', sans-serif; color: #854208;">Ally Juma</h3>
                     <p class="text-lg mb-6" style="color: #111111;">Let us Plan your dream Safari Journey</p>
                     <p class="text-sm mb-8" style="color: #5a3e2b;">Enquire now and our Travel Expert will get back to you within 24 hours.</p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -123,25 +123,25 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
                 <div>
-                    <p class="text-3xl lg:text-4xl font-bold mb-1" style="font-family: 'Playfair Display', serif; color: #ffffff;">
+                    <p class="text-3xl lg:text-4xl font-bold mb-1" style="font-family: 'Raleway', sans-serif; color: #ffffff;">
                         10+
                     </p>
                     <p class="text-sm" style="color: rgba(255,255,255,0.8);">Years of Experience</p>
                 </div>
                 <div>
-                    <p class="text-3xl lg:text-4xl font-bold mb-1" style="font-family: 'Playfair Display', serif; color: #ffffff;">
+                    <p class="text-3xl lg:text-4xl font-bold mb-1" style="font-family: 'Raleway', sans-serif; color: #ffffff;">
                         5,000+
                     </p>
                     <p class="text-sm" style="color: rgba(255,255,255,0.8);">Happy Travelers</p>
                 </div>
                 <div>
-                    <p class="text-3xl lg:text-4xl font-bold mb-1" style="font-family: 'Playfair Display', serif; color: #ffffff;">
+                    <p class="text-3xl lg:text-4xl font-bold mb-1" style="font-family: 'Raleway', sans-serif; color: #ffffff;">
                         12
                     </p>
                     <p class="text-sm" style="color: rgba(255,255,255,0.8);">National Parks Covered</p>
                 </div>
                 <div>
-                    <p class="text-3xl lg:text-4xl font-bold mb-1" style="font-family: 'Playfair Display', serif; color: #ffffff;">
+                    <p class="text-3xl lg:text-4xl font-bold mb-1" style="font-family: 'Raleway', sans-serif; color: #ffffff;">
                         100%
                     </p>
                     <p class="text-sm" style="color: rgba(255,255,255,0.8);">Local Team</p>

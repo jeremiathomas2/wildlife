@@ -19,7 +19,7 @@
                 <span class="mx-2">/</span>
                 <span style="color: #ffffff;">Gallery</span>
             </nav>
-            <h1 class="font-bold" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
+            <h1 class="font-bold" style="font-family: 'Raleway', sans-serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
                 {{ $contents['gallery_page_title']->value ?? 'Photo Gallery' }}
             </h1>
         </div>

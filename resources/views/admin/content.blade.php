@@ -3,7 +3,7 @@
 @section('title', 'Content Management')
 
 @section('content')
-    <h1 class="text-3xl font-bold mb-8" style="font-family: 'Playfair Display', serif; color: #854208;">Content Management</h1>
+    <h1 class="text-3xl font-bold mb-8" style="font-family: 'Raleway', sans-serif; color: #854208;">Content Management</h1>
 
     <form action="{{ route('admin.content.update') }}" method="POST" class="space-y-8">
         @csrf

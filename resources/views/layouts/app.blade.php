@@ -54,7 +54,7 @@
     <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -143,7 +143,7 @@
     <style>
         @layer base {
             body {
-                font-family: 'Lato', sans-serif;
+                font-family: 'Raleway', sans-serif;
                 color: #111111;
                 background: #f8f4f0;
                 -webkit-font-smoothing: antialiased;
@@ -151,7 +151,7 @@
             }
 
             h1, h2, h3, h4, h5, h6 {
-                font-family: 'Playfair Display', serif;
+                font-family: 'Raleway', sans-serif;
             }
         }
 
@@ -159,7 +159,7 @@
             .glow-text {
                 position: relative;
                 display: inline-block;
-                font-family: 'Playfair Display', serif;
+                font-family: 'Raleway', sans-serif;
                 font-weight: 700;
                 font-size: clamp(2rem, 5vw, 3.5rem);
                 color: #ffffff;
@@ -339,7 +339,7 @@
         })();
     </script>
         <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-brown_d1vgxe.png" alt="Tanzania Daily Tours & Safari" style="height: 120px; width: auto; object-fit: contain; margin-bottom: 20px; animation: zoomInOut 2s ease-in-out infinite;">
-        <h2 class="text-2xl font-bold italic mb-6" style="font-family: 'Playfair Display', serif; color: #854208;">Tanzania Daily Tour and Safari</h2>
+        <h2 class="text-2xl font-bold italic mb-6" style="font-family: 'Raleway', sans-serif; color: #854208;">Tanzania Daily Tour and Safari</h2>
         <span class="w-2 h-2 rounded-full animate-pulse" style="background: #ff9729;"></span>
         <style>
             @keyframes zoomInOut {
@@ -367,7 +367,7 @@
             
             <a href="{{ route('home') }}" class="flex items-center gap-3" style="transition: all 0.4s ease;">
             <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" id="navLogo" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
-            <span class="text-xl font-bold italic hidden sm:block" id="navTitle" style="font-family: 'Playfair Display', serif; color: #ffffff; transition: color 0.4s ease;">
+            <span class="text-xl font-bold italic hidden sm:block" id="navTitle" style="font-family: 'Raleway', sans-serif; color: #ffffff; transition: color 0.4s ease;">
                 Tanzania Daily Tours and Safari
             </span>
         </a>
@@ -379,7 +379,7 @@
                        class="text-sm font-semibold relative py-1" 
                        style="
                            color: {{ $currentRoute === $link['route'] ? '#ff9729' : '#ffffff' }}; 
-                           font-family: 'Lato', sans-serif;
+                           font-family: 'Raleway', sans-serif;
                            transition: all 0.3s ease;
                        "
                        onmouseover="this.querySelector('span').style.width = '100%'; this.querySelector('span').style.left = '0';"
@@ -422,7 +422,7 @@
         <div class="absolute top-0 left-0 right-0 px-6 flex items-center justify-between" style="height: 72px; background: #854208;">
             <a href="{{ route('home') }}" class="flex items-center gap-3" onclick="closeMobileMenu()">
                 <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
-                <span class="text-xl font-bold italic" style="font-family: 'Playfair Display', serif; color: #ffffff;">
+                <span class="text-xl font-bold italic" style="font-family: 'Raleway', sans-serif; color: #ffffff;">
                     Tanzania Daily Tours and Safari
                 </span>
             </a>
@@ -440,7 +440,7 @@
                    class="mobile-menu-item" 
                    style="
                        color: {{ $currentRoute === $link['route'] ? '#ff9729' : '#854208' }};
-                       font-family: 'Lato', sans-serif;
+                       font-family: 'Raleway', sans-serif;
                        font-size: 18px;
                        font-weight: {{ $currentRoute === $link['route'] ? '700' : '500' }};
                        background: {{ $currentRoute === $link['route'] ? 'rgba(255, 151, 41, 0.08)' : 'transparent' }};
@@ -480,7 +480,7 @@
                 <div>
                     <a href="{{ route('home') }}" class="inline-flex items-center gap-3 mb-4">
                         <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
-                        <span class="text-xl font-bold italic" style="font-family: 'Playfair Display', serif; color: #ffffff;">
+                        <span class="text-xl font-bold italic" style="font-family: 'Raleway', sans-serif; color: #ffffff;">
                             Tanzania Daily Tours and Safari
                         </span>
                     </a>

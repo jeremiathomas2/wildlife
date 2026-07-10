@@ -99,12 +99,12 @@
 
         <!-- Hero Content -->
         <div class="relative z-10 flex flex-col items-center justify-center h-full px-6 text-center" style="pointer-events: none;">
-            <span class="text-sm font-semibold uppercase tracking-wider mb-5" style="color: #ff9729; font-family: 'Lato', sans-serif; pointer-events: auto;">
+            <span class="text-sm font-semibold uppercase tracking-wider mb-5" style="color: #ff9729; font-family: 'Raleway', sans-serif; pointer-events: auto;">
                 {{ $contents['hero_tagline']->value ?? 'Discover Tanzania\'s Wilderness' }}
             </span>
 
             <h1 class="font-bold mb-6" style="
-                font-family: 'Playfair Display', serif;
+                font-family: 'Raleway', sans-serif;
                 font-size: clamp(2.5rem, 7vw, 5.5rem);
                 color: #ffffff;
                 text-shadow: 0 2px 40px rgba(0,0,0,0.15);
@@ -115,7 +115,7 @@
                 <span id="cursor" style="border-right: 3px solid #ff9729; padding-right: 3px; animation: blink 0.75s infinite;">&nbsp;</span>
             </h1>
 
-            <p class="text-lg mb-10 max-w-[560px]" style="color: rgba(255, 255, 255, 0.9); font-family: 'Lato', sans-serif; pointer-events: auto;">
+            <p class="text-lg mb-10 max-w-[560px]" style="color: rgba(255, 255, 255, 0.9); font-family: 'Raleway', sans-serif; pointer-events: auto;">
                 {{ $contents['hero_subtitle']->value ?? 'We offer a variety of safari packages to suit every budget and interest, from luxury lodges to budget camping trips.' }}
             </p>
 
@@ -155,14 +155,14 @@
             >
                 <span
                     class="text-sm font-semibold uppercase tracking-[0.15em] mb-3 block"
-                    style="color: #ff9729; font-family: 'Lato', sans-serif;"
+                    style="color: #ff9729; font-family: 'Raleway', sans-serif;"
                 >
                     {{ $contents['popular_tours_label']->value ?? 'Popular Destinations' }}
                 </span>
                 <h2
                     class="font-bold mb-3"
                     style="
-                        font-family: 'Playfair Display', serif;
+                        font-family: 'Raleway', sans-serif;
                         font-size: clamp(1.8rem, 4vw, 3.2rem);
                         color: #854208;
                         line-height: 1.15;
@@ -170,7 +170,7 @@
                 >
                     {{ $contents['popular_tours_title']->value ?? 'Day Trip Adventures' }}
                 </h2>
-                <p class="text-base mb-8" style="color: #111111; font-family: 'Lato', sans-serif;">
+                <p class="text-base mb-8" style="color: #111111; font-family: 'Raleway', sans-serif;">
                     {{ $contents['popular_tours_subtitle']->value ?? 'Explore Tanzania\'s most beloved natural wonders in a single day' }}
                 </p>
 
@@ -195,7 +195,7 @@
                                         <div class="p-4">
                                             <h3
                                                 class="font-bold text-lg mb-1.5"
-                                                style="font-family: 'Playfair Display', serif; color: #854208;"
+                                                style="font-family: 'Raleway', sans-serif; color: #854208;"
                                             >
                                                 {{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}
                                             </h3>
@@ -242,14 +242,14 @@
                 <div class="lg:sticky lg:top-32">
                     <span
                         class="text-sm font-semibold uppercase tracking-[0.15em] mb-3 block"
-                        style="color: #ff9729; font-family: 'Lato', sans-serif;"
+                        style="color: #ff9729; font-family: 'Raleway', sans-serif;"
                     >
                         {{ $contents['multi_day_label']->value ?? 'Extended Adventures' }}
                     </span>
                     <h2
                         class="font-bold mb-5"
                         style="
-                            font-family: 'Playfair Display', serif;
+                            font-family: 'Raleway', sans-serif;
                             font-size: clamp(1.8rem, 4vw, 3.2rem);
                             color: #854208;
                             line-height: 1.15;
@@ -300,7 +300,7 @@
                             <div class="flex flex-col justify-center sm:w-[60%]">
                                 <h3
                                     class="font-bold text-xl mb-2"
-                                    style="font-family: 'Playfair Display', serif; color: #854208;"
+                                    style="font-family: 'Raleway', sans-serif; color: #854208;"
                                 >
                                     {{ is_object($pkg) ? ($pkg->name ?? '') : ($pkg['name'] ?? '') }}
                                 </h3>
@@ -351,14 +351,14 @@
                 <div>
                     <span
                         class="text-sm font-semibold uppercase tracking-[0.15em] mb-3 block"
-                        style="color: #ff9729; font-family: 'Lato', sans-serif;"
+                        style="color: #ff9729; font-family: 'Raleway', sans-serif;"
                     >
                         {{ $contents['why_choose_label']->value ?? 'Why Travel With Us' }}
                     </span>
                     <h2
                         class="font-bold mb-4"
                         style="
-                            font-family: 'Playfair Display', serif;
+                            font-family: 'Raleway', sans-serif;
                             font-size: clamp(1.8rem, 4vw, 3.2rem);
                             color: #854208;
                             line-height: 1.15;
@@ -404,7 +404,7 @@
                                 <div>
                                     <h4
                                         class="font-bold text-base mb-1"
-                                        style="font-family: 'Lato', sans-serif; color: #854208;"
+                                        style="font-family: 'Raleway', sans-serif; color: #854208;"
                                     >
                                         {{ $feature['title'] }}
                                     </h4>
@@ -432,13 +432,13 @@
 
         <div class="relative z-10 max-w-[1280px] mx-auto px-6">
             <div class="text-center mb-12">
-                <span class="text-sm font-semibold uppercase tracking-[0.15em] mb-3 block" style="color: #ff9729; font-family: 'Lato', sans-serif;">
+                <span class="text-sm font-semibold uppercase tracking-[0.15em] mb-3 block" style="color: #ff9729; font-family: 'Raleway', sans-serif;">
                     {{ $contents['testimonials_label']->value ?? 'Testimonials' }}
                 </span>
                 <h2
                     class="font-bold mb-4"
                     style="
-                        font-family: 'Playfair Display', serif;
+                        font-family: 'Raleway', sans-serif;
                         font-size: clamp(1.8rem, 4vw, 3.2rem);
                         color: #ffffff;
                         line-height: 1.15;
@@ -446,7 +446,7 @@
                 >
                     {{ $contents['testimonials_title']->value ?? 'What Our Travelers Say' }}
                 </h2>
-                <p class="text-base" style="color: rgba(255,255,255,0.8); font-family: 'Lato', sans-serif;">
+                <p class="text-base" style="color: rgba(255,255,255,0.8); font-family: 'Raleway', sans-serif;">
                     {{ $contents['testimonials_subtitle']->value ?? 'Real experiences from real adventurers' }}
                 </p>
             </div>
@@ -504,7 +504,7 @@
                                 >
                                     <p
                                         class="text-lg lg:text-2xl italic leading-relaxed max-w-[700px] text-center mb-8"
-                                        style="font-family: 'Playfair Display', serif; color: #ffffff;"
+                                        style="font-family: 'Raleway', sans-serif; color: #ffffff;"
                                     >
                                         &ldquo;{{ $t['text'] }}&rdquo;
                                     </p>
@@ -515,10 +515,10 @@
                                             </svg>
                                         @endfor
                                     </div>
-                                    <p class="text-lg font-bold" style="color: #ffffff; font-family: 'Lato', sans-serif;">
+                                    <p class="text-lg font-bold" style="color: #ffffff; font-family: 'Raleway', sans-serif;">
                                         {{ $t['name'] }}
                                     </p>
-                                    <p class="text-sm" style="color: #ff9729; font-family: 'Lato', sans-serif;">
+                                    <p class="text-sm" style="color: #ff9729; font-family: 'Raleway', sans-serif;">
                                         {{ $t['trip'] }}
                                     </p>
                                 </div>
@@ -553,14 +553,14 @@
                 <div>
                     <span
                         class="text-sm font-semibold uppercase tracking-[0.15em] mb-3 block"
-                        style="color: #ff9729; font-family: 'Lato', sans-serif;"
+                        style="color: #ff9729; font-family: 'Raleway', sans-serif;"
                     >
                         {{ $contents['gallery_label']->value ?? 'Photo Gallery' }}
                     </span>
                     <h2
                         class="font-bold"
                         style="
-                            font-family: 'Playfair Display', serif;
+                            font-family: 'Raleway', sans-serif;
                             font-size: clamp(1.8rem, 4vw, 3.2rem);
                             color: #854208;
                             line-height: 1.15;
@@ -620,7 +620,7 @@
             <h2
                 class="font-bold mb-5"
                 style="
-                    font-family: 'Playfair Display', serif;
+                    font-family: 'Raleway', sans-serif;
                     font-size: clamp(2rem, 5vw, 3.5rem);
                     color: #ffffff;
                     line-height: 1.15;

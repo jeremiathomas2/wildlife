@@ -19,7 +19,7 @@
                 <span class="mx-2">/</span>
                 <span style="color: #ffffff;">Reviews</span>
             </nav>
-            <h1 class="font-bold mb-2" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
+            <h1 class="font-bold mb-2" style="font-family: 'Raleway', sans-serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
                 {{ $contents['reviews_page_title']->value ?? 'Traveler Reviews' }}
             </h1>
             <div class="flex items-center gap-2">
@@ -69,7 +69,7 @@
                                 </svg>
                             @endfor
                         </div>
-                        <p class="text-sm italic mb-4 leading-relaxed" style="font-family: 'Playfair Display', serif; color: #111111;">
+                        <p class="text-sm italic mb-4 leading-relaxed" style="font-family: 'Raleway', sans-serif; color: #111111;">
                             "{{ $testimonial['text'] }}"
                         </p>
                         <div class="flex items-center justify-between">

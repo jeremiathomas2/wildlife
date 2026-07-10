@@ -10,7 +10,7 @@
     <!-- Hero Section -->
     <section class="relative flex items-end" style="height: 50vh; min-height: 400px; background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(101, 30, 8, 0.7)), url('https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/tour-zanzibar_y2syxk.jpg') center/cover no-repeat;">
         <div class="max-w-[1280px] mx-auto px-6 pb-12">
-            <h1 class="text-3xl md:text-5xl font-bold" style="font-family: 'Playfair Display', serif; color: #ffffff;">
+            <h1 class="text-3xl md:text-5xl font-bold" style="font-family: 'Raleway', sans-serif; color: #ffffff;">
                 Terms and Conditions
             </h1>
         </div>
@@ -20,7 +20,7 @@
     <section class="py-12 lg:py-20" style="background: #ffffff;">
         <div class="max-w-4xl mx-auto px-6">
             <div class="mb-8">
-                <h2 class="text-2xl font-bold mb-2" style="font-family: 'Playfair Display', serif; color: #854208;">
+                <h2 class="text-2xl font-bold mb-2" style="font-family: 'Raleway', sans-serif; color: #854208;">
                     Tanzania Daily Tours & Safari
                 </h2>
                 <p class="text-sm" style="color: #666666;">
@@ -28,7 +28,7 @@
                 </p>
             </div>
 
-            <div class="space-y-8" style="color: #333333; font-family: 'Lato', sans-serif;">
+            <div class="space-y-8" style="color: #333333; font-family: 'Raleway', sans-serif;">
                 <div>
                     <p class="mb-4 leading-relaxed">
                         Welcome to Tanzania Daily Tours & Safari. These terms and conditions outline the rules and regulations for the use of our services and website. By booking a tour with us, you agree to be bound by the following terms:
@@ -76,7 +76,7 @@
                 </div>
 
                 <div class="pt-8 border-t" style="border-color: #e5e5e5;">
-                    <h2 class="text-2xl font-bold mb-4" style="font-family: 'Playfair Display', serif; color: #854208;">Privacy Policy</h2>
+                    <h2 class="text-2xl font-bold mb-4" style="font-family: 'Raleway', sans-serif; color: #854208;">Privacy Policy</h2>
                     <p class="text-sm mb-6" style="color: #666666;">
                         <strong>Last Updated:</strong> July 2026
                     </p>

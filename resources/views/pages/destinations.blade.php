@@ -19,7 +19,7 @@
                 <span class="mx-2">/</span>
                 <span style="color: #ffffff;">Destinations</span>
             </nav>
-            <h1 class="font-bold" style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
+            <h1 class="font-bold" style="font-family: 'Raleway', sans-serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
                 {{ $contents['destinations_page_title']->value ?? 'Our Destinations' }}
             </h1>
         </div>
@@ -55,7 +55,7 @@
                                     <span class="inline-block px-3 py-0.5 rounded-full text-xs font-semibold text-white mb-3" style="background: {{ $category === 'Day Trip' ? '#ff9729' : ($category === 'Multi-Day Safari' ? '#088529' : '#854208') }};">
                                         {{ $category }}
                                     </span>
-                                    <h3 class="font-bold text-xl mb-2" style="font-family: 'Playfair Display', serif; color: #854208;">{{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}</h3>
+                                    <h3 class="font-bold text-xl mb-2" style="font-family: 'Raleway', sans-serif; color: #854208;">{{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}</h3>
                                     <p class="text-sm mb-4 line-clamp-2" style="color: #111111;">{{ is_object($tour) ? ($tour->desc ?? '') : ($tour['desc'] ?? '') }}</p>
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center gap-1.5 text-xs" style="color: #5a3e2b;">

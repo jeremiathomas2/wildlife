@@ -368,7 +368,7 @@ function viewBooking(id) {
                 border-radius: 12px; 
                 color: white;">
                 <div>
-                    <div style="font-size: 20px; font-weight: 700; font-family: 'Playfair Display', serif;">Booking #${booking.id}</div>
+                    <div style="font-size: 20px; font-weight: 700; font-family: 'Raleway', sans-serif;">Booking #${booking.id}</div>
                     <div style="font-size: 13px; opacity: 0.9;">Created: ${new Date(booking.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
                 </div>
                 <span style="
@@ -570,7 +570,7 @@ function viewBooking(id) {
                             font-size: 28px; 
                             color: #088529; 
                             font-weight: 700; 
-                            font-family: 'Playfair Display', serif;">
+                            font-family: 'Raleway', sans-serif;">
                             ${booking.currency ?? '$'}${(booking.amount ?? booking.total_price).toLocaleString()}
                         </div>
                         <div style="
