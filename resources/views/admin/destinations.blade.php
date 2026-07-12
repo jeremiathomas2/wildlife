@@ -45,9 +45,63 @@
                     </tr>
                 </thead>
                 <tbody id="destinationsBody">
+                    @if($destinations->isEmpty())
+                    <tr>
+                        <td colspan="7">
+                            <div class="empty-state">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M3 11 12 4l9 7"></path>
+                                    <path d="M5 10v10h14V10"></path>
+                                </svg>
+                                <h4>No destinations found</h4>
+                                <p>Try a different filter or add a new destination.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    @else
+                    @foreach($destinations as $dest)
+                    <tr data-id="{{ $dest->id }}" data-category="{{ $dest->category }}" data-status="{{ $dest->status }}" data-name="{{ strtolower($dest->name) }}">
+                        <td>
+                            <div class="cell-main">
+                                <img class="thumb" src="{{ $dest->image }}" alt="">
+                                <div>
+                                    <div class="cell-title">{{ $dest->name }}</div>
+                                    <div class="cell-sub">{{ limitString($dest->desc, 46) }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ $dest->category }}</td>
+                        <td>{{ $dest->duration }}</td>
+                        <td>${{ formatNumber($dest->price_adult ?? $dest->price) }}</td>
+                        <td>${{ formatNumber($dest->price_child ?? ($dest->price / 2)) }}</td>
+                        <td>{!! \App\Http\Controllers\AdminController::statusTag($dest->status) !!}</td>
+                        <td>
+                            <div class="row-actions">
+                                <button onclick="editDestination({{ $dest->id }})" title="Edit">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"></path>
+                                    </svg>
+                                </button>
+                                <button class="danger" onclick="confirmDeleteDest({{ $dest->id }}, '{{ escapeQuotes($dest->name) }}')" title="Delete">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
+        @if($destinations->hasPages())
+        <div class="table-pagination">
+            {{ $destinations->appends(request()->query())->links() }}
+        </div>
+        @endif
     </div>
 </div>
 
@@ -132,70 +186,9 @@
 </div>
 
 <script>
-let destinationsData = @json($destinations);
+let destinationsData = @json($destinations->items());
 let currentFilter = 'all';
 let currentSearch = '';
-let pendingDeleteFunc = null;
-let currentEditId = null;
-
-function renderDestinations() {
-    const tbody = document.getElementById('destinationsBody');
-    
-    if (destinationsData.length === 0) {
-        tbody.innerHTML = `
-            <tr>
-                <td colspan="7">
-                    <div class="empty-state">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M3 11 12 4l9 7"></path>
-                            <path d="M5 10v10h14V10"></path>
-                        </svg>
-                        <h4>No destinations found</h4>
-                        <p>Try a different filter or add a new destination.</p>
-                    </div>
-                </td>
-            </tr>
-        `;
-        return;
-    }
-    
-    tbody.innerHTML = destinationsData.map(dest => `
-        <tr data-id="${dest.id}" data-category="${dest.category}" data-status="${dest.status}" data-name="${dest.name.toLowerCase()}">
-            <td>
-                <div class="cell-main">
-                    <img class="thumb" src="${dest.image}" alt="">
-                    <div>
-                        <div class="cell-title">${dest.name}</div>
-                        <div class="cell-sub">${limitString(dest.desc, 46)}</div>
-                    </div>
-                </div>
-            </td>
-            <td>${dest.category}</td>
-            <td>${dest.duration}</td>
-            <td>$${formatNumber(dest.price_adult ?? dest.price)}</td>
-            <td>$${formatNumber(dest.price_child ?? (dest.price / 2))}</td>
-            <td>${statusTag(dest.status)}</td>
-            <td>
-                <div class="row-actions">
-                    <button onclick="editDestination(${dest.id})" title="Edit">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                            <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"></path>
-                        </svg>
-                    </button>
-                    <button class="danger" onclick="confirmDeleteDest(${dest.id}, '${escapeQuotes(dest.name)}')" title="Delete">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        </svg>
-                    </button>
-                </div>
-            </td>
-        </tr>
-    `).join('');
-    
-    renderFilteredDestinations();
-}
 
 function limitString(str, length) {
     if (!str) return '';
@@ -205,25 +198,6 @@ function limitString(str, length) {
 function formatNumber(num) {
     if (num === null || num === undefined) return 0;
     return Math.round(num).toLocaleString();
-}
-
-function statusTag(status) {
-    const map = {
-        'Confirmed': 'tag-green',
-        'Pending': 'tag-gold',
-        'Completed': 'tag-grey',
-        'Cancelled': 'tag-red',
-        'Published': 'tag-green',
-        'Draft': 'tag-grey',
-    };
-    const className = map[status] ?? 'tag-grey';
-    return `<span class="tag ${className}">${escapeHtml(status)}</span>`;
-}
-
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
 }
 
 function escapeQuotes(str) {
@@ -256,7 +230,6 @@ function renderFilteredDestinations() {
 }
 
 function openDestinationModal(id = null) {
-    currentEditId = id;
     const title = document.getElementById('destModalTitle');
     title.textContent = id ? 'Edit destination' : 'Add destination';
     const form = document.getElementById('destForm');
@@ -264,17 +237,19 @@ function openDestinationModal(id = null) {
     submitBtn.textContent = id ? 'Update destination' : 'Save destination';
 
     if (id) {
-        const dest = destinationsData.find(d => d.id === id);
-        document.getElementById('destMethod').value = 'PUT';
-        document.getElementById('destId').value = dest.id;
-        document.getElementById('destName').value = dest.name;
-        document.getElementById('destCategory').value = dest.category;
-        document.getElementById('destStatus').value = dest.status;
-        document.getElementById('destDuration').value = dest.duration;
-        document.getElementById('destPriceAdult').value = dest.price_adult;
-        document.getElementById('destPriceChild').value = dest.price_child;
-        document.getElementById('destImage').value = dest.image;
-        document.getElementById('destDesc').value = dest.desc;
+        const destData = destinationsData.find(d => d.id === id);
+        if (destData) {
+            document.getElementById('destMethod').value = 'PUT';
+            document.getElementById('destId').value = destData.id;
+            document.getElementById('destName').value = destData.name;
+            document.getElementById('destCategory').value = destData.category;
+            document.getElementById('destStatus').value = destData.status;
+            document.getElementById('destDuration').value = destData.duration;
+            document.getElementById('destPriceAdult').value = destData.price_adult;
+            document.getElementById('destPriceChild').value = destData.price_child;
+            document.getElementById('destImage').value = destData.image;
+            document.getElementById('destDesc').value = destData.desc;
+        }
     } else {
         document.getElementById('destMethod').value = '';
         document.getElementById('destId').value = '';
@@ -298,15 +273,16 @@ async function handleSubmit(event) {
     event.preventDefault();
     const form = document.getElementById('destForm');
     const submitBtn = document.getElementById('destSubmitBtn');
+    const id = document.getElementById('destId').value;
     submitBtn.disabled = true;
-    submitBtn.textContent = currentEditId ? 'Updating...' : 'Saving...';
+    submitBtn.textContent = id ? 'Updating...' : 'Saving...';
     
     const formData = new FormData(form);
     let url = "{{ route('admin.destinations.store') }}";
     let method = 'POST';
     
-    if (currentEditId) {
-        url = `/live/destinations/${currentEditId}`;
+    if (id) {
+        url = `/live/destinations/${id}`;
         formData.append('_method', 'PUT');
     }
     
@@ -331,23 +307,8 @@ async function handleSubmit(event) {
         
         if (data.success) {
             toast(data.message, 'success');
-            
-            // Update destinations data
-            if (currentEditId) {
-                // Update existing
-                const index = destinationsData.findIndex(d => d.id === currentEditId);
-                if (index !== -1) {
-                    destinationsData[index] = data.destination;
-                }
-            } else {
-                // Add new
-                destinationsData.unshift(data.destination);
-            }
-            
-            renderDestinations();
-            closeModal('destModalBackdrop');
+            window.location.reload();
         } else if (data.errors) {
-            // Handle validation errors
             const errorMessages = Object.values(data.errors).flat().join(', ');
             toast(errorMessages, 'error');
         } else {
@@ -358,7 +319,7 @@ async function handleSubmit(event) {
         toast('Something went wrong! Please check the console.', 'error');
     } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = currentEditId ? 'Update destination' : 'Save destination';
+        submitBtn.textContent = id ? 'Update destination' : 'Save destination';
     }
 }
 
@@ -379,9 +340,7 @@ function confirmDeleteDest(id, name) {
             
             if (data.success) {
                 toast(data.message, 'success');
-                // Remove from array
-                destinationsData = destinationsData.filter(d => d.id !== id);
-                renderDestinations();
+                window.location.reload();
             }
         } catch (error) {
             console.error('Error:', error);
@@ -400,7 +359,7 @@ function executeDelete() {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
-    renderDestinations();
+    renderFilteredDestinations();
 });
 </script>
 

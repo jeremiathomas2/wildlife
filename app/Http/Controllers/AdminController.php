@@ -162,7 +162,7 @@ class AdminController extends Controller
 
     public function destinations()
     {
-        $destinations = Destination::all();
+        $destinations = Destination::latest()->paginate(10);
         return view('admin.destinations', [
             'destinations' => $destinations,
             'destCount' => Destination::count(),
