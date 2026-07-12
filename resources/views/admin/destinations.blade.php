@@ -66,14 +66,14 @@
                                 <img class="thumb" src="{{ $dest->image }}" alt="">
                                 <div>
                                     <div class="cell-title">{{ $dest->name }}</div>
-                                    <div class="cell-sub">{{ limitString($dest->desc, 46) }}</div>
+                                    <div class="cell-sub">{{ \Illuminate\Support\Str::limit($dest->desc, 46) }}</div>
                                 </div>
                             </div>
                         </td>
                         <td>{{ $dest->category }}</td>
                         <td>{{ $dest->duration }}</td>
-                        <td>${{ formatNumber($dest->price_adult ?? $dest->price) }}</td>
-                        <td>${{ formatNumber($dest->price_child ?? ($dest->price / 2)) }}</td>
+                        <td>${{ number_format($dest->price_adult ?? $dest->price) }}</td>
+                        <td>${{ number_format($dest->price_child ?? ($dest->price / 2)) }}</td>
                         <td>{!! \App\Http\Controllers\AdminController::statusTag($dest->status) !!}</td>
                         <td>
                             <div class="row-actions">
@@ -189,16 +189,6 @@
 let destinationsData = @json($destinations->items());
 let currentFilter = 'all';
 let currentSearch = '';
-
-function limitString(str, length) {
-    if (!str) return '';
-    return str.length > length ? str.substring(0, length) + '…' : str;
-}
-
-function formatNumber(num) {
-    if (num === null || num === undefined) return 0;
-    return Math.round(num).toLocaleString();
-}
 
 function escapeQuotes(str) {
     return str.replace(/'/g, '\\\'').replace(/"/g, '\\"');
