@@ -1,3 +1,14 @@
 User-agent: *
+Allow: /
 Disallow: /live/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /storage/
+Disallow: /vendor/
+Disallow: /node_modules/
+
+# Sitemap
 Sitemap: https://www.tanzaniadailytoursandsafari.com/sitemap.xml
+
+# Crawl-delay (optional, adjust based on server capacity)
+Crawl-delay: 1

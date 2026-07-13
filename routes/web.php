@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SitemapController;
 
 Route::get('/', function () {
     $tours = App\Models\Destination::where('status', 'Published')->get() ?? [];
@@ -180,3 +181,6 @@ Route::prefix('live')->name('admin.')->middleware(\App\Http\Middleware\AdminAuth
     Route::post('/currency-switch', [AdminController::class, 'currencySwitch'])->name('currency.switch');
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
 });
+
+// Sitemap
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
