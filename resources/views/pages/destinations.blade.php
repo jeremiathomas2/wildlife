@@ -16,6 +16,39 @@
     "url": "https://www.tanzaniadailytoursandsafari.com/destinations"
 }
 </script>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What are the best Tanzania safari destinations?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The best Tanzania safari destinations include Serengeti National Park for the Great Migration, Ngorongoro Crater for wildlife density, Tarangire for elephants, Lake Manyara for tree-climbing lions, and Mount Kilimanjaro for trekking adventures."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How many days should I spend on safari in Tanzania?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "We recommend 5-7 days for a comprehensive Tanzania safari experience. This allows you to visit 2-3 parks including Serengeti and Ngorongoro. Day trips are available for travelers with limited time."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What wildlife can I see in Tanzania?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Tanzania is home to the Big Five (lions, elephants, buffalo, leopards, rhinos), plus cheetahs, giraffes, zebras, wildebeest, hippos, crocodiles, and over 1,000 bird species. The Great Migration features millions of wildebeest and zebras."
+            }
+        }
+    ]
+}
+</script>
 @endsection
 
 @section('content')
