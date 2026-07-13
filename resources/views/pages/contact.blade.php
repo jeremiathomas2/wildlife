@@ -63,6 +63,16 @@
                         {{ $contents['contact_description']->value ?? 'Ready to start your adventure? Send us a message and we\'ll get back to you within 24 hours to help plan your personalized Tanzanian experience.' }}
                     </p>
 
+                    <!-- Quick Links -->
+                    <div class="mb-8 p-4 rounded-lg" style="background: rgba(255,151,41,0.1);">
+                        <p class="text-sm font-semibold mb-3" style="color: #854208;">Quick Links:</p>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="{{ route('destinations') }}" class="text-xs px-3 py-1 rounded-full transition-colors hover:bg-white" style="background: rgba(8,133,41,0.1); color: #088529;">View Safari Packages</a>
+                            <a href="{{ route('about') }}" class="text-xs px-3 py-1 rounded-full transition-colors hover:bg-white" style="background: rgba(8,133,41,0.1); color: #088529;">About Us</a>
+                            <a href="{{ route('reviews') }}" class="text-xs px-3 py-1 rounded-full transition-colors hover:bg-white" style="background: rgba(8,133,41,0.1); color: #088529;">Read Reviews</a>
+                        </div>
+                    </div>
+
                     <div class="space-y-6">
                         <div class="flex items-start gap-4">
                             <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: #088529;">
