@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', (is_object($tour) ? $tour->name ?? 'Tanzania Safari' : $tour['name'] ?? 'Tanzania Safari') . ' - Tanzania Daily Tours & Safari')
-@section('meta_title', (is_object($tour) ? $tour->name ?? 'Tanzania Safari' : $tour['name'] ?? 'Tanzania Safari') . ' - Tanzania Daily Tours & Safari')
-@section('meta_description', 'Book ' . (is_object($tour) ? $tour->name ?? 'this Tanzania safari' : $tour['name'] ?? 'this Tanzania safari') . ' with expert local guides. ' . \Illuminate\Support\Str::limit(strip_tags(is_object($tour) ? $tour->desc ?? '' : $tour['desc'] ?? ''), 150) . ' Best prices guaranteed!')
-@section('meta_keywords', (is_object($tour) ? $tour->name ?? 'Tanzania safari' : $tour['name'] ?? 'Tanzania safari') . ', Tanzania tour, ' . (is_object($tour) ? $tour->category ?? '' : $tour['category'] ?? '') . ', safari package, wildlife tour')
+@section('title', (is_object($tour) ? ($tour->meta_title ?? $tour->name ?? 'Tanzania Safari') : ($tour['meta_title'] ?? $tour['name'] ?? 'Tanzania Safari')))
+@section('meta_title', (is_object($tour) ? ($tour->meta_title ?? $tour->name ?? 'Tanzania Safari') : ($tour['meta_title'] ?? $tour['name'] ?? 'Tanzania Safari')))
+@section('meta_description', (is_object($tour) ? ($tour->meta_description ?? \Illuminate\Support\Str::limit(strip_tags($tour->desc ?? ''), 150)) : ($tour['meta_description'] ?? \Illuminate\Support\Str::limit(strip_tags($tour['desc'] ?? ''), 150))))
+@section('meta_keywords', (is_object($tour) ? ($tour->meta_keywords ?? $tour->name ?? 'Tanzania safari') : ($tour['meta_keywords'] ?? $tour['name'] ?? 'Tanzania safari')))
 @section('meta_image', (is_object($tour) ? $tour->image ?? 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg' : $tour['image'] ?? 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg'))
 
 @section('structured_data')
