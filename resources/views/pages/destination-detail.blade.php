@@ -1,10 +1,35 @@
 @extends('layouts.app')
 
-@section('title', (is_object($tour) ? $tour->name ?? 'Tanzania Safari' : $tour['name'] ?? 'Tanzania Safari') . ' | Tanzania Daily Tours & Safari')
-@section('meta_title', (is_object($tour) ? $tour->name ?? 'Tanzania Safari' : $tour['name'] ?? 'Tanzania Safari') . ' | Tanzania Daily Tours & Safari')
-@section('meta_description', (is_object($tour) ? $tour->desc ?? 'Book this amazing Tanzania safari tour with expert guides. Experience the best of Tanzanian wildlife and culture.' : $tour['desc'] ?? 'Book this amazing Tanzania safari tour with expert guides. Experience the best of Tanzanian wildlife and culture.'))
-@section('meta_keywords', (is_object($tour) ? $tour->name ?? 'Tanzania safari' : $tour['name'] ?? 'Tanzania safari') . ', Tanzania tours, wildlife safari, ' . (is_object($tour) ? $tour->category ?? '' : $tour['category'] ?? ''))
+@section('title', (is_object($tour) ? $tour->name ?? 'Tanzania Safari' : $tour['name'] ?? 'Tanzania Safari') . ' - Tanzania Daily Tours & Safari')
+@section('meta_title', (is_object($tour) ? $tour->name ?? 'Tanzania Safari' : $tour['name'] ?? 'Tanzania Safari') . ' - Tanzania Daily Tours & Safari')
+@section('meta_description', 'Book ' . (is_object($tour) ? $tour->name ?? 'this Tanzania safari' : $tour['name'] ?? 'this Tanzania safari') . ' with expert local guides. ' . \Illuminate\Support\Str::limit(strip_tags(is_object($tour) ? $tour->desc ?? '' : $tour['desc'] ?? ''), 150) . ' Best prices guaranteed!')
+@section('meta_keywords', (is_object($tour) ? $tour->name ?? 'Tanzania safari' : $tour['name'] ?? 'Tanzania safari') . ', Tanzania tour, ' . (is_object($tour) ? $tour->category ?? '' : $tour['category'] ?? '') . ', safari package, wildlife tour')
 @section('meta_image', (is_object($tour) ? $tour->image ?? 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg' : $tour['image'] ?? 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg'))
+
+@section('structured_data')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    "name": "{{ is_object($tour) ? $tour->name ?? 'Tanzania Safari' : $tour['name'] ?? 'Tanzania Safari' }}",
+    "description": "{{ \Illuminate\Support\Str::limit(strip_tags(is_object($tour) ? $tour->desc ?? '' : $tour['desc'] ?? ''), 200) }}",
+    "touristType": "Wildlife enthusiast",
+    "offers": {
+        "@type": "Offer",
+        "price": "{{ is_object($tour) ? $tour->price_adult ?? $tour->price ?? 0 : $tour['price_adult'] ?? $tour['price'] ?? 0 }}",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+    },
+    "duration": "{{ is_object($tour) ? $tour->duration ?? '' : $tour['duration'] ?? '' }}",
+    "image": "{{ is_object($tour) ? $tour->image ?? '' : $tour['image'] ?? '' }}",
+    "provider": {
+        "@type": "TravelAgency",
+        "name": "Tanzania Daily Tours & Safari",
+        "url": "https://www.tanzaniadailytoursandsafari.com"
+    }
+}
+</script>
+@endsection
 
 @section('content')
     <!-- Hero -->

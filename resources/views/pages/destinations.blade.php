@@ -1,10 +1,22 @@
 @extends('layouts.app')
 
-@section('title', 'Tanzania Destinations - Best Safari Tours & Packages | Tanzania Daily Tours')
-@section('meta_title', 'Tanzania Destinations - Best Safari Tours & Packages | Tanzania Daily Tours')
-@section('meta_description', 'Explore our amazing Tanzania safari destinations and tour packages. Find the perfect Serengeti safari, Serengeti tours, Ngorongoro safari, Tarangire National Park, Mikumi safari, Ruaha safari, Zanzibar holidays, and Mount Kilimanjaro climbing adventures. We offer Tanzania safari packages, Tanzania honeymoon safari, Family safari Tanzania, Luxury safari Tanzania, and Budget safari Tanzania options!')
-@section('meta_keywords', 'Tanzania Wild safari, Daily tour, Napenda safari tanzania, Best Tanzania Tourist, Tanzania safari, Tanzania safari packages, Serengeti safari, Serengeti tours, Mount Kilimanjaro climbing, Zanzibar holidays, Tanzania travel, Tanzania wildlife safari, Ngorongoro safari, Tarangire National Park, Mikumi safari, Ruaha safari, Tanzania honeymoon safari, Family safari Tanzania, Luxury safari Tanzania, Budget safari Tanzania')
+@section('title', 'Tanzania Safari Destinations - Serengeti, Kilimanjaro, Zanzibar Tours')
+@section('meta_title', 'Tanzania Safari Destinations - Serengeti, Kilimanjaro, Zanzibar Tours')
+@section('meta_description', 'Explore our Tanzania safari destinations. Serengeti safaris, Kilimanjaro climbs, Zanzibar beaches, Ngorongoro crater, Tarangire park. Day trips & multi-day packages available.')
+@section('meta_keywords', 'Tanzania destinations, Serengeti safari, Kilimanjaro tours, Zanzibar beaches, Ngorongoro crater, Tarangire safari, Tanzania national parks, safari destinations Tanzania')
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890322/safari-kilimanjaro_rnqbaj.jpg')
+
+@section('structured_data')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Tanzania Safari Destinations",
+    "description": "Explore our Tanzania safari destinations including Serengeti, Kilimanjaro, Zanzibar, and more",
+    "url": "https://www.tanzaniadailytoursandsafari.com/destinations"
+}
+</script>
+@endsection
 
 @section('content')
     <!-- Page Header -->

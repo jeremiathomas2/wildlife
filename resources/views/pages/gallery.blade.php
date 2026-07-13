@@ -1,10 +1,22 @@
 @extends('layouts.app')
 
-@section('title', 'Photo Gallery - Tanzania Daily Tours & Safari')
-@section('meta_title', 'Photo Gallery - Tanzania Daily Tours & Safari')
-@section('meta_description', 'Explore our stunning photo gallery featuring Tanzania wildlife, landscapes, cultural moments, and safari adventures. See photos from Serengeti safari, Serengeti tours, Ngorongoro safari, Tarangire National Park, Mikumi safari, Ruaha safari, Zanzibar holidays, and Mount Kilimanjaro climbing!')
-@section('meta_keywords', 'Tanzania Wild safari, daily tour, Best Tanzania Tourist, Tanzania safari, Tanzania safari packages, Serengeti safari, Serengeti tours, Mount Kilimanjaro climbing, Zanzibar holidays, Tanzania travel, Tanzania wildlife safari, Ngorongoro safari, Tarangire National Park, Mikumi safari, Ruaha safari, Tanzania honeymoon safari, Family safari Tanzania, Luxury safari Tanzania, Budget safari Tanzania')
+@section('title', 'Tanzania Safari Photo Gallery - Wildlife, Landscapes & Culture')
+@section('meta_title', 'Tanzania Safari Photo Gallery - Wildlife, Landscapes & Culture')
+@section('meta_description', 'Browse our Tanzania safari photo gallery. Stunning wildlife photos, landscapes, cultural moments from Serengeti, Kilimanjaro, Zanzibar, and more.')
+@section('meta_keywords', 'Tanzania safari photos, wildlife photography Tanzania, Serengeti photos, Kilimanjaro pictures, Zanzibar images, Tanzania travel photos, safari gallery')
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/gallery-landscape-1_dxdd6x.jpg')
+
+@section('structured_data')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "name": "Tanzania Safari Photo Gallery",
+    "description": "Browse our Tanzania safari photo gallery featuring wildlife, landscapes, and cultural moments",
+    "url": "https://www.tanzaniadailytoursandsafari.com/gallery"
+}
+</script>
+@endsection
 
 @section('content')
     <!-- Page Header -->

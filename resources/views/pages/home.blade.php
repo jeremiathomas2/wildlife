@@ -1,10 +1,27 @@
 @extends('layouts.app')
 
-@section('title', 'Tanzania Daily Tours & Safari - Best Safari & Tours in Tanzania')
-@section('meta_title', 'Tanzania Daily Tours & Safari - Best Safari & Tours in Tanzania')
-@section('meta_description', 'Experience the best of Tanzania with expert-guided safaris, cultural tours, and Kilimanjaro adventures. Discover Serengeti safari, Serengeti tours, Ngorongoro safari, Tarangire National Park, Mikumi safari, Ruaha safari, Zanzibar holidays, and Mount Kilimanjaro climbing. We offer Tanzania safari packages, Tanzania honeymoon safari, Family safari Tanzania, Luxury safari Tanzania, and Budget safari Tanzania options!')
-@section('meta_keywords', 'Tanzania Wild safari, daily tour, Best Tanzania Tourist, Tanzania safari, Tanzania safari packages, Serengeti safari, Serengeti tours, Mount Kilimanjaro climbing, Zanzibar holidays, Tanzania travel, Tanzania wildlife safari, Ngorongoro safari, Tarangire National Park, Mikumi safari, Ruaha safari, Tanzania honeymoon safari, Family safari Tanzania, Luxury safari Tanzania, Budget safari Tanzania')
+@section('title', 'Tanzania Daily Tours & Safari - Expert-Guided Safaris Since 2012')
+@section('meta_title', 'Tanzania Daily Tours & Safari - Expert-Guided Safaris Since 2012')
+@section('meta_description', 'Discover Tanzania with our expert local guides. Serengeti safaris, Kilimanjaro climbs, Zanzibar beaches, and cultural tours. 15+ years experience, 10,000+ happy travelers. Book your adventure today!')
+@section('meta_keywords', 'Tanzania safari, Serengeti safari, Kilimanjaro climbing, Zanzibar tours, Ngorongoro crater, Tarangire safari, Tanzania tour operator, safari packages, wildlife tours, cultural tours Tanzania')
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg')
+
+@section('structured_data')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Tanzania Daily Tours & Safari - Expert-Guided Safaris Since 2012",
+    "description": "Discover Tanzania with our expert local guides. Serengeti safaris, Kilimanjaro climbs, Zanzibar beaches, and cultural tours.",
+    "url": "https://www.tanzaniadailytoursandsafari.com",
+    "mainEntity": {
+        "@type": "TravelAgency",
+        "name": "Tanzania Daily Tours & Safari",
+        "description": "Expert-guided Tanzania safaris, cultural tours, and Kilimanjaro adventures since 2012"
+    }
+}
+</script>
+@endsection
 
 @section('content')
     <style>

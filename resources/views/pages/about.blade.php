@@ -1,10 +1,28 @@
 @extends('layouts.app')
 
-@section('title', 'About Us - Tanzania Daily Tours & Safari')
-@section('meta_title', 'About Us - Tanzania Daily Tours & Safari')
-@section('meta_description', 'Learn about Tanzania Daily Tours & Safari - your trusted local guide for authentic safaris, cultural experiences, and Kilimanjaro adventures since 2012. We offer Tanzania safari packages, Serengeti safari, Serengeti tours, Ngorongoro safari, and more!')
-@section('meta_keywords', 'Tanzania Wild safari, daily tour, Best Tanzania Tourist, Tanzania safari, Tanzania safari packages, Serengeti safari, Serengeti tours, Mount Kilimanjaro climbing, Zanzibar holidays, Tanzania travel, Tanzania wildlife safari, Ngorongoro safari, Tarangire National Park, Mikumi safari, Ruaha safari, Tanzania honeymoon safari, Family safari Tanzania, Luxury safari Tanzania, Budget safari Tanzania')
+@section('title', 'About Tanzania Daily Tours & Safari - Local Experts Since 2012')
+@section('meta_title', 'About Tanzania Daily Tours & Safari - Local Experts Since 2012')
+@section('meta_description', 'Learn about Tanzania Daily Tours & Safari - your trusted local tour operator since 2012. Expert guides, authentic experiences, and unforgettable adventures across Tanzania.')
+@section('meta_keywords', 'Tanzania tour operator, local safari guides, about Tanzania tours, Tanzania safari company, Arusha tour operator, experienced safari guides, authentic Tanzania experiences')
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/about-story_of4wth.jpg')
+
+@section('structured_data')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "About Tanzania Daily Tours & Safari",
+    "description": "Learn about Tanzania Daily Tours & Safari - your trusted local tour operator since 2012",
+    "url": "https://www.tanzaniadailytoursandsafari.com/about",
+    "mainEntity": {
+        "@type": "Organization",
+        "name": "Tanzania Daily Tours & Safari",
+        "foundingDate": "2012",
+        "description": "Expert-guided Tanzania safaris, cultural tours, and Kilimanjaro adventures"
+    }
+}
+</script>
+@endsection
 
 @section('content')
     <!-- Page Header -->

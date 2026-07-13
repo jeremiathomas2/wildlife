@@ -1,10 +1,34 @@
 @extends('layouts.app')
 
-@section('title', 'Contact Us - Tanzania Daily Tours & Safari')
-@section('meta_title', 'Contact Us - Tanzania Daily Tours & Safari')
-@section('meta_description', 'Get in touch with Tanzania Daily Tours & Safari for inquiries about Tanzania safari packages, Serengeti safari, Serengeti tours, Ngorongoro safari, Mount Kilimanjaro climbing, Zanzibar holidays, and more!')
-@section('meta_keywords', 'Tanzania Wild safari, daily tour, Best Tanzania Tourist, Tanzania safari, Tanzania safari packages, Serengeti safari, Serengeti tours, Mount Kilimanjaro climbing, Zanzibar holidays, Tanzania travel, Tanzania wildlife safari, Ngorongoro safari, Tarangire National Park, Mikumi safari, Ruaha safari, Tanzania honeymoon safari, Family safari Tanzania, Luxury safari Tanzania, Budget safari Tanzania')
+@section('title', 'Contact Tanzania Daily Tours & Safari - Plan Your Safari')
+@section('meta_title', 'Contact Tanzania Daily Tours & Safari - Plan Your Safari')
+@section('meta_description', 'Get in touch with Tanzania Daily Tours & Safari to plan your perfect Tanzania adventure. Expert consultation, custom itineraries, and 24/7 support. Book your safari today!')
+@section('meta_keywords', 'contact Tanzania safari, book Tanzania safari, safari inquiry, Tanzania tour booking, Arusha tour operator contact, safari consultation')
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/contact-header_uxkkku.jpg')
+
+@section('structured_data')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Tanzania Daily Tours & Safari",
+    "description": "Get in touch with Tanzania Daily Tours & Safari to plan your perfect Tanzania adventure",
+    "url": "https://www.tanzaniadailytoursandsafari.com/contact",
+    "mainEntity": {
+        "@type": "TravelAgency",
+        "name": "Tanzania Daily Tours & Safari",
+        "telephone": "+255123456789",
+        "email": "info@tanzaniadailytoursandsafari.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Arusha, Tanzania",
+            "addressLocality": "Arusha",
+            "addressCountry": "TZ"
+        }
+    }
+}
+</script>
+@endsection
 
 @section('content')
     <!-- Page Header -->

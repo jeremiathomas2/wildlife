@@ -30,6 +30,88 @@
     <meta name="twitter:title" content="@yield('meta_title', 'Tanzania Daily Tours & Safari - Best Safari & Tours in Tanzania')">
     <meta name="twitter:description" content="@yield('meta_description', 'Experience the best of Tanzania with expert-guided safaris, cultural tours, and Kilimanjaro adventures. Explore Serengeti, Ngorongoro, Zanzibar & more!')">
     <meta name="twitter:image" content="@yield('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg')">
+
+    <!-- JSON-LD Structured Data -->
+    @yield('structured_data')
+    
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TravelAgency",
+        "name": "Tanzania Daily Tours & Safari",
+        "description": "Expert-guided Tanzania safaris, cultural tours, and Kilimanjaro adventures since 2012",
+        "url": "https://www.tanzaniadailytoursandsafari.com",
+        "logo": "https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg",
+        "image": "https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg",
+        "telephone": "+255123456789",
+        "email": "info@tanzaniadailytoursandsafari.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Arusha, Tanzania",
+            "addressLocality": "Arusha",
+            "addressCountry": "TZ"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "-3.3869",
+            "longitude": "36.6830"
+        },
+        "openingHours": "Mo-Su 00:00-23:59",
+        "priceRange": "$$",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "500"
+        },
+        "sameAs": [
+            "https://www.facebook.com/tanzaniadailytours",
+            "https://www.instagram.com/tanzaniadailytours",
+            "https://www.tripadvisor.com/Restaurant_Review-g293930-d12345678"
+        ]
+    }
+    </script>
+    
+    <!-- Website Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Tanzania Daily Tours & Safari",
+        "url": "https://www.tanzaniadailytoursandsafari.com",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.tanzaniadailytoursandsafari.com/destinations?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    
+    <!-- Breadcrumb Schema -->
+    @if(request()->path() != '/')
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.tanzaniadailytoursandsafari.com"
+            },
+            @if(request()->path() != 'destinations')
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "{{ ucfirst(str_replace('-', ' ', request()->segment(1))) }}",
+                "item": "https://www.tanzaniadailytoursandsafari.com/{{ request()->segment(1) }}"
+            }
+            @endif
+        ]
+    }
+    </script>
+    @endif
     
     <!-- Google tag (gtag.js) - will load after cookie consent -->
     <script id="google-analytics" data-consent="analytics">
