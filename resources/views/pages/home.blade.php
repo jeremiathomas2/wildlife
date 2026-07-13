@@ -351,7 +351,7 @@
             <!-- Experience Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Card 1 -->
-                <div class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
+                <a href="{{ route('destinations') }}" class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 block" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
                     <div class="aspect-[4/5] relative">
                         <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg" alt="Serengeti Safari" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -367,10 +367,10 @@
                             <p class="text-sm" style="color: rgba(255,255,255,0.8);">Witness the Great Migration and Big Five in their natural habitat</p>
                         </div>
                     </div>
-                </div>
+                </a>
 
                 <!-- Card 2 -->
-                <div class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
+                <a href="{{ route('destinations') }}" class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 block" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
                     <div class="aspect-[4/5] relative">
                         <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890322/safari-kilimanjaro_rnqbaj.jpg" alt="Mount Kilimanjaro" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -384,10 +384,10 @@
                             <p class="text-sm" style="color: rgba(255,255,255,0.8);">Conquer Africa's highest peak with expert guides and stunning views</p>
                         </div>
                     </div>
-                </div>
+                </a>
 
                 <!-- Card 3 -->
-                <div class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
+                <a href="{{ route('destinations') }}" class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 block" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
                     <div class="aspect-[4/5] relative">
                         <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=800" alt="Zanzibar Beach" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -403,10 +403,10 @@
                             <p class="text-sm" style="color: rgba(255,255,255,0.8);">Relax on pristine beaches and explore historic Stone Town</p>
                         </div>
                     </div>
-                </div>
+                </a>
 
                 <!-- Card 4 -->
-                <div class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
+                <a href="{{ route('destinations') }}" class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 block" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
                     <div class="aspect-[4/5] relative">
                         <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=800" alt="Cultural Experience" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -423,7 +423,7 @@
                             <p class="text-sm" style="color: rgba(255,255,255,0.8);">Immerse yourself in Maasai culture and local traditions</p>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
 
             <!-- Stats Bar -->
