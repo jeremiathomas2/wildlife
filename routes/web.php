@@ -84,6 +84,11 @@ Route::get('/terms', function () {
     return view('pages.terms', compact('contents'));
 })->name('terms');
 
+Route::get('/privacy', function () {
+    $contents = App\Models\SiteContent::all()->keyBy('key') ?? [];
+    return view('pages.privacy', compact('contents'));
+})->name('privacy');
+
 Route::get('/sitemap.xml', function () {
     $tours = App\Models\Destination::where('status', 'Published')->get() ?? [];
     $pages = [

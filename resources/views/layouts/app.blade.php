@@ -697,6 +697,9 @@
                     <a href="{{ route('terms') }}" class="text-xs transition-colors duration-300 hover:text-white" style="color: rgba(255, 255, 255, 0.6);">
                         Terms of Service
                     </a>
+                    <a href="{{ route('privacy') }}" class="text-xs transition-colors duration-300 hover:text-white" style="color: rgba(255, 255, 255, 0.6);">
+                        Privacy Policy
+                    </a>
                 </div>
             </div>
         </div>

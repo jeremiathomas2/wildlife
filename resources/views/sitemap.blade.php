@@ -58,6 +58,14 @@
         <priority>0.6</priority>
     </url>
     
+    <!-- Privacy Page -->
+    <url>
+        <loc>https://www.tanzaniadailytoursandsafari.com/privacy</loc>
+        <lastmod>{{ now()->format('Y-m-d') }}</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    
     <!-- Destination Detail Pages -->
     @foreach($destinations as $destination)
     <url>
