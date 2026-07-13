@@ -353,7 +353,7 @@
                 <!-- Card 1 -->
                 <a href="{{ route('destinations') }}" class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 block" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
                     <div class="aspect-[4/5] relative">
-                        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg" alt="Serengeti Safari" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1783506719/Screenshot_2026-07-08_033102_qp2cgp.png" alt="Serengeti Safari" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-6">
                             <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background: #ff9729;">
@@ -372,7 +372,7 @@
                 <!-- Card 2 -->
                 <a href="{{ route('destinations') }}" class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 block" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
                     <div class="aspect-[4/5] relative">
-                        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890322/safari-kilimanjaro_rnqbaj.jpg" alt="Mount Kilimanjaro" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1783497617/Screenshot_2026-07-08_005522_sonnrs.png" alt="Mount Kilimanjaro" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-6">
                             <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background: #088529;">
@@ -389,7 +389,7 @@
                 <!-- Card 3 -->
                 <a href="{{ route('destinations') }}" class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 block" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
                     <div class="aspect-[4/5] relative">
-                        <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=800" alt="Zanzibar Beach" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1783432553/pexels-mck-242487578-14667295_oxtpwj.jpg" alt="Zanzibar Beach" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-6">
                             <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background: #088529;">
@@ -408,7 +408,7 @@
                 <!-- Card 4 -->
                 <a href="{{ route('destinations') }}" class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 block" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
                     <div class="aspect-[4/5] relative">
-                        <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=800" alt="Cultural Experience" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1783352695/maasai_tribe_ggsbdm.jpg" alt="Cultural Experience" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-6">
                             <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background: #ff9729;">
