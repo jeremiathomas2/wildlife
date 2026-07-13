@@ -18,7 +18,14 @@
         "@type": "Organization",
         "name": "Tanzania Daily Tours & Safari",
         "foundingDate": "2012",
-        "description": "Expert-guided Tanzania safaris, cultural tours, and Kilimanjaro adventures"
+        "description": "Expert-guided Tanzania safaris, cultural tours, and Kilimanjaro adventures",
+        "employee": {
+            "@type": "Person",
+            "name": "Ally Juma",
+            "jobTitle": "Senior Tour Guide",
+            "image": "https://res.cloudinary.com/aenplcpl/image/upload/v1783677911/ally_h4ud4z.png",
+            "description": "Expert Tanzania safari guide with over 10 years of experience"
+        }
     }
 }
 </script>
