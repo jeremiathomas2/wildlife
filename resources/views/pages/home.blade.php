@@ -21,6 +21,39 @@
     }
 }
 </script>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is the best time to visit Tanzania for safari?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The best time for Tanzania safaris is during the dry season from June to October for excellent wildlife viewing. The Great Migration occurs from June to July in the Serengeti."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How much does a Tanzania safari cost?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Tanzania safari prices range from $150 to $500 per day depending on the park, accommodation level, and group size. We offer budget, mid-range, and luxury safari packages."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Do I need a visa for Tanzania?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Most visitors need a visa for Tanzania. You can obtain an e-visa online or get a visa on arrival at major airports and border crossings."
+            }
+        }
+    ]
+}
+</script>
 @endsection
 
 @section('content')
