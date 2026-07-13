@@ -72,6 +72,8 @@
                     background-repeat: no-repeat;
                     opacity: {{ $index === 0 ? 1 : 0 }};
                 "
+                role="img"
+                aria-label="@if($index == 0)Serengeti safari with wildlife including lions and elephants @elseif($index == 1)Mount Kilimanjaro summit view with snow-capped peak @elseif($index == 2)Ngorongoro crater landscape with wildlife @elseif($index == 3)Tanzania wildlife safari in national park @elseif($index == 4)African animals in natural habitat including giraffes @elseZanzibar beach paradise with turquoise waters @endif"
             ></div>
         @endforeach
 
