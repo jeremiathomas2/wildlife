@@ -329,92 +329,120 @@
         </div>
     </section>
 
-    <!-- Why Choose Us Section -->
-    <section class="py-20 lg:py-28" style="background: #ffffff;">
-        <div class="max-w-[1280px] mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-                <!-- Left - Image -->
-                <div class="relative overflow-hidden rounded-2xl" style="aspect-ratio: 4/3;">
-                    <img
-                        src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/about-story_of4wth.jpg"
-                        alt="Safari guides with vehicle in the Serengeti"
-                        class="w-full h-full object-cover"
-                        loading="lazy"
-                    />
-                    <div
-                        class="absolute inset-0"
-                        style="background: linear-gradient(to right, rgba(99,30,8,0.1), transparent);"
-                    />
+    <!-- Tanzania Experience Section -->
+    <section class="py-20 lg:py-28 relative overflow-hidden" style="background: linear-gradient(135deg, #631e08 0%, #854208 50%, #631e08 100%);">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 left-0 w-96 h-96 rounded-full opacity-10" style="background: radial-gradient(circle, #ff9729 0%, transparent 70%); filter: blur(60px);"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 rounded-full opacity-10" style="background: radial-gradient(circle, #088529 0%, transparent 70%); filter: blur(60px);"></div>
+
+        <div class="relative z-10 max-w-[1280px] mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-sm font-semibold uppercase tracking-[0.15em] mb-3 block" style="color: #ff9729; font-family: 'Raleway', sans-serif;">
+                    Experience Tanzania
+                </span>
+                <h2 class="font-bold mb-4" style="font-family: 'Raleway', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); color: #ffffff; line-height: 1.1;">
+                    Your Safari Adventure Awaits
+                </h2>
+                <p class="text-lg max-w-2xl mx-auto" style="color: rgba(255,255,255,0.85);">
+                    From the vast Serengeti plains to the pristine beaches of Zanzibar, discover the magic of Tanzania through unforgettable experiences.
+                </p>
+            </div>
+
+            <!-- Experience Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
+                    <div class="aspect-[4/5] relative">
+                        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg" alt="Serengeti Safari" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background: #ff9729;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M2 12h20"/>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-bold text-xl mb-2" style="font-family: 'Raleway', sans-serif; color: #ffffff;">Serengeti Safari</h3>
+                            <p class="text-sm" style="color: rgba(255,255,255,0.8);">Witness the Great Migration and Big Five in their natural habitat</p>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Right - Content -->
-                <div>
-                    <span
-                        class="text-sm font-semibold uppercase tracking-[0.15em] mb-3 block"
-                        style="color: #ff9729; font-family: 'Raleway', sans-serif;"
-                    >
-                        {{ $contents['why_choose_label']->value ?? 'Why Travel With Us' }}
-                    </span>
-                    <h2
-                        class="font-bold mb-4"
-                        style="
-                            font-family: 'Raleway', sans-serif;
-                            font-size: clamp(1.8rem, 4vw, 3.2rem);
-                            color: #854208;
-                            line-height: 1.15;
-                        "
-                    >
-                        {{ $contents['why_choose_title']->value ?? 'Your Trusted Safari Partner' }}
-                    </h2>
-                    <p class="text-base mb-8 leading-relaxed" style="color: #111111;">
-                        {{ $contents['why_choose_description']->value ?? 'With over a decade of experience, we craft safari experiences that go beyond the ordinary. Our expert guides, comfortable 4x4 vehicles, and deep local knowledge ensure every moment is unforgettable.' }}
-                    </p>
-
-                    <div class="space-y-5">
-                        @php
-                            $features = [
-                                [
-                                    'title' => 'Expert Local Guides',
-                                    'description' => 'Our guides have 10+ years of experience and know every corner of the parks.',
-                                ],
-                                [
-                                    'title' => 'Comfortable 4x4 Vehicles',
-                                    'description' => 'Pop-up roof Land Cruisers with charging ports and binoculars.',
-                                ],
-                                [
-                                    'title' => 'All-Inclusive Packages',
-                                    'description' => 'No hidden fees. Park entry, meals, and accommodation included.',
-                                ],
-                                [
-                                    'title' => 'Flexible Itineraries',
-                                    'description' => 'Customize your trip. We adapt to your interests and pace.',
-                                ],
-                            ];
-                        @endphp
-                        @foreach($features as $feature)
-                            <div class="flex items-start gap-4">
-                                <div
-                                    class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center"
-                                    style="background: #088529;"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M9 19l-7-7 7-7"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4
-                                        class="font-bold text-base mb-1"
-                                        style="font-family: 'Raleway', sans-serif; color: #854208;"
-                                    >
-                                        {{ $feature['title'] }}
-                                    </h4>
-                                    <p class="text-sm leading-relaxed" style="color: #111111;">
-                                        {{ $feature['description'] }}
-                                    </p>
-                                </div>
+                <!-- Card 2 -->
+                <div class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
+                    <div class="aspect-[4/5] relative">
+                        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890322/safari-kilimanjaro_rnqbaj.jpg" alt="Mount Kilimanjaro" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background: #088529;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="m8 3 4 8 5-5 5 15H2L8 3z"/>
+                                </svg>
                             </div>
-                        @endforeach
+                            <h3 class="font-bold text-xl mb-2" style="font-family: 'Raleway', sans-serif; color: #ffffff;">Kilimanjaro Trek</h3>
+                            <p class="text-sm" style="color: rgba(255,255,255,0.8);">Conquer Africa's highest peak with expert guides and stunning views</p>
+                        </div>
                     </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
+                    <div class="aspect-[4/5] relative">
+                        <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=800" alt="Zanzibar Beach" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background: #088529;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M2 12h20"/>
+                                    <path d="M12 2v20"/>
+                                    <circle cx="12" cy="12" r="10"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-bold text-xl mb-2" style="font-family: 'Raleway', sans-serif; color: #ffffff;">Zanzibar Escape</h3>
+                            <p class="text-sm" style="color: rgba(255,255,255,0.8);">Relax on pristine beaches and explore historic Stone Town</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
+                    <div class="aspect-[4/5] relative">
+                        <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=800" alt="Cultural Experience" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background: #ff9729;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-bold text-xl mb-2" style="font-family: 'Raleway', sans-serif; color: #ffffff;">Cultural Tours</h3>
+                            <p class="text-sm" style="color: rgba(255,255,255,0.8);">Immerse yourself in Maasai culture and local traditions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-4xl font-bold mb-2" style="font-family: 'Raleway', sans-serif; color: #ff9729;">15+</div>
+                    <div class="text-sm" style="color: rgba(255,255,255,0.8);">Years Experience</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold mb-2" style="font-family: 'Raleway', sans-serif; color: #ff9729;">10K+</div>
+                    <div class="text-sm" style="color: rgba(255,255,255,0.8);">Happy Travelers</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold mb-2" style="font-family: 'Raleway', sans-serif; color: #ff9729;">50+</div>
+                    <div class="text-sm" style="color: rgba(255,255,255,0.8);">Expert Guides</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold mb-2" style="font-family: 'Raleway', sans-serif; color: #ff9729;">100%</div>
+                    <div class="text-sm" style="color: rgba(255,255,255,0.8);">Satisfaction Rate</div>
                 </div>
             </div>
         </div>
@@ -422,14 +450,6 @@
 
     <!-- Testimonials Section -->
     <section class="py-20 lg:py-28 relative overflow-hidden" style="background: #631e08;">
-        <!-- Subtle noise texture overlay -->
-        <div
-            class="absolute inset-0 opacity-5"
-            style="
-                background-image: url('data:image/svg+xml;utf8,<svg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'noiseFilter\'><feTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/></filter><rect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/></svg>');
-            "
-        ></div>
-
         <div class="relative z-10 max-w-[1280px] mx-auto px-6">
             <div class="text-center mb-12">
                 <span class="text-sm font-semibold uppercase tracking-[0.15em] mb-3 block" style="color: #ff9729; font-family: 'Raleway', sans-serif;">
