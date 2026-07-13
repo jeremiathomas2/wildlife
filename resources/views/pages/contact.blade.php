@@ -28,6 +28,39 @@
     }
 }
 </script>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How do I book a Tanzania safari?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You can book a Tanzania safari by contacting us through our website form, WhatsApp, or email. We'll respond within 24 hours with a customized itinerary and quote based on your preferences and travel dates."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What information do I need to provide for booking?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "To book your safari, we'll need your travel dates, number of travelers, preferred destinations, accommodation level (budget, mid-range, or luxury), and any special requirements or dietary restrictions."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What payment methods do you accept?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "We accept bank transfers, credit cards, and mobile money payments. A 30% deposit is required to confirm your booking, with the remaining balance due 30 days before your safari begins."
+            }
+        }
+    ]
+}
+</script>
 @endsection
 
 @section('content')
