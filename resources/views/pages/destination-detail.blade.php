@@ -232,13 +232,39 @@
                                 <input type="hidden" name="total_price" id="total-price-hidden" value="{{ number_format($adultPrice, 2) }}">
                             </div>
 
-                            <button type="submit" class="w-full py-3.5 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90" style="background: #088529;">
-                                Book Now
+                            <button type="submit" class="w-full py-3.5 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90 shadow-lg" style="background: #088529;">
+                                Book Now - Secure Your Spot
                             </button>
 
-                            <p class="text-center mt-3">
-                                <a href="{{ route('contact') }}" class="text-xs font-semibold transition-colors hover:underline" style="color: #ff9729;">
-                                    Or contact us
+                            <!-- Trust Signals -->
+                            <div class="mt-4 space-y-2">
+                                <div class="flex items-center gap-2 text-xs" style="color: #5a3e2b;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#088529" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                    </svg>
+                                    <span>Instant confirmation</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-xs" style="color: #5a3e2b;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#088529" stroke-width="2">
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                    </svg>
+                                    <span>Free cancellation up to 24 hours</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-xs" style="color: #5a3e2b;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#088529" stroke-width="2">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                    <span>4.8/5 customer rating</span>
+                                </div>
+                            </div>
+
+                            <p class="text-center mt-4">
+                                <a href="{{ route('contact') }}" class="text-xs font-semibold transition-colors hover:underline flex items-center justify-center gap-1" style="color: #ff9729;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                                    </svg>
+                                    Need help? Contact us
                                 </a>
                             </p>
 
