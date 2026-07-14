@@ -34,8 +34,8 @@
     <!-- JSON-LD Structured Data -->
     @yield('structured_data')
     
-    <!-- Organization Schema -->
-    <script type="application/ld+json">
+    @php
+        $organizationSchema = '<script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "TravelAgency",
@@ -107,10 +107,9 @@
             "Big Five Africa"
         ]
     }
-    </script>
+    </script>';
 
-    <!-- LocalBusiness Schema for Google Business Profile -->
-    <script type="application/ld+json">
+        $localBusinessSchema = '<script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
@@ -140,10 +139,9 @@
             "reviewCount": "500"
         }
     }
-    </script>
-    
-    <!-- Website Schema -->
-    <script type="application/ld+json">
+    </script>';
+
+        $websiteSchema = '<script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
@@ -155,7 +153,11 @@
             "query-input": "required name=search_term_string"
         }
     }
-    </script>
+    </script>';
+    @endphp
+    {!! $organizationSchema !!}
+    {!! $localBusinessSchema !!}
+    {!! $websiteSchema !!}
     
     <!-- Breadcrumb Schema -->
     @php
