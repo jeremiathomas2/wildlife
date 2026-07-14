@@ -158,7 +158,12 @@
     </script>
     
     <!-- Breadcrumb Schema -->
-    @if(request()->path() != '/')
+    @php
+        $showBreadcrumb = request()->path() != '/';
+        $showSecondItem = request()->path() != 'destinations';
+        $segment1 = request()->segment(1) ? ucfirst(str_replace('-', ' ', request()->segment(1))) : '';
+    @endphp
+    @if($showBreadcrumb)
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -169,12 +174,12 @@
                 "position": 1,
                 "name": "Home",
                 "item": "https://www.tanzaniadailytoursandsafari.com"
-            },
-            @if(request()->path() != 'destinations')
-            {
+            }
+            @if($showSecondItem)
+            ,{
                 "@type": "ListItem",
                 "position": 2,
-                "name": "{{ ucfirst(str_replace('-', ' ', request()->segment(1))) }}",
+                "name": "{{ $segment1 }}",
                 "item": "https://www.tanzaniadailytoursandsafari.com/{{ request()->segment(1) }}"
             }
             @endif
@@ -535,12 +540,7 @@
                            transition: all 0.3s ease;
                        "
                        onmouseover="this.querySelector('span').style.width = '100%'; this.querySelector('span').style.left = '0';"
-                       onmouseout="
-                           @if($currentRoute !== $link['route'])
-                               this.querySelector('span').style.width = '0'; 
-                               this.querySelector('span').style.left = '50%';
-                           @endif
-                       "
+                       onmouseout="if(this.querySelector('span').style.width !== '100%') { this.querySelector('span').style.width = '0'; this.querySelector('span').style.left = '50%'; }"
                     >
                         {{ $link['label'] }}
                         <span class="absolute bottom-0 h-0.5" style="
