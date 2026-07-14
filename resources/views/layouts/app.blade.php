@@ -178,13 +178,14 @@
                 "item" => "https://www.tanzaniadailytoursandsafari.com/" . request()->segment(1)
             ];
         }
+        $breadcrumbJson = json_encode($breadcrumbItems);
     @endphp
     @if($showBreadcrumb)
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
-        "itemListElement": {{ json_encode($breadcrumbItems) }}
+        "itemListElement": {!! $breadcrumbJson !!}
     }
     </script>
     @endif
