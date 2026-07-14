@@ -179,16 +179,16 @@
             ];
         }
         $breadcrumbJson = json_encode($breadcrumbItems);
-    @endphp
-    @if($showBreadcrumb)
-    <script type="application/ld+json">
-    {
+        $breadcrumbScript = '';
+        if ($showBreadcrumb) {
+            $breadcrumbScript = '<script type="application/ld+json">{
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
-        "itemListElement": {!! $breadcrumbJson !!}
-    }
-    </script>
-    @endif
+        "itemListElement": ' . $breadcrumbJson . '
+    }</script>';
+        }
+    @endphp
+    {!! $breadcrumbScript !!}
     
     <!-- Google tag (gtag.js) - will load after cookie consent -->
     <script id="google-analytics" data-consent="analytics">
