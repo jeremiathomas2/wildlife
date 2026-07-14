@@ -95,7 +95,18 @@
             ];
         @endphp
         @foreach($heroImages as $index => $src)
-            <div 
+            @php
+                $ariaLabels = [
+                    'Serengeti safari with wildlife including lions and elephants',
+                    'Mount Kilimanjaro summit view with snow-capped peak',
+                    'Ngorongoro crater landscape with wildlife',
+                    'Tanzania wildlife safari in national park',
+                    'African animals in natural habitat including giraffes',
+                    'Zanzibar beach paradise with turquoise waters'
+                ];
+                $ariaLabel = $ariaLabels[$index] ?? $ariaLabels[0];
+            @endphp
+            <div
                 id="hero-slide-{{ $index }}"
                 class="absolute inset-0 transition-opacity duration-1000"
                 style="
@@ -106,7 +117,7 @@
                     opacity: {{ $index === 0 ? 1 : 0 }};
                 "
                 role="img"
-                aria-label="@if($index == 0)Serengeti safari with wildlife including lions and elephants @elseif($index == 1)Mount Kilimanjaro summit view with snow-capped peak @elseif($index == 2)Ngorongoro crater landscape with wildlife @elseif($index == 3)Tanzania wildlife safari in national park @elseif($index == 4)African animals in natural habitat including giraffes @elseZanzibar beach paradise with turquoise waters @endif"
+                aria-label="{{ $ariaLabel }}"
             ></div>
         @endforeach
 
