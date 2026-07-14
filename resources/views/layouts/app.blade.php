@@ -797,10 +797,15 @@
                 hamburger2.style.background = '#854208';
                 hamburger3.style.background = '#854208';
                 
-                // Update desktop nav links color
-                const desktopLinks = nav.querySelectorAll('a');
+                // Update desktop nav links color - preserve active route color
+                const desktopLinks = nav.querySelectorAll('.hidden.lg\\:flex a');
                 desktopLinks.forEach(link => {
-                    if (!link.style.background || link.style.background === 'transparent') {
+                    const underline = link.querySelector('span');
+                    if (underline && underline.style.width === '100%') {
+                        // Active route - keep orange color
+                        link.style.color = '#ff9729';
+                    } else if (!link.style.background || link.style.background === 'transparent') {
+                        // Non-active route - change to dark
                         link.style.color = '#111111';
                     }
                 });
@@ -816,10 +821,15 @@
                 hamburger2.style.background = '#ffffff';
                 hamburger3.style.background = '#ffffff';
                 
-                // Update desktop nav links color
-                const desktopLinks = nav.querySelectorAll('a');
+                // Update desktop nav links color - preserve active route color
+                const desktopLinks = nav.querySelectorAll('.hidden.lg\\:flex a');
                 desktopLinks.forEach(link => {
-                    if (!link.style.background || link.style.background === 'transparent') {
+                    const underline = link.querySelector('span');
+                    if (underline && underline.style.width === '100%') {
+                        // Active route - keep orange color
+                        link.style.color = '#ff9729';
+                    } else if (!link.style.background || link.style.background === 'transparent') {
+                        // Non-active route - change to white
                         link.style.color = '#ffffff';
                     }
                 });
@@ -880,7 +890,7 @@
             hamburger3 = document.getElementById('hamburger3');
             
             // Listen to scroll
-            lenis.on('scroll', updateNav);
+            // lenis.on('scroll', updateNav);
             window.addEventListener('scroll', updateNav);
             updateNav();
         });
