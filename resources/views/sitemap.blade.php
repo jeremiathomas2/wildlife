@@ -1,75 +1,76 @@
-@php header('Content-Type: text/xml'); @endphp
-<?xml version="1.0" encoding="UTF-8"?>
+@php
+    echo '<' . '?xml version="1.0" encoding="UTF-8"?>';
+@endphp
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
     <!-- Homepage -->
     <url>
-        <loc>https://www.tanzaniadailytoursandsafari.com/</loc>
+        <loc>{{ url('/') }}</loc>
         <lastmod>{{ now()->format('Y-m-d') }}</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
-    
+
     <!-- Destinations Page -->
     <url>
-        <loc>https://www.tanzaniadailytoursandsafari.com/destinations</loc>
+        <loc>{{ url('/destinations') }}</loc>
         <lastmod>{{ now()->format('Y-m-d') }}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
-    
+
     <!-- About Page -->
     <url>
-        <loc>https://www.tanzaniadailytoursandsafari.com/about</loc>
+        <loc>{{ url('/about') }}</loc>
         <lastmod>{{ now()->format('Y-m-d') }}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
-    
+
     <!-- Reviews Page -->
     <url>
-        <loc>https://www.tanzaniadailytoursandsafari.com/reviews</loc>
+        <loc>{{ url('/reviews') }}</loc>
         <lastmod>{{ now()->format('Y-m-d') }}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
-    
+
     <!-- Gallery Page -->
     <url>
-        <loc>https://www.tanzaniadailytoursandsafari.com/gallery</loc>
+        <loc>{{ url('/gallery') }}</loc>
         <lastmod>{{ now()->format('Y-m-d') }}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
-    
+
     <!-- Contact Page -->
     <url>
-        <loc>https://www.tanzaniadailytoursandsafari.com/contact</loc>
+        <loc>{{ url('/contact') }}</loc>
         <lastmod>{{ now()->format('Y-m-d') }}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
-    
+
     <!-- Terms Page -->
     <url>
-        <loc>https://www.tanzaniadailytoursandsafari.com/terms</loc>
+        <loc>{{ url('/terms') }}</loc>
         <lastmod>{{ now()->format('Y-m-d') }}</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
     </url>
-    
+
     <!-- Privacy Page -->
     <url>
-        <loc>https://www.tanzaniadailytoursandsafari.com/privacy</loc>
+        <loc>{{ url('/privacy') }}</loc>
         <lastmod>{{ now()->format('Y-m-d') }}</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
     </url>
-    
+
     <!-- Destination Detail Pages -->
     @foreach($destinations as $destination)
     <url>
-        <loc>{{ url('destination.detail', $destination->slug ?? \Illuminate\Support\Str::slug($destination->name)) }}</loc>
+        <loc>{{ route('destination.detail', $destination->slug ?? \Illuminate\Support\Str::slug($destination->name)) }}</loc>
         <lastmod>{{ $destination->updated_at ? $destination->updated_at->format('Y-m-d') : now()->format('Y-m-d') }}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
