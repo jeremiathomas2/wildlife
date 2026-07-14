@@ -488,20 +488,20 @@
     <!-- Loading Screen - Only show on home page -->
     @php
         $isHomePage = Route::currentRouteName() === 'home';
-    @endphp
-    @if($isHomePage)
-    <div id="loadingScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center" style="background: #f8f4f0; opacity: 1; transition: opacity 0.5s ease;">
+        $loadingScreenHtml = '';
+        if ($isHomePage) {
+            $loadingScreenHtml = '<div id="loadingScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center" style="background: #f8f4f0; opacity: 1; transition: opacity 0.5s ease;">
     <script>
         (function() {
-            const hasSeenSplash = localStorage.getItem('hasSeenSplash');
-            const loadingScreen = document.getElementById('loadingScreen');
+            const hasSeenSplash = localStorage.getItem(\'hasSeenSplash\');
+            const loadingScreen = document.getElementById(\'loadingScreen\');
             if (hasSeenSplash) {
-                loadingScreen.style.display = 'none';
+                loadingScreen.style.display = \'none\';
             }
         })();
     </script>
         <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-brown_d1vgxe.png" alt="Tanzania Daily Tours & Safari" style="height: 120px; width: auto; object-fit: contain; margin-bottom: 20px; animation: zoomInOut 2s ease-in-out infinite;">
-        <h2 class="text-2xl font-bold italic mb-6" style="font-family: 'Raleway', sans-serif; color: #854208;">Tanzania Daily Tour and Safari</h2>
+        <h2 class="text-2xl font-bold italic mb-6" style="font-family: \'Raleway\', sans-serif; color: #854208;">Tanzania Daily Tour and Safari</h2>
         <span class="w-2 h-2 rounded-full animate-pulse" style="background: #ff9729;"></span>
         <style>
             @keyframes zoomInOut {
@@ -509,8 +509,10 @@
                 50% { transform: scale(1.2); }
             }
         </style>
-    </div>
-    @endif
+    </div>';
+        }
+    @endphp
+    {!! $loadingScreenHtml !!}
 
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-400" id="mainNav">
