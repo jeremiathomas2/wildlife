@@ -499,6 +499,14 @@
             const loadingScreen = document.getElementById(\'loadingScreen\');
             if (hasSeenSplash) {
                 loadingScreen.style.display = \'none\';
+            } else {
+                setTimeout(function() {
+                    loadingScreen.style.opacity = \'0\';
+                    setTimeout(function() {
+                        loadingScreen.style.display = \'none\';
+                        localStorage.setItem(\'hasSeenSplash\', \'true\');
+                    }, 500);
+                }, 3000);
             }
         })();
     </script>
