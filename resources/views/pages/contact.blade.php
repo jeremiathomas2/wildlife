@@ -40,7 +40,7 @@
             "name": "How do I book a Tanzania safari?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "You can book a Tanzania safari by contacting us through our website form, WhatsApp, or email. We'll respond within 24 hours with a customized itinerary and quote based on your preferences and travel dates."
+                "text": "You can book a Tanzania safari by contacting us through our website form, WhatsApp, or email. We\'ll respond within 24 hours with a customized itinerary and quote based on your preferences and travel dates."
             }
         },
         {
@@ -48,7 +48,7 @@
             "name": "What information do I need to provide for booking?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "To book your safari, we'll need your travel dates, number of travelers, preferred destinations, accommodation level (budget, mid-range, or luxury), and any special requirements or dietary restrictions."
+                "text": "To book your safari, we\'ll need your travel dates, number of travelers, preferred destinations, accommodation level (budget, mid-range, or luxury), and any special requirements or dietary restrictions."
             }
         },
         {
