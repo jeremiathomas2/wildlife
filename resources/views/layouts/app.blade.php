@@ -504,7 +504,7 @@
         <h2 class="text-2xl font-bold italic mb-6" style="font-family: \'Raleway\', sans-serif; color: #854208;">Tanzania Daily Tour and Safari</h2>
         <span class="w-2 h-2 rounded-full animate-pulse" style="background: #ff9729;"></span>
         <style>
-            @keyframes zoomInOut {
+            @@keyframes zoomInOut {
                 0%, 100% { transform: scale(1); }
                 50% { transform: scale(1.2); }
             }
