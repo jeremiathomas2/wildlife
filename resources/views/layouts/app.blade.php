@@ -486,7 +486,10 @@
 </head>
 <body>
     <!-- Loading Screen - Only show on home page -->
-    @if(Route::currentRouteName() === 'home')
+    @php
+        $isHomePage = Route::currentRouteName() === 'home';
+    @endphp
+    @if($isHomePage)
     <div id="loadingScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center" style="background: #f8f4f0; opacity: 1; transition: opacity 0.5s ease;">
     <script>
         (function() {
