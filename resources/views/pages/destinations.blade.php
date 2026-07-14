@@ -7,7 +7,8 @@
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890322/safari-kilimanjaro_rnqbaj.jpg')
 
 @section('structured_data')
-<script type="application/ld+json">
+@php
+    $structuredData = '<script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -48,8 +49,9 @@
         }
     ]
 }
-</script>
-@endsection
+</script>';
+@endphp
+{!! $structuredData !!}
 
 @section('content')
     <!-- Page Header -->
