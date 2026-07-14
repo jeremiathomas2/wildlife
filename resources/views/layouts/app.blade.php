@@ -492,33 +492,10 @@
         $isHomePage = Route::currentRouteName() === 'home';
         $loadingScreenHtml = '';
         if ($isHomePage) {
-            $loadingScreenHtml = '<div id="loadingScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center" style="background: #f8f4f0; opacity: 1; transition: opacity 0.5s ease;">
-    <script>
-        (function() {
-            const hasSeenSplash = localStorage.getItem(\'hasSeenSplash\');
-            const loadingScreen = document.getElementById(\'loadingScreen\');
-            if (hasSeenSplash) {
-                loadingScreen.style.display = \'none\';
-            } else {
-                setTimeout(function() {
-                    loadingScreen.style.opacity = \'0\';
-                    setTimeout(function() {
-                        loadingScreen.style.display = \'none\';
-                        localStorage.setItem(\'hasSeenSplash\', \'true\');
-                    }, 500);
-                }, 3000);
-            }
-        })();
-    </script>
-        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-brown_d1vgxe.png" alt="Tanzania Daily Tours & Safari" style="height: 120px; width: auto; object-fit: contain; margin-bottom: 20px; animation: zoomInOut 2s ease-in-out infinite;">
+            $loadingScreenHtml = '<div id="loadingScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center" style="background: #f8f4f0; opacity: 1; transition: opacity 0.3s ease;">
+        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-brown_d1vgxe.png" alt="Tanzania Daily Tours & Safari" style="height: 120px; width: auto; object-fit: contain; margin-bottom: 20px;">
         <h2 class="text-2xl font-bold italic mb-6" style="font-family: \'Raleway\', sans-serif; color: #854208;">Tanzania Daily Tour and Safari</h2>
         <span class="w-2 h-2 rounded-full animate-pulse" style="background: #ff9729;"></span>
-        <style>
-            @@keyframes zoomInOut {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.2); }
-            }
-        </style>
     </div>';
         }
     @endphp
@@ -850,7 +827,7 @@
         }
         
         document.addEventListener('DOMContentLoaded', function() {
-            // Loading screen
+            // Loading screen - hide immediately for better performance
             const loadingScreen = document.getElementById('loadingScreen');
             
             if (loadingScreen) {
@@ -859,17 +836,16 @@
                 
                 if (hasSeenSplash) {
                     // Hide immediately if already seen
-                    loadingScreen.style.opacity = '0';
                     loadingScreen.style.display = 'none';
                 } else {
-                    // Show splash screen and set flag
+                    // Show splash screen briefly and set flag
                     setTimeout(function() {
                         loadingScreen.style.opacity = '0';
                         setTimeout(function() {
                             loadingScreen.style.display = 'none';
                             localStorage.setItem('hasSeenSplash', 'true');
-                        }, 500);
-                    }, 5000);
+                        }, 300);
+                    }, 1500);
                 }
             }
             
@@ -883,17 +859,17 @@
             // Scroll to top on page load
             window.scrollTo(0, 0);
             
-            // Initialize Lenis for smooth scrolling
-            lenis = new Lenis({
-                duration: 1.2,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                smoothWheel: true
-            });
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
-            requestAnimationFrame(raf);
+            // Initialize Lenis for smooth scrolling - disabled for better performance
+            // lenis = new Lenis({
+            //     duration: 0.8,
+            //     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            //     smoothWheel: true
+            // });
+            // function raf(time) {
+            //     lenis.raf(time);
+            //     requestAnimationFrame(raf);
+            // }
+            // requestAnimationFrame(raf);
             
             // Navbar setup
             nav = document.getElementById('mainNav');
