@@ -7,7 +7,8 @@
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg')
 
 @section('structured_data')
-<script type="application/ld+json">
+@php
+    $structuredData = '<script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@type": "TermsPage",
@@ -15,8 +16,9 @@
     "description": "Read our terms and conditions for booking Tanzania safaris",
     "url": "https://www.tanzaniadailytoursandsafari.com/terms"
 }
-</script>
-@endsection
+</script>';
+@endphp
+{!! $structuredData !!}
 
 @section('content')
     <!-- Hero Section -->

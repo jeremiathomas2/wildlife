@@ -7,29 +7,37 @@
 @section('meta_image', (is_object($tour) ? $tour->image ?? 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg' : $tour['image'] ?? 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg'))
 
 @section('structured_data')
-<script type="application/ld+json">
+@php
+    $tourName = is_object($tour) ? ($tour->name ?? 'Tanzania Safari') : ($tour['name'] ?? 'Tanzania Safari');
+    $tourDesc = \Illuminate\Support\Str::limit(strip_tags(is_object($tour) ? ($tour->desc ?? '') : ($tour['desc'] ?? '')), 200);
+    $tourPrice = is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0);
+    $tourDuration = is_object($tour) ? ($tour->duration ?? '') : ($tour['duration'] ?? '');
+    $tourImage = is_object($tour) ? ($tour->image ?? '') : ($tour['image'] ?? '');
+    
+    $structuredData = '<script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@type": "TouristTrip",
-    "name": "{{ is_object($tour) ? $tour->name ?? 'Tanzania Safari' : $tour['name'] ?? 'Tanzania Safari' }}",
-    "description": "{{ \Illuminate\Support\Str::limit(strip_tags(is_object($tour) ? $tour->desc ?? '' : $tour['desc'] ?? ''), 200) }}",
+    "name": "' . addslashes($tourName) . '",
+    "description": "' . addslashes($tourDesc) . '",
     "touristType": "Wildlife enthusiast",
     "offers": {
         "@type": "Offer",
-        "price": "{{ is_object($tour) ? $tour->price_adult ?? $tour->price ?? 0 : $tour['price_adult'] ?? $tour['price'] ?? 0 }}",
+        "price": "' . $tourPrice . '",
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock"
     },
-    "duration": "{{ is_object($tour) ? $tour->duration ?? '' : $tour['duration'] ?? '' }}",
-    "image": "{{ is_object($tour) ? $tour->image ?? '' : $tour['image'] ?? '' }}",
+    "duration": "' . addslashes($tourDuration) . '",
+    "image": "' . $tourImage . '",
     "provider": {
         "@type": "TravelAgency",
         "name": "Tanzania Daily Tours & Safari",
         "url": "https://www.tanzaniadailytoursandsafari.com"
     }
 }
-</script>
-@endsection
+</script>';
+@endphp
+{!! $structuredData !!}
 
 @section('content')
     <!-- Hero -->

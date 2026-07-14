@@ -7,7 +7,8 @@
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg')
 
 @section('structured_data')
-<script type="application/ld+json">
+@php
+    $structuredData = '<script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -15,8 +16,9 @@
     "description": "Read our privacy policy. Learn how we collect, use, and protect your personal information",
     "url": "https://www.tanzaniadailytoursandsafari.com/privacy"
 }
-</script>
-@endsection
+</script>';
+@endphp
+{!! $structuredData !!}
 
 @section('content')
     <!-- Hero Section -->

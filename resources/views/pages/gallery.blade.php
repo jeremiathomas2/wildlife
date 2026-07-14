@@ -7,7 +7,8 @@
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/gallery-landscape-1_dxdd6x.jpg')
 
 @section('structured_data')
-<script type="application/ld+json">
+@php
+    $structuredData = '<script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@type": "ImageGallery",
@@ -15,8 +16,9 @@
     "description": "Browse our Tanzania safari photo gallery featuring wildlife, landscapes, and cultural moments",
     "url": "https://www.tanzaniadailytoursandsafari.com/gallery"
 }
-</script>
-@endsection
+</script>';
+@endphp
+{!! $structuredData !!}
 
 @section('content')
     <!-- Page Header -->

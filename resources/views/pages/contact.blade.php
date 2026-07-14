@@ -7,7 +7,8 @@
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/contact-header_uxkkku.jpg')
 
 @section('structured_data')
-<script type="application/ld+json">
+@php
+    $structuredData = '<script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@type": "ContactPage",
@@ -60,8 +61,9 @@
         }
     ]
 }
-</script>
-@endsection
+</script>';
+@endphp
+{!! $structuredData !!}
 
 @section('content')
     <!-- Page Header -->
