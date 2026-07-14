@@ -534,7 +534,7 @@
                            transition: all 0.3s ease;
                        "
                        onmouseover="this.querySelector('span').style.width = '100%'; this.querySelector('span').style.left = '0';"
-                       onmouseout="if(this.querySelector('span').style.width !== '100%') { this.querySelector('span').style.width = '0'; this.querySelector('span').style.left = '50%'; }"
+                       onmouseout="this.querySelector('span').style.width = '{{ $currentRoute === $link['route'] ? '100%' : '0' }}'; this.querySelector('span').style.left = '{{ $currentRoute === $link['route'] ? '0' : '50%' }}';"
                     >
                         {{ $link['label'] }}
                         <span class="absolute bottom-0 h-0.5" style="
