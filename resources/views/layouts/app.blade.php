@@ -162,28 +162,29 @@
         $showBreadcrumb = request()->path() != '/';
         $showSecondItem = request()->path() != 'destinations';
         $segment1 = request()->segment(1) ? ucfirst(str_replace('-', ' ', request()->segment(1))) : '';
+        $breadcrumbItems = [
+            [
+                "@type" => "ListItem",
+                "position" => 1,
+                "name" => "Home",
+                "item" => "https://www.tanzaniadailytoursandsafari.com"
+            ]
+        ];
+        if ($showSecondItem && $segment1) {
+            $breadcrumbItems[] = [
+                "@type" => "ListItem",
+                "position" => 2,
+                "name" => $segment1,
+                "item" => "https://www.tanzaniadailytoursandsafari.com/" . request()->segment(1)
+            ];
+        }
     @endphp
     @if($showBreadcrumb)
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://www.tanzaniadailytoursandsafari.com"
-            }
-            @if($showSecondItem)
-            ,{
-                "@type": "ListItem",
-                "position": 2,
-                "name": "{{ $segment1 }}",
-                "item": "https://www.tanzaniadailytoursandsafari.com/{{ request()->segment(1) }}"
-            }
-            @endif
-        ]
+        "itemListElement": {{ json_encode($breadcrumbItems) }}
     }
     </script>
     @endif
