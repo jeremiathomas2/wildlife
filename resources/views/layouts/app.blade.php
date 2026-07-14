@@ -42,33 +42,103 @@
         "name": "Tanzania Daily Tours & Safari",
         "description": "Expert-guided Tanzania safaris, cultural tours, and Kilimanjaro adventures since 2012",
         "url": "https://www.tanzaniadailytoursandsafari.com",
-        "logo": "https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg",
+        "logo": "https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-brown_d1vgxe.png",
         "image": "https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg",
-        "telephone": "+255123456789",
+        "telephone": "+255623975934",
         "email": "info@tanzaniadailytoursandsafari.com",
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Arusha, Tanzania",
-            "addressLocality": "Arusha",
+            "streetAddress": "Wakala wa Vipimo",
+            "addressLocality": "Moshi",
+            "addressRegion": "Kilimanjaro",
+            "postalCode": "25113",
             "addressCountry": "TZ"
         },
         "geo": {
             "@type": "GeoCoordinates",
-            "latitude": "-3.3869",
-            "longitude": "36.6830"
+            "latitude": "-3.3546",
+            "longitude": "37.3414"
         },
-        "openingHours": "Mo-Su 00:00-23:59",
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ],
+            "opens": "08:00",
+            "closes": "18:00"
+        },
+        "priceRange": "$$",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "500",
+            "bestRating": "5",
+            "worstRating": "1"
+        },
+        "sameAs": [
+            "https://www.instagram.com/tanzania_dailytours_and_safari/",
+            "https://www.facebook.com/tanzaniadailytoursandsafari",
+            "https://twitter.com/tanzaniadailytours"
+        ],
+        "founder": {
+            "@type": "Person",
+            "name": "Ally Juma",
+            "jobTitle": "Senior Tour Guide"
+        },
+        "foundingDate": "2012",
+        "areaServed": {
+            "@type": "Country",
+            "name": "Tanzania"
+        },
+        "knowsAbout": [
+            "Serengeti National Park",
+            "Ngorongoro Crater",
+            "Mount Kilimanjaro",
+            "Tarangire National Park",
+            "Lake Manyara",
+            "Zanzibar",
+            "Tanzania wildlife",
+            "Great Migration",
+            "Big Five Africa"
+        ]
+    }
+    </script>
+
+    <!-- LocalBusiness Schema for Google Business Profile -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Tanzania Daily Tours & Safari",
+        "description": "Expert-guided Tanzania safaris, cultural tours, and Kilimanjaro adventures since 2012",
+        "url": "https://www.tanzaniadailytoursandsafari.com",
+        "telephone": "+255623975934",
+        "email": "info@tanzaniadailytoursandsafari.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Wakala wa Vipimo",
+            "addressLocality": "Moshi",
+            "addressRegion": "Kilimanjaro",
+            "postalCode": "25113",
+            "addressCountry": "TZ"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "-3.3546",
+            "longitude": "37.3414"
+        },
+        "openingHours": "Mo-Sa 08:00-18:00",
         "priceRange": "$$",
         "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": "4.8",
             "reviewCount": "500"
-        },
-        "sameAs": [
-            "https://www.facebook.com/tanzaniadailytours",
-            "https://www.instagram.com/tanzaniadailytours",
-            "https://www.tripadvisor.com/Restaurant_Review-g293930-d12345678"
-        ]
+        }
     }
     </script>
     
