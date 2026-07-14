@@ -93,19 +93,16 @@
                 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890321/gallery-wildlife-1_tzfe6e.jpg',
                 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890319/tour-zanzibar_y2syxk.jpg',
             ];
+            $ariaLabels = [
+                'Serengeti safari with wildlife including lions and elephants',
+                'Mount Kilimanjaro summit view with snow-capped peak',
+                'Ngorongoro crater landscape with wildlife',
+                'Tanzania wildlife safari in national park',
+                'African animals in natural habitat including giraffes',
+                'Zanzibar beach paradise with turquoise waters'
+            ];
         @endphp
         @foreach($heroImages as $index => $src)
-            @php
-                $ariaLabels = [
-                    'Serengeti safari with wildlife including lions and elephants',
-                    'Mount Kilimanjaro summit view with snow-capped peak',
-                    'Ngorongoro crater landscape with wildlife',
-                    'Tanzania wildlife safari in national park',
-                    'African animals in natural habitat including giraffes',
-                    'Zanzibar beach paradise with turquoise waters'
-                ];
-                $ariaLabel = $ariaLabels[$index] ?? $ariaLabels[0];
-            @endphp
             <div
                 id="hero-slide-{{ $index }}"
                 class="absolute inset-0 transition-opacity duration-1000"
@@ -117,7 +114,7 @@
                     opacity: {{ $index === 0 ? 1 : 0 }};
                 "
                 role="img"
-                aria-label="{{ $ariaLabel }}"
+                aria-label="{{ $ariaLabels[$index] ?? $ariaLabels[0] }}"
             ></div>
         @endforeach
 
