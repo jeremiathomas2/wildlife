@@ -140,7 +140,7 @@
                     <p class="text-base mb-6" style="color: #5a3e2b;">
                         Share your experience on TripAdvisor and help other travelers discover Tanzania with us!
                     </p>
-                    <div class="flex justify-center">
+                    <div class="flex flex-col items-center gap-6">
                         <div id="TA_rated458" class="TA_rated">
                             <ul id="OEQBtiJT1z9h" class="TA_links fjINTJ8nYkf">
                                 <li id="GLvFwnFD" class="0neu5M">
@@ -151,6 +151,17 @@
                             </ul>
                         </div>
                         <script async src="https://www.jscache.com/wejs?wtype=rated&uniq=458&locationId=34526433&lang=en_US&display_version=2" data-loadtrk onload="this.loadtrk=true"></script>
+                        
+                        <div id="TA_cdswritereviewlg871" class="TA_cdswritereviewlg">
+                            <ul id="iBJKyFQ" class="TA_links 23OxtBS7l">
+                                <li id="m5D5lbEVm" class="me78DD8eQE">
+                                    <a target="_blank" href="https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html">
+                                        <img src="https://static.tacdn.com/img2/brand_refresh/Tripadvisor_lockup_horizontal_secondary_registered.svg" alt="TripAdvisor"/>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <script async src="https://www.jscache.com/wejs?wtype=cdswritereviewlg&uniq=871&locationId=34526433&lang=en_US&display_version=2" data-loadtrk onload="this.loadtrk=true"></script>
                     </div>
                 </div>
             </div>
