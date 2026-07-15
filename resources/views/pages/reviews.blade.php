@@ -126,6 +126,28 @@
                     </button>
                 </div>
             </div>
+
+            <!-- TripAdvisor Review Section -->
+            <div class="mt-16">
+                <div class="bg-white rounded-2xl p-8 text-center" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="#00af87">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="white"/>
+                        </svg>
+                        <h3 class="text-2xl font-bold" style="font-family: 'Raleway', sans-serif; color: #00af87;">TripAdvisor Reviews</h3>
+                    </div>
+                    <p class="text-base mb-6" style="color: #5a3e2b;">
+                        Share your experience on TripAdvisor and help other travelers discover Tanzania with us!
+                    </p>
+                    <a href="https://www.tripadvisor.com/UserReviewEdit-g317084-d34526433-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-8 py-3 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90" style="background: #00af87;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        Review on TripAdvisor
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 @endsection
