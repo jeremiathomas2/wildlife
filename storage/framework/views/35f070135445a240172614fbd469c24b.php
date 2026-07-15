@@ -1,13 +1,11 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'Tanzania Safari Reviews - What Our Travelers Say'); ?>
+<?php $__env->startSection('meta_title', 'Tanzania Safari Reviews - What Our Travelers Say'); ?>
+<?php $__env->startSection('meta_description', 'Read genuine Tanzania safari reviews from our happy travelers. 4.8/5 rating from 10,000+ customers. See why we\'re the top-rated Tanzania tour operator.'); ?>
+<?php $__env->startSection('meta_keywords', 'Tanzania safari reviews, Tanzania tour operator reviews, Serengeti safari reviews, Kilimanjaro climb reviews, Zanzibar tour reviews, customer testimonials Tanzania'); ?>
+<?php $__env->startSection('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890322/safari-ngorongoro_j04gqg.jpg'); ?>
 
-@section('title', 'Tanzania Safari Reviews - What Our Travelers Say')
-@section('meta_title', 'Tanzania Safari Reviews - What Our Travelers Say')
-@section('meta_description', 'Read genuine Tanzania safari reviews from our happy travelers. 4.8/5 rating from 10,000+ customers. See why we\'re the top-rated Tanzania tour operator.')
-@section('meta_keywords', 'Tanzania safari reviews, Tanzania tour operator reviews, Serengeti safari reviews, Kilimanjaro climb reviews, Zanzibar tour reviews, customer testimonials Tanzania')
-@section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890322/safari-ngorongoro_j04gqg.jpg')
-
-@section('structured_data')
-@php
+<?php $__env->startSection('structured_data'); ?>
+<?php
     $structuredData = '<script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -28,10 +26,11 @@
     }
 }
 </script>';
-@endphp
-{!! $structuredData !!}
+?>
+<?php echo $structuredData; ?>
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
     <!-- Page Header -->
     <section class="relative h-[40vh] min-h-[280px] flex items-end pb-16">
         <div class="absolute inset-0">
@@ -40,23 +39,24 @@
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-6 w-full">
             <nav class="text-xs mb-3" style="color: rgba(255,255,255,0.7);">
-                <a href="{{ route('home') }}" class="hover:text-white transition-colors">Home</a>
+                <a href="<?php echo e(route('home')); ?>" class="hover:text-white transition-colors">Home</a>
                 <span class="mx-2">/</span>
                 <span style="color: #ffffff;">Reviews</span>
             </nav>
             <h1 class="font-bold mb-2" style="font-family: 'Raleway', sans-serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
-                {{ $contents['reviews_page_title']->value ?? 'Traveler Reviews' }}
+                <?php echo e($contents['reviews_page_title']->value ?? 'Traveler Reviews'); ?>
+
             </h1>
             <div class="flex items-center gap-2">
                 <div class="flex">
-                    @for($i = 0; $i < 5; $i++)
+                    <?php for($i = 0; $i < 5; $i++): ?>
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="#ff9729" stroke="#ff9729">
                             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                         </svg>
-                    @endfor
+                    <?php endfor; ?>
                 </div>
                 <span class="text-sm font-bold" style="color: #ffffff;">5.0</span>
-                <span class="text-sm" style="color: rgba(255,255,255,0.7);">({{ count($testimonials) }} reviews)</span>
+                <span class="text-sm" style="color: rgba(255,255,255,0.7);">(<?php echo e(count($testimonials)); ?> reviews)</span>
             </div>
         </div>
     </section>
@@ -85,44 +85,46 @@
 
             <!-- Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="reviews-grid">
-                @foreach($testimonials as $testimonial)
-                    <div class="review-card bg-white rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1" data-trip="{{ strtolower(str_replace(' ', '', $testimonial['trip'])) }}" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                <?php $__currentLoopData = $testimonials; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $testimonial): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="review-card bg-white rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1" data-trip="<?php echo e(strtolower(str_replace(' ', '', $testimonial['trip']))); ?>" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                         <div class="flex items-center gap-1 mb-3">
-                            @for($i = 0; $i < $testimonial['rating']; $i++)
+                            <?php for($i = 0; $i < $testimonial['rating']; $i++): ?>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="#ff9729" stroke="#ff9729">
                                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                                 </svg>
-                            @endfor
+                            <?php endfor; ?>
                         </div>
                         <p class="text-sm italic mb-4 leading-relaxed" style="font-family: 'Raleway', sans-serif; color: #111111;">
-                            "{{ $testimonial['text'] }}"
+                            "<?php echo e($testimonial['text']); ?>"
                         </p>
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm font-bold" style="color: #854208;">{{ $testimonial['name'] }}</p>
-                                <p class="text-xs" style="color: #5a3e2b;">{{ $testimonial['trip'] }}</p>
+                                <p class="text-sm font-bold" style="color: #854208;"><?php echo e($testimonial['name']); ?></p>
+                                <p class="text-xs" style="color: #5a3e2b;"><?php echo e($testimonial['trip']); ?></p>
                             </div>
-                            @if($testimonial['verified'])
+                            <?php if($testimonial['verified']): ?>
                                 <span class="flex items-center gap-1 text-xs font-semibold" style="color: #088529;">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
                                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                                     </svg>
                                     Verified
                                 </span>
-                            @endif
+                            <?php endif; ?>
                         </div>
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
             <!-- Submit Review CTA -->
             <div class="mt-12 text-center">
                 <div class="bg-white rounded-2xl p-8 inline-block max-w-md" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                     <p class="text-base mb-4" style="color: #111111;">
-                        {{ $contents['reviews_cta_text']->value ?? 'Traveled with us? Share your experience!' }}
+                        <?php echo e($contents['reviews_cta_text']->value ?? 'Traveled with us? Share your experience!'); ?>
+
                     </p>
                     <button onclick="alert('Review submission coming soon! Thank you for your feedback.')" class="px-8 py-3 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90" style="background: #088529;">
-                        {{ $contents['reviews_cta_button']->value ?? 'Write a Review' }}
+                        <?php echo e($contents['reviews_cta_button']->value ?? 'Write a Review'); ?>
+
                     </button>
                 </div>
             </div>
@@ -140,7 +142,7 @@
                     <p class="text-base mb-6" style="color: #5a3e2b;">
                         Share your experience on TripAdvisor and help other travelers discover Tanzania with us!
                     </p>
-                    <div class="flex justify-center">
+                    <div class="flex flex-col items-center gap-6">
                         <div id="TA_rated458" class="TA_rated">
                             <ul id="OEQBtiJT1z9h" class="TA_links fjINTJ8nYkf">
                                 <li id="GLvFwnFD" class="0neu5M">
@@ -151,14 +153,25 @@
                             </ul>
                         </div>
                         <script async src="https://www.jscache.com/wejs?wtype=rated&uniq=458&locationId=34526433&lang=en_US&display_version=2" data-loadtrk onload="this.loadtrk=true"></script>
+                        
+                        <div id="TA_cdswritereviewlg871" class="TA_cdswritereviewlg">
+                            <ul id="iBJKyFQ" class="TA_links 23OxtBS7l">
+                                <li id="m5D5lbEVm" class="me78DD8eQE">
+                                    <a target="_blank" href="https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html">
+                                        <img src="https://static.tacdn.com/img2/brand_refresh/Tripadvisor_lockup_horizontal_secondary_registered.svg" alt="TripAdvisor"/>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <script async src="https://www.jscache.com/wejs?wtype=cdswritereviewlg&uniq=871&locationId=34526433&lang=en_US&display_version=2" data-loadtrk onload="this.loadtrk=true"></script>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
     <script>
         const filterBtns = document.querySelectorAll('.review-filter-btn');
         const cards = document.querySelectorAll('.review-card');
@@ -194,4 +207,6 @@
             });
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\TDTS\resources\views/pages/reviews.blade.php ENDPATH**/ ?>
