@@ -629,6 +629,26 @@
                 <p class="text-base" style="color: rgba(255,255,255,0.8); font-family: 'Raleway', sans-serif;">
                     {{ $contents['testimonials_subtitle']->value ?? 'Real experiences from real adventurers' }}
                 </p>
+
+                <!-- TripAdvisor Badge -->
+                <div class="mt-8 flex justify-center items-center">
+                    <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-sm rounded-2xl px-8 py-4 inline-flex items-center gap-4" style="border: 1px solid rgba(255,255,255,0.2);">
+                        <div id="TA_rated260" class="TA_rated">
+                            <ul id="GfkJirIfYgzq" class="TA_links abbMITnMe">
+                                <li id="4pOhGBqbk6D" class="Wh6U2f">
+                                    <a target="_blank" href="https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html">
+                                        <img src="https://www.tripadvisor.com/img/cdsi/img2/badges/ollie-11424-2.gif" alt="TripAdvisor" style="height: 60px; width: auto;"/>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <script async src="https://www.jscache.com/wejs?wtype=rated&amp;uniq=260&amp;locationId=34526433&amp;lang=en_US&amp;display_version=2" data-loadtrk onload="this.loadtrk=true"></script>
+                        <div class="text-left">
+                            <p class="text-sm font-semibold" style="color: #ffffff; font-family: 'Raleway', sans-serif;">Rated on TripAdvisor</p>
+                            <p class="text-xs" style="color: rgba(255,255,255,0.7); font-family: 'Raleway', sans-serif;">Read verified reviews</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="relative">
