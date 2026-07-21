@@ -121,7 +121,7 @@
                     <p class="text-base mb-4" style="color: #111111;">
                         {{ $contents['reviews_cta_text']->value ?? 'Traveled with us? Share your experience!' }}
                     </p>
-                    <button onclick="alert('Review submission coming soon! Thank you for your feedback.')" class="px-8 py-3 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90" style="background: #088529;">
+                    <button onclick="window.location.href='https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html'" class="px-8 py-3 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90" style="background: #088529;">
                         {{ $contents['reviews_cta_button']->value ?? 'Write a Review' }}
                     </button>
                 </div>
