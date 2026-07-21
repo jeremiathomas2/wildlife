@@ -749,11 +749,7 @@
                             </svg>
                         </a>
                         <a href="https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html" target="_blank" rel="noopener noreferrer" class="transition-opacity duration-300 hover:opacity-70" aria-label="TripAdvisor">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" color="#ffffff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M12 6v6l4 2"/>
-                                <path d="M12 18h.01"/>
-                            </svg>
+                            <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1784610546/PngItem_1715860_wbqbw4.png" alt="TripAdvisor" class="w-5 h-5" style="filter: brightness(0) invert(1);"/>
                         </a>
                     </div>
                 </div>
