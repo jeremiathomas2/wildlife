@@ -99,7 +99,7 @@
         </div>
         @if($destinations->hasPages())
         <div class="table-pagination">
-            {{ $destinations->appends(request()->query())->links() }}
+            {{ $destinations->appends(request()->query())->links('vendor.pagination.admin') }}
         </div>
         @endif
     </div>
