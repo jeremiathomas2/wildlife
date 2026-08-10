@@ -87,7 +87,7 @@
         ],
         "founder": {
             "@type": "Person",
-            "name": "Ally Juma",
+            "name": "Petro Mihambo",
             "jobTitle": "Senior Tour Guide"
         },
         "foundingDate": "2012",
