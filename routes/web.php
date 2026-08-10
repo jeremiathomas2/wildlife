@@ -32,7 +32,7 @@ Route::get('/destinations/{slug}', function ($slug) {
         $tId = is_object($t) ? ($t->id ?? null) : ($t['id'] ?? null);
         $tourId = is_object($tour) ? ($tour->id ?? null) : ($tour['id'] ?? null);
         return $tCategory === $tourCategory && $tId !== $tourId;
-    });
+    })->take(4)->values();
     $contents = App\Models\SiteContent::all()->keyBy('key') ?? [];
     return view('pages.destination-detail', compact('tour', 'relatedTours', 'contents'));
 })->name('destination.detail');
