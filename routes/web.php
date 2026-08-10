@@ -8,7 +8,7 @@ use App\Http\Controllers\SitemapController;
 Route::get('/', function () {
     $tours = App\Models\Destination::where('status', 'Published')->get() ?? [];
     $featuredTours = collect($tours)->take(4);
-    $testimonials = App\Helpers\TourData::testimonials();
+    $testimonials = App\Models\Review::where('status', 'Published')->get();
     $gallery = App\Models\Gallery::take(6)->get() ?? [];
     $contents = App\Models\SiteContent::all()->keyBy('key') ?? [];
     return view('pages.home', compact('featuredTours', 'tours', 'testimonials', 'gallery', 'contents'));
@@ -38,13 +38,12 @@ Route::get('/destinations/{slug}', function ($slug) {
 })->name('destination.detail');
 
 Route::get('/about', function () {
-    $team = App\Helpers\TourData::team();
     $contents = App\Models\SiteContent::all()->keyBy('key') ?? [];
-    return view('pages.about', compact('team', 'contents'));
+    return view('pages.about', compact('contents'));
 })->name('about');
 
 Route::get('/reviews', function () {
-    $testimonials = App\Helpers\TourData::testimonials();
+    $testimonials = App\Models\Review::where('status', 'Published')->get();
     $contents = App\Models\SiteContent::all()->keyBy('key') ?? [];
     return view('pages.reviews', compact('testimonials', 'contents'));
 })->name('reviews');

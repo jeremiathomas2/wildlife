@@ -2,32 +2,38 @@
 
 @section('title', 'Tanzania Safari Reviews - What Our Travelers Say')
 @section('meta_title', 'Tanzania Safari Reviews - What Our Travelers Say')
-@section('meta_description', 'Read genuine Tanzania safari reviews from our happy travelers. 4.8/5 rating from 10,000+ customers. See why we\'re the top-rated Tanzania tour operator.')
+@section('meta_description', 'Read genuine Tanzania safari reviews from our travelers. See why people choose us for Serengeti safaris, Kilimanjaro treks, and Moshi day trips.')
 @section('meta_keywords', 'Tanzania safari reviews, Tanzania tour operator reviews, Serengeti safari reviews, Kilimanjaro climb reviews, Zanzibar tour reviews, customer testimonials Tanzania')
 @section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890322/safari-ngorongoro_j04gqg.jpg')
 
 @section('structured_data')
 @php
-    $structuredData = '<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "ReviewPage",
-    "name": "Tanzania Safari Reviews",
-    "description": "Read genuine Tanzania safari reviews from our happy travelers",
-    "url": "https://www.tanzaniadailytoursandsafari.com/reviews",
-    "mainEntity": {
-        "@type": "TravelAgency",
-        "name": "Tanzania Daily Tours & Safari",
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "reviewCount": "500",
-            "bestRating": "5",
-            "worstRating": "1"
-        }
+    $reviews = collect($testimonials ?? []);
+    $reviewCount = $reviews->count();
+    $avgRating = $reviewCount > 0 ? round($reviews->avg('rating'), 1) : 0;
+
+    $mainEntity = [
+        '@type' => 'TravelAgency',
+        'name' => 'Tanzania Daily Tours & Safari',
+    ];
+    if ($reviewCount > 0) {
+        $mainEntity['aggregateRating'] = [
+            '@type' => 'AggregateRating',
+            'ratingValue' => (string) $avgRating,
+            'reviewCount' => (string) $reviewCount,
+            'bestRating' => '5',
+            'worstRating' => '1',
+        ];
     }
-}
-</script>';
+    $schema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'ReviewPage',
+        'name' => 'Tanzania Safari Reviews',
+        'description' => 'Read genuine Tanzania safari reviews from our travelers',
+        'url' => 'https://www.tanzaniadailytoursandsafari.com/reviews',
+        'mainEntity' => $mainEntity,
+    ];
+    $structuredData = '<script type="application/ld+json">' . json_encode($schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . '</script>';
 @endphp
 {!! $structuredData !!}
 
@@ -49,14 +55,14 @@
             </h1>
             <div class="flex items-center gap-2">
                 <div class="flex">
-                    @for($i = 0; $i < 5; $i++)
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="#ff9729" stroke="#ff9729">
+                    @for($i = 1; $i <= 5; $i++)
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" @if($i <= round($avgRating)) fill="#ff9729" stroke="#ff9729" @else fill="rgba(255,255,255,0.3)" stroke="rgba(255,255,255,0.3)" @endif>
                             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                         </svg>
                     @endfor
                 </div>
-                <span class="text-sm font-bold" style="color: #ffffff;">5.0</span>
-                <span class="text-sm" style="color: rgba(255,255,255,0.7);">({{ count($testimonials) }} reviews)</span>
+                <span class="text-sm font-bold" style="color: #ffffff;">{{ $reviewCount > 0 ? number_format($avgRating, 1) : '—' }}</span>
+                <span class="text-sm" style="color: rgba(255,255,255,0.7);">({{ $reviewCount }} reviews)</span>
             </div>
         </div>
     </section>
@@ -86,30 +92,22 @@
             <!-- Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="reviews-grid">
                 @foreach($testimonials as $testimonial)
-                    <div class="review-card bg-white rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1" data-trip="{{ strtolower(str_replace(' ', '', $testimonial['trip'])) }}" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                    <div class="review-card bg-white rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1" data-trip="{{ strtolower(str_replace(' ', '', $testimonial->tour)) }}" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                         <div class="flex items-center gap-1 mb-3">
-                            @for($i = 0; $i < $testimonial['rating']; $i++)
+                            @for($i = 0; $i < ($testimonial->rating ?? 5); $i++)
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="#ff9729" stroke="#ff9729">
                                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                                 </svg>
                             @endfor
                         </div>
                         <p class="text-sm italic mb-4 leading-relaxed" style="font-family: 'Raleway', sans-serif; color: #111111;">
-                            "{{ $testimonial['text'] }}"
+                            "{{ $testimonial->text }}"
                         </p>
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm font-bold" style="color: #854208;">{{ $testimonial['name'] }}</p>
-                                <p class="text-xs" style="color: #5a3e2b;">{{ $testimonial['trip'] }}</p>
+                                <p class="text-sm font-bold" style="color: #854208;">{{ $testimonial->name }}</p>
+                                <p class="text-xs" style="color: #5a3e2b;">{{ $testimonial->tour }}</p>
                             </div>
-                            @if($testimonial['verified'])
-                                <span class="flex items-center gap-1 text-xs font-semibold" style="color: #088529;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                    </svg>
-                                    Verified
-                                </span>
-                            @endif
                         </div>
                     </div>
                 @endforeach

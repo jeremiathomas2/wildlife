@@ -9,6 +9,15 @@ export default {
   theme: {
     extend: {
       colors: {
+        safari: {
+          brown: "#854208",
+          green: "#088529",
+          orange: "#ff9729",
+          cream: "#f8f4f0",
+          espresso: "#631e08",
+          ink: "#111111",
+          soft: "#5a3e2b",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

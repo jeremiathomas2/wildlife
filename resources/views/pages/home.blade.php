@@ -67,8 +67,7 @@
     </style>
 
     @php
-        $testimonials = App\Helpers\TourData::testimonials();
-        $featuredTestimonials = array_slice($testimonials, 0, 3);
+        $featuredTestimonials = collect($testimonials ?? [])->take(3)->values();
         $gallery = $gallery ?? [];
         $previewImages = collect($gallery)->map(function($item) {
             $src = '';
@@ -706,20 +705,20 @@
                                         class="text-lg lg:text-2xl italic leading-relaxed max-w-[700px] text-center mb-8"
                                         style="font-family: 'Raleway', sans-serif; color: #ffffff;"
                                     >
-                                        &ldquo;{{ $t['text'] }}&rdquo;
+                                        &ldquo;{{ $t->text }}&rdquo;
                                     </p>
                                     <div class="flex items-center gap-1 mb-4">
-                                        @for($i = 0; $i < $t['rating']; $i++)
+                                        @for($i = 0; $i < ($t->rating ?? 5); $i++)
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="#ff9729" stroke="#ff9729">
                                                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                                             </svg>
                                         @endfor
                                     </div>
                                     <p class="text-lg font-bold" style="color: #ffffff; font-family: 'Raleway', sans-serif;">
-                                        {{ $t['name'] }}
+                                        {{ $t->name }}
                                     </p>
                                     <p class="text-sm" style="color: #ff9729; font-family: 'Raleway', sans-serif;">
-                                        {{ $t['trip'] }}
+                                        {{ $t->tour }}
                                     </p>
                                 </div>
                             @endforeach
@@ -1145,13 +1144,14 @@
             const u_res = gl.getUniformLocation(program, 'u_res');
             const u_color = gl.getUniformLocation(program, 'u_color');
 
-            // Resize canvas
+            // Resize canvas (cap devicePixelRatio to keep the GPU cost reasonable)
             function resize() {
                 const heroSection = document.getElementById('hero-section');
                 if (!heroSection) return;
                 const rect = heroSection.getBoundingClientRect();
-                canvas.width = rect.width;
-                canvas.height = rect.height;
+                const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+                canvas.width = Math.round(rect.width * dpr);
+                canvas.height = Math.round(rect.height * dpr);
                 gl.viewport(0, 0, canvas.width, canvas.height);
             }
             window.addEventListener('resize', resize);
@@ -1159,7 +1159,10 @@
 
             // Animation loop
             const startTime = performance.now();
+            let silkRunning = false;
+
             function animate(time) {
+                if (!silkRunning) return;
                 const t = (time - startTime) / 1000;
                 gl.uniform1f(u_time, t);
                 gl.uniform2f(u_res, canvas.width, canvas.height);
@@ -1167,14 +1170,40 @@
                 gl.drawArrays(gl.TRIANGLES, 0, 3);
                 requestAnimationFrame(animate);
             }
-            requestAnimationFrame(animate);
+
+            // Run the shader only while the hero is on screen
+            if ('IntersectionObserver' in window) {
+                const io = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            canvas.style.display = 'block';
+                            if (!silkRunning) {
+                                silkRunning = true;
+                                requestAnimationFrame(animate);
+                            }
+                        } else {
+                            silkRunning = false;
+                            canvas.style.display = 'none';
+                        }
+                    });
+                }, { threshold: 0.05 });
+                io.observe(canvas);
+            } else {
+                silkRunning = true;
+                requestAnimationFrame(animate);
+            }
         }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
             heroAutoplayInterval = setInterval(nextHeroSlide, 6000);
             testimonialInterval = setInterval(nextTestimonial, 6000);
-            initDrapingSilk();
+
+            if (!prefersReducedMotion) {
+                initDrapingSilk();
+            }
 
             // Typewriter effect
             const messages = [
@@ -1214,22 +1243,11 @@
                 setTimeout(type, typeSpeed);
             }
 
-            // Start typewriter
-            type();
-
-            // Hide silk on scroll
-            window.addEventListener('scroll', function() {
-                const silk = document.getElementById('draping-silk');
-                const hero = document.getElementById('hero-section');
-                if (hero && silk) {
-                    const heroHeight = hero.clientHeight;
-                    if (window.scrollY > heroHeight) {
-                        silk.style.display = 'none';
-                    } else {
-                        silk.style.display = 'block';
-                    }
-                }
-            });
+            if (prefersReducedMotion) {
+                typewriter.textContent = messages[0];
+            } else {
+                type();
+            }
         });
     </script>
 @endsection

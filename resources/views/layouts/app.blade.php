@@ -218,275 +218,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: ["class"],
-            theme: {
-                extend: {
-                    colors: {
-                        border: "hsl(var(--border))",
-                        input: "hsl(var(--input))",
-                        ring: "hsl(var(--ring))",
-                        background: "hsl(var(--background))",
-                        foreground: "hsl(var(--foreground))",
-                        primary: {
-                            DEFAULT: "hsl(var(--primary))",
-                            foreground: "hsl(var(--primary-foreground))",
-                        },
-                        secondary: {
-                            DEFAULT: "hsl(var(--secondary))",
-                            foreground: "hsl(var(--secondary-foreground))",
-                        },
-                        destructive: {
-                            DEFAULT: "hsl(var(--destructive))",
-                            foreground: "hsl(var(--destructive-foreground))",
-                        },
-                        muted: {
-                            DEFAULT: "hsl(var(--muted))",
-                            foreground: "hsl(var(--muted-foreground))",
-                        },
-                        accent: {
-                            DEFAULT: "hsl(var(--accent))",
-                            foreground: "hsl(var(--accent-foreground))",
-                        },
-                        popover: {
-                            DEFAULT: "hsl(var(--popover))",
-                            foreground: "hsl(var(--popover-foreground))",
-                        },
-                        card: {
-                            DEFAULT: "hsl(var(--card))",
-                            foreground: "hsl(var(--card-foreground))",
-                        },
-                        sidebar: {
-                            DEFAULT: "hsl(var(--sidebar-background))",
-                            foreground: "hsl(var(--sidebar-foreground))",
-                            primary: "hsl(var(--sidebar-primary))",
-                            "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-                            accent: "hsl(var(--sidebar-accent))",
-                            "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-                            border: "hsl(var(--sidebar-border))",
-                            ring: "hsl(var(--sidebar-ring))",
-                        },
-                    },
-                    borderRadius: {
-                        xl: "calc(var(--radius) + 4px)",
-                        lg: "var(--radius)",
-                        md: "calc(var(--radius) - 2px)",
-                        sm: "calc(var(--radius) - 4px)",
-                        xs: "calc(var(--radius) - 6px)",
-                    },
-                    boxShadow: {
-                        xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-                    },
-                    keyframes: {
-                        "accordion-down": {
-                            from: { height: "0" },
-                            to: { height: "var(--radix-accordion-content-height)" },
-                        },
-                        "accordion-up": {
-                            from: { height: "var(--radix-accordion-content-height)" },
-                            to: { height: "0" },
-                        },
-                        "caret-blink": {
-                            "0%,70%,100%": { opacity: "1" },
-                            "20%,50%": { opacity: "0" },
-                        },
-                    },
-                    animation: {
-                        "accordion-down": "accordion-down 0.2s ease-out",
-                        "accordion-up": "accordion-up 0.2s ease-out",
-                        "caret-blink": "caret-blink 1.25s ease-out infinite",
-                    },
-                },
-            },
-        }
-    </script>
-    <style>
-        @layer base {
-            body {
-                font-family: 'Raleway', sans-serif;
-                color: #111111;
-                background: #f8f4f0;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
-
-            h1, h2, h3, h4, h5, h6 {
-                font-family: 'Raleway', sans-serif;
-            }
-        }
-
-        @layer components {
-            .glow-text {
-                position: relative;
-                display: inline-block;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 700;
-                font-size: clamp(2rem, 5vw, 3.5rem);
-                color: #ffffff;
-                letter-spacing: 0.02em;
-                padding: 0 0.5em;
-                border-radius: 0.15em;
-                text-shadow:
-                    0 0 0.1em #088529,
-                    0 0 0.2em #088529,
-                    0 0 0.3em #088529,
-                    0 0 0.4em #088529,
-                    0 0 0.6em #088529,
-                    0 0 0.8em #088529,
-                    0 0 1em #088529;
-                box-shadow:
-                    inset 0 0 0.5em #088529,
-                    inset 0 0 1em #088529,
-                    0 0 0.5em #088529;
-                animation: glowCycle 12s infinite linear, glowPulse 3s infinite ease-in-out;
-            }
-
-            .glow-text::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                border-radius: inherit;
-                background: linear-gradient(45deg, #088529, #ff9729, #854208);
-                z-index: -1;
-                opacity: 0.25;
-                animation: glowCycle 12s infinite linear, glowPulse 3s infinite ease-in-out;
-            }
-
-            .glow-text::selection {
-                background: #088529;
-                color: #fff;
-            }
-        }
-
-        @keyframes glowCycle {
-            0%,100% {
-                filter: hue-rotate(0deg);
-            }
-            33.33% {
-                filter: hue-rotate(-30deg);
-            }
-            66.66% {
-                filter: hue-rotate(30deg);
-            }
-        }
-
-        @keyframes glowPulse {
-            0%,100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.82;
-            }
-        }
-
-        @keyframes zoomInOut {
-            0%,100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-        }
-    </style>
-    <style>
-        /* Custom responsive styles */
-        * {
-            box-sizing: border-box;
-        }
-        
-        body {
-            overflow-x: hidden;
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes zoomInOut {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        /* Hide overflow on mobile */
-        @media (max-width: 768px) {
-            .hero-content {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-            
-            .section-padding {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-        }
-        
-        /* Touch-friendly buttons */
-        button, a {
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        /* Smooth image loading */
-        img {
-            display: block;
-            max-width: 100%;
-            height: auto;
-        }
-        
-        /* Improve scrollbar on mobile */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f8f4f0;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #854208;
-            border-radius: 3px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff9729;
-        }
-        
-        /* Mobile menu styles */
-        .mobile-menu-item {
-            position: relative;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            transition: background-color 0.2s ease;
-        }
-        
-        .mobile-menu-item:hover {
-            background: rgba(255, 151, 41, 0.05);
-        }
-        
-        .mobile-menu-item::after {
-            content: '';
-            position: absolute;
-            left: 24px;
-            right: 24px;
-            bottom: 0;
-            height: 1px;
-            background: rgba(133, 66, 8, 0.1);
-        }
-        
-        .mobile-menu-item:last-child::after {
-            display: none;
-        }
-    </style>
+    @vite(['resources/css/app.css'])
 </head>
 <body>
     <!-- Loading Screen - Only show on home page -->
@@ -496,7 +228,7 @@
         if ($isHomePage) {
             $loadingScreenHtml = '<div id="loadingScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center" style="background: #f8f4f0; opacity: 1; transition: opacity 0.3s ease;">
         <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-brown_d1vgxe.png" alt="Tanzania Daily Tours & Safari" style="height: 120px; width: auto; object-fit: contain; margin-bottom: 20px;">
-        <h2 class="text-2xl font-bold italic mb-6" style="font-family: \'Raleway\', sans-serif; color: #854208;">Tanzania Daily Tour and Safari</h2>
+        <h2 class="text-2xl font-bold italic mb-6" style="font-family: \'Raleway\', sans-serif; color: #854208;">Tanzania Daily Tours &amp; Safari</h2>
         <span class="w-2 h-2 rounded-full animate-pulse" style="background: #ff9729;"></span>
     </div>';
         }
@@ -521,7 +253,7 @@
             <a href="{{ route('home') }}" class="flex items-center gap-3" style="transition: all 0.4s ease;">
             <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" id="navLogo" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
             <span class="text-xl font-bold italic hidden sm:block" id="navTitle" style="font-family: 'Raleway', sans-serif; color: #ffffff; transition: color 0.4s ease;">
-                Tanzania Daily Tours and Safari
+                Tanzania Daily Tours &amp; Safari
             </span>
         </a>
 
@@ -571,7 +303,7 @@
             <a href="{{ route('home') }}" class="flex items-center gap-3" onclick="closeMobileMenu()">
                 <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
                 <span class="text-xl font-bold italic" style="font-family: 'Raleway', sans-serif; color: #ffffff;">
-                    Tanzania Daily Tours and Safari
+                    Tanzania Daily Tours &amp; Safari
                 </span>
             </a>
             <button onclick="closeMobileMenu()" class="p-2" aria-label="Close menu">
@@ -629,7 +361,7 @@
                     <a href="{{ route('home') }}" class="inline-flex items-center gap-3 mb-4">
                         <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
                         <span class="text-xl font-bold italic" style="font-family: 'Raleway', sans-serif; color: #ffffff;">
-                            Tanzania Daily Tours and Safari
+                            Tanzania Daily Tours &amp; Safari
                         </span>
                     </a>
                     <p class="text-sm leading-relaxed" style="color: rgba(255, 255, 255, 0.7);">
@@ -842,14 +574,16 @@
         }
         
         document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
             // Loading screen - hide immediately for better performance
             const loadingScreen = document.getElementById('loadingScreen');
             
             if (loadingScreen) {
-                // Check if splash screen has been shown before
+                // Check if splash screen has been shown before (skip entirely for reduced motion)
                 const hasSeenSplash = localStorage.getItem('hasSeenSplash');
                 
-                if (hasSeenSplash) {
+                if (hasSeenSplash || prefersReducedMotion) {
                     // Hide immediately if already seen
                     loadingScreen.style.display = 'none';
                 } else {
