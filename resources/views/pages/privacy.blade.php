@@ -78,9 +78,9 @@
                 <h2 class="font-bold text-2xl mb-4" style="font-family: 'Raleway', sans-serif; color: #854208;">6. Contact Us</h2>
                 <p class="mb-6">If you have questions about this privacy policy or your personal data, please contact us at:</p>
                 <p class="mb-6">
-                    <strong>Email:</strong> info@tanzaniadailytoursandsafari.com<br>
-                    <strong>Phone:</strong> +255 700 000 000<br>
-                    <strong>Address:</strong> Arusha, Tanzania
+                    <strong>Email:</strong> info@tanzaniadailytours.com<br>
+                    <strong>Phone:</strong> +255 623 975 934<br>
+                    <strong>Address:</strong> Wakala wa Vipimo Building, Moshi, Kilimanjaro, Tanzania
                 </p>
 
                 <div class="mt-8 p-6 rounded-lg" style="background: #f8f4f0;">
