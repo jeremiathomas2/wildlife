@@ -4,7 +4,7 @@
 @section('meta_title', 'Terms & Conditions - Tanzania Daily Tours & Safari')
 @section('meta_description', 'Read our terms and conditions for booking Tanzania safaris. Cancellation policy, payment terms, booking requirements, and travel insurance information.')
 @section('meta_keywords', 'Tanzania safari terms, safari booking conditions, cancellation policy Tanzania, safari payment terms, Tanzania tour terms and conditions')
-@section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg')
+@section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/safari-serengeti_agwjrp.jpg')
 
 @section('structured_data')
 @php

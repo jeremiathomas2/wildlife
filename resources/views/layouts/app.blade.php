@@ -9,7 +9,7 @@
     <title>@yield('title', 'Tanzania Daily Tours & Safari - Best Safari & Tours in Tanzania')</title>
     <meta name="title" content="@yield('meta_title', 'Tanzania Daily Tours & Safari - Best Safari & Tours in Tanzania')">
     <meta name="description" content="@yield('meta_description', 'Experience the best of Tanzania with expert-guided safaris, cultural tours, and Kilimanjaro adventures. Explore Serengeti, Ngorongoro, Zanzibar & more!')">
-    <meta name="keywords" content="@yield('meta_keywords', 'Tanzania Daily Tours & Safari, Tanzania Daily Tour, Tanzania Daily Safari, Tanzania safari, Tanzania safari packages, best Tanzania safari, luxury Tanzania safari, budget Tanzania safari, private Tanzania safari, family Tanzania safari, Tanzania wildlife safari, Tanzania safari tours, African safari Tanzania, climb Mount Kilimanjaro, Kilimanjaro trekking, Kilimanjaro tours, Machame route, Marangu route, Lemosho route, Rongai route, Umbwe route, Kilimanjaro guide, Kilimanjaro packages, Zanzibar holidays, Zanzibar beach vacation, Zanzibar honeymoon, Zanzibar tours, Zanzibar package, Serengeti safari, Ngorongoro crater tour, Tarangire safari, Lake Manyara tour, Arusha National Park, Mikumi safari, Ruaha safari, Nyerere safari, Great Migration, Big Five Tanzania, Moshi tour company, tour operator Moshi, Kilimanjaro tour company, Moshi safari booking, airport transfer Moshi, Moshi day trips, coffee tour Moshi, Materuni waterfall, Chemka hot springs, Kikuletwa hot springs, utalii Tanzania, safari Tanzania, kupanda Kilimanjaro, kampuni ya utalii Moshi, ziara Serengeti, ziara Ngorongoro, likizo Zanzibar, hifadhi za taifa Tanzania, safari za wanyamapori, bei ya safari Tanzania, private Serengeti, 5 day Ngorongoro, booking Tarangire, 2026 Lake Manyara, best Kilimanjaro, private Zanzibar, 5 day Moshi, booking Arusha, 2026 wildlife, best luxury safari, private budget safari, 5 day family safari, booking honeymoon safari, 2026 day trip, best tour operator, private travel agency, 5 day Great Migration, booking airport transfer, 2026 cultural tour, Daily tour, Tanzania Best safari, Utalii bora Tanzania, Utalii wa Uhakika')">
+    <meta name="keywords" content="@yield('meta_keywords', 'Tanzania safari, Kilimanjaro trek, Serengeti, Zanzibar, Ngorongoro, day trips, wildlife tours')">
     <meta name="author" content="Tanzania Daily Tours & Safari">
     <meta name="robots" content="index, follow">
     <meta name="language" content="English">
@@ -20,7 +20,7 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="@yield('meta_title', 'Tanzania Daily Tours & Safari - Best Safari & Tours in Tanzania')">
     <meta property="og:description" content="@yield('meta_description', 'Experience the best of Tanzania with expert-guided safaris, cultural tours, and Kilimanjaro adventures. Explore Serengeti, Ngorongoro, Zanzibar & more!')">
-    <meta property="og:image" content="@yield('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg')">
+    <meta property="og:image" content="@yield('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/safari-serengeti_agwjrp.jpg')">
     <meta property="og:site_name" content="Tanzania Daily Tours & Safari">
     <meta property="og:locale" content="en_US">
     
@@ -29,7 +29,7 @@
     <meta name="twitter:url" content="{{ url()->current() }}">
     <meta name="twitter:title" content="@yield('meta_title', 'Tanzania Daily Tours & Safari - Best Safari & Tours in Tanzania')">
     <meta name="twitter:description" content="@yield('meta_description', 'Experience the best of Tanzania with expert-guided safaris, cultural tours, and Kilimanjaro adventures. Explore Serengeti, Ngorongoro, Zanzibar & more!')">
-    <meta name="twitter:image" content="@yield('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg')">
+    <meta name="twitter:image" content="@yield('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/safari-serengeti_agwjrp.jpg')">
 
     <!-- JSON-LD Structured Data -->
     @yield('structured_data')
@@ -42,8 +42,8 @@
         "name": "Tanzania Daily Tours & Safari",
         "description": "Expert-guided Tanzania safaris, cultural tours, and Kilimanjaro adventures since 2012",
         "url": "https://www.tanzaniadailytoursandsafari.com",
-        "logo": "https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-brown_d1vgxe.png",
-        "image": "https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg",
+        "logo": "https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-brown_d1vgxe.png",
+        "image": "https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/safari-serengeti_agwjrp.jpg",
         "telephone": "+255623975934",
         "email": "info@tanzaniadailytoursandsafari.com",
         "address": {
@@ -227,7 +227,7 @@
         $loadingScreenHtml = '';
         if ($isHomePage) {
             $loadingScreenHtml = '<div id="loadingScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center" style="background: #f8f4f0; opacity: 1; transition: opacity 0.3s ease;">
-        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-brown_d1vgxe.png" alt="Tanzania Daily Tours & Safari" style="height: 120px; width: auto; object-fit: contain; margin-bottom: 20px;">
+        <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-brown_d1vgxe.png" alt="Tanzania Daily Tours & Safari" style="height: 120px; width: auto; object-fit: contain; margin-bottom: 20px;">
         <h2 class="text-2xl font-bold italic mb-6" style="font-family: \'Raleway\', sans-serif; color: #854208;">Tanzania Daily Tours &amp; Safari</h2>
         <span class="w-2 h-2 rounded-full animate-pulse" style="background: #ff9729;"></span>
     </div>';
@@ -236,7 +236,7 @@
     {!! $loadingScreenHtml !!}
 
     <!-- Navbar -->
-    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-400" id="mainNav">
+    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-400" id="mainNav" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.15);">
         <div class="max-w-[1280px] mx-auto px-6 flex items-center justify-between" style="height: 72px;">
             @php
                 $navLinks = [
@@ -251,7 +251,7 @@
             @endphp
             
             <a href="{{ route('home') }}" class="flex items-center gap-3" style="transition: all 0.4s ease;">
-            <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" id="navLogo" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
+            <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-white_bexcal.png" id="navLogo" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
             <span class="text-xl font-bold italic hidden sm:block" id="navTitle" style="font-family: 'Raleway', sans-serif; color: #ffffff; transition: color 0.4s ease;">
                 Tanzania Daily Tours &amp; Safari
             </span>
@@ -301,7 +301,7 @@
         <!-- Mobile menu header -->
         <div class="absolute top-0 left-0 right-0 px-6 flex items-center justify-between" style="height: 72px; background: #854208;">
             <a href="{{ route('home') }}" class="flex items-center gap-3" onclick="closeMobileMenu()">
-                <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
+                <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
                 <span class="text-xl font-bold italic" style="font-family: 'Raleway', sans-serif; color: #ffffff;">
                     Tanzania Daily Tours &amp; Safari
                 </span>
@@ -359,7 +359,7 @@
                 <!-- Brand -->
                 <div>
                     <a href="{{ route('home') }}" class="inline-flex items-center gap-3 mb-4">
-                        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
+                        <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
                         <span class="text-xl font-bold italic" style="font-family: 'Raleway', sans-serif; color: #ffffff;">
                             Tanzania Daily Tours &amp; Safari
                         </span>
@@ -481,10 +481,18 @@
                             </svg>
                         </a>
                         <a href="https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html" target="_blank" rel="noopener noreferrer" class="transition-opacity duration-300 hover:opacity-70" aria-label="TripAdvisor">
-                            <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1784610546/PngItem_1715860_wbqbw4.png" alt="TripAdvisor" class="w-5 h-5" style="filter: brightness(0) invert(1);"/>
+                            <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_100/v1784610546/PngItem_1715860_wbqbw4.png" alt="TripAdvisor" class="w-5 h-5" style="filter: brightness(0) invert(1);"/>
                         </a>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Sustainable Association Partners -->
+        <div class="border-t" style="border-color: rgba(255, 255, 255, 0.15);">
+            <div class="max-w-[1280px] mx-auto px-6 py-8 mt-8 text-center">
+                <p class="text-xs font-semibold uppercase tracking-wider mb-4" style="color: rgba(255, 255, 255, 0.5);">Sustainable Association Partners</p>
+                <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_600/v1787751810/Sustainable-Association-4_klxpxg.webp" alt="Sustainable Association Partners" class="mx-auto" style="max-height: 50px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.7;" loading="lazy">
             </div>
         </div>
 
@@ -523,11 +531,13 @@
             const scrolled = window.scrollY > window.innerHeight * 0.5;
             
             if (scrolled) {
-                nav.style.background = 'rgba(255, 255, 255, 0.92)';
-                nav.style.backdropFilter = 'blur(12px)';
-                nav.style.borderBottom = '1px solid rgba(133, 66, 8, 0.08)';
+                nav.style.background = 'rgba(255, 255, 255, 0.88)';
+                nav.style.backdropFilter = 'blur(16px)';
+                nav.style.webkitBackdropFilter = 'blur(16px)';
+                nav.style.borderBottom = '1px solid rgba(255, 255, 255, 0.2)';
+                nav.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.08)';
                 
-                navLogo.src = "https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-brown_d1vgxe.png";
+                navLogo.src = "https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-brown_d1vgxe.png";
                 navTitle.style.color = '#854208';
                 
                 hamburger1.style.background = '#854208';
@@ -539,19 +549,19 @@
                 desktopLinks.forEach(link => {
                     const underline = link.querySelector('span');
                     if (underline && underline.style.width === '100%') {
-                        // Active route - keep orange color
                         link.style.color = '#ff9729';
                     } else if (!link.style.background || link.style.background === 'transparent') {
-                        // Non-active route - change to dark
                         link.style.color = '#111111';
                     }
                 });
             } else {
-                nav.style.background = 'transparent';
-                nav.style.backdropFilter = 'none';
-                nav.style.borderBottom = '1px solid transparent';
+                nav.style.background = 'rgba(255, 255, 255, 0.1)';
+                nav.style.backdropFilter = 'blur(10px)';
+                nav.style.webkitBackdropFilter = 'blur(10px)';
+                nav.style.borderBottom = '1px solid rgba(255, 255, 255, 0.15)';
+                nav.style.boxShadow = 'none';
                 
-                navLogo.src = "https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png";
+                navLogo.src = "https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-white_bexcal.png";
                 navTitle.style.color = '#ffffff';
                 
                 hamburger1.style.background = '#ffffff';
@@ -563,10 +573,8 @@
                 desktopLinks.forEach(link => {
                     const underline = link.querySelector('span');
                     if (underline && underline.style.width === '100%') {
-                        // Active route - keep orange color
                         link.style.color = '#ff9729';
                     } else if (!link.style.background || link.style.background === 'transparent') {
-                        // Non-active route - change to white
                         link.style.color = '#ffffff';
                     }
                 });

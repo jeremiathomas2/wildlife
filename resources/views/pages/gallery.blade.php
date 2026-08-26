@@ -24,7 +24,7 @@
     <!-- Page Header -->
     <section class="relative h-[40vh] min-h-[280px] flex items-end pb-16">
         <div class="absolute inset-0">
-            <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890318/gallery-landscape-1_dxdd6x.jpg" alt="Gallery" class="w-full h-full object-cover">
+            <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890318/gallery-landscape-1_dxdd6x.jpg" alt="Gallery" class="w-full h-full object-cover">
             <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(26,18,8,0.4), rgba(99,30,8,0.8));"></div>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-6 w-full">
@@ -79,26 +79,45 @@
     </section>
 
     <!-- Lightbox -->
-    <div id="lightbox" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 hidden" onclick="closeLightbox()">
-        <button class="absolute top-6 right-6 text-white hover:text-opacity-70 transition-colors" onclick="closeLightbox()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+    <div id="lightbox" class="fixed inset-0 z-50 hidden" onclick="closeLightbox()">
+        <!-- Backdrop -->
+        <div class="absolute inset-0" style="background: rgba(0,0,0,0.92); backdrop-filter: blur(4px);"></div>
+
+        <!-- Close Button -->
+        <button class="absolute top-5 right-5 z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white hover:bg-opacity-20" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);" onclick="event.stopPropagation(); closeLightbox()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" style="color: #ffffff;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6L6 18M6 6l12 12"/>
             </svg>
         </button>
-        <button class="absolute left-6 top-1/2 -translate-y-1/2 text-white hover:text-opacity-70 transition-colors" onclick="event.stopPropagation(); prevImage()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+
+        <!-- Image Counter -->
+        <div class="absolute top-5 left-1/2 -translate-x-1/2 z-10 px-4 py-1.5 rounded-full text-xs font-semibold" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.85); font-family: 'Raleway', sans-serif;">
+            <span id="lightbox-counter"></span>
+        </div>
+
+        <!-- Prev Button -->
+        <button class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white hover:bg-opacity-20 hover:scale-110" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);" onclick="event.stopPropagation(); prevImage()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" style="color: #ffffff;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 19l-7-7 7-7"/>
             </svg>
         </button>
-        <button class="absolute right-6 top-1/2 -translate-y-1/2 text-white hover:text-opacity-70 transition-colors" onclick="event.stopPropagation(); nextImage()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+
+        <!-- Next Button -->
+        <button class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white hover:bg-opacity-20 hover:scale-110" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);" onclick="event.stopPropagation(); nextImage()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" style="color: #ffffff;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 5l7 7-7 7"/>
             </svg>
         </button>
-        <img id="lightbox-img" src="" alt="" class="max-w-[90vw] max-h-[85vh] object-contain rounded-lg" onclick="event.stopPropagation()">
-        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-center">
-            <p id="lightbox-title" class="text-sm font-bold text-white"></p>
-            <p id="lightbox-category" class="text-xs text-white text-opacity-70 capitalize"></p>
+
+        <!-- Image Container -->
+        <div class="relative z-10 flex items-center justify-center w-full h-full px-16 py-20" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg transition-opacity duration-300" style="box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+        </div>
+
+        <!-- Caption -->
+        <div class="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-center px-6 py-3 rounded-2xl" style="background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1);">
+            <p id="lightbox-title" class="text-sm font-bold text-white" style="font-family: 'Raleway', sans-serif;"></p>
+            <p id="lightbox-category" class="text-xs text-white text-opacity-60 capitalize mt-0.5"></p>
         </div>
     </div>
 @endsection
@@ -153,10 +172,16 @@
 
         function updateLightbox() {
             const item = galleryData[currentIndex];
-            document.getElementById('lightbox-img').src = item.src;
-            document.getElementById('lightbox-img').alt = item.title;
+            const img = document.getElementById('lightbox-img');
+            img.style.opacity = '0';
+            setTimeout(function() {
+                img.src = item.src;
+                img.alt = item.title;
+                img.onload = function() { img.style.opacity = '1'; };
+            }, 150);
             document.getElementById('lightbox-title').textContent = item.title;
             document.getElementById('lightbox-category').textContent = item.category;
+            document.getElementById('lightbox-counter').textContent = (currentIndex + 1) + ' / ' + galleryData.length;
         }
 
         function nextImage() {
@@ -177,5 +202,23 @@
             if (e.key === 'ArrowRight') nextImage();
             if (e.key === 'ArrowLeft') prevImage();
         });
+
+        // Touch swipe navigation
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const lightboxEl = document.getElementById('lightbox');
+
+        lightboxEl.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        lightboxEl.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) nextImage();
+                else prevImage();
+            }
+        }, { passive: true });
     </script>
 @endsection

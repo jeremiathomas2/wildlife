@@ -89,26 +89,26 @@
 
                 <div class="settings-pane" id="pane-brand" style="display:none;">
                     <h3 style="font-size:17px;margin-bottom:6px;">Brand & Assets</h3>
-                    <p class="field-hint" style="margin-bottom:16px;">These mirror the live site's safari palette — sandy neutrals with terracotta, gold and acacia-green accents.</p>
+                    <p class="field-hint" style="margin-bottom:16px;">These mirror the live site's safari palette — earthy tones with espresso, orange and acacia-green accents.</p>
                     <div class="color-swatch-row">
                         <div class="color-swatch">
-                            <div class="swatch" style="background: #C2592B;"></div>
-                            <span class="swatch-label">Terracotta</span>
+                            <div class="swatch" style="background: #631e08;"></div>
+                            <span class="swatch-label">Espresso</span>
                         </div>
                         <div class="color-swatch">
-                            <div class="swatch" style="background: #2A1B10;"></div>
-                            <span class="swatch-label">Coffee</span>
+                            <div class="swatch" style="background: #ff9729;"></div>
+                            <span class="swatch-label">Orange</span>
                         </div>
                         <div class="color-swatch">
-                            <div class="swatch" style="background: #D4A24C;"></div>
-                            <span class="swatch-label">Savanna Gold</span>
-                        </div>
-                        <div class="color-swatch">
-                            <div class="swatch" style="background: #7A8450;"></div>
+                            <div class="swatch" style="background: #088529;"></div>
                             <span class="swatch-label">Acacia Green</span>
                         </div>
                         <div class="color-swatch">
-                            <div class="swatch" style="background: #FBF7EF;"></div>
+                            <div class="swatch" style="background: #854208;"></div>
+                            <span class="swatch-label">Brown</span>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="swatch" style="background: #f8f4f0;"></div>
                             <span class="swatch-label">Sand</span>
                         </div>
                     </div>
@@ -151,14 +151,24 @@
                                 <strong>{{ $content->label ?? $content->key }}</strong>
                                 <span>{{ $content->value ?? 'Enable this notification' }}</span>
                             </div>
-                            <button type="button" class="switch {{ $content->value === '1' || $content->value === 'true' ? 'on' : '' }}" onclick="this.classList.toggle('on')"></button>
+                            <input type="hidden" name="content[{{ $content->key }}]" value="0">
+                            <button type="button" class="switch {{ $content->value === '1' || $content->value === 'true' ? 'on' : '' }}" onclick="this.classList.toggle('on'); this.previousElementSibling.value = this.classList.contains('on') ? '1' : '0'"></button>
                         </div>
                     @endforeach
                 </div>
 
                 <div class="settings-pane" id="pane-users" style="display:none;">
                     <h3 style="font-size:17px;margin-bottom:18px;">Admin Users</h3>
-                    <p style="color:var(--ink-soft);font-size:13.5px;margin-bottom:16px;">User management is not yet implemented. Contact your system administrator to add or remove users.</p>
+                    <p style="color:var(--ink-soft);font-size:13.5px;margin-bottom:16px;">Manage admin accounts, permissions and access levels.</p>
+                    <a href="{{ route('admin.users') }}" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:6px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Manage admin users
+                    </a>
                 </div>
             </form>
         </div>

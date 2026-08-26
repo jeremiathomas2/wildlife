@@ -55,7 +55,7 @@ class AdminController extends Controller
     public function currencySwitch(Request $request)
     {
         $validated = $request->validate([
-            'currency' => 'required|in:USD,EUR,GBP,KES,TZS,UGX,ZAR'
+            'currency' => 'required|in:USD,EUR,GBP,JPY,CAD,AUD,INR,TZS,KES,UGX,ZAR'
         ]);
         session(['admin_currency' => $validated['currency']]);
         return response()->json(['success' => true, 'currency' => $validated['currency']]);
@@ -123,13 +123,21 @@ class AdminController extends Controller
             'name' => 'required|string',
             'email' => 'required|email',
             'tour_name' => 'required|string',
+            'destination_id' => 'nullable|integer|exists:destinations,id',
             'travel_date' => 'required|date',
             'guests' => 'required|integer|min:1',
-            'amount' => 'required|numeric',
             'status' => 'required|string',
         ]);
 
-        Booking::create($validated);
+        $amount = 0;
+        if (!empty($validated['destination_id'])) {
+            $destination = Destination::find($validated['destination_id']);
+            if ($destination) {
+                $amount = ($destination->price_adult ?? $destination->price ?? 0) * $validated['guests'];
+            }
+        }
+
+        Booking::create([...$validated, 'amount' => $amount]);
         return back()->with('success', 'Booking saved!');
     }
 
@@ -141,15 +149,28 @@ class AdminController extends Controller
             'country_code' => 'required|string',
             'phone_number' => 'required|string',
             'tour_name' => 'required|string',
+            'destination_id' => 'nullable|integer|exists:destinations,id',
             'travel_date' => 'required|date',
             'adults' => 'required|integer|min:1',
             'children' => 'nullable|integer|min:0',
-            'amount' => 'required|numeric',
             'status' => 'required|string',
         ]);
 
         $booking = Booking::findOrFail($id);
-        $booking->update($validated);
+
+        $guests = $validated['adults'] + ($validated['children'] ?? 0);
+        $amount = 0;
+        $destinationId = $validated['destination_id'] ?? $booking->destination_id;
+        if ($destinationId) {
+            $destination = Destination::find($destinationId);
+            if ($destination) {
+                $adultPrice = $destination->price_adult ?? $destination->price ?? 0;
+                $childPrice = $destination->price_child ?? ($adultPrice / 2);
+                $amount = ($adultPrice * $validated['adults']) + ($childPrice * ($validated['children'] ?? 0));
+            }
+        }
+
+        $booking->update([...$validated, 'amount' => $amount, 'guests' => $guests]);
         return redirect()->route('admin.bookings')->with('success', 'Booking updated successfully!');
     }
 

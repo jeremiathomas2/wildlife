@@ -41,7 +41,7 @@
     <!-- Page Header -->
     <section class="relative h-[40vh] min-h-[280px] flex items-end pb-16">
         <div class="absolute inset-0">
-            <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890322/reviews-header_wnccc3.jpg" alt="Reviews" class="w-full h-full object-cover">
+            <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890322/reviews-header_wnccc3.jpg" alt="Reviews" class="w-full h-full object-cover">
             <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(26,18,8,0.4), rgba(99,30,8,0.8));"></div>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-6 w-full">
@@ -143,7 +143,7 @@
                             <ul id="OEQBtiJT1z9h" class="TA_links fjINTJ8nYkf">
                                 <li id="GLvFwnFD" class="0neu5M">
                                     <a target="_blank" href="https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html">
-                                        <img src="https://www.tripadvisor.com/img/cdsi/img2/badges/ollie-11424-2.gif" alt="TripAdvisor"/>
+                                        <img src="https://www.tripadvisor.com/img/cdsi/img2/badges/ollie-11424-2.gif" alt="TripAdvisor" loading="lazy"/>
                                     </a>
                                 </li>
                             </ul>

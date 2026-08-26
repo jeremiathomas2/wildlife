@@ -91,6 +91,10 @@ Route::get('/privacy', function () {
 
 Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
 
+Route::get('/api/currency-rates', function () {
+    return response()->json(\App\Helpers\CurrencyHelper::getRatesWithSymbols());
+})->name('api.currency-rates');
+
 Route::post('/contact', function (Illuminate\Http\Request $request) {
     $validated = $request->validate([
         'name' => 'required|string',
@@ -99,7 +103,7 @@ Route::post('/contact', function (Illuminate\Http\Request $request) {
         'message' => 'required|string',
     ]);
 
-    App\Models\Message::create([
+    $message = App\Models\Message::create([
         'name' => $validated['name'],
         'email' => $validated['email'],
         'subject' => $validated['interest'],
@@ -107,13 +111,15 @@ Route::post('/contact', function (Illuminate\Http\Request $request) {
         'read' => false,
     ]);
 
+    Illuminate\Support\Facades\Mail::to(config('mail.from.address'))->queue(new \App\Mail\NewMessageAlert($message));
+
     return back()->with('success', 'Thank you! We will get back to you soon.');
 })->name('contact.submit');
 
 // Admin Auth Routes
 Route::prefix('live')->name('admin.')->group(function () {
     Route::get('/login', [AdminController::class, 'login'])->name('login');
-    Route::post('/login', [AdminController::class, 'loginSubmit'])->name('login.submit');
+    Route::post('/login', [AdminController::class, 'loginSubmit'])->middleware('throttle:5,1')->name('login.submit');
 });
 
 // Protected Admin Routes

@@ -442,7 +442,7 @@
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sb-brand">
-                <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="width: 38px; height: 38px; border-radius: 10px; flex: none;">
+                <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="width: 38px; height: 38px; border-radius: 10px; flex: none;">
                 <div class="sb-brand-text">
                     <strong>Tanzania Daily</strong>
                     <span>Tours & Safari · CMS</span>

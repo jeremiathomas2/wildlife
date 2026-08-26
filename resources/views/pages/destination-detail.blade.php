@@ -4,7 +4,7 @@
 @section('meta_title', (is_object($tour) ? ($tour->meta_title ?? $tour->name ?? 'Tanzania Safari') : ($tour['meta_title'] ?? $tour['name'] ?? 'Tanzania Safari')))
 @section('meta_description', (is_object($tour) ? ($tour->meta_description ?? \Illuminate\Support\Str::limit(strip_tags($tour->desc ?? ''), 150)) : ($tour['meta_description'] ?? \Illuminate\Support\Str::limit(strip_tags($tour['desc'] ?? ''), 150))))
 @section('meta_keywords', (is_object($tour) ? ($tour->meta_keywords ?? $tour->name ?? 'Tanzania safari') : ($tour['meta_keywords'] ?? $tour['name'] ?? 'Tanzania safari')))
-@section('meta_image', (is_object($tour) ? $tour->image ?? 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg' : $tour['image'] ?? 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg'))
+@section('meta_image', (is_object($tour) ? $tour->image ?? 'https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/safari-serengeti_agwjrp.jpg' : $tour['image'] ?? 'https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/safari-serengeti_agwjrp.jpg'))
 
 @section('structured_data')
 @php
@@ -45,9 +45,10 @@
         <img src="{{ is_object($tour) ? ($tour->image ?? '') : ($tour['image'] ?? '') }}" alt="{{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}" class="w-full h-full object-cover">
         <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(17,17,17,0.7), transparent 60%);"></div>
         <div class="absolute bottom-0 left-0 right-0 z-10 max-w-7xl mx-auto px-6 pb-10">
-            <a href="{{ route('destinations') }}" class="inline-flex items-center gap-1 text-sm mb-4 transition-colors hover:text-white" style="color: rgba(255,255,255,0.8);">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 12H5M5 12l7-7M5 12l7 7"/>
+            <a href="{{ route('destinations') }}" class="inline-flex items-center gap-2 mb-5 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-white hover:bg-opacity-25 hover:-translate-x-0.5" style="background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2); color: #ffffff; font-family: 'Raleway', sans-serif;">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5"/>
+                    <path d="m12 19-7-7 7-7"/>
                 </svg>
                 {{ $contents['destination_back_text']->value ?? 'Back to Destinations' }}
             </a>
@@ -95,7 +96,7 @@
                                 @foreach($relatedTours as $related)
                                     <a href="{{ route('destination.detail', is_object($related) ? ($related->slug ?? Str::slug($related->name ?? '')) : ($related['slug'] ?? Str::slug($related['name'] ?? ''))) }}" class="flex items-center gap-4 group:">
                                         <div class="w-20 h-14 rounded-lg overflow-hidden flex-shrink-0">
-                                            <img src="{{ is_object($related) ? ($related->image ?? '') : ($related['image'] ?? '') }}" alt="{{ is_object($related) ? ($related->name ?? '') : ($related['name'] ?? '') }}" class="w-full h-full object-cover">
+                                            <img src="{{ is_object($related) ? ($related->image ?? '') : ($related['image'] ?? '') }}" alt="{{ is_object($related) ? ($related->name ?? '') : ($related['name'] ?? '') }}" class="w-full h-full object-cover" loading="lazy">
                                         </div>
                                         <div>
                                             <h4 class="font-bold text-sm group-hover:underline" style="color: #854208;">
@@ -125,10 +126,8 @@
 
                         <form id="booking-form" method="POST" action="{{ route('bookings.store') }}">
                             @csrf
+                            <input type="hidden" name="destination_id" value="{{ is_object($tour) ? $tour->id : ($tour['id'] ?? '') }}">
                             <input type="hidden" name="tour_name" value="{{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}">
-                            <input type="hidden" name="base_price" value="{{ is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0) }}">
-                            <input type="hidden" name="price_adult" value="{{ is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0) }}">
-                            <input type="hidden" name="price_child" value="{{ is_object($tour) ? ($tour->price_child ?? (($tour->price_adult ?? $tour->price ?? 0) / 2)) : ($tour['price_child'] ?? (($tour->price_adult ?? $tour['price'] ?? 0) / 2)) }}">
                             <input type="hidden" name="phone_number" id="phone-number-hidden">
 
                             <div class="space-y-4 mb-6">
@@ -145,14 +144,9 @@
                                         Currency
                                     </label>
                                     <select id="currency-selector" name="currency" onchange="updatePrice()" class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;">
-                                        <option value="USD" data-symbol="$" data-rate="1">USD ($)</option>
-                                        <option value="EUR" data-symbol="€" data-rate="0.92">EUR (€)</option>
-                                        <option value="GBP" data-symbol="£" data-rate="0.79">GBP (£)</option>
-                                        <option value="JPY" data-symbol="¥" data-rate="151">JPY (¥)</option>
-                                        <option value="CAD" data-symbol="C$" data-rate="1.36">CAD (C$)</option>
-                                        <option value="AUD" data-symbol="A$" data-rate="1.53">AUD (A$)</option>
-                                        <option value="INR" data-symbol="₹" data-rate="83">INR (₹)</option>
-                                        <option value="TZS" data-symbol="TSh" data-rate="2500">TZS (TSh)</option>
+                                        @foreach(\App\Helpers\CurrencyHelper::$exchangeRates as $code => $rate)
+                                            <option value="{{ $code }}" data-symbol="{{ \App\Helpers\CurrencyHelper::$currencySymbols[$code] }}" data-rate="{{ $rate }}" {{ $code === 'USD' ? 'selected' : '' }}>{{ $code }} ({{ \App\Helpers\CurrencyHelper::$currencySymbols[$code] }})</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -237,7 +231,6 @@
                                     <span style="color: #854208;">Total</span>
                                     <span id="total-price" style="color: #088529;">${{ number_format($adultPrice, 2) }}</span>
                                 </div>
-                                <input type="hidden" name="total_price" id="total-price-hidden" value="{{ number_format($adultPrice, 2) }}">
                             </div>
 
                             <button type="submit" class="w-full py-3.5 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90 shadow-lg" style="background: #088529;">

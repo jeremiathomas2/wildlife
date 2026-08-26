@@ -4,7 +4,7 @@
 @section('meta_title', 'Privacy Policy - Tanzania Daily Tours & Safari')
 @section('meta_description', 'Read our privacy policy. Learn how we collect, use, and protect your personal information when booking Tanzania safaris and tours.')
 @section('meta_keywords', 'Tanzania safari privacy policy, data protection, GDPR compliance, personal information security')
-@section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg')
+@section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/safari-serengeti_agwjrp.jpg')
 
 @section('structured_data')
 @php
@@ -22,7 +22,7 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="relative flex items-end" style="height: 50vh; min-height: 400px; background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(101, 30, 8, 0.7)), url('https://res.cloudinary.com/aenplcpl/image/upload/v1782890323/safari-serengeti_agwjrp.jpg') center/cover no-repeat;">
+    <section class="relative flex items-end" style="height: 50vh; min-height: 400px; background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(101, 30, 8, 0.7)), url('https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/safari-serengeti_agwjrp.jpg') center/cover no-repeat;">
         <div class="max-w-[1280px] mx-auto px-6 pb-12">
             <nav class="text-xs mb-3" style="color: rgba(255,255,255,0.7);">
                 <a href="{{ route('home') }}" class="hover:text-white transition-colors">Home</a>

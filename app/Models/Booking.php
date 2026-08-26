@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Booking extends Model
 {
     protected $fillable = [
+        'destination_id',
         'tour_name',
         'base_price',
         'currency',
@@ -25,6 +26,6 @@ class Booking extends Model
 
     public function destination()
     {
-        return $this->belongsTo(Destination::class, 'tour_name', 'name');
+        return $this->belongsTo(Destination::class);
     }
 }

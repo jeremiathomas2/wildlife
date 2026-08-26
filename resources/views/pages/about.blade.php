@@ -37,7 +37,7 @@
     <!-- Page Header -->
     <section class="relative h-[50vh] min-h-[320px] flex items-end pb-16">
         <div class="absolute inset-0">
-            <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890320/about-hero_dbeshf.jpg" alt="About" class="w-full h-full object-cover">
+            <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890320/about-hero_dbeshf.jpg" alt="About" class="w-full h-full object-cover">
             <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(26,18,8,0.4), rgba(99,30,8,0.8));"></div>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-6 w-full">
@@ -57,7 +57,7 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                 <div class="overflow-hidden rounded-2xl" style="aspect-ratio: 4/3;">
-                    <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1783621533/Tanzania_Daily_Tours_and_Safari_guide-Picsart-AiImageEnhancer_qisc5z.png" alt="Story" class="w-full h-full object-cover" loading="lazy">
+                    <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_800/v1783621533/Tanzania_Daily_Tours_and_Safari_guide-Picsart-AiImageEnhancer_qisc5z.png" alt="Story" class="w-full h-full object-cover" loading="lazy">
                 </div>
                 <div>
                     <span class="text-sm font-semibold uppercase tracking-wider mb-3 block" style="color: #ff9729;">{{ $contents['about_story_label']->value ?? 'Our Story' }}</span>
@@ -123,7 +123,7 @@
             <div class="max-w-2xl mx-auto">
                 <div class="bg-white rounded-2xl p-8 lg:p-12 text-center" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                     <div class="w-40 h-40 rounded-full overflow-hidden mx-auto mb-6" style="aspect-ratio: 1/1; border: 4px solid #088529;">
-                        <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1783677911/ally_h4ud4z.png" alt="Petro Mihambo" class="w-full h-full object-cover" loading="lazy">
+                        <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_400/v1783677911/ally_h4ud4z.png" alt="Petro Mihambo" class="w-full h-full object-cover" loading="lazy">
                     </div>
                     <p class="text-sm font-semibold uppercase tracking-wider mb-2" style="color: #ff9729;">Senior Tour Guide</p>
                     <h3 class="font-bold text-2xl lg:text-3xl mb-4" style="font-family: 'Raleway', sans-serif; color: #854208;">Petro Mihambo</h3>

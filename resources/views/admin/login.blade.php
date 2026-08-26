@@ -128,7 +128,7 @@
 <body>
     <div class="login-card">
         <div class="login-mark">
-            <img src="https://res.cloudinary.com/aenplcpl/image/upload/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="width: 60px; height: 60px; object-fit: contain;">
+            <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="width: 60px; height: 60px; object-fit: contain;">
         </div>
         <h1 style="text-align: center;">Tanzania Daily Tours & Safari</h1>
         <h2 style="font-family: 'Raleway', sans-serif; font-size: 20px; margin-bottom: 8px; color: var(--terracotta-600); text-align: center;">Admin Control Panel</h2>
