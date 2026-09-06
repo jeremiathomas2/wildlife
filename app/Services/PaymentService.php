@@ -65,7 +65,7 @@ class PaymentService
             'payment_mode' => $amounts['mode'],
             'deposit_percentage' => $amounts['deposit_percentage'],
             'amount' => $amounts['amount'],
-            'requested_amount' => $booking->total_price,
+            'requested_amount' => $amounts['requested_amount'] ?? $booking->total_price,
             'currency' => $this->chargeCurrency($booking),
             'status' => Payment::STATUS_PENDING,
             'provider' => 'pesapal',
@@ -210,17 +210,30 @@ class PaymentService
 
     public function amountForBooking(Booking $booking): array
     {
+        $bookingCurrency = strtoupper((string) $booking->currency) ?: 'USD';
+        $chargeCurrency = $this->chargeCurrency($booking);
+
         $full = (float) $booking->total_price;
+        if ($chargeCurrency !== $bookingCurrency) {
+            $full = round((float) \App\Helpers\CurrencyHelper::convert($full, $bookingCurrency, $chargeCurrency), 2);
+        }
+
         $depositPercentage = PaymentSettings::depositPercentage();
 
         if ($depositPercentage <= 0 || $depositPercentage >= 100) {
-            return ['mode' => Payment::MODE_FULL, 'deposit_percentage' => 0, 'amount' => $full];
+            return [
+                'mode' => Payment::MODE_FULL,
+                'deposit_percentage' => 0,
+                'amount' => $full,
+                'requested_amount' => $full,
+            ];
         }
 
         return [
             'mode' => Payment::MODE_DEPOSIT,
             'deposit_percentage' => $depositPercentage,
             'amount' => round($full * $depositPercentage / 100, 2),
+            'requested_amount' => $full,
         ];
     }
 

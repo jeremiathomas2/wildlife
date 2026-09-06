@@ -137,6 +137,98 @@ class PaymentTest extends TestCase
         ]);
     }
 
+    public function test_booking_submit_with_selected_currency_converts_total_and_charges_exact_deposit(): void
+    {
+        $this->enablePayments(30);
+        $this->fakePesaPal();
+
+        $destination = $this->createDestination(['price_adult' => 300, 'price_child' => 150]);
+
+        $response = $this->post(route('bookings.store'), [
+            'name' => 'Asha Mwangi',
+            'email' => 'traveler@example.com',
+            'destination_id' => $destination->id,
+            'tour_name' => 'Ngorongoro Crater',
+            'travel_date' => now()->addDays(10)->format('Y-m-d'),
+            'adults' => 2,
+            'children' => 0,
+            'currency' => 'EUR',
+            'country_code' => '+255',
+            'phone_number' => '712345678',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('https://pay.pesapal.com/checkout/TRACK-001');
+
+        $this->assertDatabaseHas('bookings', [
+            'email' => 'traveler@example.com',
+            'currency' => 'EUR',
+            'total_price' => 552.00,
+        ]);
+        $this->assertDatabaseHas('payments', [
+            'currency' => 'EUR',
+            'amount' => 165.60,
+            'requested_amount' => 552.00,
+            'status' => Payment::STATUS_PENDING,
+        ]);
+    }
+
+    public function test_booking_submit_with_unsupported_currency_does_not_create_payment(): void
+    {
+        $this->enablePayments(30);
+        $this->fakePesaPal();
+
+        $destination = $this->createDestination(['price_adult' => 300, 'price_child' => 150]);
+
+        $response = $this->post(route('bookings.store'), [
+            'name' => 'Asha Mwangi',
+            'email' => 'traveler@example.com',
+            'destination_id' => $destination->id,
+            'tour_name' => 'Ngorongoro Crater',
+            'travel_date' => now()->addDays(10)->format('Y-m-d'),
+            'adults' => 2,
+            'children' => 0,
+            'currency' => 'JPY',
+            'country_code' => '+255',
+            'phone_number' => '712345678',
+        ]);
+
+        $response->assertStatus(302);
+        $this->assertDatabaseCount('payments', 0);
+        $this->assertDatabaseHas('bookings', [
+            'email' => 'traveler@example.com',
+            'currency' => 'JPY',
+            'total_price' => 90600.00,
+        ]);
+    }
+
+    public function test_amount_for_booking_converts_uncommon_currency_to_charge_currency(): void
+    {
+        $this->enablePayments(30);
+
+        $booking = Booking::create([
+            'destination_id' => $this->createDestination()->id,
+            'tour_name' => 'Ngorongoro Crater',
+            'base_price' => 300,
+            'total_price' => 90600.00,
+            'currency' => 'JPY',
+            'travel_date' => now()->addDays(10)->format('Y-m-d'),
+            'adults' => 2,
+            'children' => 0,
+            'email' => 'traveler@example.com',
+            'country_code' => '+255',
+            'phone_number' => '712345678',
+            'name' => 'Asha Mwangi',
+            'status' => 'Pending',
+        ]);
+
+        $amounts = app(PaymentService::class)->amountForBooking($booking);
+
+        $this->assertSame(Payment::MODE_DEPOSIT, $amounts['mode']);
+        $this->assertEquals(180.00, $amounts['amount']);
+        $this->assertEquals(600.00, $amounts['requested_amount']);
+    }
+
     public function test_booking_submit_with_payment_disabled_does_not_create_payment(): void
     {
         $this->fakePesaPal();

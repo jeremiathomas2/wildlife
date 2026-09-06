@@ -265,7 +265,7 @@
                                 $depositPct = $paymentsEnabled ? \App\Services\PaymentSettings::depositPercentage() : 0;
                             @endphp
                             @if($paymentsEnabled)
-                            <div class="mt-4 rounded-xl p-4" style="background-color: rgba(8,133,41,0.06); border: 1px solid rgba(8,133,41,0.15);">
+                            <div id="online-payment-box" class="mt-4 rounded-xl p-4" style="background-color: rgba(8,133,41,0.06); border: 1px solid rgba(8,133,41,0.15);">
                                 <div class="flex items-center gap-2 text-xs font-bold mb-1" style="color: #088529;">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <rect x="2" y="5" width="20" height="14" rx="2"/>
@@ -276,8 +276,26 @@
                                 <p class="text-xs leading-relaxed" style="color: #5a3e2b;">
                                     After booking you'll be redirected to a secure PesaPal checkout.
                                     @if($depositPct > 0 && $depositPct < 100)
-                                        A deposit of <strong>{{ $depositPct }}%</strong> is due now; the balance is arranged before travel.
+                                        A deposit of <strong>{{ $depositPct }}%</strong> is due now
+                                        <span id="deposit-amount" style="color:#854208;"></span>;
+                                        the balance is arranged before travel.
                                     @endif
+                                </p>
+                            </div>
+                            <div id="unsupported-currency-box" class="mt-4 rounded-xl p-4" style="display:none; background-color: rgba(255,151,41,0.10); border: 1px solid rgba(255,151,41,0.35);">
+                                <div class="flex items-center gap-2 text-xs font-bold mb-1" style="color: #b25e00;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/>
+                                        <line x1="12" y1="9" x2="12" y2="13"/>
+                                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                    Online checkout unavailable in this currency
+                                </div>
+                                <p class="text-xs leading-relaxed" style="color: #5a3e2b;">
+                                    Online checkout isn't available in <strong id="unsupported-currency-name"></strong>.
+                                    Please pay by <strong>bank transfer or mobile money</strong>, or
+                                    <a href="{{ route('contact') }}" style="color: #854208; font-weight: 700; text-decoration: underline;">contact our support</a>
+                                    and we'll arrange it for you.
                                 </p>
                             </div>
                             @endif
@@ -302,11 +320,14 @@
     <script>
         const basePriceUSD = {{ is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0) }};
         const baseChildPriceUSD = {{ is_object($tour) ? ($tour->price_child ?? (($tour->price_adult ?? $tour->price ?? 0) / 2)) : ($tour['price_child'] ?? (($tour['price_adult'] ?? $tour['price'] ?? 0) / 2)) }};
+        const pesapalCurrencies = @json(\App\Services\PesaPalService::SUPPORTED_CURRENCIES);
+        const depositPercent = @json($depositPct);
         
         function updatePrice() {
             // Get selected currency
             const currencySelect = document.getElementById('currency-selector');
             const selectedOption = currencySelect.options[currencySelect.selectedIndex];
+            const currencyCode = currencySelect.value;
             const symbol = selectedOption.dataset.symbol;
             const rate = parseFloat(selectedOption.dataset.rate);
             
@@ -326,7 +347,6 @@
             document.getElementById('price-per-child').textContent = `${symbol}${pricePerChild.toFixed(2)}`;
             document.getElementById('adults-count').textContent = adults;
             document.getElementById('total-price').textContent = `${symbol}${totalPrice}`;
-            document.getElementById('total-price-hidden').value = totalPrice;
             
             // Show/hide children row
             const childrenRow = document.getElementById('children-row');
@@ -335,6 +355,25 @@
                 document.getElementById('children-count').textContent = children;
             } else {
                 childrenRow.classList.add('hidden');
+            }
+
+            // Toggle online-payment vs unsupported-currency messages
+            const paymentBox = document.getElementById('online-payment-box');
+            const unsupportedBox = document.getElementById('unsupported-currency-box');
+            if (!paymentBox || !unsupportedBox) return;
+
+            const supported = pesapalCurrencies.includes(currencyCode);
+            paymentBox.style.display = supported ? '' : 'none';
+            unsupportedBox.style.display = supported ? 'none' : '';
+
+            if (!supported) {
+                document.getElementById('unsupported-currency-name').textContent = `${currencyCode} (${symbol})`;
+                return;
+            }
+
+            const depositEl = document.getElementById('deposit-amount');
+            if (depositEl && depositPercent > 0 && depositPercent < 100) {
+                depositEl.textContent = `=${symbol}${(parseFloat(totalPrice) * depositPercent / 100).toFixed(2)}`;
             }
         }
 
@@ -388,6 +427,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            updatePrice();
             const bookingForm = document.getElementById('booking-form');
             
             bookingForm.addEventListener('submit', function(e) {
