@@ -116,6 +116,17 @@
         .sidebar.collapsed .sb-item span:not(.badge){display:none;}
         .sidebar.collapsed .sb-item .badge{display:none;}
         .sidebar.collapsed .sb-item{justify-content:center;}
+        .sb-drop{position:relative;}
+        .sb-drop-toggle{width:100%;cursor:pointer;background:none;border:none;font-family:inherit;}
+        .sb-drop-toggle .chev{margin-left:auto;opacity:.55;transition:transform .25s ease;width:15px;height:15px;flex:none;}
+        .sb-drop.open .sb-drop-toggle .chev{transform:rotate(180deg);}
+        .sb-drop-menu{display:none;margin:2px 0 4px;padding-left:12px;}
+        .sb-drop.open .sb-drop-menu{display:block;}
+        .sidebar.collapsed .sb-drop-menu{display:none;}
+        .sb-drop-sub{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;margin-bottom:1px;color:rgba(255,255,255,.55);font-size:13px;font-weight:500;text-decoration:none;transition:background .15s ease,color .15s ease;}
+        .sb-drop-sub:hover{color:#fff;background:rgba(255,255,255,.06);}
+        .sb-drop-sub.active{color:var(--gold-500);background:rgba(212,162,76,.12);}
+        .sb-drop-sub svg{width:14px;height:14px;flex:none;}
         .sb-footer{padding:14px 20px 20px;border-top:1px solid rgba(255,255,255,.08);}
         .sb-user{display:flex;align-items:center;gap:11px;}
         .sb-avatar{
@@ -237,12 +248,17 @@
         .table-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);overflow:hidden;}
         .table-toolbar{display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
         .chip-filters{display:flex;gap:8px;flex-wrap:wrap;}
-        .chip{padding:7px 14px;border-radius:20px;font-size:12.5px;font-weight:600;background:var(--sand-100);color:var(--coffee-700);border:1px solid transparent;cursor:pointer;}
+        .chip{padding:7px 14px;border-radius:20px;font-size:12.5px;font-weight:600;background:var(--sand-100);color:var(--coffee-700);border:1px solid transparent;cursor:pointer;display:inline-flex;align-items:center;text-decoration:none;}
         .chip.active{background:var(--coffee-900);color:#fff;}
         .table-search{display:flex;align-items:center;gap:8px;background:var(--sand-50);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;margin-left:auto;min-width:200px;}
         .table-search svg{width:15px;height:15px;color:var(--ink-soft);}
         .table-search input{border:none;background:transparent;outline:none;font-size:13.5px;width:100%;}
         .table-scroll{overflow-x:auto;}
+        .table-pager{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-top:1px solid var(--line);flex-wrap:wrap;}
+        .pager-pages{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+        .pager-pages a,.pager-pages span.page{min-width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;padding:0 8px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;font-weight:600;color:var(--coffee-700);text-decoration:none;background:var(--white);}
+        .pager-pages a:hover{border-color:var(--gold-500);color:var(--terracotta-600);}
+        .pager-pages span.active{background:var(--coffee-900);color:#fff;border-color:var(--coffee-900);}
         table{width:100%;border-collapse:collapse;min-width:680px;}
         thead th{
             text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);
@@ -266,11 +282,24 @@
         .tag-gold{background:var(--gold-100);color:#8a6418;}
         .tag-red{background:var(--danger-100);color:var(--danger);}
         .tag-grey{background:var(--sand-200);color:var(--ink-soft);}
+        .tag-terracotta{background:var(--terracotta-100);color:var(--terracotta-600);}
         .row-actions{display:flex;gap:6px;justify-content:flex-end;}
         .row-actions button{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--white);display:flex;align-items:center;justify-content:center;color:var(--coffee-700);}
         .row-actions button:hover{background:var(--sand-100);}
         .row-actions button svg{width:14.5px;height:14.5px;}
         .row-actions .danger:hover{background:var(--danger-100);color:var(--danger);border-color:var(--danger-100);}
+        .row-actions .warn:hover{background:var(--gold-100);color:#8a6418;border-color:var(--gold-100);}
+        .pwd-wrap{position:relative;}
+        .pwd-wrap input{padding-right:42px;}
+        .pwd-toggle{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:32px;height:32px;border:none;background:transparent;cursor:pointer;font-size:14px;opacity:.7;border-radius:8px;}
+        .pwd-toggle:hover{opacity:1;background:var(--sand-200);}
+        .input-icon-wrap{position:relative;}
+        .input-icon-wrap .input-icon{position:absolute;left:14px;top:0;bottom:0;margin:auto 0;width:16px;height:16px;color:var(--coffee-300);pointer-events:none;}
+        .field .input-icon-wrap input,.field .input-icon-wrap textarea{padding-left:42px;}
+        .settings-section{display:flex;align-items:center;gap:9px;margin:24px 0 4px;padding-top:8px;}
+        .settings-section:first-of-type{margin-top:0;padding-top:0;}
+        .settings-section::before{content:'';width:22px;height:3px;border-radius:2px;background:var(--gold-500);flex:none;}
+        .settings-section h4{margin:0;font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--coffee-700);}
         .empty-state{padding:60px 20px;text-align:center;color:var(--ink-soft);}
         .empty-state svg{width:46px;height:46px;color:var(--coffee-300);margin-bottom:12px;}
         .empty-state h4{margin-bottom:5px;color:var(--coffee-800);}
@@ -347,6 +376,7 @@
 
         /* Settings */
         .settings-grid{display:grid;grid-template-columns:240px 1fr;gap:24px;align-items:start;}
+        .settings-grid-single{grid-template-columns:1fr;}
         .settings-nav{display:flex;flex-direction:column;gap:3px;background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);padding:10px;box-shadow:var(--shadow-sm);}
         .settings-nav button{
             display:flex;align-items:center;gap:10px;text-align:left;padding:11px 13px;border-radius:9px;border:none;background:transparent;
@@ -494,6 +524,14 @@
                     <span>Bookings</span>
                     <span class="badge" id="navBookingCount">{{ $bookingCount ?? 0 }}</span>
                 </a>
+                <a href="{{ route('admin.payments') }}" class="sb-item {{ request()->routeIs('admin.payments') ? 'active' : '' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                    </svg>
+                    <span>Payments</span>
+                    <span class="badge" id="navPaymentCount">{{ $paymentCount ?? 0 }}</span>
+                </a>
                 <a href="{{ route('admin.messages') }}" class="sb-item {{ request()->routeIs('admin.messages') ? 'active' : '' }}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"></path>
@@ -502,20 +540,71 @@
                     <span class="badge" id="navMsgCount">{{ $msgCount ?? 0 }}</span>
                 </a>
                 <div class="sb-section-label">System</div>
-                <a href="{{ route('admin.users') }}" class="sb-item {{ request()->routeIs('admin.users') ? 'active' : '' }}">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    <span>Admin Users</span>
-                </a>
-                <a href="{{ route('admin.settings') }}" class="sb-item {{ request()->routeIs('admin.settings') ? 'active' : '' }}">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1.04-1.56V3a2 2 0 0 1 4 0v.09A1.7 1.7 0 0 0 15 4.6a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.56 1.04H21a2 2 0 0 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15Z"></path>
-                    </svg>
-                    <span>Site Settings</span>
-                </a>
+                <div class="sb-drop {{ request()->routeIs('admin.settings') ? 'open' : '' }}">
+                    <button type="button" class="sb-item sb-drop-toggle {{ request()->routeIs('admin.settings') ? 'active' : '' }}" onclick="toggleSbDrop(this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1.04-1.56V3a2 2 0 0 1 4 0v.09A1.7 1.7 0 0 0 15 4.6a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.56 1.04H21a2 2 0 0 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15Z"></path>
+                        </svg>
+                        <span>Site Settings</span>
+                        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="sb-drop-menu">
+                        <a href="{{ route('admin.settings', ['pane' => 'general']) }}" class="sb-drop-sub {{ (!request()->has('pane') || request()->query('pane') === 'general') && request()->routeIs('admin.settings') ? 'active' : '' }}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                <rect x="9" y="9" width="6" height="6"></rect>
+                            </svg>
+                            General
+                        </a>
+                        <a href="{{ route('admin.settings', ['pane' => 'brand']) }}" class="sb-drop-sub {{ request()->query('pane') === 'brand' ? 'active' : '' }}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="13.5" cy="6.5" r=".5"></circle>
+                                <circle cx="17.5" cy="10.5" r=".5"></circle>
+                                <circle cx="8.5" cy="7.5" r=".5"></circle>
+                                <circle cx="6.5" cy="12.5" r=".5"></circle>
+                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C22 6.012 17.461 2 12 2Z"></path>
+                            </svg>
+                            Brand & Colors
+                        </a>
+                        <a href="{{ route('admin.settings', ['pane' => 'contact']) }}" class="sb-drop-sub {{ request()->query('pane') === 'contact' ? 'active' : '' }}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"></path>
+                            </svg>
+                            Contact & Social
+                        </a>
+                        <a href="{{ route('admin.settings', ['pane' => 'notifications']) }}" class="sb-drop-sub {{ request()->query('pane') === 'notifications' ? 'active' : '' }}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                            </svg>
+                            Notifications
+                        </a>
+                        <a href="{{ route('admin.users') }}" class="sb-drop-sub {{ request()->routeIs('admin.users', 'admin.users.show') ? 'active' : '' }}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            Admin Users
+                        </a>
+                        <a href="{{ route('admin.settings', ['pane' => 'payments']) }}" class="sb-drop-sub {{ request()->query('pane') === 'payments' ? 'active' : '' }}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                                <line x1="2" y1="10" x2="22" y2="10"></line>
+                            </svg>
+                            Payments
+                        </a>
+                        <a href="{{ route('admin.settings', ['pane' => 'mail']) }}" class="sb-drop-sub {{ request()->query('pane') === 'mail' ? 'active' : '' }}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                            </svg>
+                            Mail
+                        </a>
+                    </div>
+                </div>
             </nav>
             <div class="sb-footer">
                 <a href="{{ route('admin.profile') }}" class="sb-user" style="text-decoration:none;">
@@ -621,6 +710,12 @@
         function closeMobileSidebar(){
             document.getElementById('sidebar').classList.remove('mobile-open');
             document.getElementById('mobileOverlay').classList.remove('show');
+        }
+        function toggleSbDrop(el){
+            const drop = el.closest('.sb-drop');
+            const wasOpen = drop.classList.contains('open');
+            document.querySelectorAll('.sb-drop').forEach(d => d.classList.remove('open'));
+            if(!wasOpen) drop.classList.add('open');
         }
 
         function toast(msg, type='default'){

@@ -18,6 +18,7 @@ class AdminUserSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'password' => 'admin123',
+                'role' => 'super_admin',
                 'is_active' => true,
             ]
         );

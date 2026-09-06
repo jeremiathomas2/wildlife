@@ -23,14 +23,22 @@ class AdminAuth
         // Check if last activity was more than 5 minutes (300 seconds) ago
         $timeout = 300; // 5 minutes in seconds
         if (session()->has('admin_last_activity') && (time() - session('admin_last_activity')) > $timeout) {
-            session()->forget(['admin_logged_in', 'admin_user_id', 'admin_last_activity']);
+            session()->forget(['admin_logged_in', 'admin_user_id', 'admin_role', 'admin_last_activity']);
             return redirect()->route('admin.login')->with('error', 'Session expired! Please login again.');
         }
 
         $admin = AdminUser::find(session('admin_user_id'));
         if (!$admin || !$admin->is_active) {
-            session()->forget(['admin_logged_in', 'admin_user_id', 'admin_last_activity']);
+            session()->forget(['admin_logged_in', 'admin_user_id', 'admin_role', 'admin_last_activity']);
             return redirect()->route('admin.login');
+        }
+
+        // Keep the session role in sync with the database (roles may change).
+        session(['admin_role' => $admin->role]);
+
+        // Force an account with a pending password reset to change it first.
+        if ($admin->must_change_password && !$request->routeIs('admin.change-password', 'admin.change-password.submit', 'admin.logout')) {
+            return redirect()->route('admin.change-password')->with('info', 'You must set a new password to continue.');
         }
 
         // Update last activity time

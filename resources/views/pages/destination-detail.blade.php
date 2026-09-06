@@ -260,6 +260,28 @@
                                 </div>
                             </div>
 
+                            @php
+                                $paymentsEnabled = \App\Services\PaymentSettings::isEnabled();
+                                $depositPct = $paymentsEnabled ? \App\Services\PaymentSettings::depositPercentage() : 0;
+                            @endphp
+                            @if($paymentsEnabled)
+                            <div class="mt-4 rounded-xl p-4" style="background-color: rgba(8,133,41,0.06); border: 1px solid rgba(8,133,41,0.15);">
+                                <div class="flex items-center gap-2 text-xs font-bold mb-1" style="color: #088529;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="5" width="20" height="14" rx="2"/>
+                                        <line x1="2" y1="10" x2="22" y2="10"/>
+                                    </svg>
+                                    Secure online payment
+                                </div>
+                                <p class="text-xs leading-relaxed" style="color: #5a3e2b;">
+                                    After booking you'll be redirected to a secure PesaPal checkout.
+                                    @if($depositPct > 0 && $depositPct < 100)
+                                        A deposit of <strong>{{ $depositPct }}%</strong> is due now; the balance is arranged before travel.
+                                    @endif
+                                </p>
+                            </div>
+                            @endif
+
                             <p class="text-center mt-4">
                                 <a href="{{ route('contact') }}" class="text-xs font-semibold transition-colors hover:underline flex items-center justify-center gap-1" style="color: #ff9729;">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

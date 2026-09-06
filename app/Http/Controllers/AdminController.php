@@ -9,6 +9,10 @@ use App\Models\Review;
 use App\Models\Message;
 use App\Models\SiteContent;
 use App\Models\AdminUser;
+use App\Models\AdminLoginLog;
+use App\Models\Payment;
+use App\Services\AdminAudit;
+use App\Services\PaymentSettings;
 use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
@@ -33,13 +37,30 @@ class AdminController extends Controller
 
         $admin = AdminUser::where('email', $credentials['email'])->first();
 
-        if ($admin && $admin->checkPassword($credentials['password']) && $admin->is_active) {
+        $loggedIn = $admin && $admin->checkPassword($credentials['password']) && $admin->is_active;
+
+        AdminLoginLog::create([
+            'admin_user_id' => $admin?->id,
+            'email' => $credentials['email'],
+            'ip_address' => $request->ip(),
+            'user_agent' => substr((string) $request->userAgent(), 0, 500),
+            'success' => $loggedIn,
+        ]);
+
+        if ($loggedIn) {
             $admin->update(['last_login_at' => now()]);
             session([
                 'admin_logged_in' => true,
                 'admin_user_id' => $admin->id,
+                'admin_role' => $admin->role,
                 'admin_last_activity' => time()
             ]);
+
+            if ($admin->must_change_password) {
+                return redirect()->route('admin.change-password')
+                    ->with('success', 'Welcome! For security, set a new password to continue.');
+            }
+
             return redirect()->route('admin.dashboard');
         }
 
@@ -48,7 +69,7 @@ class AdminController extends Controller
 
     public function logout(Request $request)
     {
-        $request->session()->forget('admin_logged_in');
+        $request->session()->forget(['admin_logged_in', 'admin_user_id', 'admin_role']);
         return redirect()->route('admin.login');
     }
 
@@ -79,6 +100,11 @@ class AdminController extends Controller
         $unreadMessages = Message::where('read', false)->count();
         $pendingReviews = Review::where('status', 'Pending')->count();
 
+        $collectedPayments = Payment::where('status', Payment::STATUS_COMPLETED)->sum('amount');
+        $pendingPayments = Payment::whereIn('status', [Payment::STATUS_PENDING, Payment::STATUS_PROCESSING])->sum('amount');
+        $pendingPaymentCount = Payment::whereIn('status', [Payment::STATUS_PENDING, Payment::STATUS_PROCESSING])->count();
+        $recentPayments = Payment::with('booking')->latest()->take(5)->get();
+
         $dayTripCount = Booking::whereHas('destination', function($q) {
             $q->where('category', 'Day Trip');
         })->count();
@@ -96,6 +122,11 @@ class AdminController extends Controller
             'pendingReviews' => $pendingReviews,
             'dayTripCount' => $dayTripCount,
             'multiDayCount' => $multiDayCount,
+            'collectedPayments' => $collectedPayments,
+            'pendingPayments' => $pendingPayments,
+            'pendingPaymentCount' => $pendingPaymentCount,
+            'recentPayments' => $recentPayments,
+            'paymentCurrency' => PaymentSettings::currency(),
             'destCount' => Destination::count(),
             'reviewCount' => $pendingReviews,
             'bookingCount' => Booking::where('status', 'Pending')->count(),
@@ -373,8 +404,21 @@ class AdminController extends Controller
     public function settings()
     {
         $contents = SiteContent::all();
+        $currencies = array_values(array_intersect(
+            \App\Helpers\CurrencyHelper::getSupportedCurrencies(),
+            \App\Services\PesaPalService::SUPPORTED_CURRENCIES
+        ));
         return view('admin.settings', [
             'contents' => $contents,
+            'settings' => \App\Services\PaymentSettings::toArray(),
+            'currencies' => $currencies ?: ['USD', 'TZS', 'KES', 'UGX'],
+            'secretsStored' => [
+                'pesapal_consumer_key' => \App\Services\PaymentSettings::isStored('pesapal_consumer_key'),
+                'pesapal_consumer_secret' => \App\Services\PaymentSettings::isStored('pesapal_consumer_secret'),
+            ],
+            'depositPercentage' => \App\Services\PaymentSettings::depositPercentage(),
+            'mailSettings' => \App\Services\MailSettings::toArray(),
+            'mailPasswordStored' => \App\Services\MailSettings::isStored('mail_smtp_password'),
             'destCount' => Destination::count(),
             'reviewCount' => Review::where('status', 'Pending')->count(),
             'bookingCount' => Booking::where('status', 'Pending')->count(),
@@ -405,61 +449,296 @@ class AdminController extends Controller
     }
 
     // Admin User Management
-    public function users()
+    public function users(Request $request)
     {
-        $users = AdminUser::paginate(10);
-        return view('admin.users', [
+        $query = AdminUser::query();
+
+        $filters = [
+            'q' => trim((string) $request->input('q', '')),
+            'role' => in_array($request->input('role'), AdminUser::ROLES, true) ? $request->input('role') : '',
+            'status' => in_array($request->input('status'), ['active', 'inactive'], true) ? $request->input('status') : '',
+        ];
+
+        if ($filters['q'] !== '') {
+            $query->where(function ($q) use ($filters) {
+                $q->where('name', 'like', "%{$filters['q']}%")
+                    ->orWhere('email', 'like', "%{$filters['q']}%");
+            });
+        }
+        if ($filters['role'] !== '') {
+            $query->where('role', $filters['role']);
+        }
+        if ($filters['status'] !== '') {
+            $query->where('is_active', $filters['status'] === 'active');
+        }
+
+        $users = $query
+            ->withCount(['loginLogs as successful_logins' => fn ($q) => $q->where('success', true)])
+            ->orderBy('created_at', 'desc')
+            ->paginate(15)
+            ->withQueryString();
+
+        $roleCounts = AdminUser::query()
+            ->selectRaw('role, COUNT(*) as total')
+            ->groupBy('role')
+            ->pluck('total', 'role');
+
+        $stats = [
+            'total' => AdminUser::count(),
+            'active' => AdminUser::where('is_active', true)->count(),
+            'inactive' => AdminUser::where('is_active', false)->count(),
+            'roles' => $roleCounts,
+        ];
+
+        $currentAdmin = session('admin_user_id') ? AdminUser::find(session('admin_user_id')) : null;
+
+        return view('admin.users', $this->layoutData([
             'users' => $users,
-            'destCount' => Destination::count(),
-            'reviewCount' => Review::where('status', 'Pending')->count(),
-            'bookingCount' => Booking::where('status', 'Pending')->count(),
-            'msgCount' => Message::where('read', false)->count(),
-        ]);
+            'stats' => $stats,
+            'filters' => $filters,
+            'currentAdmin' => $currentAdmin,
+            'activePane' => 'users',
+        ]));
     }
 
     public function storeUser(Request $request)
     {
+        $actor = AdminAudit::actor();
+
+        if (!$actor || !$actor->canManageUsers()) {
+            return back()->with('error', 'You do not have permission to manage users.');
+        }
+
         $validated = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:admin_users,email',
-            'password' => 'required|string|min:6',
-            'is_active' => 'boolean',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:admin_users,email',
+            'password' => 'required|string|min:8',
+            'role' => 'required|in:super_admin,admin,editor,viewer',
+            'is_active' => 'nullable|boolean',
         ]);
 
-        AdminUser::create($validated);
-        return back()->with('success', 'User added successfully!');
+        $validated['is_active'] = $request->boolean('is_active');
+        $validated['must_change_password'] = $request->boolean('must_change_password');
+
+        $user = AdminUser::create($validated);
+
+        AdminAudit::log('user.created', 'admin_user', $user->id, [
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $user->role,
+            'is_active' => $user->is_active,
+        ], $actor);
+
+        return back()->with('success', "User {$user->name} created successfully!");
     }
 
     public function updateUser(Request $request, $id)
     {
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:admin_users,email,' . $id,
-            'password' => 'nullable|string|min:6',
-            'is_active' => 'boolean',
-        ]);
+        $actor = AdminAudit::actor();
+
+        if (!$actor || !$actor->canManageUsers()) {
+            return back()->with('error', 'You do not have permission to manage users.');
+        }
 
         $user = AdminUser::findOrFail($id);
 
-        if (empty($validated['password'])) {
-            unset($validated['password']);
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:admin_users,email,' . $id,
+            'password' => 'nullable|string|min:8',
+            'role' => 'required|in:super_admin,admin,editor,viewer',
+            'is_active' => 'nullable|boolean',
+            'must_change_password' => 'nullable|boolean',
+        ]);
+
+        $validated['is_active'] = $request->boolean('is_active');
+        $validated['must_change_password'] = $request->boolean('must_change_password');
+
+        // An admin may never alter their own role or deactivate themselves.
+        $isSelf = (int) $id === (int) $actor->id;
+        if ($isSelf) {
+            if ($validated['role'] !== $user->role) {
+                return back()->with('error', 'You cannot change your own role.');
+            }
+            if ($request->boolean('is_active') === false) {
+                return back()->with('error', 'You cannot deactivate your own account.');
+            }
+            $validated['must_change_password'] = false;
         }
 
-        $user->update($validated);
-        return back()->with('success', 'User updated successfully!');
+        // Never demote the last remaining super admin.
+        if ($user->isSuperAdmin() && $validated['role'] !== 'super_admin') {
+            $superAdmins = AdminUser::where('role', 'super_admin')->count();
+            if ($superAdmins <= 1) {
+                return back()->with('error', 'At least one super admin must remain. Promote another user first.');
+            }
+        }
+
+        $changes = [];
+
+        if ($validated['role'] !== $user->role) {
+            $changes['role'] = ['from' => $user->role, 'to' => $validated['role']];
+        }
+
+        if ($request->filled('password')) {
+            $user->password = $validated['password'];
+            $user->password_changed_at = now();
+            $changes['password'] = true;
+        }
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->role = $validated['role'];
+        $user->is_active = $validated['is_active'];
+        $user->must_change_password = $validated['must_change_password'];
+        $user->save();
+
+        AdminAudit::log('user.updated', 'admin_user', $user->id, [
+            'changes' => $changes,
+            'is_active' => $user->is_active,
+            'must_change_password' => $user->must_change_password,
+        ], $actor);
+
+        return back()->with('success', "User {$user->name} updated successfully!");
     }
 
     public function destroyUser($id)
     {
+        $actor = AdminAudit::actor();
+
+        if (!$actor || !$actor->canDeleteUsers()) {
+            return back()->with('error', 'Only a super admin can delete users.');
+        }
+
         $user = AdminUser::findOrFail($id);
 
-        // Prevent deleting the last admin user
-        if (AdminUser::count() <= 1) {
-            return back()->with('error', 'Cannot delete the last admin user!');
+        if ((int) $id === (int) $actor->id) {
+            return back()->with('error', 'You cannot delete your own account.');
+        }
+
+        if ($user->isSuperAdmin()) {
+            $superAdmins = AdminUser::where('role', 'super_admin')->count();
+            if ($superAdmins <= 1) {
+                return back()->with('error', 'At least one super admin must remain.');
+            }
         }
 
         $user->delete();
-        return back()->with('success', 'User deleted successfully!');
+
+        AdminAudit::log('user.deleted', 'admin_user', null, [
+            'name' => $user->name,
+            'email' => $user->email,
+        ], $actor);
+
+        return back()->with('success', "User {$user->name} deleted successfully!");
+    }
+
+    public function toggleUserStatus($id)
+    {
+        $actor = AdminAudit::actor();
+
+        if (!$actor || !$actor->canManageUsers()) {
+            return back()->with('error', 'You do not have permission to manage users.');
+        }
+
+        $user = AdminUser::findOrFail($id);
+
+        if ((int) $id === (int) $actor->id) {
+            return back()->with('error', 'You cannot deactivate your own account.');
+        }
+
+        $wasActive = $user->is_active;
+        $user->is_active = !$wasActive;
+        $user->save();
+
+        AdminAudit::log('user.toggled', 'admin_user', $user->id, [
+            'from' => $wasActive ? 'active' : 'inactive',
+            'to' => $user->is_active ? 'active' : 'inactive',
+            'name' => $user->name,
+        ], $actor);
+
+        $state = $user->is_active ? 'activated' : 'deactivated';
+
+        return back()->with('success', "User {$user->name} {$state} successfully!");
+    }
+
+    public function resetPassword(Request $request, $id)
+    {
+        $actor = AdminAudit::actor();
+
+        if (!$actor || !$actor->canManageUsers()) {
+            return back()->with('error', 'You do not have permission to manage users.');
+        }
+
+        $user = AdminUser::findOrFail($id);
+
+        $validated = $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user->password = $validated['password'];
+        $user->password_changed_at = now();
+
+        $isSelf = (int) $id === (int) $actor->id;
+        $user->must_change_password = !$isSelf;
+        $user->save();
+
+        AdminAudit::log('user.password_reset', 'admin_user', $user->id, [
+            'by' => $isSelf ? 'self' : $actor->email,
+            'must_change_password' => $user->must_change_password,
+        ], $actor);
+
+        return back()->with('success', "Password updated for {$user->name}. They must change it on next login.");
+    }
+
+    public function userDetail($id)
+    {
+        $user = AdminUser::with(['loginLogs', 'activityLogs'])->findOrFail($id);
+
+        $currentAdmin = session('admin_user_id') ? AdminUser::find(session('admin_user_id')) : null;
+
+        return view('admin.user-detail', $this->layoutData([
+            'user' => $user,
+            'currentAdmin' => $currentAdmin,
+            'isSelf' => $currentAdmin && (int) $currentAdmin->id === (int) $user->id,
+            'loginLogs' => $user->loginLogs()->limit(20)->get(),
+            'recentActivity' => $user->activityLogs()->limit(25)->get(),
+            'loginCount' => $user->loginLogs()->where('success', true)->count(),
+            'activePane' => 'users',
+        ]));
+    }
+
+    // Forced/self password change
+    public function changePasswordPage()
+    {
+        $currentAdmin = AdminAudit::actor();
+
+        return view('admin.change-password', $this->layoutData([
+            'currentAdmin' => $currentAdmin,
+        ]));
+    }
+
+    public function submitChangePassword(Request $request)
+    {
+        $currentAdmin = AdminAudit::actor();
+        if (!$currentAdmin) {
+            return redirect()->route('admin.login');
+        }
+
+        $validated = $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $currentAdmin->password = $validated['password'];
+        $currentAdmin->must_change_password = false;
+        $currentAdmin->password_changed_at = now();
+        $currentAdmin->save();
+
+        session(['admin_role' => $currentAdmin->role]);
+
+        AdminAudit::log('auth.password_changed', 'admin_user', $currentAdmin->id, [], $currentAdmin);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Your password has been updated successfully!');
     }
 
     // Profile Management
@@ -500,5 +779,17 @@ class AdminController extends Controller
 
         $currentUser->save();
         return back()->with('success', 'Profile updated successfully!');
+    }
+
+    protected function layoutData(array $data): array
+    {
+        return array_merge($data, [
+            'destCount' => Destination::count(),
+            'reviewCount' => Review::where('status', 'Pending')->count(),
+            'bookingCount' => Booking::where('status', 'Pending')->count(),
+            'msgCount' => Message::where('read', false)->count(),
+            'paymentCount' => Payment::count(),
+            'currentAdminUser' => session('admin_user_id') ? AdminUser::find(session('admin_user_id')) : null,
+        ]);
     }
 }

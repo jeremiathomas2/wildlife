@@ -4,6 +4,42 @@
 
 @section('content')
 <div class="view active">
+    <style>
+        .paydrop{position:relative;}
+        .paydrop-menu{
+            display:none;
+            position:absolute;
+            right:0;
+            top:calc(100% + 6px);
+            background:var(--white);
+            border:1px solid var(--line);
+            border-radius:12px;
+            box-shadow:0 12px 24px rgba(133,66,8,0.12);
+            width:280px;
+            z-index:100;
+            padding:8px 0;
+        }
+        .paydrop-menu.open{display:block;}
+        .paydrop-header{padding:6px 16px 4px;font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;}
+        .paydrop .paydrop-item{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            width:100%;
+            height:auto;
+            padding:10px 16px;
+            background:transparent;
+            border:none;
+            border-radius:0;
+            cursor:pointer;
+            text-align:left;
+            color:var(--coffee-900);
+        }
+        .paydrop .paydrop-item:hover{background:var(--sand-100);}
+        .paydrop-icon{width:28px;height:28px;border-radius:6px;background:var(--sand-100);color:var(--coffee-700);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+        .paydrop-label strong{display:block;font-size:13px;margin-bottom:1px;}
+        .paydrop-label small{font-size:11px;color:var(--ink-soft);}
+    </style>
     <div class="view-head">
         <div>
             <h2>Bookings</h2>
@@ -48,6 +84,7 @@
                         <th>Adults</th>
                         <th>Children</th>
                         <th>Total</th>
+                        <th>Payment</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -85,6 +122,15 @@
                                 ~{!! \App\Helpers\CurrencyHelper::format(\App\Helpers\CurrencyHelper::convert($booking->amount ?? $booking->total_price, $booking->currency ?? 'USD', session('admin_currency', 'USD')), session('admin_currency', 'USD')) !!}
                             </div>
                         </td>
+                        <td>
+                            @if($booking->latestPayment)
+                                <a href="{{ route('admin.payments.show', $booking->latestPayment->id) }}" style="text-decoration:none;">
+                                    {!! \App\Models\Payment::statusTag($booking->latestPayment->status) !!}
+                                </a>
+                            @else
+                                <span style="font-size:12px;color:var(--ink-soft);">—</span>
+                            @endif
+                        </td>
                         <td>{!! \App\Http\Controllers\AdminController::statusTag($booking->status) !!}</td>
                         <td>
                             <div class="row-actions">
@@ -100,6 +146,39 @@
                                         <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"></path>
                                     </svg>
                                 </button>
+                                <div class="paydrop">
+                                    <button type="button" class="paydrop-toggle" onclick="togglePaydrop(event, this)" title="Send payment link">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                                        </svg>
+                                    </button>
+                                    <div class="paydrop-menu" data-paydrop-menu>
+                                        <div class="paydrop-header">Payment link</div>
+                                        <form action="{{ route('admin.bookings.payment-link', $booking->id) }}" method="POST" style="margin:0;padding:0;">
+                                            @csrf
+                                            <button type="submit" class="paydrop-item">
+                                                <span class="paydrop-icon">✉</span>
+                                                <span class="paydrop-label">
+                                                    <strong>Send via email</strong>
+                                                    <small>Customized link with system context &amp; colors</small>
+                                                </span>
+                                            </button>
+                                        </form>
+                                        <button type="button" class="paydrop-item" data-copy-link="{{ $booking->id }}">
+                                            <span class="paydrop-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;">
+                                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                                </svg>
+                                            </span>
+                                            <span class="paydrop-label">
+                                                <strong>Copy payment link</strong>
+                                                <small>Copy the raw URL to your clipboard</small>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
                                 <form action="{{ route('admin.bookings.destroy', $booking->id) }}" method="POST" onsubmit="return confirm('Delete this booking?')">
                                     @csrf
                                     @method('DELETE')
@@ -596,4 +675,56 @@ function viewBooking(id) {
     toast('{{ session('success') }}', 'success');
 </script>
 @endif
+
+<script>
+// Payment link dropdown
+function togglePaydrop(e, btn) {
+    e.stopPropagation();
+    const menu = btn.nextElementSibling;
+    const isOpen = menu.classList.contains('open');
+    document.querySelectorAll('.paydrop-menu.open').forEach(m => m.classList.remove('open'));
+    if (!isOpen) menu.classList.add('open');
+}
+document.addEventListener('click', e => {
+    if (!e.target.closest('.paydrop')) {
+        document.querySelectorAll('.paydrop-menu.open').forEach(m => m.classList.remove('open'));
+    }
+});
+document.querySelectorAll('[data-copy-link]').forEach(btn => {
+    btn.addEventListener('click', async function () {
+        const bookingId = this.dataset.copyLink;
+        try {
+            const res = await fetch('/live/bookings/' + bookingId + '/payment-link/copy', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+            const data = await res.json();
+            if (data.url) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(data.url);
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = data.url;
+                    ta.style.position = 'fixed';
+                    ta.style.left = '-9999px';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                }
+                document.querySelectorAll('.paydrop-menu.open').forEach(m => m.classList.remove('open'));
+                toast('Payment link copied', 'success');
+            } else {
+                toast('Could not generate payment link', 'error');
+            }
+        } catch (err) {
+            toast('Could not generate payment link', 'error');
+        }
+    });
+});
+</script>
 @endsection

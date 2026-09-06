@@ -144,6 +144,54 @@
     <div class="panel-grid">
         <div class="panel">
             <div class="panel-head">
+                <h3>Payments</h3>
+                <a href="{{ route('admin.payments') }}" class="link">View all →</a>
+            </div>
+            <div class="panel-body">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px;" class="payment-mini">
+                    <div style="background:var(--acacia-100);border-radius:12px;padding:16px;">
+                        <div style="font-size:12px;color:var(--acacia-600);font-weight:700;">Collected</div>
+                        <div style="font-size:22px;font-weight:800;color:var(--coffee-900);margin-top:4px;">{{ \App\Helpers\CurrencyHelper::format($collectedPayments, $paymentCurrency) }}</div>
+                    </div>
+                    <div style="background:var(--gold-100);border-radius:12px;padding:16px;">
+                        <div style="font-size:12px;color:#8a6418;font-weight:700;">Pending ({!! $pendingPaymentCount !!})</div>
+                        <div style="font-size:22px;font-weight:800;color:var(--coffee-900);margin-top:4px;">{{ \App\Helpers\CurrencyHelper::format($pendingPayments, $paymentCurrency) }}</div>
+                    </div>
+                    <div style="background:var(--sand-100);border-radius:12px;padding:16px;">
+                        <div style="font-size:12px;color:var(--ink-soft);font-weight:700;">Fee</div>
+                        <div style="font-size:13px;font-weight:600;color:var(--coffee-700);margin-top:8px;line-height:1.5;">PesaPal charges a small %<br>on completed payments</div>
+                    </div>
+                </div>
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Reference</th>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if($recentPayments->isEmpty())
+                            <tr><td colspan="4" style="text-align:center;color:var(--ink-soft);padding:24px;">No payments yet.</td></tr>
+                            @else
+                            @foreach($recentPayments as $p)
+                            <tr>
+                                <td class="cell-title"><a href="{{ route('admin.payments.show', $p->id) }}">{{ $p->merchant_reference }}</a></td>
+                                <td>{{ $p->customer_email }}</td>
+                                <td>{{ \App\Helpers\CurrencyHelper::format($p->amount, $p->currency) }}</td>
+                                <td>{!! \App\Models\Payment::statusTag($p->status) !!}</td>
+                            </tr>
+                            @endforeach
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-head">
                 <h3>Recent bookings</h3>
                 <a href="{{ route('admin.bookings') }}" class="link">View all →</a>
             </div>

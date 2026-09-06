@@ -14,9 +14,8 @@ return new class extends Migration
         });
 
         DB::table('bookings')
-            ->join('destinations', 'bookings.tour_name', '=', 'destinations.name')
-            ->whereNull('bookings.destination_id')
-            ->update(['bookings.destination_id' => DB::raw('destinations.id')]);
+            ->whereNull('destination_id')
+            ->update(['destination_id' => DB::raw('(SELECT d.id FROM destinations d WHERE d.name = bookings.tour_name LIMIT 1)')]);
 
         Schema::table('bookings', function (Blueprint $table) {
             $table->foreign('destination_id')->references('id')->on('destinations')->nullOnDelete();

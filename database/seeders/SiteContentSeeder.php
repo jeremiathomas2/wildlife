@@ -369,5 +369,51 @@ class SiteContentSeeder extends Seeder
             ['key' => 'terms_effective_date'],
             ['label' => 'Terms Effective Date', 'type' => 'text', 'group' => 'terms', 'value' => 'June 2026']
         );
+
+        // Settings - Payments
+        SiteContent::updateOrCreate(
+            ['key' => 'payment_enabled'],
+            ['label' => 'Online Payments Enabled', 'type' => 'toggle', 'group' => 'payment', 'value' => '0']
+        );
+
+        SiteContent::updateOrCreate(
+            ['key' => 'pesapal_environment'],
+            ['label' => 'PesaPal Environment', 'type' => 'select', 'group' => 'payment', 'value' => 'sandbox']
+        );
+
+        SiteContent::updateOrCreate(
+            ['key' => 'pesapal_consumer_key'],
+            ['label' => 'PesaPal Consumer Key', 'type' => 'text', 'group' => 'payment', 'value' => '']
+        );
+
+        SiteContent::updateOrCreate(
+            ['key' => 'pesapal_consumer_secret'],
+            ['label' => 'PesaPal Consumer Secret', 'type' => 'text', 'group' => 'payment', 'value' => '']
+        );
+
+        SiteContent::updateOrCreate(
+            ['key' => 'pesapal_currency'],
+            ['label' => 'PesaPal Currency', 'type' => 'select', 'group' => 'payment', 'value' => 'USD']
+        );
+
+        SiteContent::updateOrCreate(
+            ['key' => 'pesapal_deposit_percentage'],
+            ['label' => 'Deposit Percentage', 'type' => 'number', 'group' => 'payment', 'value' => '30']
+        );
+
+        SiteContent::updateOrCreate(
+            ['key' => 'pesapal_ipn_url'],
+            ['label' => 'PesaPal IPN URL', 'type' => 'text', 'group' => 'payment', 'value' => '']
+        );
+
+        SiteContent::updateOrCreate(
+            ['key' => 'pesapal_callback_url'],
+            ['label' => 'PesaPal Callback URL', 'type' => 'text', 'group' => 'payment', 'value' => '']
+        );
+
+        SiteContent::updateOrCreate(
+            ['key' => 'pesapal_cancellation_url'],
+            ['label' => 'PesaPal Cancellation URL', 'type' => 'text', 'group' => 'payment', 'value' => '']
+        );
     }
 }

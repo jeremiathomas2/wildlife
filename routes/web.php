@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminPaymentController;
+use App\Http\Controllers\AdminMailController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SitemapController;
 
 Route::get('/', function () {
@@ -91,6 +94,12 @@ Route::get('/privacy', function () {
 
 Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
 
+// PesaPal payment routes (public)
+Route::get('/payments/callback', [PaymentController::class, 'callback'])->name('payments.callback');
+Route::get('/payments/cancelled', [PaymentController::class, 'cancelled'])->name('payments.cancelled');
+Route::get('/payments/pay/{reference}', [PaymentController::class, 'resume'])->name('payments.resume');
+Route::match(['get', 'post'], '/api/pesapal/ipn', [PaymentController::class, 'ipn'])->name('payments.ipn');
+
 Route::get('/api/currency-rates', function () {
     return response()->json(\App\Helpers\CurrencyHelper::getRatesWithSymbols());
 })->name('api.currency-rates');
@@ -131,6 +140,19 @@ Route::prefix('live')->name('admin.')->middleware(\App\Http\Middleware\AdminAuth
     Route::post('/bookings', [AdminController::class, 'storeBooking'])->name('bookings.store');
     Route::put('/bookings/{id}', [AdminController::class, 'updateBooking'])->name('bookings.update');
     Route::delete('/bookings/{id}', [AdminController::class, 'destroyBooking'])->name('bookings.destroy');
+    Route::post('/bookings/{id}/payment-link', [AdminPaymentController::class, 'resendPaymentLink'])->name('bookings.payment-link');
+    Route::post('/bookings/{id}/payment-link/copy', [AdminPaymentController::class, 'copyPaymentLink'])->name('bookings.payment-link.copy');
+
+    // Payments
+    Route::get('/payments/settings', [AdminPaymentController::class, 'settings'])->name('payments.settings');
+    Route::put('/payments/settings', [AdminPaymentController::class, 'updateSettings'])->name('payments.settings.update');
+    Route::post('/payments/settings/test', [AdminPaymentController::class, 'testConnection'])->name('payments.settings.test');
+    Route::post('/payments/settings/ipn', [AdminPaymentController::class, 'registerIpn'])->name('payments.settings.ipn');
+    Route::match(['GET', 'POST'], '/payments/settings/ipns', [AdminPaymentController::class, 'ipnList'])->name('payments.settings.ipns');
+    Route::get('/payments', [AdminPaymentController::class, 'index'])->name('payments');
+    Route::get('/payments/{id}', [AdminPaymentController::class, 'show'])->name('payments.show');
+    Route::post('/payments/{id}/verify', [AdminPaymentController::class, 'verify'])->name('payments.verify');
+    Route::post('/payments/{id}/status', [AdminPaymentController::class, 'markStatus'])->name('payments.status');
     
     // Destinations
     Route::get('/destinations', [AdminController::class, 'destinations'])->name('destinations');
@@ -157,11 +179,22 @@ Route::prefix('live')->name('admin.')->middleware(\App\Http\Middleware\AdminAuth
     Route::get('/settings', [AdminController::class, 'settings'])->name('settings');
     Route::put('/settings', [AdminController::class, 'updateSettings'])->name('settings.update');
 
+    // Mail Settings
+    Route::put('/settings/mail', [AdminMailController::class, 'updateSettings'])->name('settings.mail.update');
+    Route::post('/settings/mail/test', [AdminMailController::class, 'sendTest'])->name('settings.mail.test');
+
     // Admin Users
     Route::get('/users', [AdminController::class, 'users'])->name('users');
     Route::post('/users', [AdminController::class, 'storeUser'])->name('users.store');
+    Route::get('/users/{id}', [AdminController::class, 'userDetail'])->name('users.show');
     Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('users.update');
     Route::delete('/users/{id}', [AdminController::class, 'destroyUser'])->name('users.destroy');
+    Route::post('/users/{id}/toggle', [AdminController::class, 'toggleUserStatus'])->name('users.toggle');
+    Route::post('/users/{id}/reset-password', [AdminController::class, 'resetPassword'])->name('users.reset-password');
+
+    // Forced / self password change
+    Route::get('/change-password', [AdminController::class, 'changePasswordPage'])->name('change-password');
+    Route::post('/change-password', [AdminController::class, 'submitChangePassword'])->name('change-password.submit');
 
     // Profile
     Route::get('/profile', [AdminController::class, 'profile'])->name('profile');

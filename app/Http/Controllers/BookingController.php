@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Booking;
-use App\Models\Destination;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\BookingConfirmation;
 use App\Mail\NewBookingAlert;
+use App\Models\Booking;
+use App\Models\Destination;
+use App\Services\PaymentService;
+use App\Services\PaymentSettings;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 
 class BookingController extends Controller
 {
@@ -41,6 +43,23 @@ class BookingController extends Controller
 
         Mail::to($validated['email'])->queue(new BookingConfirmation($booking));
         Mail::to(config('mail.from.address'))->queue(new NewBookingAlert($booking));
+
+        if (PaymentSettings::isEnabled()) {
+            try {
+                $payment = app(PaymentService::class)->createPaymentForBooking($booking);
+
+                if ($payment->redirect_url) {
+                    return redirect()->away($payment->redirect_url);
+                }
+            } catch (\Throwable $e) {
+                logger()->error('Payment initiation failed', [
+                    'booking' => $booking->id,
+                    'error' => $e->getMessage(),
+                ]);
+
+                return Redirect::back()->with('success', 'Your booking has been submitted successfully! We will contact you to arrange payment.');
+            }
+        }
 
         return Redirect::back()->with('success', 'Your booking has been submitted successfully! We will contact you soon.');
     }
