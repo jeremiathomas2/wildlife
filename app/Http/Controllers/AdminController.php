@@ -1,19 +1,25 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Helpers\CurrencyHelper;
+use App\Models\AdminLoginLog;
+use App\Models\AdminUser;
 use App\Models\Booking;
 use App\Models\Destination;
 use App\Models\Gallery;
-use App\Models\Review;
 use App\Models\Message;
-use App\Models\SiteContent;
-use App\Models\AdminUser;
-use App\Models\AdminLoginLog;
 use App\Models\Payment;
+use App\Models\Review;
+use App\Models\SiteContent;
 use App\Services\AdminAudit;
+use App\Services\MailSettings;
 use App\Services\PaymentSettings;
+use App\Services\PesaPalService;
+use App\Support\SafariContent;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -25,6 +31,7 @@ class AdminController extends Controller
         // Clear old session data to prevent redirect loops
         session()->forget('admin_logged_in');
         session()->forget('admin_user_id');
+
         return view('admin.login');
     }
 
@@ -53,7 +60,7 @@ class AdminController extends Controller
                 'admin_logged_in' => true,
                 'admin_user_id' => $admin->id,
                 'admin_role' => $admin->role,
-                'admin_last_activity' => time()
+                'admin_last_activity' => time(),
             ]);
 
             if ($admin->must_change_password) {
@@ -70,15 +77,17 @@ class AdminController extends Controller
     public function logout(Request $request)
     {
         $request->session()->forget(['admin_logged_in', 'admin_user_id', 'admin_role']);
+
         return redirect()->route('admin.login');
     }
 
     public function currencySwitch(Request $request)
     {
         $validated = $request->validate([
-            'currency' => 'required|in:USD,EUR,GBP,JPY,CAD,AUD,INR,TZS,KES,UGX,ZAR'
+            'currency' => 'required|in:USD,EUR,GBP,JPY,CAD,AUD,INR,TZS,KES,UGX,ZAR',
         ]);
         session(['admin_currency' => $validated['currency']]);
+
         return response()->json(['success' => true, 'currency' => $validated['currency']]);
     }
 
@@ -86,15 +95,15 @@ class AdminController extends Controller
     {
         $totalBookings = Booking::count();
         $thisMonthBookings = Booking::whereYear('created_at', '>=', now()->startOfMonth())->count();
-        
+
         // Calculate total revenue in USD by converting each booking's amount to USD
         $totalRevenue = 0;
         foreach (Booking::all() as $booking) {
             $amount = $booking->amount ?? $booking->total_price ?? 0;
             $currency = $booking->currency ?? 'USD';
-            $totalRevenue += \App\Helpers\CurrencyHelper::convert($amount, $currency, 'USD');
+            $totalRevenue += CurrencyHelper::convert($amount, $currency, 'USD');
         }
-        
+
         $recentBookings = Booking::latest()->take(5)->get();
         $activeDestinations = Destination::where('status', 'Published')->count();
         $unreadMessages = Message::where('read', false)->count();
@@ -105,10 +114,10 @@ class AdminController extends Controller
         $pendingPaymentCount = Payment::whereIn('status', [Payment::STATUS_PENDING, Payment::STATUS_PROCESSING])->count();
         $recentPayments = Payment::with('booking')->latest()->take(5)->get();
 
-        $dayTripCount = Booking::whereHas('destination', function($q) {
+        $dayTripCount = Booking::whereHas('destination', function ($q) {
             $q->where('category', 'Day Trip');
         })->count();
-        $multiDayCount = Booking::whereHas('destination', function($q) {
+        $multiDayCount = Booking::whereHas('destination', function ($q) {
             $q->where('category', 'Multi-Day Safari');
         })->count();
 
@@ -138,6 +147,7 @@ class AdminController extends Controller
     {
         $bookings = Booking::latest()->paginate(10);
         $destinations = Destination::all();
+
         return view('admin.bookings', [
             'bookings' => $bookings,
             'destinations' => $destinations,
@@ -161,7 +171,7 @@ class AdminController extends Controller
         ]);
 
         $amount = 0;
-        if (!empty($validated['destination_id'])) {
+        if (! empty($validated['destination_id'])) {
             $destination = Destination::find($validated['destination_id']);
             if ($destination) {
                 $amount = ($destination->price_adult ?? $destination->price ?? 0) * $validated['guests'];
@@ -169,6 +179,7 @@ class AdminController extends Controller
         }
 
         Booking::create([...$validated, 'amount' => $amount]);
+
         return back()->with('success', 'Booking saved!');
     }
 
@@ -202,6 +213,7 @@ class AdminController extends Controller
         }
 
         $booking->update([...$validated, 'amount' => $amount, 'guests' => $guests]);
+
         return redirect()->route('admin.bookings')->with('success', 'Booking updated successfully!');
     }
 
@@ -209,12 +221,14 @@ class AdminController extends Controller
     {
         $booking = Booking::findOrFail($id);
         $booking->delete();
+
         return back()->with('success', 'Booking deleted successfully.');
     }
 
     public function destinations()
     {
         $destinations = Destination::latest()->paginate(10);
+
         return view('admin.destinations', [
             'destinations' => $destinations,
             'destCount' => Destination::count(),
@@ -224,63 +238,166 @@ class AdminController extends Controller
         ]);
     }
 
+    public function destinationEdit($id)
+    {
+        $dest = Destination::findOrFail($id);
+
+        $allTours = collect(SafariContent::buildTours(Destination::where('status', 'Published')->get()));
+        $merged = $allTours->first(fn ($t) => $t['slug'] === $dest->slug
+            || (isset($t['db']['id']) && (int) $t['db']['id'] === (int) $dest->id));
+
+        $currentAdmin = session('admin_user_id') ? AdminUser::find(session('admin_user_id')) : null;
+
+        return view('admin.destination-edit', $this->layoutData([
+            'dest' => $dest,
+            'merged' => $merged,
+            'listingCategories' => SafariContent::LISTING_CATEGORIES,
+            'currentAdmin' => $currentAdmin,
+        ]));
+    }
+
     public function storeDestination(Request $request)
     {
-        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'category' => 'required|string',
             'status' => 'required|string',
             'duration' => 'required|string',
+            'location' => 'nullable|string',
             'price_adult' => 'nullable|numeric',
             'price' => 'nullable|numeric',
             'price_child' => 'nullable|numeric',
+            'rating' => 'nullable|numeric|between:0,5',
             'image' => 'nullable|url',
             'desc' => 'nullable|string',
+            'long_description' => 'nullable|string',
+            'quick_facts' => 'nullable|array',
+            'quick_facts.*.label' => 'nullable|string',
+            'quick_facts.*.value' => 'nullable|string',
+            'highlights' => 'nullable|array',
+            'highlights.*.icon' => 'nullable|string',
+            'highlights.*.text' => 'nullable|string',
+            'itinerary' => 'nullable|array',
+            'itinerary.*.label' => 'nullable|string',
+            'itinerary.*.title' => 'nullable|string',
+            'itinerary.*.desc' => 'nullable|string',
+            'itinerary.*.activities' => 'nullable|string',
+            'itinerary.*.meals' => 'nullable|string',
+            'itinerary.*.accommodation' => 'nullable|string',
+            'includes' => 'nullable|array',
+            'includes.*' => 'nullable|string',
+            'excluded' => 'nullable|array',
+            'excluded.*' => 'nullable|string',
+            'faqs' => 'nullable|array',
+            'faqs.*.q' => 'nullable|string',
+            'faqs.*.a' => 'nullable|string',
+            'gallery' => 'nullable|array',
+            'gallery.*' => 'nullable|string',
+            'meta_title' => 'nullable|string',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
             if ($request->expectsJson()) {
                 return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
             }
+
             return back()->withErrors($validator)->withInput();
         }
 
         $validated = $validator->validated();
 
         // Handle price fields: if price_adult not set, use price; set price from price_adult
-        if (empty($validated['price_adult']) && !empty($validated['price'])) {
+        if (empty($validated['price_adult']) && ! empty($validated['price'])) {
             $validated['price_adult'] = $validated['price'];
         }
-        if (empty($validated['price']) && !empty($validated['price_adult'])) {
+        if (empty($validated['price']) && ! empty($validated['price_adult'])) {
             $validated['price'] = $validated['price_adult'];
         }
-        
+
+        // Empty rating → null; JSON repeaters normalized (blank rows dropped).
+        if (array_key_exists('rating', $validated)) {
+            $validated['rating'] = $validated['rating'] === '' || $validated['rating'] === null ? null : $validated['rating'];
+        }
+
+        $listFields = ['includes', 'excluded', 'gallery'];
+        foreach ($listFields as $field) {
+            if (array_key_exists($field, $validated)) {
+                $validated[$field] = $this->normalizeListField($validated[$field]);
+            }
+        }
+
+        $rowFields = [
+            'highlights' => ['icon', 'text'],
+            'itinerary' => ['label', 'title', 'desc', 'activities', 'meals', 'accommodation'],
+            'quick_facts' => ['label', 'value'],
+        ];
+        foreach ($rowFields as $field => $keys) {
+            if (array_key_exists($field, $validated)) {
+                $validated[$field] = $this->normalizeRowsField($validated[$field], $keys);
+            }
+        }
+        if (array_key_exists('faqs', $validated)) {
+            $validated['faqs'] = $this->normalizeFaqRows($validated['faqs']);
+        }
+
         $dest = Destination::create($validated);
-        
+
         if ($request->expectsJson()) {
             return response()->json(['success' => true, 'destination' => $dest, 'message' => 'Destination added!']);
         }
+
         return back()->with('success', 'Destination added!');
     }
 
     public function updateDestination(Request $request, $id)
     {
-        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'category' => 'required|string',
             'status' => 'required|string',
             'duration' => 'required|string',
+            'location' => 'nullable|string',
             'price_adult' => 'nullable|numeric',
             'price' => 'nullable|numeric',
             'price_child' => 'nullable|numeric',
+            'rating' => 'nullable|numeric|between:0,5',
             'image' => 'nullable|url',
             'desc' => 'nullable|string',
+            'long_description' => 'nullable|string',
+            'quick_facts' => 'nullable|array',
+            'quick_facts.*.label' => 'nullable|string',
+            'quick_facts.*.value' => 'nullable|string',
+            'highlights' => 'nullable|array',
+            'highlights.*.icon' => 'nullable|string',
+            'highlights.*.text' => 'nullable|string',
+            'itinerary' => 'nullable|array',
+            'itinerary.*.label' => 'nullable|string',
+            'itinerary.*.title' => 'nullable|string',
+            'itinerary.*.desc' => 'nullable|string',
+            'itinerary.*.activities' => 'nullable|string',
+            'itinerary.*.meals' => 'nullable|string',
+            'itinerary.*.accommodation' => 'nullable|string',
+            'includes' => 'nullable|array',
+            'includes.*' => 'nullable|string',
+            'excluded' => 'nullable|array',
+            'excluded.*' => 'nullable|string',
+            'faqs' => 'nullable|array',
+            'faqs.*.q' => 'nullable|string',
+            'faqs.*.a' => 'nullable|string',
+            'gallery' => 'nullable|array',
+            'gallery.*' => 'nullable|string',
+            'meta_title' => 'nullable|string',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
             if ($request->expectsJson()) {
                 return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
             }
+
             return back()->withErrors($validator)->withInput();
         }
 
@@ -289,38 +406,139 @@ class AdminController extends Controller
 
         // Handle price fields: if price_adult not set, use existing price or price from request
         if (empty($validated['price_adult'])) {
-            if (!empty($validated['price'])) {
+            if (! empty($validated['price'])) {
                 $validated['price_adult'] = $validated['price'];
-            } else if (!empty($dest->price)) {
+            } elseif (! empty($dest->price)) {
                 $validated['price_adult'] = $dest->price;
             }
         }
-        if (empty($validated['price']) && !empty($validated['price_adult'])) {
+        if (empty($validated['price']) && ! empty($validated['price_adult'])) {
             $validated['price'] = $validated['price_adult'];
         }
 
-        $dest->update($validated);
-        
+        // Explicit per-field assignment so a partial save never blanks untouched content.
+        $scalars = ['name', 'category', 'status', 'duration', 'location', 'price', 'price_adult', 'price_child', 'image', 'desc', 'long_description', 'meta_title', 'meta_description', 'meta_keywords'];
+        foreach ($scalars as $field) {
+            if (array_key_exists($field, $validated)) {
+                $dest->{$field} = $validated[$field];
+            }
+        }
+
+        if (array_key_exists('rating', $validated)) {
+            $dest->rating = $validated['rating'] === '' || $validated['rating'] === null ? null : $validated['rating'];
+        }
+
+        // JSON repeaters — normalized and stored as arrays (null when every row is blank).
+        $listFields = ['includes', 'excluded', 'gallery'];
+        foreach ($listFields as $field) {
+            if (array_key_exists($field, $validated)) {
+                $dest->{$field} = $this->normalizeListField($validated[$field]);
+            }
+        }
+
+        $rowFields = [
+            'highlights' => ['icon', 'text'],
+            'itinerary' => ['label', 'title', 'desc', 'activities', 'meals', 'accommodation'],
+            'quick_facts' => ['label', 'value'],
+        ];
+        foreach ($rowFields as $field => $keys) {
+            if (array_key_exists($field, $validated)) {
+                $dest->{$field} = $this->normalizeRowsField($validated[$field], $keys);
+            }
+        }
+        if (array_key_exists('faqs', $validated)) {
+            $dest->faqs = $this->normalizeFaqRows($validated['faqs']);
+        }
+
+        $dest->save();
+
         if ($request->expectsJson()) {
             return response()->json(['success' => true, 'destination' => $dest, 'message' => 'Destination updated!']);
         }
+
         return back()->with('success', 'Destination updated!');
+    }
+
+    /**
+     * Filter a submitted list of strings, dropping blanks; null when nothing remains.
+     */
+    protected function normalizeListField($value): ?array
+    {
+        if (! is_array($value)) {
+            return null;
+        }
+
+        $out = array_values(array_filter($value, fn ($item) => ! is_null($item) && trim((string) $item) !== ''));
+
+        return $out ?: null;
+    }
+
+    /**
+     * Filter a submitted array of keyed rows, dropping fully-blank rows and trimming values.
+     */
+    protected function normalizeRowsField($value, array $keys): ?array
+    {
+        if (! is_array($value)) {
+            return null;
+        }
+
+        $out = [];
+        foreach ($value as $row) {
+            if (! is_array($row)) {
+                continue;
+            }
+            $filtered = [];
+            foreach ($keys as $key) {
+                $filtered[$key] = trim((string) ($row[$key] ?? ''));
+            }
+            if (implode('', $filtered) !== '') {
+                $out[] = $filtered;
+            }
+        }
+
+        return $out ?: null;
+    }
+
+    /**
+     * Filter FAQ rows, keeping only complete question + answer pairs.
+     */
+    protected function normalizeFaqRows($value): ?array
+    {
+        if (! is_array($value)) {
+            return null;
+        }
+
+        $out = [];
+        foreach ($value as $row) {
+            if (! is_array($row)) {
+                continue;
+            }
+            $q = trim((string) ($row['q'] ?? ''));
+            $a = trim((string) ($row['a'] ?? ''));
+            if ($q !== '' && $a !== '') {
+                $out[] = ['q' => $q, 'a' => $a];
+            }
+        }
+
+        return $out ?: null;
     }
 
     public function destroyDestination($id)
     {
         $dest = Destination::findOrFail($id);
         $dest->delete();
-        
+
         if (request()->expectsJson()) {
             return response()->json(['success' => true, 'message' => 'Destination deleted!']);
         }
+
         return back()->with('success', 'Destination deleted!');
     }
 
     public function gallery()
     {
         $gallery = Gallery::all();
+
         return view('admin.gallery', [
             'gallery' => $gallery,
             'destCount' => Destination::count(),
@@ -339,6 +557,7 @@ class AdminController extends Controller
         ]);
 
         Gallery::create($validated);
+
         return back()->with('success', 'Image added to gallery!');
     }
 
@@ -346,12 +565,14 @@ class AdminController extends Controller
     {
         $img = Gallery::findOrFail($id);
         $img->delete();
+
         return back()->with('success', 'Gallery item deleted!');
     }
 
     public function reviews()
     {
         $reviews = Review::all();
+
         return view('admin.reviews', [
             'reviews' => $reviews,
             'destCount' => Destination::count(),
@@ -365,6 +586,7 @@ class AdminController extends Controller
     {
         $review = Review::findOrFail($id);
         $review->update(['status' => $status]);
+
         return back()->with('success', 'Review updated!');
     }
 
@@ -372,12 +594,14 @@ class AdminController extends Controller
     {
         $review = Review::findOrFail($id);
         $review->delete();
+
         return back()->with('success', 'Review deleted!');
     }
 
     public function messages()
     {
         $messages = Message::latest()->get();
+
         return view('admin.messages', [
             'messages' => $messages,
             'destCount' => Destination::count(),
@@ -391,6 +615,7 @@ class AdminController extends Controller
     {
         $msg = Message::findOrFail($id);
         $msg->update(['read' => true]);
+
         return back()->with('success', 'Message marked as read');
     }
 
@@ -398,27 +623,61 @@ class AdminController extends Controller
     {
         $msg = Message::findOrFail($id);
         $msg->delete();
+
         return back()->with('success', 'Message deleted!');
+    }
+
+    public function content()
+    {
+        return view('admin.content', $this->layoutData([
+            'contents' => SiteContent::all(),
+            'contentGroups' => [
+                'general' => 'General information',
+                'home' => 'Home page',
+                'about' => 'About page',
+                'contact' => 'Contact page',
+                'destinations' => 'Destinations page',
+                'destination' => 'Destination tour pages',
+                'gallery' => 'Gallery page',
+                'reviews' => 'Reviews page',
+                'terms' => 'Terms page',
+            ],
+        ]));
+    }
+
+    public function contentUpdate(Request $request)
+    {
+        foreach ($request->input('content', []) as $key => $value) {
+            $content = SiteContent::firstOrNew(['key' => $key]);
+            $content->value = $value;
+            if (! $content->exists) {
+                $content->label = ucwords(str_replace(['_', '-'], ' ', $key));
+            }
+            $content->save();
+        }
+
+        return back()->with('success', 'Content saved!');
     }
 
     public function settings()
     {
         $contents = SiteContent::all();
         $currencies = array_values(array_intersect(
-            \App\Helpers\CurrencyHelper::getSupportedCurrencies(),
-            \App\Services\PesaPalService::SUPPORTED_CURRENCIES
+            CurrencyHelper::getSupportedCurrencies(),
+            PesaPalService::SUPPORTED_CURRENCIES
         ));
+
         return view('admin.settings', [
             'contents' => $contents,
-            'settings' => \App\Services\PaymentSettings::toArray(),
+            'settings' => PaymentSettings::toArray(),
             'currencies' => $currencies ?: ['USD', 'TZS', 'KES', 'UGX'],
             'secretsStored' => [
-                'pesapal_consumer_key' => \App\Services\PaymentSettings::isStored('pesapal_consumer_key'),
-                'pesapal_consumer_secret' => \App\Services\PaymentSettings::isStored('pesapal_consumer_secret'),
+                'pesapal_consumer_key' => PaymentSettings::isStored('pesapal_consumer_key'),
+                'pesapal_consumer_secret' => PaymentSettings::isStored('pesapal_consumer_secret'),
             ],
-            'depositPercentage' => \App\Services\PaymentSettings::depositPercentage(),
-            'mailSettings' => \App\Services\MailSettings::toArray(),
-            'mailPasswordStored' => \App\Services\MailSettings::isStored('mail_smtp_password'),
+            'depositPercentage' => PaymentSettings::depositPercentage(),
+            'mailSettings' => MailSettings::toArray(),
+            'mailPasswordStored' => MailSettings::isStored('mail_smtp_password'),
             'destCount' => Destination::count(),
             'reviewCount' => Review::where('status', 'Pending')->count(),
             'bookingCount' => Booking::where('status', 'Pending')->count(),
@@ -428,9 +687,15 @@ class AdminController extends Controller
 
     public function updateSettings(Request $request)
     {
-        foreach($request->input('content', []) as $key => $value) {
-            SiteContent::where('key', $key)->update(['value' => $value]);
+        foreach ($request->input('content', []) as $key => $value) {
+            $content = SiteContent::firstOrNew(['key' => $key]);
+            $content->value = $value;
+            if (! $content->exists) {
+                $content->label = ucwords(str_replace(['_', '-'], ' ', $key));
+            }
+            $content->save();
         }
+
         return back()->with('success', 'Settings saved!');
     }
 
@@ -445,7 +710,8 @@ class AdminController extends Controller
             'Draft' => 'tag-grey',
         ];
         $class = $map[$status] ?? 'tag-grey';
-        return '<span class="tag ' . $class . '">' . htmlspecialchars($status) . '</span>';
+
+        return '<span class="tag '.$class.'">'.htmlspecialchars($status).'</span>';
     }
 
     // Admin User Management
@@ -505,7 +771,7 @@ class AdminController extends Controller
     {
         $actor = AdminAudit::actor();
 
-        if (!$actor || !$actor->canManageUsers()) {
+        if (! $actor || ! $actor->canManageUsers()) {
             return back()->with('error', 'You do not have permission to manage users.');
         }
 
@@ -536,7 +802,7 @@ class AdminController extends Controller
     {
         $actor = AdminAudit::actor();
 
-        if (!$actor || !$actor->canManageUsers()) {
+        if (! $actor || ! $actor->canManageUsers()) {
             return back()->with('error', 'You do not have permission to manage users.');
         }
 
@@ -544,7 +810,7 @@ class AdminController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:admin_users,email,' . $id,
+            'email' => 'required|email|max:255|unique:admin_users,email,'.$id,
             'password' => 'nullable|string|min:8',
             'role' => 'required|in:super_admin,admin,editor,viewer',
             'is_active' => 'nullable|boolean',
@@ -606,7 +872,7 @@ class AdminController extends Controller
     {
         $actor = AdminAudit::actor();
 
-        if (!$actor || !$actor->canDeleteUsers()) {
+        if (! $actor || ! $actor->canDeleteUsers()) {
             return back()->with('error', 'Only a super admin can delete users.');
         }
 
@@ -637,7 +903,7 @@ class AdminController extends Controller
     {
         $actor = AdminAudit::actor();
 
-        if (!$actor || !$actor->canManageUsers()) {
+        if (! $actor || ! $actor->canManageUsers()) {
             return back()->with('error', 'You do not have permission to manage users.');
         }
 
@@ -648,7 +914,7 @@ class AdminController extends Controller
         }
 
         $wasActive = $user->is_active;
-        $user->is_active = !$wasActive;
+        $user->is_active = ! $wasActive;
         $user->save();
 
         AdminAudit::log('user.toggled', 'admin_user', $user->id, [
@@ -666,7 +932,7 @@ class AdminController extends Controller
     {
         $actor = AdminAudit::actor();
 
-        if (!$actor || !$actor->canManageUsers()) {
+        if (! $actor || ! $actor->canManageUsers()) {
             return back()->with('error', 'You do not have permission to manage users.');
         }
 
@@ -680,7 +946,7 @@ class AdminController extends Controller
         $user->password_changed_at = now();
 
         $isSelf = (int) $id === (int) $actor->id;
-        $user->must_change_password = !$isSelf;
+        $user->must_change_password = ! $isSelf;
         $user->save();
 
         AdminAudit::log('user.password_reset', 'admin_user', $user->id, [
@@ -721,7 +987,7 @@ class AdminController extends Controller
     public function submitChangePassword(Request $request)
     {
         $currentAdmin = AdminAudit::actor();
-        if (!$currentAdmin) {
+        if (! $currentAdmin) {
             return redirect()->route('admin.login');
         }
 
@@ -745,6 +1011,7 @@ class AdminController extends Controller
     public function profile()
     {
         $currentUser = AdminUser::find(session('admin_user_id'));
+
         return view('admin.profile', [
             'currentUser' => $currentUser,
             'destCount' => Destination::count(),
@@ -760,7 +1027,7 @@ class AdminController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string',
-            'email' => 'required|email|unique:admin_users,email,' . $currentUser->id,
+            'email' => 'required|email|unique:admin_users,email,'.$currentUser->id,
             'current_password' => 'nullable|required_with:new_password',
             'new_password' => 'nullable|string|min:6|confirmed',
         ]);
@@ -769,15 +1036,16 @@ class AdminController extends Controller
         $currentUser->name = $validated['name'];
 
         // Update password if provided
-        if (!empty($validated['new_password'])) {
+        if (! empty($validated['new_password'])) {
             // Verify current password
-            if (!$currentUser->checkPassword($validated['current_password'])) {
+            if (! $currentUser->checkPassword($validated['current_password'])) {
                 return back()->with('error', 'Current password is incorrect.');
             }
             $currentUser->password = $validated['new_password'];
         }
 
         $currentUser->save();
+
         return back()->with('success', 'Profile updated successfully!');
     }
 

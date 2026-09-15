@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     <!-- Primary Meta Tags -->
     <title>@yield('title', 'Tanzania Daily Tours & Safari - Best Safari & Tours in Tanzania')</title>
     <meta name="title" content="@yield('meta_title', 'Tanzania Daily Tours & Safari - Best Safari & Tours in Tanzania')">
@@ -13,8 +13,9 @@
     <meta name="author" content="Tanzania Daily Tours & Safari">
     <meta name="robots" content="index, follow">
     <meta name="language" content="English">
+    <meta name="theme-color" content="#6e2f0a">
     <link rel="canonical" href="{{ url()->current() }}">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
@@ -23,7 +24,7 @@
     <meta property="og:image" content="@yield('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/safari-serengeti_agwjrp.jpg')">
     <meta property="og:site_name" content="Tanzania Daily Tours & Safari">
     <meta property="og:locale" content="en_US">
-    
+
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="{{ url()->current() }}">
@@ -33,7 +34,7 @@
 
     <!-- JSON-LD Structured Data -->
     @yield('structured_data')
-    
+
     @php
         $organizationSchema = '<script type="application/ld+json">
     {
@@ -61,14 +62,7 @@
         },
         "openingHoursSpecification": {
             "@type": "OpeningHoursSpecification",
-            "dayOfWeek": [
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday"
-            ],
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             "opens": "08:00",
             "closes": "18:00"
         },
@@ -85,26 +79,13 @@
             "https://www.facebook.com/tanzaniadailytoursandsafari",
             "https://twitter.com/tanzaniadailytours"
         ],
-        "founder": {
-            "@type": "Person",
-            "name": "Petro Mihambo",
-            "jobTitle": "Senior Tour Guide"
-        },
+        "founder": { "@type": "Person", "name": "Petro Mihambo", "jobTitle": "Senior Tour Guide" },
         "foundingDate": "2012",
-        "areaServed": {
-            "@type": "Country",
-            "name": "Tanzania"
-        },
+        "areaServed": { "@type": "Country", "name": "Tanzania" },
         "knowsAbout": [
-            "Serengeti National Park",
-            "Ngorongoro Crater",
-            "Mount Kilimanjaro",
-            "Tarangire National Park",
-            "Lake Manyara",
-            "Zanzibar",
-            "Tanzania wildlife",
-            "Great Migration",
-            "Big Five Africa"
+            "Serengeti National Park", "Ngorongoro Crater", "Mount Kilimanjaro",
+            "Tarangire National Park", "Lake Manyara", "Zanzibar",
+            "Tanzania wildlife", "Great Migration", "Big Five Africa"
         ]
     }
     </script>';
@@ -126,17 +107,11 @@
             "postalCode": "25113",
             "addressCountry": "TZ"
         },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": "-3.3546",
-            "longitude": "37.3414"
-        },
+        "geo": { "@type": "GeoCoordinates", "latitude": "-3.3546", "longitude": "37.3414" },
         "openingHours": "Mo-Sa 08:00-18:00",
         "priceRange": "$$",
         "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "reviewCount": "500"
+            "@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "500"
         }
     }
     </script>';
@@ -158,19 +133,14 @@
     {!! $organizationSchema !!}
     {!! $localBusinessSchema !!}
     {!! $websiteSchema !!}
-    
+
     <!-- Breadcrumb Schema -->
     @php
         $showBreadcrumb = request()->path() != '/';
         $showSecondItem = request()->path() != 'destinations';
         $segment1 = request()->segment(1) ? ucfirst(str_replace('-', ' ', request()->segment(1))) : '';
         $breadcrumbItems = [
-            [
-                "@type" => "ListItem",
-                "position" => 1,
-                "name" => "Home",
-                "item" => "https://www.tanzaniadailytoursandsafari.com"
-            ]
+            ["@type" => "ListItem", "position" => 1, "name" => "Home", "item" => "https://www.tanzaniadailytoursandsafari.com"]
         ];
         if ($showSecondItem && $segment1) {
             $breadcrumbItems[] = [
@@ -191,568 +161,42 @@
         }
     @endphp
     {!! $breadcrumbScript !!}
-    
-    <!-- Google tag (gtag.js) - will load after cookie consent -->
-    <script id="google-analytics" data-consent="analytics">
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-JS83PTXEYM');
-    </script>
-    <script id="google-analytics-src" data-consent="analytics">
-        (function() {
-            if (localStorage.getItem('cookieConsent') === 'accepted') {
-                var script = document.createElement('script');
-                script.async = true;
-                script.src = 'https://www.googletagmanager.com/gtag/js?id=G-JS83PTXEYM';
-                document.head.appendChild(script);
-            }
-        })();
-    </script>
+
+    <!-- Fonts + Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="preconnect" href="https://res.cloudinary.com" />
+    <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
     <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('favicon/android-chrome-192x192.png') }}">
     <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('favicon/android-chrome-512x512.png') }}">
     <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    @vite(['resources/css/app.css'])
+
+    @stack('styles')
+    <link rel="stylesheet" href="{{ asset('assets/css/safari.css') }}" />
 </head>
 <body>
-    <!-- Loading Screen - Only show on home page -->
-    @php
-        $isHomePage = Route::currentRouteName() === 'home';
-        $loadingScreenHtml = '';
-        if ($isHomePage) {
-            $loadingScreenHtml = '<div id="loadingScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center" style="background: #f8f4f0; opacity: 1; transition: opacity 0.3s ease;">
-        <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-brown_d1vgxe.png" alt="Tanzania Daily Tours & Safari" style="height: 120px; width: auto; object-fit: contain; margin-bottom: 20px;">
-        <h2 class="text-2xl font-bold italic mb-6" style="font-family: \'Raleway\', sans-serif; color: #854208;">Tanzania Daily Tours &amp; Safari</h2>
-        <span class="w-2 h-2 rounded-full animate-pulse" style="background: #ff9729;"></span>
-    </div>';
-        }
-    @endphp
-    {!! $loadingScreenHtml !!}
 
-    <!-- Navbar -->
-    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-400" id="mainNav" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.15);">
-        <div class="max-w-[1280px] mx-auto px-6 flex items-center justify-between" style="height: 72px;">
-            @php
-                $navLinks = [
-                    ['label' => 'Home', 'route' => 'home', 'icon' => 'home'],
-                    ['label' => 'Destinations', 'route' => 'destinations', 'icon' => 'destination'],
-                    ['label' => 'About', 'route' => 'about', 'icon' => 'about'],
-                    ['label' => 'Reviews', 'route' => 'reviews', 'icon' => 'reviews'],
-                    ['label' => 'Gallery', 'route' => 'gallery', 'icon' => 'gallery'],
-                    ['label' => 'Contact', 'route' => 'contact', 'icon' => 'contact'],
-                ];
-                $currentRoute = Route::currentRouteName();
-            @endphp
-            
-            <a href="{{ route('home') }}" class="flex items-center gap-3" style="transition: all 0.4s ease;">
-            <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-white_bexcal.png" id="navLogo" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
-            <span class="text-xl font-bold italic hidden sm:block" id="navTitle" style="font-family: 'Raleway', sans-serif; color: #ffffff; transition: color 0.4s ease;">
-                Tanzania Daily Tours &amp; Safari
-            </span>
-        </a>
+@include('partials.preloader')
+@include('partials.header')
 
-            <!-- Desktop Nav -->
-            <div class="hidden lg:flex items-center gap-8">
-                @foreach($navLinks as $link)
-                    <a href="{{ route($link['route']) }}" 
-                       class="text-sm font-semibold relative py-1" 
-                       style="
-                           color: {{ $currentRoute === $link['route'] ? '#ff9729' : '#ffffff' }}; 
-                           font-family: 'Raleway', sans-serif;
-                           transition: all 0.3s ease;
-                       "
-                       onmouseover="this.querySelector('span').style.width = '100%'; this.querySelector('span').style.left = '0';"
-                       onmouseout="this.querySelector('span').style.width = '{{ $currentRoute === $link['route'] ? '100%' : '0' }}'; this.querySelector('span').style.left = '{{ $currentRoute === $link['route'] ? '0' : '50%' }}';"
-                    >
-                        {{ $link['label'] }}
-                        <span class="absolute bottom-0 h-0.5" style="
-                            background: #ff9729;
-                            left: {{ $currentRoute === $link['route'] ? '0' : '50%' }};
-                            width: {{ $currentRoute === $link['route'] ? '100%' : '0' }};
-                            transition: all 0.3s ease;
-                        "></span>
-                    </a>
-                @endforeach
-            </div>
+<main id="siteMain">
+    @yield('content')
+</main>
 
-            <div class="hidden lg:block">
-                <a href="{{ route('destinations') }}" class="inline-flex items-center px-6 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90" style="background: #088529;">
-                    Book a Trip
-                </a>
-            </div>
+@include('partials.footer')
+@include('partials.modals')
 
-            <!-- Mobile Hamburger -->
-            <button id="mobileMenuBtn" class="lg:hidden flex flex-col gap-1.5 p-2" aria-label="Toggle menu">
-                <span class="block w-6 h-0.5 transition-all duration-300" id="hamburger1" style="background: #ffffff;"></span>
-                <span class="block w-6 h-0.5 transition-all duration-300" id="hamburger2" style="background: #ffffff;"></span>
-                <span class="block w-6 h-0.5 transition-all duration-300" id="hamburger3" style="background: #ffffff;"></span>
-            </button>
-        </div>
-    </nav>
+<script src="{{ asset('assets/js/safari-data.js') }}"></script>
+@include('partials.safari-data')
+<script src="{{ asset('assets/js/safari.js') }}"></script>
+@yield('scripts')
+@stack('scripts')
 
-    <!-- Mobile Menu Overlay -->
-    <div id="mobileMenu" class="fixed inset-0 z-40 hidden flex-col bg-white" style="padding-top: 80px;">
-        <!-- Mobile menu header -->
-        <div class="absolute top-0 left-0 right-0 px-6 flex items-center justify-between" style="height: 72px; background: #854208;">
-            <a href="{{ route('home') }}" class="flex items-center gap-3" onclick="closeMobileMenu()">
-                <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
-                <span class="text-xl font-bold italic" style="font-family: 'Raleway', sans-serif; color: #ffffff;">
-                    Tanzania Daily Tours &amp; Safari
-                </span>
-            </a>
-            <button onclick="closeMobileMenu()" class="p-2" aria-label="Close menu">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" style="color: #ffffff;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 6L6 18M6 6l12 12"/>
-                </svg>
-            </button>
-        </div>
-        
-        <!-- Mobile menu items -->
-        <div class="flex-1 overflow-y-auto bg-white">
-            @foreach($navLinks as $index => $link)
-                <a href="{{ route($link['route']) }}" 
-                   class="mobile-menu-item" 
-                   style="
-                       color: {{ $currentRoute === $link['route'] ? '#ff9729' : '#854208' }};
-                       font-family: 'Raleway', sans-serif;
-                       font-size: 18px;
-                       font-weight: {{ $currentRoute === $link['route'] ? '700' : '500' }};
-                       background: {{ $currentRoute === $link['route'] ? 'rgba(255, 151, 41, 0.08)' : 'transparent' }};
-                   " 
-                   onclick="closeMobileMenu()">
-                    <span>{{ $link['label'] }}</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" style="color: {{ $currentRoute === $link['route'] ? '#ff9729' : '#854208' }};" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 6l6 6-6 6"/>
-                    </svg>
-                </a>
-            @endforeach
-        </div>
-        
-        <!-- Mobile menu footer -->
-        <div class="p-6" style="background: #f8f4f0;">
-            <a href="{{ route('destinations') }}" 
-               class="w-full inline-flex items-center justify-center px-6 py-3.5 rounded-full text-lg font-semibold text-white transition-all duration-300 hover:opacity-90" 
-               style="background: #088529;" 
-               onclick="closeMobileMenu()">
-                Book a Trip
-            </a>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <main>
-        <div id="pageContent" style="opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease;">
-            @yield('content')
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer style="background: #854208;">
-        <div class="max-w-[1280px] mx-auto px-6 py-16">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-                <!-- Brand -->
-                <div>
-                    <a href="{{ route('home') }}" class="inline-flex items-center gap-3 mb-4">
-                        <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-white_bexcal.png" alt="Tanzania Daily Tours & Safari" style="height: 50px; object-fit: contain;">
-                        <span class="text-xl font-bold italic" style="font-family: 'Raleway', sans-serif; color: #ffffff;">
-                            Tanzania Daily Tours &amp; Safari
-                        </span>
-                    </a>
-                    <p class="text-sm leading-relaxed" style="color: rgba(255, 255, 255, 0.7);">
-                        Authentic African safari experiences since 2012. We craft unforgettable journeys through Tanzania's most spectacular landscapes.
-                    </p>
-                </div>
-
-                <!-- Quick Links -->
-                <div>
-                    <h4 class="text-sm font-bold uppercase tracking-wider mb-4" style="color: #ff9729;">
-                        Quick Links
-                    </h4>
-                    <ul class="space-y-2.5">
-                        @php
-                            $quickLinks = [
-                                ['label' => 'Home', 'route' => 'home'],
-                                ['label' => 'About Us', 'route' => 'about'],
-                                ['label' => 'Destinations', 'route' => 'destinations'],
-                                ['label' => 'Reviews', 'route' => 'reviews'],
-                                ['label' => 'Gallery', 'route' => 'gallery'],
-                                ['label' => 'Contact', 'route' => 'contact'],
-                            ];
-                        @endphp
-                        @foreach($quickLinks as $link)
-                            <li>
-                                <a href="{{ route($link['route']) }}" class="text-sm transition-colors duration-300 hover:text-white" style="color: rgba(255, 255, 255, 0.7);">
-                                    {{ $link['label'] }}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-
-                <!-- Popular Tours -->
-                <div>
-                    <h4 class="text-sm font-bold uppercase tracking-wider mb-4" style="color: #ff9729;">
-                        Popular Tours
-                    </h4>
-                    <ul class="space-y-2.5">
-                        @php
-                            $popularTours = [
-                                'Materuni Waterfall',
-                                'Chemka Hot Springs',
-                                'Kilimanjaro Day Hike',
-                                'Serengeti Safari',
-                            ];
-                        @endphp
-                        @foreach($popularTours as $tour)
-                            <li>
-                                <a href="{{ route('destinations') }}" class="text-sm transition-colors duration-300 hover:text-white" style="color: rgba(255, 255, 255, 0.7);">
-                                    {{ $tour }}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-
-                <!-- Contact -->
-                <div>
-                    <h4 class="text-sm font-bold uppercase tracking-wider mb-4" style="color: #ff9729;">
-                        Contact Us
-                    </h4>
-                    <ul class="space-y-3">
-                        <li class="flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" style="color: #ff9729;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
-                            </svg>
-                            <a href="tel:+255623975934" class="text-sm" style="color: rgba(255, 255, 255, 0.7);">
-                                +255 623 975 934
-                            </a>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" style="color: #ff9729;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
-                            </svg>
-                            <span class="text-sm" style="color: rgba(255, 255, 255, 0.7);">
-                                WhatsApp: +255 623 975 934
-                            </span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" style="color: #ff9729;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                <polyline points="22,6 12,13 2,6"/>
-                            </svg>
-                            <a href="mailto:info@tanzaniadailytours.com" class="text-sm" style="color: rgba(255, 255, 255, 0.7);">
-                                info@tanzaniadailytours.com
-                            </a>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" style="color: #ff9729; margin-top: 3px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                            <span class="text-sm" style="color: rgba(255, 255, 255, 0.7);">
-                                Wakala wa Vipimo - Moshi - Kilimanjaro
-                            </span>
-                        </li>
-                    </ul>
-
-                    <!-- Social Icons -->
-                    <div class="flex items-center gap-4 mt-6">
-                        <a href="https://www.instagram.com/tanzania_dailytours_and_safari/" target="_blank" rel="noopener noreferrer" class="transition-opacity duration-300 hover:opacity-70" aria-label="Instagram">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" color="#ffffff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-                            </svg>
-                        </a>
-                        <a href="https://www.facebook.com/tanzaniadailytoursandsafari" target="_blank" rel="noopener noreferrer" class="transition-opacity duration-300 hover:opacity-70" aria-label="Facebook">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" color="#ffffff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
-                            </svg>
-                        </a>
-                        <a href="https://twitter.com/tanzaniadailytours" target="_blank" rel="noopener noreferrer" class="transition-opacity duration-300 hover:opacity-70" aria-label="Twitter">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" color="#ffffff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
-                            </svg>
-                        </a>
-                        <a href="https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html" target="_blank" rel="noopener noreferrer" class="transition-opacity duration-300 hover:opacity-70" aria-label="TripAdvisor">
-                            <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_100/v1784610546/PngItem_1715860_wbqbw4.png" alt="TripAdvisor" class="w-5 h-5" style="filter: brightness(0) invert(1);"/>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sustainable Association Partners -->
-        <div class="border-t" style="border-color: rgba(255, 255, 255, 0.15);">
-            <div class="max-w-[1280px] mx-auto px-6 py-8 mt-8 text-center">
-                <p class="text-xs font-semibold uppercase tracking-wider mb-4" style="color: rgba(255, 255, 255, 0.5);">Sustainable Association Partners</p>
-                <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_600/v1787751810/Sustainable-Association-4_klxpxg.webp" alt="Sustainable Association Partners" class="mx-auto" style="max-height: 50px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.7;" loading="lazy">
-            </div>
-        </div>
-
-        <!-- Bottom Bar -->
-        <div class="border-t" style="border-color: rgba(255, 255, 255, 0.15);">
-            <div class="max-w-[1280px] mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-2">
-                <p class="text-xs" style="color: rgba(255, 255, 255, 0.6);">
-                    &copy; {{ date('Y') }} Tanzania Daily Tours & Safari. All rights reserved.
-                </p>
-                <div class="flex items-center gap-4">
-                    <a href="{{ route('terms') }}" class="text-xs transition-colors duration-300 hover:text-white" style="color: rgba(255, 255, 255, 0.6);">
-                        Terms of Service
-                    </a>
-                    <a href="{{ route('privacy') }}" class="text-xs transition-colors duration-300 hover:text-white" style="color: rgba(255, 255, 255, 0.6);">
-                        Privacy Policy
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- WhatsApp Float -->
-    <a href="https://wa.me/255623975934" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 left-6 z-50 w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110" style="background: #25D366;">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-white" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.488-.492-.67-.5-.173-.01-.372-.01-.572-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
-    </a>
-
-    <script>
-        // Smooth scroll
-        let lenis;
-        let nav, navLogo, navTitle, hamburger1, hamburger2, hamburger3;
-        
-        function updateNav() {
-            if (!nav) return;
-            const scrolled = window.scrollY > window.innerHeight * 0.5;
-            
-            if (scrolled) {
-                nav.style.background = 'rgba(255, 255, 255, 0.88)';
-                nav.style.backdropFilter = 'blur(16px)';
-                nav.style.webkitBackdropFilter = 'blur(16px)';
-                nav.style.borderBottom = '1px solid rgba(255, 255, 255, 0.2)';
-                nav.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.08)';
-                
-                navLogo.src = "https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-brown_d1vgxe.png";
-                navTitle.style.color = '#854208';
-                
-                hamburger1.style.background = '#854208';
-                hamburger2.style.background = '#854208';
-                hamburger3.style.background = '#854208';
-                
-                // Update desktop nav links color - preserve active route color
-                const desktopLinks = nav.querySelectorAll('.hidden.lg\\:flex a');
-                desktopLinks.forEach(link => {
-                    const underline = link.querySelector('span');
-                    if (underline && underline.style.width === '100%') {
-                        link.style.color = '#ff9729';
-                    } else if (!link.style.background || link.style.background === 'transparent') {
-                        link.style.color = '#111111';
-                    }
-                });
-            } else {
-                nav.style.background = 'rgba(255, 255, 255, 0.1)';
-                nav.style.backdropFilter = 'blur(10px)';
-                nav.style.webkitBackdropFilter = 'blur(10px)';
-                nav.style.borderBottom = '1px solid rgba(255, 255, 255, 0.15)';
-                nav.style.boxShadow = 'none';
-                
-                navLogo.src = "https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_200/v1782890324/safari-logo-white_bexcal.png";
-                navTitle.style.color = '#ffffff';
-                
-                hamburger1.style.background = '#ffffff';
-                hamburger2.style.background = '#ffffff';
-                hamburger3.style.background = '#ffffff';
-                
-                // Update desktop nav links color - preserve active route color
-                const desktopLinks = nav.querySelectorAll('.hidden.lg\\:flex a');
-                desktopLinks.forEach(link => {
-                    const underline = link.querySelector('span');
-                    if (underline && underline.style.width === '100%') {
-                        link.style.color = '#ff9729';
-                    } else if (!link.style.background || link.style.background === 'transparent') {
-                        link.style.color = '#ffffff';
-                    }
-                });
-            }
-        }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-            // Loading screen - hide immediately for better performance
-            const loadingScreen = document.getElementById('loadingScreen');
-            
-            if (loadingScreen) {
-                // Check if splash screen has been shown before (skip entirely for reduced motion)
-                const hasSeenSplash = localStorage.getItem('hasSeenSplash');
-                
-                if (hasSeenSplash || prefersReducedMotion) {
-                    // Hide immediately if already seen
-                    loadingScreen.style.display = 'none';
-                } else {
-                    // Show splash screen briefly and set flag
-                    setTimeout(function() {
-                        loadingScreen.style.opacity = '0';
-                        setTimeout(function() {
-                            loadingScreen.style.display = 'none';
-                            localStorage.setItem('hasSeenSplash', 'true');
-                        }, 300);
-                    }, 1500);
-                }
-            }
-            
-            // Page transition animation
-            const pageContent = document.getElementById('pageContent');
-            setTimeout(function() {
-                pageContent.style.opacity = '1';
-                pageContent.style.transform = 'translateY(0)';
-            }, 100);
-            
-            // Scroll to top on page load
-            window.scrollTo(0, 0);
-            
-            // Initialize Lenis for smooth scrolling - disabled for better performance
-            // lenis = new Lenis({
-            //     duration: 0.8,
-            //     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            //     smoothWheel: true
-            // });
-            // function raf(time) {
-            //     lenis.raf(time);
-            //     requestAnimationFrame(raf);
-            // }
-            // requestAnimationFrame(raf);
-            
-            // Navbar setup
-            nav = document.getElementById('mainNav');
-            navLogo = document.getElementById('navLogo');
-            navTitle = document.getElementById('navTitle');
-            hamburger1 = document.getElementById('hamburger1');
-            hamburger2 = document.getElementById('hamburger2');
-            hamburger3 = document.getElementById('hamburger3');
-            
-            // Listen to scroll
-            // lenis.on('scroll', updateNav);
-            window.addEventListener('scroll', updateNav);
-            updateNav();
-        });
-
-        // Mobile menu
-        let mobileOpen = false;
-        function toggleMobileMenu() {
-            mobileOpen = !mobileOpen;
-            const mobileMenu = document.getElementById('mobileMenu');
-            if (mobileOpen) {
-                mobileMenu.classList.remove('hidden');
-                hamburger1.style.transform = 'rotate(45deg) translate(4px, 4px)';
-                hamburger2.style.opacity = '0';
-                hamburger3.style.transform = 'rotate(-45deg) translate(4px, -4px)';
-                document.body.style.overflow = 'hidden';
-            } else {
-                mobileMenu.classList.add('hidden');
-                hamburger1.style.transform = 'none';
-                hamburger2.style.opacity = '1';
-                hamburger3.style.transform = 'none';
-                document.body.style.overflow = '';
-            }
-        }
-        function closeMobileMenu() {
-            mobileOpen = false;
-            const mobileMenu = document.getElementById('mobileMenu');
-            mobileMenu.classList.add('hidden');
-            hamburger1.style.transform = 'none';
-            hamburger2.style.opacity = '1';
-            hamburger3.style.transform = 'none';
-            document.body.style.overflow = '';
-        }
-        document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
-    </script>
-    @yield('scripts')
-
-    <!--Start of Tawk.to Script - will load after cookie consent -->
-    <script id="tawk-to-script" data-consent="marketing">
-        (function() {
-            if (localStorage.getItem('cookieConsent') === 'accepted') {
-                var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-                (function(){
-                    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-                    s1.async=true;
-                    s1.src='https://embed.tawk.to/6a452b6d59a11c1d46cc69ff/1jsf339th';
-                    s1.charset='UTF-8';
-                    s1.setAttribute('crossorigin','*');
-                    s0.parentNode.insertBefore(s1,s0);
-                })();
-            }
-        })();
-    </script>
-    <!--End of Tawk.to Script-->
-
-    <!-- Cookie Consent Banner -->
-    <div id="cookieConsentBanner" class="fixed bottom-0 left-0 right-0 z-50 p-4" style="background: #111111; display: none;">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="text-sm text-white flex-1">
-                <p class="mb-1" style="color: #ffffff;">We use cookies to enhance your experience and analyze site traffic.</p>
-                <p class="text-xs" style="color: rgba(255,255,255,0.7);">By clicking "Accept All", you consent to our use of cookies.</p>
-            </div>
-            <div class="flex gap-3">
-                <button onclick="acceptCookies()" class="px-6 py-2 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90" style="background: #088529;">
-                    Accept All
-                </button>
-                <button onclick="declineCookies()" class="px-6 py-2 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90" style="background: rgba(255,255,255,0.2);">
-                    Decline
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Cookie Consent Management
-        function initCookieConsent() {
-            const consent = localStorage.getItem('cookieConsent');
-            if (!consent) {
-                document.getElementById('cookieConsentBanner').style.display = 'block';
-            } else if (consent === 'accepted') {
-                loadConsentedScripts();
-            }
-        }
-
-        function acceptCookies() {
-            localStorage.setItem('cookieConsent', 'accepted');
-            document.getElementById('cookieConsentBanner').style.display = 'none';
-            loadConsentedScripts();
-        }
-
-        function declineCookies() {
-            localStorage.setItem('cookieConsent', 'declined');
-            document.getElementById('cookieConsentBanner').style.display = 'none';
-        }
-
-        function loadConsentedScripts() {
-            // Load Google Analytics
-            const gaScript = document.createElement('script');
-            gaScript.async = true;
-            gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-JS83PTXEYM';
-            document.head.appendChild(gaScript);
-
-            // Load Tawk.to
-            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-            (function(){
-                var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-                s1.async=true;
-                s1.src='https://embed.tawk.to/6a452b6d59a11c1d46cc69ff/1jsf339th';
-                s1.charset='UTF-8';
-                s1.setAttribute('crossorigin','*');
-                s0.parentNode.insertBefore(s1,s0);
-            })();
-        }
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', initCookieConsent);
-    </script>
 </body>
 </html>

@@ -490,6 +490,12 @@
                     <span>Dashboard</span>
                 </a>
                 <div class="sb-section-label">Content</div>
+                <a href="{{ route('admin.content') }}" class="sb-item {{ request()->routeIs('admin.content') ? 'active' : '' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 6h16M4 12h16M4 18h10"></path>
+                    </svg>
+                    <span>Site Content</span>
+                </a>
                 <a href="{{ route('admin.destinations') }}" class="sb-item {{ request()->routeIs('admin.destinations') ? 'active' : '' }}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 11 12 4l9 7"></path>

@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Booking;
 use App\Models\Destination;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class BookingTest extends TestCase
 {
@@ -81,13 +81,13 @@ class BookingTest extends TestCase
 
     public function test_missing_required_fields_returns_422(): void
     {
-        $response = $this->post(route('bookings.store'), []);
+        $response = $this->postJson(route('bookings.store'), []);
         $response->assertStatus(422);
     }
 
     public function test_invalid_destination_id_returns_422(): void
     {
-        $response = $this->post(route('bookings.store'), [
+        $response = $this->postJson(route('bookings.store'), [
             'name' => 'Test',
             'email' => 'test@example.com',
             'destination_id' => 99999,

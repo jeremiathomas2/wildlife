@@ -1,88 +1,73 @@
 @extends('admin.layout')
 
-@section('title', 'Content Management')
+@section('title', 'Site Content')
 
 @section('content')
-    <h1 class="text-3xl font-bold mb-8" style="font-family: 'Raleway', sans-serif; color: #854208;">Content Management</h1>
+<div class="view active">
+    <div class="view-head">
+        <div>
+            <h2>Site Content</h2>
+            <p class="sub">Edit the copy and assets shown across the public pages.</p>
+        </div>
+        <div class="view-actions">
+            <button type="submit" form="contentForm" class="btn btn-primary">Save all changes</button>
+        </div>
+    </div>
 
-    <form action="{{ route('admin.content.update') }}" method="POST" class="space-y-8">
+    <form id="contentForm" action="{{ route('admin.content.update') }}" method="POST">
         @csrf
         @method('PUT')
 
-        <!-- General Group -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h2 class="text-xl font-bold mb-4" style="color: #854208;">General Settings</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                @foreach($contents->where('group', 'general') as $content)
-                    <div>
-                        <label class="block text-sm font-semibold mb-2 text-gray-700">{{ $content->label }}</label>
-                        @if($content->type === 'image')
-                            <div class="space-y-2">
-                                @if($content->value)
-                                    <img src="{{ $content->value }}" alt="{{ $content->label }}" class="w-32 h-32 object-cover rounded-lg border border-gray-200">
-                                @endif
-                                <input type="text" name="content[{{ $content->key }}]" value="{{ old('content.' . $content->key, $content->value) }}" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="Image URL">
-                            </div>
-                        @elseif($content->type === 'html')
-                            <textarea name="content[{{ $content->key }}]" rows="4" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="{{ $content->label }}">{{ old('content.' . $content->key, $content->value) }}</textarea>
-                        @else
-                            <input type="text" name="content[{{ $content->key }}]" value="{{ old('content.' . $content->key, $content->value) }}" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="{{ $content->label }}">
-                        @endif
-                    </div>
+        <div class="settings-grid settings-grid-single">
+            <div class="settings-panel">
+                @foreach($contentGroups as $group => $label)
+                    @php $items = $contents->where('group', $group); @endphp
+                    @if($items->isNotEmpty())
+                        <div class="settings-section">
+                            <h4>{{ $label }}</h4>
+                        </div>
+                        <div class="form-row">
+                            @foreach($items as $content)
+                                <div class="field">
+                                    <label>{{ $content->label ?? ucwords(str_replace('_', ' ', $content->key)) }}</label>
+                                    @if($content->type === 'textarea')
+                                        <textarea name="content[{{ $content->key }}]" rows="3">{{ old('content.' . $content->key, $content->value) }}</textarea>
+                                    @elseif($content->type === 'html')
+                                        <textarea name="content[{{ $content->key }}]" rows="6" class="mono">{{ old('content.' . $content->key, $content->value) }}</textarea>
+                                    @elseif($content->type === 'image')
+                                        <div class="image-field">
+                                            @if($content->value)
+                                                <img src="{{ $content->value }}" alt="{{ $content->label }}" style="width:88px;height:88px;object-fit:cover;border-radius:10px;border:1px solid var(--line);margin-bottom:10px;">
+                                            @endif
+                                            <input type="text" name="content[{{ $content->key }}]" value="{{ old('content.' . $content->key, $content->value) }}" placeholder="Image URL">
+                                        </div>
+                                    @elseif($content->type === 'email')
+                                        <input type="email" name="content[{{ $content->key }}]" value="{{ old('content.' . $content->key, $content->value) }}">
+                                    @elseif($content->type === 'select')
+                                        <select name="content[{{ $content->key }}]">
+                                            @if($content->key === 'default_currency')
+                                                <option {{ $content->value === 'USD ($)' ? 'selected' : '' }}>USD ($)</option>
+                                                <option {{ $content->value === 'TZS (TSh)' ? 'selected' : '' }}>TZS (TSh)</option>
+                                                <option {{ $content->value === 'EUR (€)' ? 'selected' : '' }}>EUR (€)</option>
+                                            @elseif($content->key === 'timezone')
+                                                <option {{ $content->value === 'Africa/Dar es Salaam (EAT)' ? 'selected' : '' }}>Africa/Dar es Salaam (EAT)</option>
+                                                <option {{ $content->value === 'UTC' ? 'selected' : '' }}>UTC</option>
+                                            @endif
+                                        </select>
+                                    @else
+                                        <input type="text" name="content[{{ $content->key }}]" value="{{ old('content.' . $content->key, $content->value) }}">
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                 @endforeach
+
+                <div class="view-head" style="margin-top:28px;">
+                    <button type="submit" class="btn btn-primary">Save all changes</button>
+                </div>
             </div>
         </div>
-
-        <!-- Home Group -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h2 class="text-xl font-bold mb-4" style="color: #854208;">Home Page</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                @foreach($contents->where('group', 'home') as $content)
-                    <div>
-                        <label class="block text-sm font-semibold mb-2 text-gray-700">{{ $content->label }}</label>
-                        @if($content->type === 'image')
-                            <div class="space-y-2">
-                                @if($content->value)
-                                    <img src="{{ $content->value }}" alt="{{ $content->label }}" class="w-32 h-32 object-cover rounded-lg border border-gray-200">
-                                @endif
-                                <input type="text" name="content[{{ $content->key }}]" value="{{ old('content.' . $content->key, $content->value) }}" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="Image URL">
-                            </div>
-                        @elseif($content->type === 'html')
-                            <textarea name="content[{{ $content->key }}]" rows="4" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="{{ $content->label }}">{{ old('content.' . $content->key, $content->value) }}</textarea>
-                        @else
-                            <input type="text" name="content[{{ $content->key }}]" value="{{ old('content.' . $content->key, $content->value) }}" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="{{ $content->label }}">
-                        @endif
-                    </div>
-                @endforeach
-            </div>
-        </div>
-
-        <!-- About Group -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h2 class="text-xl font-bold mb-4" style="color: #854208;">About Page</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                @foreach($contents->where('group', 'about') as $content)
-                    <div>
-                        <label class="block text-sm font-semibold mb-2 text-gray-700">{{ $content->label }}</label>
-                        @if($content->type === 'image')
-                            <div class="space-y-2">
-                                @if($content->value)
-                                    <img src="{{ $content->value }}" alt="{{ $content->label }}" class="w-32 h-32 object-cover rounded-lg border border-gray-200">
-                                @endif
-                                <input type="text" name="content[{{ $content->key }}]" value="{{ old('content.' . $content->key, $content->value) }}" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="Image URL">
-                            </div>
-                        @elseif($content->type === 'html')
-                            <textarea name="content[{{ $content->key }}]" rows="4" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="{{ $content->label }}">{{ old('content.' . $content->key, $content->value) }}</textarea>
-                        @else
-                            <input type="text" name="content[{{ $content->key }}]" value="{{ old('content.' . $content->key, $content->value) }}" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="{{ $content->label }}">
-                        @endif
-                    </div>
-                @endforeach
-            </div>
-        </div>
-
-        <button type="submit" class="w-full md:w-auto px-8 py-3 rounded-full text-white font-semibold transition-all hover:opacity-90" style="background-color: #088529;">
-            Save All Changes
-        </button>
     </form>
+</div>
 @endsection

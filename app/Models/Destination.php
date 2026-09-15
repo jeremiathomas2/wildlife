@@ -7,7 +7,18 @@ use Illuminate\Support\Str;
 
 class Destination extends Model
 {
-    protected $fillable = ['name', 'slug', 'category', 'duration', 'price', 'price_adult', 'price_child', 'status', 'image', 'desc', 'long_description', 'includes', 'meta_title', 'meta_description', 'meta_keywords'];
+    protected $fillable = ['name', 'slug', 'category', 'duration', 'location', 'price', 'price_adult', 'price_child', 'rating', 'status', 'image', 'desc', 'long_description', 'includes', 'excluded', 'quick_facts', 'highlights', 'itinerary', 'faqs', 'gallery', 'meta_title', 'meta_description', 'meta_keywords'];
+
+    protected $casts = [
+        'includes' => 'array',
+        'excluded' => 'array',
+        'quick_facts' => 'array',
+        'highlights' => 'array',
+        'itinerary' => 'array',
+        'faqs' => 'array',
+        'gallery' => 'array',
+        'rating' => 'decimal:1',
+    ];
 
     protected static function boot()
     {

@@ -4,7 +4,7 @@
 @section('meta_title', 'Tanzania Safari Reviews - What Our Travelers Say')
 @section('meta_description', 'Read genuine Tanzania safari reviews from our travelers. See why people choose us for Serengeti safaris, Kilimanjaro treks, and Moshi day trips.')
 @section('meta_keywords', 'Tanzania safari reviews, Tanzania tour operator reviews, Serengeti safari reviews, Kilimanjaro climb reviews, Zanzibar tour reviews, customer testimonials Tanzania')
-@section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/v1782890322/safari-ngorongoro_j04gqg.jpg')
+@section('meta_image', 'https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890322/safari-ngorongoro_j04gqg.jpg')
 
 @section('structured_data')
 @php
@@ -30,166 +30,77 @@
         '@type' => 'ReviewPage',
         'name' => 'Tanzania Safari Reviews',
         'description' => 'Read genuine Tanzania safari reviews from our travelers',
-        'url' => 'https://www.tanzaniadailytoursandsafari.com/reviews',
+        'url' => url()->current(),
         'mainEntity' => $mainEntity,
     ];
-    $structuredData = '<script type="application/ld+json">' . json_encode($schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . '</script>';
 @endphp
-{!! $structuredData !!}
-
-@section('content')
-    <!-- Page Header -->
-    <section class="relative h-[40vh] min-h-[280px] flex items-end pb-16">
-        <div class="absolute inset-0">
-            <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890322/reviews-header_wnccc3.jpg" alt="Reviews" class="w-full h-full object-cover">
-            <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(26,18,8,0.4), rgba(99,30,8,0.8));"></div>
-        </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-6 w-full">
-            <nav class="text-xs mb-3" style="color: rgba(255,255,255,0.7);">
-                <a href="{{ route('home') }}" class="hover:text-white transition-colors">Home</a>
-                <span class="mx-2">/</span>
-                <span style="color: #ffffff;">Reviews</span>
-            </nav>
-            <h1 class="font-bold mb-2" style="font-family: 'Raleway', sans-serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #ffffff;">
-                {{ $contents['reviews_page_title']->value ?? 'Traveler Reviews' }}
-            </h1>
-            <div class="flex items-center gap-2">
-                <div class="flex">
-                    @for($i = 1; $i <= 5; $i++)
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" @if($i <= round($avgRating)) fill="#ff9729" stroke="#ff9729" @else fill="rgba(255,255,255,0.3)" stroke="rgba(255,255,255,0.3)" @endif>
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                        </svg>
-                    @endfor
-                </div>
-                <span class="text-sm font-bold" style="color: #ffffff;">{{ $reviewCount > 0 ? number_format($avgRating, 1) : '—' }}</span>
-                <span class="text-sm" style="color: rgba(255,255,255,0.7);">({{ $reviewCount }} reviews)</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Reviews Content -->
-    <section class="py-16 lg:py-20" style="background: #f8f4f0;">
-        <div class="max-w-7xl mx-auto px-6">
-            <!-- Filters -->
-            <div class="flex flex-wrap items-center gap-3 mb-10">
-                <button class="review-filter-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300" data-filter="all" style="background: #088529; color: #ffffff;">
-                    All
-                </button>
-                <button class="review-filter-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300" data-filter="serengeti" style="background: transparent; color: #854208; border: 1px solid #854208;">
-                    Serengeti
-                </button>
-                <button class="review-filter-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300" data-filter="kilimanjaro" style="background: transparent; color: #854208; border: 1px solid #854208;">
-                    Kilimanjaro
-                </button>
-                <button class="review-filter-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300" data-filter="day" style="background: transparent; color: #854208; border: 1px solid #854208;">
-                    Day Trips
-                </button>
-                <button class="review-filter-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300" data-filter="multi" style="background: transparent; color: #854208; border: 1px solid #854208;">
-                    Multi-Day
-                </button>
-            </div>
-
-            <!-- Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="reviews-grid">
-                @foreach($testimonials as $testimonial)
-                    <div class="review-card bg-white rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1" data-trip="{{ strtolower(str_replace(' ', '', $testimonial->tour)) }}" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
-                        <div class="flex items-center gap-1 mb-3">
-                            @for($i = 0; $i < ($testimonial->rating ?? 5); $i++)
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="#ff9729" stroke="#ff9729">
-                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                                </svg>
-                            @endfor
-                        </div>
-                        <p class="text-sm italic mb-4 leading-relaxed" style="font-family: 'Raleway', sans-serif; color: #111111;">
-                            "{{ $testimonial->text }}"
-                        </p>
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-bold" style="color: #854208;">{{ $testimonial->name }}</p>
-                                <p class="text-xs" style="color: #5a3e2b;">{{ $testimonial->tour }}</p>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
-            <!-- Submit Review CTA -->
-            <div class="mt-12 text-center">
-                <div class="bg-white rounded-2xl p-8 inline-block max-w-md" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
-                    <p class="text-base mb-4" style="color: #111111;">
-                        {{ $contents['reviews_cta_text']->value ?? 'Traveled with us? Share your experience!' }}
-                    </p>
-                    <button onclick="window.location.href='https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html'" class="px-8 py-3 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90" style="background: #088529;">
-                        {{ $contents['reviews_cta_button']->value ?? 'Write a Review' }}
-                    </button>
-                </div>
-            </div>
-
-            <!-- TripAdvisor Review Section -->
-            <div class="mt-16">
-                <div class="bg-white rounded-2xl p-8 text-center" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
-                    <div class="flex items-center justify-center gap-3 mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="#00af87">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="white"/>
-                        </svg>
-                        <h3 class="text-2xl font-bold" style="font-family: 'Raleway', sans-serif; color: #00af87;">TripAdvisor Reviews</h3>
-                    </div>
-                    <p class="text-base mb-6" style="color: #5a3e2b;">
-                        Share your experience on TripAdvisor and help other travelers discover Tanzania with us!
-                    </p>
-                    <div class="flex justify-center">
-                        <div id="TA_rated458" class="TA_rated">
-                            <ul id="OEQBtiJT1z9h" class="TA_links fjINTJ8nYkf">
-                                <li id="GLvFwnFD" class="0neu5M">
-                                    <a target="_blank" href="https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html">
-                                        <img src="https://www.tripadvisor.com/img/cdsi/img2/badges/ollie-11424-2.gif" alt="TripAdvisor" loading="lazy"/>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <script async src="https://www.jscache.com/wejs?wtype=rated&uniq=458&locationId=34526433&lang=en_US&display_version=2" data-loadtrk onload="this.loadtrk=true"></script>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<script type="application/ld+json">{!! json_encode($schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) !!}</script>
 @endsection
 
-@section('scripts')
-    <script>
-        const filterBtns = document.querySelectorAll('.review-filter-btn');
-        const cards = document.querySelectorAll('.review-card');
+@section('content')
 
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const filter = btn.dataset.filter;
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <img class="hero-bg" src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890322/reviews-header_wnccc3.jpg" alt="Traveler reviews" />
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ route('home') }}">Home</a>
+      <span>/</span>
+      <span>Reviews</span>
+    </nav>
+    <h1>{{ $contents['reviews_page_title']->value ?? 'TRAVELER REVIEWS' }}</h1>
+    <p class="hero-copy">
+      @for($i = 1; $i <= 5; $i++)
+        <i class="fas fa-star" style="color:var(--accent);{{ $i <= round($avgRating) ? '' : 'opacity:.35' }}"></i>
+      @endfor
+      {{ $reviewCount > 0 ? number_format($avgRating, 1) : '—' }}
+      <span style="color:rgba(255,255,255,.7);"> ({{ $reviewCount }} reviews)</span>
+    </p>
+  </div>
+</section>
 
-                // Update active button styles
-                filterBtns.forEach(b => {
-                    b.style.background = 'transparent';
-                    b.style.color = '#854208';
-                    b.style.border = '1px solid #854208';
-                });
-                btn.style.background = '#088529';
-                btn.style.color = '#ffffff';
-                btn.style.border = '1px solid #088529';
+<!-- REVIEWS SLIDER -->
+<section class="reviews page-section" id="reviews" style="padding-top:110px;">
+  <div class="container">
+    <div class="section-head light reveal">
+      <div class="eyebrow eyebrow-light">TRAVELER STORIES</div>
+      <h2 class="display-lg light">WHAT OUR GUESTS SAY</h2>
+    </div>
+    <div class="reviews-slider" id="reviewsSlider"></div>
+    <div class="review-dots" id="revDots" role="tablist" aria-label="Reviews"></div>
+    <div class="review-nav">
+      <button id="revPrev" aria-label="Previous review"><i class="fas fa-chevron-left"></i></button>
+      <button id="revNext" aria-label="Next review"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <p class="review-note" id="reviewsNote">Trusted by travelers worldwide.</p>
+  </div>
+</section>
 
-                // Filter cards
-                cards.forEach(card => {
-                    const trip = card.dataset.trip;
-                    if (filter === 'all' || 
-                        (filter === 'day' && (trip.includes('hot') || trip.includes('boma') || trip.includes('waterfall'))) ||
-                        (filter === 'multi' && (trip.includes('safari') || trip.includes('crater'))) ||
-                        trip.includes(filter)) {
-                        card.style.display = 'block';
-                        setTimeout(() => card.style.opacity = '1', 10);
-                    } else {
-                        card.style.opacity = '0';
-                        setTimeout(() => card.style.display = 'none', 300);
-                    }
-                });
-            });
-        });
-    </script>
+<!-- REVIEW CTA + TRIPADVISOR -->
+<section class="page-section alt" style="padding-top:70px;padding-bottom:90px;">
+  <div class="container">
+    <div class="page-detail-grid" style="grid-template-columns:1fr 1fr;gap:26px;">
+      <div class="detail-card reveal">
+        <h2><span class="mm">+</span>{{ $contents['reviews_cta_text']->value ?? 'Traveled with us? Share your experience!' }}</h2>
+        <p style="color:var(--muted);margin-bottom:22px;">Your story helps other travelers discover Tanzania with confidence.</p>
+        <a href="https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html" target="_blank" rel="noopener noreferrer" class="btn btn-primary">{{ $contents['reviews_cta_button']->value ?? 'Write a Review' }}</a>
+      </div>
+      <div class="detail-card reveal">
+        <h2 style="display:flex;align-items:center;gap:10px;"><span class="mm">★</span>TripAdvisor</h2>
+        <p style="color:var(--muted);margin-bottom:22px;">Share your experience on TripAdvisor and help travelers discover Tanzania with us.</p>
+        <div id="TA_rated458" class="TA_rated">
+          <ul id="OEQBtiJT1z9h" class="TA_links fjINTJ8nYkf" style="list-style:none;display:flex;gap:16px;align-items:center;">
+            <li id="GLvFwnFD" class="0neu5M">
+              <a target="_blank" href="https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html">
+                <img src="https://www.tripadvisor.com/img/cdsi/img2/badges/ollie-11424-2.gif" alt="TripAdvisor" loading="lazy" />
+              </a>
+            </li>
+          </ul>
+        </div>
+        <script async src="https://www.jscache.com/wejs?wtype=rated&uniq=458&locationId=34526433&lang=en_US&display_version=2" data-loadtrk onload="this.loadtrk=true"></script>
+      </div>
+    </div>
+  </div>
+</section>
+
 @endsection

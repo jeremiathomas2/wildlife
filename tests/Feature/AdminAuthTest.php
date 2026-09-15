@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\AdminUser;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class AdminAuthTest extends TestCase
 {
@@ -30,8 +30,8 @@ class AdminAuthTest extends TestCase
         ]);
 
         $response->assertRedirect(route('admin.dashboard'));
-        $this->assertSessionHas('admin_logged_in', true);
-        $this->assertSessionHas('admin_user_id', $admin->id);
+        $response->assertSessionHas('admin_logged_in', true);
+        $response->assertSessionHas('admin_user_id', $admin->id);
     }
 
     public function test_invalid_credentials_redirects_back(): void
@@ -44,7 +44,7 @@ class AdminAuthTest extends TestCase
         ]);
 
         $response->assertRedirect();
-        $this->assertSessionMissing('admin_logged_in');
+        $response->assertSessionMissing('admin_logged_in');
     }
 
     public function test_throttle_lockout_after_failed_attempts(): void

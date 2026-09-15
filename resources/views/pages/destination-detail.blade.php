@@ -1,363 +1,430 @@
 @extends('layouts.app')
 
-@section('title', (is_object($tour) ? ($tour->meta_title ?? $tour->name ?? 'Tanzania Safari') : ($tour['meta_title'] ?? $tour['name'] ?? 'Tanzania Safari')))
-@section('meta_title', (is_object($tour) ? ($tour->meta_title ?? $tour->name ?? 'Tanzania Safari') : ($tour['meta_title'] ?? $tour['name'] ?? 'Tanzania Safari')))
-@section('meta_description', (is_object($tour) ? ($tour->meta_description ?? \Illuminate\Support\Str::limit(strip_tags($tour->desc ?? ''), 150)) : ($tour['meta_description'] ?? \Illuminate\Support\Str::limit(strip_tags($tour['desc'] ?? ''), 150))))
-@section('meta_keywords', (is_object($tour) ? ($tour->meta_keywords ?? $tour->name ?? 'Tanzania safari') : ($tour['meta_keywords'] ?? $tour['name'] ?? 'Tanzania safari')))
-@section('meta_image', (is_object($tour) ? $tour->image ?? 'https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/safari-serengeti_agwjrp.jpg' : $tour['image'] ?? 'https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/safari-serengeti_agwjrp.jpg'))
+@php
+    $T = $tourData;
+    $TTitle = $T['title'] ?? 'Tanzania Safari';
+    $TDesc = \Illuminate\Support\Str::limit(strip_tags($T['overview'] ?? ''), 150);
+    $TImage = $T['image'] ?? 'https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/safari-serengeti_agwjrp.jpg';
+    $TCat = ucwords(str_replace('-', ' ', $T['category'] ?? 'tour'));
+    $adultPrice = (float) ($T['price'] ?? 0);
+    $childPrice = (float) (($T['db']['child'] ?? 0) ?: ($adultPrice / 2));
+    $hasBooking = (bool) ($tour ?? null);
+@endphp
+
+@section('title', $TTitle)
+@section('meta_title', $TTitle)
+@section('meta_description', $TDesc)
+@section('meta_keywords', $TTitle . ', Tanzania tour, Tanzania safari, ' . $TCat)
+@section('meta_image', $TImage)
 
 @section('structured_data')
 @php
-    $tourName = is_object($tour) ? ($tour->name ?? 'Tanzania Safari') : ($tour['name'] ?? 'Tanzania Safari');
-    $tourDesc = \Illuminate\Support\Str::limit(strip_tags(is_object($tour) ? ($tour->desc ?? '') : ($tour['desc'] ?? '')), 200);
-    $tourPrice = is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0);
-    $tourDuration = is_object($tour) ? ($tour->duration ?? '') : ($tour['duration'] ?? '');
-    $tourImage = is_object($tour) ? ($tour->image ?? '') : ($tour['image'] ?? '');
-    
-    $structuredData = '<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "TouristTrip",
-    "name": "' . addslashes($tourName) . '",
-    "description": "' . addslashes($tourDesc) . '",
-    "touristType": "Wildlife enthusiast",
-    "offers": {
-        "@type": "Offer",
-        "price": "' . $tourPrice . '",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-    },
-    "duration": "' . addslashes($tourDuration) . '",
-    "image": "' . $tourImage . '",
-    "provider": {
-        "@type": "TravelAgency",
-        "name": "Tanzania Daily Tours & Safari",
-        "url": "https://www.tanzaniadailytoursandsafari.com"
+    $reviewAggregate = count($T['reviews'] ?? []) > 0 ? [
+        '@type' => 'aggregateRating',
+        'ratingValue' => (string) ($T['rating'] ?? '5'),
+        'reviewCount' => (string) count($T['reviews'] ?? []),
+    ] : null;
+    $structuredData = [
+        '@context' => 'https://schema.org',
+        '@type' => 'TouristTrip',
+        'name' => $TTitle,
+        'description' => \Illuminate\Support\Str::limit(strip_tags($T['overview'] ?? ''), 200),
+        'touristType' => 'Wildlife enthusiast',
+        'duration' => $T['duration'] ?? '',
+        'image' => $TImage,
+        'provider' => [
+            '@type' => 'TravelAgency',
+            'name' => 'Tanzania Daily Tours & Safari',
+            'url' => 'https://www.tanzaniadailytoursandsafari.com',
+        ],
+    ];
+    if ($adultPrice > 0) {
+        $structuredData['offers'] = [
+            '@type' => 'Offer',
+            'price' => (string) $adultPrice,
+            'priceCurrency' => 'USD',
+            'availability' => 'https://schema.org/InStock',
+        ];
     }
-}
-</script>';
+    if ($reviewAggregate) {
+        $structuredData['aggregateRating'] = $reviewAggregate;
+    }
 @endphp
-{!! $structuredData !!}
+<script type="application/ld+json">
+{!! json_encode($structuredData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+</script>
+@endsection
 
 @section('content')
-    <!-- Hero -->
-    <section class="relative" style="height: 60vh; min-height: 400px;">
-        <img src="{{ is_object($tour) ? ($tour->image ?? '') : ($tour['image'] ?? '') }}" alt="{{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}" class="w-full h-full object-cover">
-        <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(17,17,17,0.7), transparent 60%);"></div>
-        <div class="absolute bottom-0 left-0 right-0 z-10 max-w-7xl mx-auto px-6 pb-10">
-            <a href="{{ route('destinations') }}" class="inline-flex items-center gap-2 mb-5 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-white hover:bg-opacity-25 hover:-translate-x-0.5" style="background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2); color: #ffffff; font-family: 'Raleway', sans-serif;">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 12H5"/>
-                    <path d="m12 19-7-7 7-7"/>
-                </svg>
-                {{ $contents['destination_back_text']->value ?? 'Back to Destinations' }}
-            </a>
-            <span class="inline-block px-3 py-0.5 rounded-full text-xs font-semibold text-white mb-3" style="background: #ff9729;">
-                {{ is_object($tour) ? ($tour->category ?? '') : ($tour['category'] ?? '') }}
-            </span>
-            <h1 class="font-bold" style="font-family: 'Raleway', sans-serif; font-size: clamp(1.8rem, 4vw, 3.5rem); color: #ffffff; line-height: 1.15;">
-                {{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}
-            </h1>
-            <div class="flex items-center gap-4 mt-3">
-                <div class="flex items-center gap-1.5 text-sm" style="color: rgba(255,255,255,0.8);">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <polyline points="12 6 12 12 16 14"/>
-                    </svg>
-                    {{ is_object($tour) ? ($tour->duration ?? '') : ($tour['duration'] ?? '') }}
-                </div>
-                <span class="text-sm font-bold" style="color: #ff9729;">From ${{ is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0) }}</span>
-            </div>
-        </div>
-    </section>
 
-    <!-- Content -->
-    <section class="py-12 lg:py-16" style="background: #f8f4f0;">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10">
-                <!-- Main Content -->
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <img class="hero-bg" src="{{ $TImage }}" alt="{{ $TTitle }}" />
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ route('home') }}">Home</a>
+      <span>/</span>
+      <a href="{{ route('destinations') }}">Destinations</a>
+      <span>/</span>
+      <span>{{ $TTitle }}</span>
+    </nav>
+    <span class="eyebrow eyebrow-light">{{ $TCat }}</span>
+    <h1>{{ $TTitle }}</h1>
+    <p class="hero-copy">
+      <i class="fas fa-map-marker-alt"></i> {{ $T['location'] ?? '' }}
+      &nbsp;•&nbsp; <i class="fas fa-clock"></i> {{ $T['duration'] ?? '' }}
+      @if($adultPrice > 0)
+        &nbsp;•&nbsp; <i class="fas fa-tag"></i> From <span data-price-currency>USD</span> {{ number_format($adultPrice, 2) }} per person
+      @else
+        &nbsp;•&nbsp; <i class="fas fa-tag"></i> Price on request
+      @endif
+    </p>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<section class="page-section" style="background:#f8f4f0;">
+  <div class="container">
+    <div class="page-detail-grid">
+      <!-- Main Content -->
+      <div class="main-col">
+
+        <div class="detail-card">
+          <h2><span class="mm">01</span>{{ $contents['destination_about_title']->value ?? 'About This Tour' }}</h2>
+          <div class="overview-grid">
+            <div class="tour-desc">
+              {!! $T['overview'] ?? '' !!}
+              <p>Every detail is handled by our local team — from pickup and guiding to meals, park fees and accommodation. This is a complete travel product, not just a short description.</p>
+            </div>
+            @if(count($T['quickFacts'] ?? []))
+            <div class="quick-facts">
+              <h4>Quick Facts</h4>
+              @foreach($T['quickFacts'] as $k => $v)
+                <div class="qf-item"><div class="qf-label">{{ $k }}</div><div class="qf-value">{{ $v }}</div></div>
+              @endforeach
+            </div>
+            @endif
+          </div>
+
+          @if(count($T['highlights'] ?? []))
+            <h2 style="margin-top:36px"><span class="mm">02</span> Highlights</h2>
+            <div class="highlights-grid">
+              @foreach($T['highlights'] as $h)
+                <div class="hl-item"><i class="fas {{ $h['icon'] }}"></i><span>{{ $h['text'] }}</span></div>
+              @endforeach
+            </div>
+          @endif
+        </div>
+
+        @if(count($T['itinerary'] ?? []))
+        <div class="detail-card">
+          <h2><span class="mm">03</span> Detailed Itinerary</h2>
+          <p style="color:var(--muted);margin-bottom:24px;">A moment-by-moment breakdown of your journey.</p>
+          <div class="itinerary">
+            @foreach($T['itinerary'] as $d)
+              <div class="itin-item">
+                <div class="itin-head">
+                  <span class="itin-label">{{ $d['label'] }}</span>
+                  <span class="itin-title">{{ $d['title'] }}</span>
+                </div>
+                <p class="itin-desc">{{ $d['desc'] }}</p>
+                <div class="itin-details">
+                  @if(!empty($d['activities']) && $d['activities'] !== '—')
+                    <span><i class="fas fa-binoculars"></i>{{ $d['activities'] }}</span>
+                  @endif
+                  @if(!empty($d['meals']) && $d['meals'] !== '—')
+                    <span><i class="fas fa-utensils"></i>{{ $d['meals'] }}</span>
+                  @endif
+                  @if(!empty($d['accommodation']) && $d['accommodation'] !== '—')
+                    <span><i class="fas fa-bed"></i>{{ $d['accommodation'] }}</span>
+                  @endif
+                </div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+        @endif
+
+        @if(count($T['included'] ?? []) || count($T['excluded'] ?? []))
+        <div class="detail-card">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+            @if(count($T['included'] ?? []))
+            <div class="inc-panel">
+              <h4>Included in Your Tour</h4>
+              <ul>
+                @foreach($T['included'] as $i)
+                  <li><i class="fas fa-check"></i>{{ $i }}</li>
+                @endforeach
+              </ul>
+            </div>
+            @endif
+            @if(count($T['excluded'] ?? []))
+            <div class="exc-panel">
+              <h4>Excluded from Your Tour</h4>
+              <ul>
+                @foreach($T['excluded'] as $i)
+                  <li><i class="fas fa-times"></i>{{ $i }}</li>
+                @endforeach
+              </ul>
+            </div>
+            @endif
+          </div>
+        </div>
+        @endif
+
+        @if(count($T['faqs'] ?? []))
+        <div class="detail-card">
+          <h2><span class="mm">04</span> Frequently Asked Questions</h2>
+          <div class="faq-list">
+            @foreach($T['faqs'] as $i => $f)
+              <div class="faq-item">
+                <div class="faq-q"><span class="faq-qmark" aria-hidden="true">Q</span><span>{{ $f['q'] }}</span></div>
+                <div class="faq-a"><span class="faq-amark" aria-hidden="true">A</span><p>{{ $f['a'] }}</p></div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+        @endif
+
+        @if(count($T['gallery'] ?? []))
+        <div class="detail-card">
+          <h2><span class="mm">05</span> Gallery</h2>
+          <div class="tour-gallery">
+            @foreach($T['gallery'] as $i => $src)
+              <div class="gal-item" data-lb="{{ $i }}" data-src="{{ $src }}" data-caption="{{ $TTitle }} — photo {{ $i + 1 }}" role="button" tabindex="0" aria-label="Open image: {{ $TTitle }} photo {{ $i + 1 }}">
+                <img src="{{ $src }}" alt="{{ $TTitle }} gallery {{ $i + 1 }}" loading="lazy" />
+                <div class="gal-overlay"><i class="fas fa-search-plus"></i></div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+        @endif
+
+        @if(count($T['reviews'] ?? []))
+        <div class="detail-card">
+          <h2><span class="mm">06</span> Traveler Reviews</h2>
+          @foreach($T['reviews'] as $r)
+            <div style="background:var(--light);padding:24px;border-left:4px solid var(--accent);border-radius:4px;margin-bottom:14px">
+              <div style="color:var(--accent);letter-spacing:4px;margin-bottom:10px">★★★★★</div>
+              <p style="font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:12px">"{{ $r['text'] }}"</p>
+              <div style="font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--primary)">{{ $r['author'] }}
+                <span style="color:var(--muted);font-weight:500"> • {{ $r['country'] }}</span>
+              </div>
+            </div>
+          @endforeach
+        </div>
+        @endif
+
+        <!-- Related Tours -->
+        @if(count($relatedTours))
+        <div class="detail-card">
+          <h2><span class="mm">07</span>{{ $contents['destination_related_title']->value ?? 'You May Also Like' }}</h2>
+          <div class="related-list">
+            @foreach($relatedTours as $related)
+              <a href="{{ route('destination.detail', $related['slug']) }}" class="related-row">
+                <img src="{{ $related['image'] }}" alt="{{ $related['title'] }}" loading="lazy" />
                 <div>
-                    <div class="bg-white rounded-2xl p-6 lg:p-8 mb-8" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
-                        <h2 class="font-bold text-xl mb-4" style="font-family: 'Raleway', sans-serif; color: #854208;">
-                            {{ $contents['destination_about_title']->value ?? 'About This Tour' }}
-                        </h2>
-                        <div class="text-base leading-relaxed" style="color: #111111; text-align: justify;">
-                            {!! nl2br(e(is_object($tour) ? ($tour->desc ?? '') : ($tour['desc'] ?? ''))) !!}
-                        </div>
-                    </div>
-
-                    <!-- Related Tours -->
-                    @if((is_object($relatedTours) ? $relatedTours->count() : count($relatedTours)) > 0)
-                        <div class="bg-white rounded-2xl p-6 lg:p-8" style="box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
-                            <h2 class="font-bold text-xl mb-4" style="font-family: 'Raleway', sans-serif; color: #854208;">
-                                {{ $contents['destination_related_title']->value ?? 'You May Also Like' }}
-                            </h2>
-                            <div class="space-y-4">
-                                @foreach($relatedTours as $related)
-                                    <a href="{{ route('destination.detail', is_object($related) ? ($related->slug ?? Str::slug($related->name ?? '')) : ($related['slug'] ?? Str::slug($related['name'] ?? ''))) }}" class="flex items-center gap-4 group:">
-                                        <div class="w-20 h-14 rounded-lg overflow-hidden flex-shrink-0">
-                                            <img src="{{ is_object($related) ? ($related->image ?? '') : ($related['image'] ?? '') }}" alt="{{ is_object($related) ? ($related->name ?? '') : ($related['name'] ?? '') }}" class="w-full h-full object-cover" loading="lazy">
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-sm group-hover:underline" style="color: #854208;">
-                                                {{ is_object($related) ? ($related->name ?? '') : ($related['name'] ?? '') }}
-                                            </h4>
-                                            <p class="text-xs" style="color: #5a3e2b;">{{ is_object($related) ? ($related->duration ?? '') : ($related['duration'] ?? '') }} • From ${{ is_object($related) ? ($related->price_adult ?? $related->price ?? 0) : ($related['price_adult'] ?? $related['price'] ?? 0) }}</p>
-                                        </div>
-                                    </a>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
+                  <h4>{{ $related['title'] }}</h4>
+                  <p>{{ $related['duration'] }} • {{ $related['price'] > 0 ? 'From $' . number_format($related['price'], 2) : 'Price on request' }}</p>
                 </div>
-
-                <!-- Sidebar - Booking Card -->
-                <div class="lg:sticky lg:top-24 self-start">
-                    @if(session('success'))
-                        <div class="mb-4 p-4 rounded-lg text-sm" style="background-color: rgba(8, 133, 41, 0.1); color: #088529;">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
-                    <div class="bg-white rounded-2xl p-6 lg:p-8" style="box-shadow: 0 8px 32px rgba(0,0,0,0.08);">
-                        <h3 class="font-bold text-lg mb-5" style="font-family: 'Raleway', sans-serif; color: #854208;">
-                            Book This Tour
-                        </h3>
-
-                        <form id="booking-form" method="POST" action="{{ route('bookings.store') }}">
-                            @csrf
-                            <input type="hidden" name="destination_id" value="{{ is_object($tour) ? $tour->id : ($tour['id'] ?? '') }}">
-                            <input type="hidden" name="tour_name" value="{{ is_object($tour) ? ($tour->name ?? '') : ($tour['name'] ?? '') }}">
-                            <input type="hidden" name="phone_number" id="phone-number-hidden">
-
-                            <div class="space-y-4 mb-6">
-                                <!-- Name -->
-                                <div>
-                                    <label class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">
-                                        Full Name
-                                    </label>
-                                    <input type="text" name="name" id="name-input" required class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="John Doe">
-                                </div>
-                                <!-- Currency Selector -->
-                                <div>
-                                    <label class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">
-                                        Currency
-                                    </label>
-                                    <select id="currency-selector" name="currency" onchange="updatePrice()" class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;">
-                                        @foreach(\App\Helpers\CurrencyHelper::$exchangeRates as $code => $rate)
-                                            <option value="{{ $code }}" data-symbol="{{ \App\Helpers\CurrencyHelper::$currencySymbols[$code] }}" data-rate="{{ $rate }}" {{ $code === 'USD' ? 'selected' : '' }}>{{ $code }} ({{ \App\Helpers\CurrencyHelper::$currencySymbols[$code] }})</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <!-- Travel Date -->
-                                <div>
-                                    <label class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">
-                                        Travel Date
-                                    </label>
-                                    <input type="date" name="travel_date" id="travel-date" required class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;">
-                                </div>
-
-                                <!-- Adults -->
-                                <div>
-                                    <label class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">
-                                        Adults
-                                    </label>
-                                    <input type="number" name="adults" id="adults-input" min="1" value="1" onchange="updatePrice()" oninput="updatePrice()" required class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;">
-                                </div>
-
-                                <!-- Children -->
-                                <div>
-                                    <label class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">
-                                        Children (Optional)
-                                    </label>
-                                    <input type="number" name="children" id="children-input" min="0" value="0" onchange="updatePrice()" oninput="updatePrice()" class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;">
-                                </div>
-
-                                <!-- Email -->
-                                <div>
-                                    <label class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">
-                                        Email
-                                    </label>
-                                    <input type="email" name="email" id="email-input" required class="w-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="your@email.com">
-                                </div>
-
-                                <!-- Phone Number -->
-                                <div>
-                                <label class="block text-xs font-semibold mb-1.5" style="color: #5a3e2b;">
-                                    Phone Number <span class="text-red-500">*</span>
-                                </label>
-                                <div class="flex gap-2 w-full items-stretch">
-                                    <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg border flex-shrink-0" style="border-color: rgba(133,66,8,0.2); min-width: 160px; max-width: 200px;">
-                                        <span id="country-flag" class="text-2xl flex-shrink-0">🇹🇿</span>
-                                        <select id="country-code-selector" name="country_code" onchange="updateFlagAndPhonePrefix()" class="bg-transparent text-sm focus:outline-none truncate" style="color: #111111; max-width: 120px;">
-                                            @foreach(\App\Helpers\CountryHelper::getCountries() as $country)
-                                            <option value="{{ $country['code'] }}" data-flag="{{ $country['flag'] }}" {{ $country['code'] === '+255' ? 'selected' : '' }}>{{ $country['name'] }} ({{ $country['code'] }})</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="flex-1 min-w-0">
-                                        <input type="tel" name="phone_local" id="phone-local-input" required class="w-full h-full px-4 py-2.5 rounded-lg text-sm border focus:outline-none focus:ring-2" style="border-color: rgba(133,66,8,0.2); color: #111111;" placeholder="712 345 678" pattern="[0-9\s\-\(\)]+" oninput="detectCountryCode(); updateFullPhoneDisplay()">
-                                    </div>
-                                </div>
-                                <div class="mt-1 text-xs" style="color: #5a3e2b;">
-                                    Full number: <span id="full-phone-display" class="font-semibold">+255 </span>
-                                </div>
-                            </div>
-                            </div>
-
-                            @php
-                                $adultPrice = is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0);
-                                $childPrice = is_object($tour) ? ($tour->price_child ?? ($adultPrice / 2)) : ($tour['price_child'] ?? ($adultPrice / 2));
-                            @endphp
-                            <div class="border-t pt-4 mb-6 space-y-2" style="border-color: rgba(133,66,8,0.1);">
-                                <div class="flex justify-between text-sm">
-                                    <span style="color: #5a3e2b;">Price per adult</span>
-                                    <span id="price-per-person" style="color: #111111;">${{ number_format($adultPrice, 2) }}</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span style="color: #5a3e2b;">Price per child</span>
-                                    <span id="price-per-child" style="color: #111111;">${{ number_format($childPrice, 2) }}</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span style="color: #5a3e2b;">Adults</span>
-                                    <span id="adults-count" style="color: #111111;">1</span>
-                                </div>
-                                <div id="children-row" class="flex justify-between text-sm hidden">
-                                    <span style="color: #5a3e2b;">Children</span>
-                                    <span id="children-count" style="color: #111111;">0</span>
-                                </div>
-                                <div class="flex justify-between text-base font-bold pt-2 border-t" style="border-color: rgba(133,66,8,0.1);">
-                                    <span style="color: #854208;">Total</span>
-                                    <span id="total-price" style="color: #088529;">${{ number_format($adultPrice, 2) }}</span>
-                                </div>
-                            </div>
-
-                            <button type="submit" class="w-full py-3.5 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90 shadow-lg" style="background: #088529;">
-                                Book Now - Secure Your Spot
-                            </button>
-
-                            <!-- Trust Signals -->
-                            <div class="mt-4 space-y-2">
-                                <div class="flex items-center gap-2 text-xs" style="color: #5a3e2b;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#088529" stroke-width="2">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                        <polyline points="22 4 12 14.01 9 11.01"/>
-                                    </svg>
-                                    <span>Instant confirmation</span>
-                                </div>
-                                <div class="flex items-center gap-2 text-xs" style="color: #5a3e2b;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#088529" stroke-width="2">
-                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                                    </svg>
-                                    <span>Free cancellation up to 24 hours</span>
-                                </div>
-                                <div class="flex items-center gap-2 text-xs" style="color: #5a3e2b;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#088529" stroke-width="2">
-                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                    </svg>
-                                    <span>4.8/5 customer rating</span>
-                                </div>
-                            </div>
-
-                            @php
-                                $paymentsEnabled = \App\Services\PaymentSettings::isEnabled();
-                                $depositPct = $paymentsEnabled ? \App\Services\PaymentSettings::depositPercentage() : 0;
-                            @endphp
-                            @if($paymentsEnabled)
-                            <div id="online-payment-box" class="mt-4 rounded-xl p-4" style="background-color: rgba(8,133,41,0.06); border: 1px solid rgba(8,133,41,0.15);">
-                                <div class="flex items-center gap-2 text-xs font-bold mb-1" style="color: #088529;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="2" y="5" width="20" height="14" rx="2"/>
-                                        <line x1="2" y1="10" x2="22" y2="10"/>
-                                    </svg>
-                                    Secure online payment
-                                </div>
-                                <p class="text-xs leading-relaxed" style="color: #5a3e2b;">
-                                    After booking you'll be redirected to a secure PesaPal checkout.
-                                    @if($depositPct > 0 && $depositPct < 100)
-                                        A deposit of <strong>{{ $depositPct }}%</strong> is due now
-                                        <span id="deposit-amount" style="color:#854208;"></span>;
-                                        the balance is arranged before travel.
-                                    @endif
-                                </p>
-                            </div>
-                            <div id="unsupported-currency-box" class="mt-4 rounded-xl p-4" style="display:none; background-color: rgba(255,151,41,0.10); border: 1px solid rgba(255,151,41,0.35);">
-                                <div class="flex items-center gap-2 text-xs font-bold mb-1" style="color: #b25e00;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/>
-                                        <line x1="12" y1="9" x2="12" y2="13"/>
-                                        <line x1="12" y1="17" x2="12.01" y2="17"/>
-                                    </svg>
-                                    Online checkout unavailable in this currency
-                                </div>
-                                <p class="text-xs leading-relaxed" style="color: #5a3e2b;">
-                                    Online checkout isn't available in <strong id="unsupported-currency-name"></strong>.
-                                    Please pay by <strong>bank transfer or mobile money</strong>, or
-                                    <a href="{{ route('contact') }}" style="color: #854208; font-weight: 700; text-decoration: underline;">contact our support</a>
-                                    and we'll arrange it for you.
-                                </p>
-                            </div>
-                            @endif
-
-                            <p class="text-center mt-4">
-                                <a href="{{ route('contact') }}" class="text-xs font-semibold transition-colors hover:underline flex items-center justify-center gap-1" style="color: #ff9729;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-                                    </svg>
-                                    Need help? Contact us
-                                </a>
-                            </p>
-
-                    </div>
-                </div>
-            </div>
+              </a>
+            @endforeach
+          </div>
         </div>
-    </section>
+        @endif
+      </div>
+
+      <!-- Sidebar - Booking Card -->
+      <aside class="book-sidebar">
+        @if(session('success'))
+          <div class="alert-box">{{ session('success') }}</div>
+        @endif
+
+        @if($hasBooking)
+        <h3>Book This Tour</h3>
+        <form id="booking-form" method="POST" action="{{ route('bookings.store') }}">
+          @csrf
+          <input type="hidden" name="destination_id" value="{{ $tour->id }}">
+          <input type="hidden" name="tour_name" value="{{ $TTitle }}">
+          <input type="hidden" name="phone_number" id="phone-number-hidden">
+
+          <div class="form-group-sm">
+            <label class="field-sm" for="name-input">Full Name</label>
+            <input type="text" name="name" id="name-input" required class="form-control" placeholder="John Doe">
+          </div>
+
+          <div class="form-group-sm">
+            <label class="field-sm" for="currency-selector">Currency</label>
+            <select id="currency-selector" name="currency" onchange="updatePrice()" class="form-control">
+              @foreach(\App\Helpers\CurrencyHelper::$exchangeRates as $code => $rate)
+                <option value="{{ $code }}" data-symbol="{{ \App\Helpers\CurrencyHelper::$currencySymbols[$code] }}" data-rate="{{ $rate }}" {{ $code === 'USD' ? 'selected' : '' }}>{{ $code }} ({{ \App\Helpers\CurrencyHelper::$currencySymbols[$code] }})</option>
+              @endforeach
+            </select>
+          </div>
+
+          <div class="form-group-sm">
+            <label class="field-sm" for="travel-date">Travel Date</label>
+            <input type="date" name="travel_date" id="travel-date" required class="form-control" min="{{ date('Y-m-d') }}">
+          </div>
+
+          <div class="form-group-sm">
+            <label class="field-sm" for="adults-input">Adults</label>
+            <input type="number" name="adults" id="adults-input" min="1" value="1" onchange="updatePrice()" oninput="updatePrice()" required class="form-control">
+          </div>
+
+          <div class="form-group-sm">
+            <label class="field-sm" for="children-input">Children (Optional)</label>
+            <input type="number" name="children" id="children-input" min="0" value="0" onchange="updatePrice()" oninput="updatePrice()" class="form-control">
+          </div>
+
+          <div class="form-group-sm">
+            <label class="field-sm" for="email-input">Email</label>
+            <input type="email" name="email" id="email-input" required class="form-control" placeholder="your@email.com">
+          </div>
+
+          <div class="form-group-sm">
+            <label class="field-sm" for="phone-local-input">Phone Number *</label>
+            <div class="phone-row">
+              <div class="phone-cc">
+                <span id="country-flag" class="text-2xl">🇹🇿</span>
+                <select id="country-code-selector" name="country_code" onchange="updateFlagAndPhonePrefix()">
+                  @foreach(\App\Helpers\CountryHelper::getCountries() as $country)
+                    <option value="{{ $country['code'] }}" data-flag="{{ $country['flag'] }}" {{ $country['code'] === '+255' ? 'selected' : '' }}>{{ $country['name'] }} ({{ $country['code'] }})</option>
+                  @endforeach
+                </select>
+              </div>
+              <input type="tel" name="phone_local" id="phone-local-input" required class="form-control" placeholder="712 345 678" pattern="[0-9\s\-\(\)]+" oninput="detectCountryCode(); updateFullPhoneDisplay()">
+            </div>
+            <div class="mt-1 text-xs" style="color:#6b5643;font-size:.75rem;margin-top:6px;">
+              Full number: <span id="full-phone-display" style="font-weight:700;color:#91400f;">+255 </span>
+            </div>
+          </div>
+
+          <div class="price-break"><span>Price per adult</span><span id="price-per-person">${{ number_format($adultPrice, 2) }}</span></div>
+          <div class="price-break"><span>Price per child</span><span id="price-per-child">${{ number_format($childPrice, 2) }}</span></div>
+          <div class="price-break"><span>Adults</span><span id="adults-count">1</span></div>
+          <div id="children-row" class="price-break" style="display:none;"><span>Children</span><span id="children-count">0</span></div>
+          <div class="price-total"><span>Total</span><span id="total-price">${{ number_format($adultPrice, 2) }}</span></div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;margin-top:20px;">Book Now — Secure Your Spot</button>
+
+          <ul class="trust-list">
+            <li><i class="fas fa-check-circle"></i> Instant confirmation</li>
+            <li><i class="fas fa-shield-halved"></i> Free cancellation up to 24 hours</li>
+            <li><i class="fas fa-star"></i> 4.8/5 customer rating</li>
+          </ul>
+
+          @php
+            $paymentsEnabled = \App\Services\PaymentSettings::isEnabled();
+            $depositPct = $paymentsEnabled ? \App\Services\PaymentSettings::depositPercentage() : 0;
+            $checkoutCurrency = in_array($tour->currency ?? '', ['TZS','KES','UGX','RWF','BIF','USD','EUR','GBP','ZAR','NGN','GHS','CAD','AUD'])
+                ? ($tour->currency ?? 'USD') : (\App\Services\PaymentSettings::currency() ?: 'USD');
+          @endphp
+          @if($paymentsEnabled)
+            <div class="pay-box" id="online-payment-box">
+              <div class="pay-title"><i class="fas fa-credit-card"></i> Secure online payment</div>
+              <p>After booking you'll be redirected to a secure PesaPal checkout.
+                @if($depositPct > 0 && $depositPct < 100)
+                  A deposit of <strong>{{ $depositPct }}%</strong> is due now <span id="deposit-amount" style="color:#91400f;"></span>; the balance is arranged before travel.
+                @endif
+              </p>
+            </div>
+            <div class="warn-box" id="unsupported-currency-box">
+              <div class="pay-title" style="color:#b25e00;"><i class="fas fa-triangle-exclamation"></i> Online checkout in a different currency</div>
+              <p>Online checkout isn't available in <strong id="unsupported-currency-name"></strong>. You'll be charged in <strong>{{ $checkoutCurrency }}</strong> at today's rate, paid by card, bank transfer or mobile money.</p>
+            </div>
+          @endif
+
+          <div class="need-help">
+            <a href="{{ route('contact') }}"><i class="fas fa-comments"></i> Need help? Contact us</a>
+          </div>
+        </form>
+        @else
+        <h3>Enquire About This Tour</h3>
+        <p class="enquire-note">This experience is arranged on request. Send us your details and we'll reply within 24 hours with a personalised itinerary and quote.</p>
+        <form method="POST" action="{{ route('contact.submit') }}" novalidate>
+          @csrf
+          <input type="hidden" name="interest" value="{{ $TTitle }}">
+          <div class="form-group-sm">
+            <label class="field-sm" for="enq-name">Full Name</label>
+            <input type="text" id="enq-name" name="name" required class="form-control" placeholder="John Doe">
+          </div>
+          <div class="form-group-sm">
+            <label class="field-sm" for="enq-email">Email</label>
+            <input type="email" id="enq-email" name="email" required class="form-control" placeholder="your@email.com">
+          </div>
+          <div class="form-group-sm">
+            <label class="field-sm" for="enq-phone">Phone / WhatsApp</label>
+            <input type="tel" id="enq-phone" name="phone" class="form-control" placeholder="+255 712 345 678">
+          </div>
+          <div class="form-group-sm">
+            <label class="field-sm" for="enq-date">Travel Date</label>
+            <input type="date" id="enq-date" name="travel_date" class="form-control" min="{{ date('Y-m-d') }}">
+          </div>
+          <div class="form-group-sm">
+            <label class="field-sm" for="enq-adults">Adults</label>
+            <input type="number" id="enq-adults" name="adults" min="1" value="1" class="form-control">
+          </div>
+          <div class="form-group-sm">
+            <label class="field-sm" for="enq-children">Children</label>
+            <input type="number" id="enq-children" name="children" min="0" value="0" class="form-control">
+          </div>
+          <input type="hidden" name="message" id="enq-message">
+          <button type="submit" class="btn btn-primary" style="width:100%;margin-top:20px;">Request Itinerary & Quote</button>
+          <ul class="trust-list">
+            <li><i class="fas fa-check-circle"></i> Reply within 24 hours</li>
+            <li><i class="fas fa-user-tie"></i> Personal safari consultant</li>
+            <li><i class="fas fa-star"></i> 4.8/5 customer rating</li>
+          </ul>
+        </form>
+        @endif
+      </aside>
+    </div>
+  </div>
+</section>
 @endsection
 
 @section('scripts')
+    @if($hasBooking)
     <script>
-        const basePriceUSD = {{ is_object($tour) ? ($tour->price_adult ?? $tour->price ?? 0) : ($tour['price_adult'] ?? $tour['price'] ?? 0) }};
-        const baseChildPriceUSD = {{ is_object($tour) ? ($tour->price_child ?? (($tour->price_adult ?? $tour->price ?? 0) / 2)) : ($tour['price_child'] ?? (($tour['price_adult'] ?? $tour['price'] ?? 0) / 2)) }};
+        const basePriceUSD = {{ $adultPrice }};
+        const baseChildPriceUSD = {{ $childPrice }};
         const pesapalCurrencies = @json(\App\Services\PesaPalService::SUPPORTED_CURRENCIES);
+        const checkoutCurrency = @json($checkoutCurrency);
         const depositPercent = @json($depositPct);
-        
+
         function updatePrice() {
-            // Get selected currency
             const currencySelect = document.getElementById('currency-selector');
             const selectedOption = currencySelect.options[currencySelect.selectedIndex];
             const currencyCode = currencySelect.value;
             const symbol = selectedOption.dataset.symbol;
-            const rate = parseFloat(selectedOption.dataset.rate);
-            
-            // Get number of adults and children
+            const rate = parseFloat(selectedOption.dataset.rate) || 1;
+
             const adults = Math.max(1, parseInt(document.getElementById('adults-input').value) || 1);
             const children = Math.max(0, parseInt(document.getElementById('children-input').value) || 0);
-            
-            // Calculate prices
-            const pricePerPerson = (basePriceUSD * rate);
-            const pricePerChild = (baseChildPriceUSD * rate);
+
+            const pricePerPerson = (parseFloat(basePriceUSD) * rate);
+            const pricePerChild = (parseFloat(baseChildPriceUSD) * rate);
             const adultTotal = pricePerPerson * adults;
             const childTotal = pricePerChild * children;
             const totalPrice = (adultTotal + childTotal).toFixed(2);
-            
-            // Update UI
+
             document.getElementById('price-per-person').textContent = `${symbol}${pricePerPerson.toFixed(2)}`;
             document.getElementById('price-per-child').textContent = `${symbol}${pricePerChild.toFixed(2)}`;
             document.getElementById('adults-count').textContent = adults;
             document.getElementById('total-price').textContent = `${symbol}${totalPrice}`;
-            
-            // Show/hide children row
+
             const childrenRow = document.getElementById('children-row');
             if (children > 0) {
-                childrenRow.classList.remove('hidden');
+                childrenRow.style.display = 'flex';
                 document.getElementById('children-count').textContent = children;
             } else {
-                childrenRow.classList.add('hidden');
+                childrenRow.style.display = 'none';
             }
 
-            // Toggle online-payment vs unsupported-currency messages
+            const priceCur = document.querySelector('[data-price-currency]');
+            if (priceCur) priceCur.textContent = currencyCode;
+
             const paymentBox = document.getElementById('online-payment-box');
             const unsupportedBox = document.getElementById('unsupported-currency-box');
             if (!paymentBox || !unsupportedBox) return;
@@ -379,8 +446,7 @@
 
         function updateFlagAndPhonePrefix() {
             const countrySelect = document.getElementById('country-code-selector');
-            const selectedOption = countrySelect.options[countrySelect.selectedIndex];
-            const flag = selectedOption.dataset.flag;
+            const flag = countrySelect.options[countrySelect.selectedIndex].dataset.flag;
             document.getElementById('country-flag').textContent = flag;
             updateFullPhoneDisplay();
         }
@@ -388,54 +454,64 @@
         function updateFullPhoneDisplay() {
             const countryCode = document.getElementById('country-code-selector').value;
             const phoneLocal = document.getElementById('phone-local-input').value.trim();
-            const fullPhoneDisplay = document.getElementById('full-phone-display');
-            fullPhoneDisplay.textContent = countryCode + ' ' + phoneLocal;
+            document.getElementById('full-phone-display').textContent = countryCode + ' ' + phoneLocal;
         }
 
         function detectCountryCode() {
             const phoneLocalInput = document.getElementById('phone-local-input');
             const phoneLocalValue = phoneLocalInput.value;
             const countrySelect = document.getElementById('country-code-selector');
-            
-            // Check if starts with +
+
             if (phoneLocalValue.startsWith('+')) {
-                // Extract the numeric part after +
                 let codePart = phoneLocalValue.substring(1);
-                
-                // Try to match the longest possible country code first
-                // Sort options by code length descending
-                const sortedOptions = Array.from(countrySelect.options).sort((a, b) => 
-                    b.value.length - a.value.length);
-                
+                const sortedOptions = Array.from(countrySelect.options).sort((a, b) => b.value.length - a.value.length);
                 for (let option of sortedOptions) {
                     const optionCode = option.value.replace('+', '');
                     if (codePart.startsWith(optionCode)) {
-                        // Match found!
                         countrySelect.value = option.value;
                         updateFlagAndPhonePrefix();
-                        
-                        // Remove the country code from the phone input, keeping the rest
-                        const remainingDigits = codePart.substring(optionCode.length);
-                        phoneLocalInput.value = remainingDigits.trim();
+                        phoneLocalInput.value = codePart.substring(optionCode.length).trim();
                         break;
                     }
                 }
             }
-            
-            // Update full phone display after any changes
             updateFullPhoneDisplay();
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const saved = localStorage.getItem('tdts_currency');
+                if (saved) {
+                    const sel = document.getElementById('currency-selector');
+                    if (sel.querySelector('option[value="' + saved + '"]')) sel.value = saved;
+                }
+            } catch (e) { /* noop */ }
             updatePrice();
-            const bookingForm = document.getElementById('booking-form');
-            
-            bookingForm.addEventListener('submit', function(e) {
+            document.getElementById('booking-form').addEventListener('submit', function(e) {
                 const countryCode = document.getElementById('country-code-selector').value;
                 const phoneLocal = document.getElementById('phone-local-input').value.trim();
-                const fullPhoneNumber = countryCode + phoneLocal;
-                document.getElementById('phone-number-hidden').value = fullPhoneNumber;
+                document.getElementById('phone-number-hidden').value = countryCode + phoneLocal;
             });
         });
     </script>
+    @else
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('.book-sidebar form');
+            if (!form) return;
+            form.addEventListener('submit', function() {
+                const date = document.getElementById('enq-date').value;
+                const adults = document.getElementById('enq-adults').value;
+                const children = document.getElementById('enq-children').value;
+                const phone = document.getElementById('enq-phone').value.trim();
+                const title = (form.querySelector('input[name="interest"]').value || '').trim();
+                document.getElementById('enq-message').value =
+                    'Booking request for ' + title + '.' +
+                    (date ? ' Travel date: ' + date + '.' : '') +
+                    ' Adults: ' + adults + ', Children: ' + children + '.' +
+                    (phone ? ' Phone: ' + phone + '.' : '');
+            });
+        });
+    </script>
+    @endif
 @endsection

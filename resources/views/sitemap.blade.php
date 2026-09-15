@@ -19,6 +19,50 @@
         <priority>0.9</priority>
     </url>
 
+    <!-- Tours Page -->
+    <url>
+        <loc>{{ url('/tours') }}</loc>
+        <lastmod>{{ now()->format('Y-m-d') }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Tour Category Pages -->
+    @foreach(\App\Support\SafariContent::tourCategories() as $catSlug => $catPage)
+    <url>
+        <loc>{{ url('/tours/' . $catSlug) }}</loc>
+        <lastmod>{{ now()->format('Y-m-d') }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    @endforeach
+
+    <!-- Safaris Page -->
+    <url>
+        <loc>{{ url('/safaris') }}</loc>
+        <lastmod>{{ now()->format('Y-m-d') }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Safari Style Pages -->
+    @foreach(\App\Support\SafariContent::safariStyles() as $styleSlug => $stylePage)
+    <url>
+        <loc>{{ url('/safaris/' . $styleSlug) }}</loc>
+        <lastmod>{{ now()->format('Y-m-d') }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    @endforeach
+
+    <!-- Travel Guide Page -->
+    <url>
+        <loc>{{ url('/travel-guide') }}</loc>
+        <lastmod>{{ now()->format('Y-m-d') }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
     <!-- About Page -->
     <url>
         <loc>{{ url('/about') }}</loc>
