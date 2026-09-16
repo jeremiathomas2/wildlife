@@ -3,7 +3,7 @@
     $homeHref = $isHome ? '#hero' : route('home');
     $toursHref = $isHome ? '#tours' : route('tours.index');
     $safariHref = $isHome ? '#tours' : route('safaris');
-    $destHref = $isHome ? '#destinations' : route('destinations');
+    $destHref = route('destinations');
     $aboutHref = $isHome ? '#about' : route('about');
     $reviewsHref = $isHome ? '#reviews' : route('reviews');
     $galleryHref = $isHome ? '#gallery' : route('gallery');
@@ -78,7 +78,7 @@
           </div>
         </li>
         <li>
-          <a href="{{ $destHref }}" {{ $isHome ? 'data-spy="destinations"' : '' }}>DESTINATIONS</a>
+          <a href="{{ $destHref }}">DESTINATIONS</a>
         </li>
         <li><a href="{{ $aboutHref }}" {{ $isHome ? 'data-spy="about"' : '' }}>ABOUT</a></li>
         <li><a href="{{ $reviewsHref }}" {{ $isHome ? 'data-spy="reviews"' : '' }}>REVIEWS</a></li>
