@@ -25,7 +25,7 @@
 
 <!-- PAGE HERO -->
 <section class="page-hero">
-  <img class="hero-bg" src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/tour-zanzibar_y2syxk.jpg" alt="Terms and conditions" />
+  <img class="hero-bg" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['clipC7'], 1920) }}" alt="Terms and conditions" />
   <div class="container">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="{{ route('home') }}">Home</a>

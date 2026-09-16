@@ -474,15 +474,20 @@ h1,h2,h3,h4,h5{font-family:var(--font-display);font-weight:700;line-height:1.08;
 .booking-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
 /* ============================== TRUST / PARTNERS ============================== */
-.trust-strip{background:var(--white);padding:52px 0;border-top:1px solid var(--line)}
+.trust-strip{position:relative;background:#2a1607;padding:60px 0;overflow:hidden}
+.trust-strip .trust-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 60%;opacity:.55;z-index:0}
+.trust-strip::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,rgba(35,18,7,.93) 0%,rgba(35,18,7,.6) 48%,rgba(145,64,15,.38) 100%)}
+.trust-strip .container{position:relative;z-index:2}
 .trust-strip .trust-grid{display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap}
-.trust-note{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;font-weight:800;color:var(--muted);flex:1;min-width:200px}
-.trust-note em{display:block;color:var(--primary);font-style:normal;font-size:.8rem;letter-spacing:.12em;margin-bottom:6px}
-.trust-certs{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
-.trust-certs a{display:flex;align-items:center;gap:10px;color:var(--dark);font-size:.78rem;font-weight:600;transition:opacity .3s}
-.trust-certs a:hover{opacity:.8}
-.trust-certs img.tripadvisor{width:auto;height:34px}
-.trust-certs img.partner{width:auto;height:56px}
+.trust-note{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;font-weight:800;color:var(--sand);flex:1;min-width:200px;text-shadow:0 1px 2px rgba(0,0,0,.45)}
+.trust-note em{display:block;color:var(--gold);font-style:normal;font-size:.8rem;letter-spacing:.12em;margin-bottom:8px;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.trust-certs{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.trust-certs a,.trust-certs .TA_rated{background:rgba(35,18,7,.42);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.22);border-radius:14px;padding:12px 18px;box-shadow:var(--shadow-sm)}
+.trust-certs a{display:flex;align-items:center;gap:10px;color:var(--sand);font-size:.78rem;font-weight:600;transition:transform .3s var(--t),background .3s,box-shadow .3s}
+.trust-certs a:hover{background:rgba(35,18,7,.62);transform:translateY(-2px);box-shadow:var(--shadow-md);opacity:1}
+.trust-certs .TA_rated{background:rgba(35,18,7,.42);display:flex;align-items:center}
+.trust-certs img.tripadvisor{width:auto;height:30px}
+.trust-certs img.partner{width:auto;height:44px}
 
 /* ============================== NEWSLETTER ============================== */
 .newsletter{background:var(--light);padding:80px 0;text-align:center}

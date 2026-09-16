@@ -7,6 +7,7 @@
 window.TDTS = window.TDTS || {};
 window.TDTS.SITE = window.TDTS.SITE || {};
 window.TDTS.SITE.base = @json(url('/'));
+window.TDTS.HERO = {!! json_encode(\App\Support\SafariContent::hero(), JSON_UNESCAPED_UNICODE) !!};
 window.TDTS.DEPOSIT_PERCENT = {{ (int) \App\Services\PaymentSettings::depositPercentage() }};
 window.TDTS.TOURS = {!! json_encode($tdtsTours, JSON_UNESCAPED_UNICODE) !!};
 window.TDTS.GALLERY = {!! json_encode($tdtsGallery, JSON_UNESCAPED_UNICODE) !!};

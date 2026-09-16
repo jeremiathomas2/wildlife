@@ -25,7 +25,7 @@
 
 <!-- PAGE HERO -->
 <section class="page-hero">
-  <img class="hero-bg" src="https://res.cloudinary.com/aenlplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/safari-serengeti_agwjrp.jpg" alt="Tanzania travel guide" />
+  <img class="hero-bg" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['pxStudio'], 1920) }}" alt="Tanzania travel guide" />
   <div class="container">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="{{ route('home') }}">Home</a>
@@ -47,7 +47,7 @@
     </div>
     <div class="guide-grid">
       <article class="guide-card reveal">
-        <div class="guide-img"><img src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['safariSerengeti'], 600) }}" alt="Best time to visit Tanzania" loading="lazy" /></div>
+        <div class="guide-img"><img src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['clipC6'], 600) }}" alt="Best time to visit Tanzania" loading="lazy" /></div>
         <div class="guide-body">
           <div class="guide-cat">Planning</div>
           <h4>Best Time to Visit Tanzania</h4>

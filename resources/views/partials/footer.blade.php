@@ -27,7 +27,7 @@
           <a href="https://www.instagram.com/tanzania_dailytours_and_safari/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
           <a href="https://www.facebook.com/tanzaniadailytoursandsafari" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
           <a href="https://twitter.com/tanzaniadailytours" target="_blank" rel="noopener" aria-label="Twitter / X"><i class="fab fa-x-twitter"></i></a>
-          <a href="https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html" target="_blank" rel="noopener" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
+          <a href="https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html" target="_blank" rel="noopener" aria-label="TripAdvisor"><img src="https://res.cloudinary.com/aenplcpl/image/upload/v1784610546/PngItem_1715860_wbqbw4.png" alt="TripAdvisor" width="24" height="20" loading="lazy" style="display:block;height:20px;width:auto" /></a>
         </div>
       </div>
       <div>

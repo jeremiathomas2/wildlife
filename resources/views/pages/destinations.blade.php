@@ -58,7 +58,7 @@
 
 <!-- PAGE HERO -->
 <section class="page-hero">
-  <img class="hero-bg" src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_1920/v1782890323/safari-serengeti_agwjrp.jpg" alt="Tanzania safari" />
+  <img class="hero-bg" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['pxJairo'], 1920) }}" alt="Tanzania safari" />
   <div class="container">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="{{ route('home') }}">Home</a>

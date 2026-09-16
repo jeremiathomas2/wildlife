@@ -83,12 +83,12 @@
 
   <div class="hero-controls">
     <div class="hero-dots" role="tablist" aria-label="Hero slides">
-      <button class="active" role="tab" aria-selected="true" aria-label="Slide 1" data-go="0"></button>
-      <button role="tab" aria-selected="false" aria-label="Slide 2" data-go="1"></button>
-      <button role="tab" aria-selected="false" aria-label="Slide 3" data-go="2"></button>
-      <button role="tab" aria-selected="false" aria-label="Slide 4" data-go="3"></button>
+      @php($heroSlideCount = count(\App\Support\SafariContent::hero()))
+      @for($i = 0; $i < $heroSlideCount; $i++)
+        <button class="{{ $i === 0 ? 'active' : '' }}" role="tab" aria-selected="{{ $i === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $i + 1 }}" data-go="{{ $i }}"></button>
+      @endfor
     </div>
-    <div class="hero-counter"><b id="heroCurrent">01</b> / 04</div>
+    <div class="hero-counter"><b id="heroCurrent">01</b> / {{ str_pad($heroSlideCount, 2, '0', STR_PAD_LEFT) }}</div>
     <div class="hero-arrows">
       <button id="heroPrev" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
       <button id="heroNext" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
@@ -160,8 +160,8 @@
       <a href="{{ route('about') }}" class="btn btn-primary">DISCOVER OUR STORY</a>
     </div>
     <div class="intro-imgs reveal-right">
-      <img class="intro-img-main" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['aboutHero'], 800) }}" alt="Campfire evening under the Tanzania sky" loading="lazy" />
-      <img class="intro-img-sub" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['galleryLandscape1'], 600) }}" alt="Serengeti dawn" loading="lazy" />
+      <img class="intro-img-main" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['pxClark'], 800) }}" alt="Campfire evening under the Tanzania sky" loading="lazy" />
+      <img class="intro-img-sub" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['pxNing'], 600) }}" alt="Serengeti dawn" loading="lazy" />
       <div class="intro-deco" aria-hidden="true"></div>
       <div class="intro-badge">15+ Years<small>Local Expertise</small></div>
     </div>
@@ -439,8 +439,8 @@
 <section class="zanzibar" id="zanzibar">
   <div class="container">
     <div class="zanzibar-imgs reveal-left">
-      <img class="zanzibar-img-main" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['zanzibarBeach'], 800) }}" alt="Zanzibar beach" loading="lazy" />
-      <img class="zanzibar-img-sub" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['galleryPeople1'], 600) }}" alt="From safari to sea — game viewing on the way to the coast" loading="lazy" />
+      <img class="zanzibar-img-main" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['clipBeach'], 800) }}" alt="Zanzibar beach" loading="lazy" />
+      <img class="zanzibar-img-sub" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['shotH'], 600) }}" alt="From safari to sea — game viewing on the way to the coast" loading="lazy" />
     </div>
     <div class="zanzibar-text reveal-right">
       <div class="eyebrow">ZANZIBAR ESCAPES</div>
@@ -483,7 +483,7 @@
     </div>
     <div class="guide-grid">
       <article class="guide-card reveal">
-        <div class="guide-img"><img src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['safariSerengeti'], 600) }}" alt="Best time to visit Tanzania" loading="lazy" /></div>
+        <div class="guide-img"><img src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['clipC6'], 600) }}" alt="Best time to visit Tanzania" loading="lazy" /></div>
         <div class="guide-body">
           <div class="guide-cat">Planning</div>
           <h4>Best Time to Visit Tanzania</h4>
@@ -594,6 +594,7 @@
 
 <!-- TRUST / PARTNERS -->
 <section class="trust-strip" aria-label="Certifications and partners">
+  <img class="trust-bg" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['pxKeegan'], 1600) }}" alt="" aria-hidden="true" loading="lazy" />
   <div class="container">
     <div class="trust-grid">
       <div class="trust-note">
@@ -605,16 +606,6 @@
           <img class="tripadvisor" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['tripadvisor'], 100) }}" alt="TripAdvisor" loading="lazy" />
           <span>Rated on TripAdvisor</span>
         </a>
-        <div id="TA_rated260" class="TA_rated">
-          <ul class="TA_links" style="list-style:none;display:flex;gap:16px;align-items:center;">
-            <li>
-              <a target="_blank" href="https://www.tripadvisor.com/Attraction_Review-g317084-d34526433-Reviews-Tanzania_Daily_Tours_and_Safari-Moshi_Kilimanjaro_Region.html">
-                <img src="https://www.tripadvisor.com/img/cdsi/img2/badges/ollie-11424-2.gif" alt="TripAdvisor rating widget" loading="lazy" />
-              </a>
-            </li>
-          </ul>
-        </div>
-        <script async src="https://www.jscache.com/wejs?wtype=rated&uniq=260&locationId=34526433&lang=en_US&display_version=2" data-loadtrk onload="this.loadtrk=true"></script>
         <a href="#" aria-label="Sustainable Association Partners">
           <img class="partner" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['sustainable'], 640) }}" alt="Sustainable Association Partners" loading="lazy" />
         </a>
