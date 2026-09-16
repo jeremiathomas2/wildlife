@@ -78,24 +78,7 @@
           </div>
         </li>
         <li>
-          <a href="{{ $destHref }}" {{ $isHome ? 'data-spy="destinations"' : '' }} aria-haspopup="true">DESTINATIONS <i class="fas fa-chevron-down"></i></a>
-          <div class="mega-menu">
-            <div class="mega-list">
-              <h5>Explore Tanzania</h5>
-              <ul>
-                <li><a href="{{ route('destination.detail', 'serengeti-safari') }}">Serengeti</a></li>
-                <li><a href="{{ route('destination.detail', 'ngorongoro-crater') }}">Ngorongoro</a></li>
-                <li><a href="{{ route('destination.detail', '3-day-tarangire-ngorongoro-safari') }}">Tarangire</a></li>
-                <li><a href="{{ route('destination.detail', 'kilimanjaro-day-hike') }}">Kilimanjaro</a></li>
-                <li><a href="{{ route('destination.detail', 'zanzibar-escape') }}">Zanzibar</a></li>
-              </ul>
-            </div>
-            <div class="mega-feature">
-              <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_600/v1782890322/safari-kilimanjaro_rnqbaj.jpg" alt="Kilimanjaro" loading="lazy" />
-              <h6>Iconic</h6>
-              <p>Mount Kilimanjaro</p>
-            </div>
-          </div>
+          <a href="{{ $destHref }}" {{ $isHome ? 'data-spy="destinations"' : '' }}>DESTINATIONS</a>
         </li>
         <li><a href="{{ $aboutHref }}" {{ $isHome ? 'data-spy="about"' : '' }}>ABOUT</a></li>
         <li><a href="{{ $reviewsHref }}" {{ $isHome ? 'data-spy="reviews"' : '' }}>REVIEWS</a></li>
