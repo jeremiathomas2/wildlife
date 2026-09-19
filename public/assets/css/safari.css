@@ -296,6 +296,8 @@ h1,h2,h3,h4,h5{font-family:var(--font-display);font-weight:700;line-height:1.08;
 /* ============================== TOUR CARDS ============================== */
 .tours-section{background:var(--white)}
 .tours-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.tours-more{text-align:center;margin-top:40px}
+.tours-more .btn{margin:0 auto}
 .tour-card{background:var(--white);border:1px solid var(--line);overflow:hidden;transition:all .4s var(--t);display:flex;flex-direction:column;position:relative;border-radius:4px}
 .tour-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg);border-color:transparent}
 .tour-card-link{position:absolute;inset:0;z-index:2;border-radius:inherit;cursor:pointer}

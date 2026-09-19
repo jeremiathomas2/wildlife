@@ -264,7 +264,10 @@
       </div>
     </div>
 
-    <div class="tours-grid" id="toursGrid"></div>
+    <div class="tours-grid" id="toursGrid" data-limit="6"></div>
+    <div class="tours-more">
+      <a class="btn btn-primary" href="{{ route('destinations') }}">EXPLORE MORE TOURS <i class="fas fa-arrow-right"></i></a>
+    </div>
   </div>
 </section>
 

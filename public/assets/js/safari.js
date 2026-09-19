@@ -248,12 +248,14 @@
   }
   function renderTours() {
     var grid = $('#toursGrid'); if (!grid) return;
+    var limit = grid.getAttribute('data-limit');
     var list = TOURS.slice();
     var filter = state.filter;
     if (filter !== 'all') list = list.filter(function (t) {
       if (filter === 'safari') return t.category === 'safari';
       return t.category === filter;
     });
+    if (limit) list = list.slice(0, parseInt(limit, 10) || 6);
     var sort = state.sort;
     if (sort === 'price-asc') list.sort(function (a, b) { return a.price - b.price; });
     else if (sort === 'price-desc') list.sort(function (a, b) { return b.price - a.price; });
