@@ -393,6 +393,56 @@ $iconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users','fa-u
             </div>
         </div>
 
+        {{-- Traveler Reviews --}}
+        <div class="table-card" style="margin-bottom:18px;">
+            <div class="table-toolbar" style="border-bottom:1px solid var(--line);">
+                <strong>Traveler Reviews</strong>
+                <span style="color:var(--ink-soft);font-size:12.5px;">Shown in the "Traveler Reviews" section. Empty = default content</span>
+            </div>
+            <div style="padding:18px;">
+                <div id="reviewRows">
+                    @forelse($dest->reviews ?: [] as $rev)
+                        <div class="review-row rep-row" style="border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;">
+                            <div class="form-row">
+                                <div class="field">
+                                    <label>Author</label>
+                                    <input type="text" name="reviews[][author]" value="{{ $rev['author'] ?? '' }}" placeholder="Mark &amp; Julia T.">
+                                </div>
+                                <div class="field">
+                                    <label>Country</label>
+                                    <input type="text" name="reviews[][country]" value="{{ $rev['country'] ?? '' }}" placeholder="Germany">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Review text</label>
+                                <textarea name="reviews[][text]" rows="3" placeholder="Superbly organised. The crater was a highlight of our entire trip.">{{ $rev['text'] ?? '' }}</textarea>
+                            </div>
+                            <button type="button" class="btn btn-ghost" onclick="removeRow(this)">✕ Remove review</button>
+                        </div>
+                    @empty
+                        <div class="review-row rep-row" style="border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;">
+                            <div class="form-row">
+                                <div class="field">
+                                    <label>Author</label>
+                                    <input type="text" name="reviews[][author]" placeholder="Mark &amp; Julia T.">
+                                </div>
+                                <div class="field">
+                                    <label>Country</label>
+                                    <input type="text" name="reviews[][country]" placeholder="Germany">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Review text</label>
+                                <textarea name="reviews[][text]" rows="3" placeholder="Superbly organised. The crater was a highlight of our entire trip."></textarea>
+                            </div>
+                            <button type="button" class="btn btn-ghost" onclick="removeRow(this)">✕ Remove review</button>
+                        </div>
+                    @endforelse
+                </div>
+                <button type="button" class="btn btn-soft" onclick="addRow('reviewRow', 'reviewRows')">+ Add review</button>
+            </div>
+        </div>
+
         {{-- SEO --}}
         <div class="table-card" style="margin-bottom:18px;">
             <div class="table-toolbar" style="border-bottom:1px solid var(--line);"><strong>SEO</strong></div>
@@ -509,6 +559,15 @@ const builders = {
             <img src="" alt="" style="width:70px;height:50px;object-fit:cover;border-radius:8px;flex:none;display:none;">
             <input type="text" name="gallery[]" style="flex:1;" placeholder="https://…/photo.jpg" oninput="previewGalleryRow(this)">
             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" title="Remove">✕</button>
+        </div>`,
+    reviewRow: () => `
+        <div class="review-row rep-row" style="border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;">
+            <div class="form-row">
+                <div class="field"><label>Author</label><input type="text" name="reviews[][author]" placeholder="Mark &amp; Julia T."></div>
+                <div class="field"><label>Country</label><input type="text" name="reviews[][country]" placeholder="Germany"></div>
+            </div>
+            <div class="field"><label>Review text</label><textarea name="reviews[][text]" rows="3" placeholder="Superbly organised. The crater was a highlight of our entire trip."></textarea></div>
+            <button type="button" class="btn btn-ghost" onclick="removeRow(this)">✕ Remove review</button>
         </div>`,
 };
 

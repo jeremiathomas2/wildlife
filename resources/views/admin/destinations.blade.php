@@ -5,6 +5,7 @@
 @section('content')
 @php
 $adminIconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users','fa-utensils','fa-camera','fa-tree','fa-sun','fa-swimmer','fa-landmark','fa-hiking','fa-binoculars','fa-elephant','fa-lion','fa-paw','fa-rhino','fa-umbrella-beach','fa-seedling','fa-ship','fa-fish','fa-pencil-ruler','fa-user-tie','fa-calendar-alt','fa-wallet','fa-map','fa-heart','fa-flag','fa-mountain-sun','fa-snowflake','fa-truck-monster'];
+$adminCatLabels = ['day-trip' => 'Day Trip', 'safari' => 'Safari / Multi-Day', 'kilimanjaro' => 'Kilimanjaro', 'cultural' => 'Cultural', 'beach' => 'Beach', 'custom' => 'Custom'];
 @endphp
 <div class="view active">
     <div class="view-head">
@@ -21,8 +22,11 @@ $adminIconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users',
         <div class="table-toolbar">
             <div class="chip-filters" id="destFilterChips">
                 <button class="chip active" data-filter="all" onclick="setDestFilter('all')">All</button>
-                <button class="chip" data-filter="Day Trip" onclick="setDestFilter('Day Trip')">Day Trips</button>
-                <button class="chip" data-filter="Multi-Day Safari" onclick="setDestFilter('Multi-Day Safari')">Multi-Day Safaris</button>
+                <button class="chip" data-filter="day-trip" onclick="setDestFilter('day-trip')">Day Trips</button>
+                <button class="chip" data-filter="safari" onclick="setDestFilter('safari')">Safaris</button>
+                <button class="chip" data-filter="kilimanjaro" onclick="setDestFilter('kilimanjaro')">Kilimanjaro</button>
+                <button class="chip" data-filter="cultural" onclick="setDestFilter('cultural')">Cultural</button>
+                <button class="chip" data-filter="beach" onclick="setDestFilter('beach')">Beach</button>
                 <button class="chip" data-filter="Published" onclick="setDestFilter('Published')">Published</button>
                 <button class="chip" data-filter="Draft" onclick="setDestFilter('Draft')">Drafts</button>
             </div>
@@ -73,7 +77,7 @@ $adminIconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users',
                                 </div>
                             </div>
                         </td>
-                        <td>{{ $dest->category }}</td>
+                        <td>{{ $adminCatLabels[$dest->category] ?? $dest->category }}</td>
                         <td>{{ $dest->duration }}</td>
                         <td>${{ number_format($dest->price_adult ?? $dest->price) }}</td>
                         <td>${{ number_format($dest->price_child ?? ($dest->price / 2)) }}</td>
@@ -135,8 +139,9 @@ $adminIconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users',
                     <div class="field">
                         <label>Category</label>
                         <select id="destCategory" name="category">
-                            <option>Day Trip</option>
-                            <option>Multi-Day Safari</option>
+                            @foreach(\App\Support\SafariContent::LISTING_CATEGORIES as $cat)
+                                <option value="{{ $cat }}">{{ $adminCatLabels[$cat] ?? $cat }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="field">
@@ -228,6 +233,12 @@ $adminIconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users',
                     <label><strong>Tour Gallery</strong></label>
                     <div id="galleryRows"></div>
                     <button type="button" class="btn btn-soft" onclick="addRow('galleryRow', 'galleryRows')">+ Add image</button>
+                </div>
+
+                <div style="border-top:1px solid var(--line);padding-top:16px;margin-top:18px;">
+                    <label><strong>Traveler Reviews</strong></label>
+                    <div id="reviewRows"></div>
+                    <button type="button" class="btn btn-soft" onclick="addRow('reviewRow', 'reviewRows')">+ Add review</button>
                 </div>
 
                 <div style="border-top:1px solid var(--line);padding-top:16px;margin-top:18px;">
@@ -364,6 +375,15 @@ const builders = {
             <input type="text" name="gallery[]" value="${escAttr(v)}" style="flex:1;" placeholder="https://…/photo.jpg" oninput="previewGalleryRow(this)">
             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" title="Remove">✕</button>
         </div>`,
+    reviewRow: (d) => `
+        <div class="review-row rep-row" style="border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;">
+            <div class="form-row">
+                <div class="field"><label>Author</label><input type="text" name="reviews[][author]" value="${escAttr(d && d.author)}" placeholder="Mark &amp; Julia T."></div>
+                <div class="field"><label>Country</label><input type="text" name="reviews[][country]" value="${escAttr(d && d.country)}" placeholder="Germany"></div>
+            </div>
+            <div class="field"><label>Review text</label><textarea name="reviews[][text]" rows="3" placeholder="Superbly organised. The crater was a highlight of our entire trip.">${escAttr(d && d.text)}</textarea></div>
+            <button type="button" class="btn btn-ghost" onclick="removeRow(this)">✕ Remove review</button>
+        </div>`,
 };
 
 function addRow(type, containerId, data) {
@@ -410,6 +430,7 @@ function resetDestinationModal() {
     fillRepeater('excludedRows', 'excludedRow', null);
     fillRepeater('faqRows', 'faqRow', null);
     fillRepeater('galleryRows', 'galleryRow', null);
+    fillRepeater('reviewRows', 'reviewRow', null);
 }
 
 function escapeQuotes(str) {
@@ -481,6 +502,7 @@ function openDestinationModal(id = null) {
             fillRepeater('excludedRows', 'excludedRow', destData.excluded || null);
             fillRepeater('faqRows', 'faqRow', destData.faqs || null);
             fillRepeater('galleryRows', 'galleryRow', destData.gallery || null);
+            fillRepeater('reviewRows', 'reviewRow', destData.reviews || null);
         }
     }
     openModal('destModalBackdrop');

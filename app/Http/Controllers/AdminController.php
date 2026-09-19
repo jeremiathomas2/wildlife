@@ -293,6 +293,10 @@ class AdminController extends Controller
             'faqs.*.a' => 'nullable|string',
             'gallery' => 'nullable|array',
             'gallery.*' => 'nullable|string',
+            'reviews' => 'nullable|array',
+            'reviews.*.author' => 'nullable|string',
+            'reviews.*.country' => 'nullable|string',
+            'reviews.*.text' => 'nullable|string',
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',
@@ -341,6 +345,9 @@ class AdminController extends Controller
         if (array_key_exists('faqs', $validated)) {
             $validated['faqs'] = $this->normalizeFaqRows($validated['faqs']);
         }
+        if (array_key_exists('reviews', $validated)) {
+            $validated['reviews'] = $this->normalizeReviewRows($validated['reviews']);
+        }
 
         $dest = Destination::create($validated);
 
@@ -388,6 +395,10 @@ class AdminController extends Controller
             'faqs.*.a' => 'nullable|string',
             'gallery' => 'nullable|array',
             'gallery.*' => 'nullable|string',
+            'reviews' => 'nullable|array',
+            'reviews.*.author' => 'nullable|string',
+            'reviews.*.country' => 'nullable|string',
+            'reviews.*.text' => 'nullable|string',
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',
@@ -448,6 +459,9 @@ class AdminController extends Controller
         }
         if (array_key_exists('faqs', $validated)) {
             $dest->faqs = $this->normalizeFaqRows($validated['faqs']);
+        }
+        if (array_key_exists('reviews', $validated)) {
+            $dest->reviews = $this->normalizeReviewRows($validated['reviews']);
         }
 
         $dest->save();
@@ -518,6 +532,32 @@ class AdminController extends Controller
             if ($q !== '' && $a !== '') {
                 $out[] = ['q' => $q, 'a' => $a];
             }
+        }
+
+        return $out ?: null;
+    }
+
+    /**
+     * Filter review rows, keeping only those with non-blank review text.
+     */
+    protected function normalizeReviewRows($value): ?array
+    {
+        if (! is_array($value)) {
+            return null;
+        }
+
+        $out = [];
+        foreach ($value as $row) {
+            if (! is_array($row)) {
+                continue;
+            }
+            $author = trim((string) ($row['author'] ?? ''));
+            $country = trim((string) ($row['country'] ?? ''));
+            $text = trim((string) ($row['text'] ?? ''));
+            if ($text === '') {
+                continue;
+            }
+            $out[] = ['author' => $author, 'country' => $country, 'text' => $text];
         }
 
         return $out ?: null;

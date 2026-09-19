@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class Destination extends Model
 {
-    protected $fillable = ['name', 'slug', 'category', 'duration', 'location', 'price', 'price_adult', 'price_child', 'rating', 'status', 'image', 'desc', 'long_description', 'includes', 'excluded', 'quick_facts', 'highlights', 'itinerary', 'faqs', 'gallery', 'meta_title', 'meta_description', 'meta_keywords'];
+    protected $fillable = ['name', 'slug', 'category', 'duration', 'location', 'price', 'price_adult', 'price_child', 'rating', 'status', 'image', 'desc', 'long_description', 'includes', 'excluded', 'quick_facts', 'highlights', 'itinerary', 'faqs', 'gallery', 'reviews', 'meta_title', 'meta_description', 'meta_keywords'];
 
     protected $casts = [
         'includes' => 'array',
@@ -17,6 +17,7 @@ class Destination extends Model
         'itinerary' => 'array',
         'faqs' => 'array',
         'gallery' => 'array',
+        'reviews' => 'array',
         'rating' => 'decimal:1',
     ];
 

@@ -121,7 +121,7 @@ class SafariContent
     public static function hero(): array
     {
         $slides = [
-            ['f' => self::F['heroSerengeti'], 'alt' => 'Lion in the Serengeti plains', 'title' => 'DISCOVER<br><em>TANZANIA.</em>', 'sub' => 'SAFARIS. ADVENTURES. MEMORIES THAT LAST.', 'copy' => 'Experience Tanzania through unforgettable wildlife safaris, cultural adventures, mountain journeys and coastal escapes.', 'priority' => true],
+            ['f' => self::F['shotF'], 'alt' => 'Lion in the Serengeti plains', 'title' => 'DISCOVER<br><em>TANZANIA.</em>', 'sub' => 'SAFARIS. ADVENTURES. MEMORIES THAT LAST.', 'copy' => 'Experience Tanzania through unforgettable wildlife safaris, cultural adventures, mountain journeys and coastal escapes.', 'priority' => true],
             ['f' => self::F['heroNgorongoro'], 'alt' => 'Great Migration wildebeest crossing the savanna', 'title' => 'WITNESS<br><em>THE WILD.</em>', 'sub' => 'THE GREAT MIGRATION', 'copy' => 'Follow the thunder of a million hooves across the Serengeti — the greatest wildlife spectacle on Earth.', 'priority' => false],
             ['f' => self::F['heroKilimanjaro'], 'alt' => 'Mount Kilimanjaro snow cap', 'title' => 'CLIMB<br><em>HIGHER.</em>', 'sub' => 'MOUNT KILIMANJARO', 'copy' => 'Stand on the roof of Africa. From day hikes to full summit expeditions, we guide you every step.', 'priority' => false],
             ['f' => self::F['zanzibarBeach'], 'alt' => 'Zanzibar turquoise beach', 'title' => 'ESCAPE TO<br><em>ZANZIBAR.</em>', 'sub' => 'BEACH & CULTURE', 'copy' => 'Unwind on powder-white sands, explore Stone Town and sail into the sunset on a traditional dhow.', 'priority' => false],
@@ -751,6 +751,12 @@ class SafariContent
 
         $image = $d && $d->image ? $d->image : ($t['image'] ?? self::cld(self::F['safariSerengeti'], 900));
 
+        $reviews = self::rowsOrNull($d->reviews ?? null) ?? [];
+        $reviews = array_values(array_filter($reviews, fn ($r) => is_array($r) && trim((string) ($r['text'] ?? '')) !== ''));
+        if (! $reviews) {
+            $reviews = $t['reviews'] ?? [];
+        }
+
         return [
             'id' => $hasCode ? ($t['id'] ?? $key) : (int) ($d->id ?? 0),
             'title' => $title,
@@ -772,7 +778,7 @@ class SafariContent
             'excluded' => $excluded,
             'faqs' => $faqs,
             'gallery' => $gallery,
-            'reviews' => $t['reviews'] ?? [],
+            'reviews' => $reviews,
         ];
     }
 

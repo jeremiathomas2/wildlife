@@ -247,7 +247,7 @@ h1,h2,h3,h4,h5{font-family:var(--font-display);font-weight:700;line-height:1.08;
 @keyframes pulse{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
 
 /* ============================== TOUR FINDER ============================== */
-.tour-finder{position:relative;z-index:40;margin-top:-72px;padding:0 24px}
+.tour-finder{position:relative;z-index:40;margin-top:-44px;padding:0 24px}
 .finder-card{max-width:1340px;margin:0 auto;background:var(--white);box-shadow:var(--shadow-lg);border-top:5px solid var(--accent);padding:34px 38px;display:grid;grid-template-columns:repeat(4,1fr) auto;gap:22px;align-items:end;border-radius:6px}
 .finder-title{grid-column:1/-1;font-family:var(--font-display);font-size:1.35rem;font-weight:700;color:var(--primary);display:flex;align-items:center;gap:12px;margin-bottom:-4px}
 .finder-title i{color:var(--accent)}
@@ -809,7 +809,7 @@ h1,h2,h3,h4,h5{font-family:var(--font-display);font-weight:700;line-height:1.08;
   .hero-arrows{justify-content:center}
   .scroll-cue{display:none}
 
-  .tour-finder{margin-top:-50px;padding:0 16px}
+  .tour-finder{margin-top:-26px;padding:0 16px}
   .finder-card{grid-template-columns:1fr;padding:22px;gap:14px}
 
   .intro-imgs{height:320px}
