@@ -178,7 +178,7 @@
     </div>
     <div class="cat-grid">
       <article class="cat-card reveal-scale" data-filter="safari">
-        <img src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['safariSerengeti'], 900) }}" alt="Multi-day safari" loading="lazy" />
+        <img src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['catMultiDay'], 900) }}" alt="Multi-day safari" loading="lazy" />
         <div class="cat-overlay">
           <div class="cat-num">01</div>
           <h3>MULTI-DAY SAFARIS</h3>
@@ -187,7 +187,7 @@
         </div>
       </article>
       <article class="cat-card reveal-scale" data-filter="day-trip">
-        <img src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['tourMateruni'], 700) }}" alt="Materuni waterfall day trip" loading="lazy" />
+        <img src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['catDayTrip'], 700) }}" alt="Day trip adventure" loading="lazy" />
         <div class="cat-overlay">
           <div class="cat-num">02</div>
           <h3>DAY TRIPS</h3>
@@ -205,7 +205,7 @@
         </div>
       </article>
       <article class="cat-card reveal-scale" data-filter="cultural">
-        <img src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['galleryCulture1'], 700) }}" alt="Maasai culture" loading="lazy" />
+        <img src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['catCultural'], 700) }}" alt="Maasai culture" loading="lazy" />
         <div class="cat-overlay">
           <div class="cat-num">04</div>
           <h3>CULTURAL TOURS</h3>
@@ -223,7 +223,7 @@
         </div>
       </article>
       <article class="cat-card reveal-scale" data-filter="custom">
-        <img src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['safariMikumi'], 700) }}" alt="Custom safari" loading="lazy" />
+        <img src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['catCustom'], 700) }}" alt="Custom safari" loading="lazy" />
         <div class="cat-overlay">
           <div class="cat-num">06</div>
           <h3>CUSTOM SAFARIS</h3>
@@ -439,8 +439,8 @@
 <section class="zanzibar" id="zanzibar">
   <div class="container">
     <div class="zanzibar-imgs reveal-left">
-      <img class="zanzibar-img-main" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['clipBeach'], 800) }}" alt="Zanzibar beach" loading="lazy" />
-      <img class="zanzibar-img-sub" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['shotH'], 600) }}" alt="From safari to sea — game viewing on the way to the coast" loading="lazy" />
+    <img class="zanzibar-img-sub" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['pxKeegan'], 600) }}" alt="From safari to sea — game viewing on the way to the coast" loading="lazy" />  
+    <img class="zanzibar-img-main" src="{{ \App\Support\SafariContent::cld(\App\Support\SafariContent::F['zanzibarMain'], 800) }}" alt="Zanzibar beach" loading="lazy" />
     </div>
     <div class="zanzibar-text reveal-right">
       <div class="eyebrow">ZANZIBAR ESCAPES</div>

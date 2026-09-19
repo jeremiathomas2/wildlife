@@ -72,6 +72,15 @@ class SafariContent
         'shotK' => 'v1783503876/Screenshot_2026-07-08_024309_efeyyp.png',
         'clipBeach' => 'v1789558176/SaveClip.App_626263843_18095439202943497_8363208709431488138_n_pnxz7l.jpg',
         'pxNing' => 'v1789558530/pexels-alex-ning-523843601-33650622_p5eowd.jpg',
+
+        // === Zanzibar "From Savannah to Sea" section ===
+        'zanzibarMain' => 'v1789558355/SaveClip.App_640867807_18104518957865922_2429330572681918097_n_mtjaak.webp',
+
+        // === Category card images (home page "Explore by Category") ===
+        'catMultiDay' => 'v1789559180/Gemini_Generated_Image_hbrnzhbrnzhbrnzh_-_Copy_bn4cye.jpg',
+        'catDayTrip' => 'v1789559228/SaveClip.App_601363653_18062421518635481_5375321045818800004_n_dnomdz.webp',
+        'catCultural' => 'v1788265627/pexels-zebari-visuals-1510344-37475924_zx5q1k.jpg',
+        'catCustom' => 'v1789558981/SaveClip.App_774514153_18342486811271974_71060506532385406_n_-_Copy_lsj6lg.jpg',
     ];
 
     /** Build a Cloudinary URL with f_auto/q_auto at a given width. */
