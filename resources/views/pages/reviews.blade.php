@@ -79,7 +79,7 @@
 <!-- REVIEW CTA + TRIPADVISOR -->
 <section class="page-section alt" style="padding-top:70px;padding-bottom:90px;">
   <div class="container">
-    <div class="page-detail-grid" style="grid-template-columns:1fr 1fr;gap:26px;">
+    <div class="page-detail-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px;">
       <div class="detail-card reveal">
         <h2><span class="mm">+</span>{{ $contents['reviews_cta_text']->value ?? 'Traveled with us? Share your experience!' }}</h2>
         <p style="color:var(--muted);margin-bottom:22px;">Your story helps other travelers discover Tanzania with confidence.</p>
@@ -98,6 +98,13 @@
           </ul>
         </div>
         <script async src="https://www.jscache.com/wejs?wtype=rated&uniq=458&locationId=34526433&lang=en_US&display_version=2" data-loadtrk onload="this.loadtrk=true"></script>
+      </div>
+      <div class="detail-card reveal">
+        <h2><i class="fas fa-plane" style="color:var(--accent);margin-right:10px;"></i>GoAfricaBookings</h2>
+        <p style="color:var(--muted);margin-bottom:22px;">See our verified operator profile and traveler feedback on GoAfricaBookings.</p>
+        <a href="https://goafricabookings.com/operators/tanzania-daily-tours-safari" target="_blank" rel="noopener" title="GoAfricaBookings" style="display:inline-block;">
+          <img src="https://api.goafricabookings.com/api/v1/operators/tanzania-daily-tours-safari/badge.svg" width="240" height="90" alt="GoAfricaBookings" loading="lazy" />
+        </a>
       </div>
     </div>
   </div>

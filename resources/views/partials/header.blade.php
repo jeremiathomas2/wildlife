@@ -6,7 +6,7 @@
     $destHref = route('destinations');
     $aboutHref = $isHome ? '#about' : route('about');
     $reviewsHref = $isHome ? '#reviews' : route('reviews');
-    $galleryHref = $isHome ? '#gallery' : route('gallery');
+    $galleryHref = route('gallery');
     $guideHref = $isHome ? '#guide' : route('travel-guide');
     $travelers = ['2 Adults', '1 Adult', 'Family', 'Group (4+)'];
     $brand = \App\Support\SafariContent::site();
@@ -82,7 +82,7 @@
         </li>
         <li><a href="{{ $aboutHref }}" {{ $isHome ? 'data-spy="about"' : '' }}>ABOUT</a></li>
         <li><a href="{{ $reviewsHref }}" {{ $isHome ? 'data-spy="reviews"' : '' }}>REVIEWS</a></li>
-        <li><a href="{{ $galleryHref }}" {{ $isHome ? 'data-spy="gallery"' : '' }}>GALLERY</a></li>
+        <li><a href="{{ $galleryHref }}">GALLERY</a></li>
         <li><a href="{{ route('contact') }}">CONTACT</a></li>
         <li><a href="{{ $guideHref }}" {{ $isHome ? 'data-spy="guide"' : '' }}>TRAVEL GUIDE</a></li>
       </ul>

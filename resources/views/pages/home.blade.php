@@ -543,26 +543,6 @@
   </div>
 </section>
 
-<!-- GALLERY -->
-<section class="gallery" id="gallery">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow">VISUAL JOURNEY</div>
-      <h2 class="display-lg">GALLERY</h2>
-    </div>
-    <div class="gal-filters" role="tablist">
-      <button class="active" data-gal="all">All</button>
-      <button data-gal="wildlife">Wildlife</button>
-      <button data-gal="landscapes">Landscapes</button>
-      <button data-gal="safaris">Safaris</button>
-      <button data-gal="kilimanjaro">Kilimanjaro</button>
-      <button data-gal="culture">Culture</button>
-      <button data-gal="zanzibar">Zanzibar</button>
-    </div>
-    <div class="gal-grid" id="galGrid"></div>
-  </div>
-</section>
-
 <!-- REVIEWS -->
 <section class="reviews" id="reviews">
   <div class="container">
