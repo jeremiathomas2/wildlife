@@ -178,7 +178,10 @@
     <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}">
 
     @stack('styles')
-    <link rel="stylesheet" href="{{ asset('assets/css/safari.css') }}" />
+    @php
+        $cssVer = file_exists(public_path('assets/css/safari.css')) ? filemtime(public_path('assets/css/safari.css')) : time();
+    @endphp
+    <link rel="stylesheet" href="{{ asset('assets/css/safari.css') }}?v={{ $cssVer }}" />
 </head>
 <body>
 
@@ -192,9 +195,13 @@
 @include('partials.footer')
 @include('partials.modals')
 
-<script src="{{ asset('assets/js/safari-data.js') }}"></script>
-@include('partials.safari-data')
-<script src="{{ asset('assets/js/safari.js') }}"></script>
+@php
+        $dataVer = file_exists(public_path('assets/js/safari-data.js')) ? filemtime(public_path('assets/js/safari-data.js')) : time();
+        $jsVer = file_exists(public_path('assets/js/safari.js')) ? filemtime(public_path('assets/js/safari.js')) : time();
+    @endphp
+    <script src="{{ asset('assets/js/safari-data.js') }}?v={{ $dataVer }}"></script>
+    @include('partials.safari-data')
+    <script src="{{ asset('assets/js/safari.js') }}?v={{ $jsVer }}"></script>
 @yield('scripts')
 @stack('scripts')
 
