@@ -342,6 +342,17 @@ class AdminController extends Controller
                 $validated[$field] = $this->normalizeRowsField($validated[$field], $keys);
             }
         }
+        $structural = [
+            'quick_facts' => 'normalizeQuickFactRows',
+            'highlights' => 'normalizeHighlightRows',
+            'itinerary' => 'normalizeItineraryRows',
+        ];
+        foreach ($structural as $field => $method) {
+            if (array_key_exists($field, $validated)) {
+                $cleaned = \App\Support\SafariContent::{$method}($validated[$field] ?? []);
+                $validated[$field] = $cleaned ?: null;
+            }
+        }
         if (array_key_exists('faqs', $validated)) {
             $validated['faqs'] = $this->normalizeFaqRows($validated['faqs']);
         }
@@ -455,6 +466,17 @@ class AdminController extends Controller
         foreach ($rowFields as $field => $keys) {
             if (array_key_exists($field, $validated)) {
                 $dest->{$field} = $this->normalizeRowsField($validated[$field], $keys);
+            }
+        }
+        $structural = [
+            'quick_facts' => 'normalizeQuickFactRows',
+            'highlights' => 'normalizeHighlightRows',
+            'itinerary' => 'normalizeItineraryRows',
+        ];
+        foreach ($structural as $field => $method) {
+            if (array_key_exists($field, $validated)) {
+                $cleaned = \App\Support\SafariContent::{$method}($validated[$field] ?? []);
+                $dest->{$field} = $cleaned ?: null;
             }
         }
         if (array_key_exists('faqs', $validated)) {

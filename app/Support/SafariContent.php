@@ -738,9 +738,9 @@ class SafariContent
         $rating = $d && trim((string) ($d->rating ?? '')) !== '' ? trim((string) $d->rating) : (string) ($t['rating'] ?? '4.9');
         $popularity = (int) ($t['popularity'] ?? 50);
 
-        $quickFacts = self::quickFactsOrNull($d->quick_facts ?? null) ?? ($t['quickFacts'] ?? []);
-        $highlights = self::rowsOrNull($d->highlights ?? null) ?? ($t['highlights'] ?? []);
-        $itinerary = self::rowsOrNull($d->itinerary ?? null) ?? ($t['itinerary'] ?? []);
+        $quickFacts = self::quickFactsOrNull(self::normalizeQuickFactRows($d->quick_facts ?? null) ?? []) ?? ($t['quickFacts'] ?? []);
+        $highlights = self::normalizeHighlightRows(array_values(array_filter(self::rowsOrNull($d->highlights ?? null) ?? ($t['highlights'] ?? []), fn ($h) => is_array($h) && trim((string) ($h['text'] ?? '')) !== '')));
+        $itinerary = self::normalizeItineraryRows(self::rowsOrNull($d->itinerary ?? null) ?? ($t['itinerary'] ?? []));
         $included = self::listOrNull($d->includes ?? null) ?? ($t['included'] ?? []);
         $excluded = self::listOrNull($d->excluded ?? null) ?? ($t['excluded'] ?? []);
         $faqs = array_values(array_filter(self::rowsOrNull($d->faqs ?? null) ?? ($t['faqs'] ?? []), fn ($f) => is_array($f) && trim((string) ($f['q'] ?? '')) !== '' && trim((string) ($f['a'] ?? '')) !== ''));
@@ -839,6 +839,125 @@ class SafariContent
         }
 
         return $out ?: null;
+    }
+
+    /**
+     * Pair orphaned quick-fact rows (label in one row, value in another) into
+     * complete {label, value} pairs, dropping anything still incomplete.
+     */
+    public static function normalizeQuickFactRows($arr): array
+    {
+        $out = [];
+        $pending = null;
+        foreach (is_array($arr) ? $arr : [] as $row) {
+            if (! is_array($row)) {
+                continue;
+            }
+            $label = trim((string) ($row['label'] ?? ''));
+            $value = trim((string) ($row['value'] ?? ''));
+
+            if ($label !== '' && $value !== '') {
+                $out[] = ['label' => $label, 'value' => $value];
+                $pending = null;
+            } elseif ($label !== '') {
+                $pending = $label;
+            } elseif ($value !== '') {
+                if ($pending !== null) {
+                    $out[] = ['label' => $pending, 'value' => $value];
+                    $pending = null;
+                }
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * Pair orphaned highlight rows (icon in one row, text in another) into
+     * complete {icon, text} rows and default a generic icon when only text exists.
+     */
+    public static function normalizeHighlightRows($arr): array
+    {
+        $out = [];
+        $pending = null;
+        foreach (is_array($arr) ? $arr : [] as $row) {
+            if (! is_array($row)) {
+                continue;
+            }
+            $icon = trim((string) ($row['icon'] ?? ''));
+            $text = trim((string) ($row['text'] ?? ''));
+
+            if ($text === '') {
+                if ($icon !== '' && $pending === null) {
+                    $pending = $icon;
+                }
+                continue;
+            }
+
+            if ($pending !== null) {
+                $icon = $pending;
+                $pending = null;
+            }
+            $out[] = ['icon' => $icon !== '' ? $icon : 'fa-circle-check', 'text' => $text];
+        }
+
+        return $out;
+    }
+
+    /**
+     * Merge fragment itinerary rows (title/desc/meals/activities/accommodation
+     * entered on their own rows) into their day row, filling empty fields only.
+     * Days split on a row that carries a label. Fully-empty fragments are dropped.
+     */
+    public static function normalizeItineraryRows($arr): array
+    {
+        $days = [];
+        $cur = null;
+
+        foreach (is_array($arr) ? $arr : [] as $row) {
+            if (! is_array($row)) {
+                continue;
+            }
+
+            $label = trim((string) ($row['label'] ?? ''));
+            $title = trim((string) ($row['title'] ?? ''));
+            $desc = trim((string) ($row['desc'] ?? ''));
+            $act = trim((string) ($row['activities'] ?? ''));
+            $meals = trim((string) ($row['meals'] ?? ''));
+            $acc = trim((string) ($row['accommodation'] ?? ''));
+
+            if ($label.$title.$desc.$act.$meals.$acc === '') {
+                continue;
+            }
+
+            if ($label !== '' || $cur === null) {
+                if ($cur !== null) {
+                    $days[] = $cur;
+                }
+                $cur = [
+                    'label' => $label,
+                    'title' => $title,
+                    'desc' => $desc,
+                    'activities' => $act,
+                    'meals' => $meals,
+                    'accommodation' => $acc,
+                ];
+                continue;
+            }
+
+            foreach (['title', 'desc', 'activities', 'meals', 'accommodation'] as $field) {
+                $value = trim((string) ($row[$field] ?? ''));
+                if ($value !== '' && trim((string) ($cur[$field] ?? '')) === '') {
+                    $cur[$field] = $value;
+                }
+            }
+        }
+
+        if ($cur !== null) {
+            $days[] = $cur;
+        }
+
+        return array_values(array_filter($days, fn ($d) => trim((string) ($d['label'] ?? '')) !== '' || trim((string) ($d['title'] ?? '')) !== '' || trim((string) ($d['desc'] ?? '')) !== ''));
     }
 
     /** Convert [{label, value}] quick-fact rows to the assoc shape the front-end expects. */
