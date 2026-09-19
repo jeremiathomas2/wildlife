@@ -56,13 +56,14 @@
       <span class="intro-big-num" aria-hidden="true">01</span>
       <div class="eyebrow">{{ $contents['about_story_label']->value ?? 'Our Story' }}</div>
       <h2 class="display-lg">{{ $contents['about_story_title']->value ?? 'PASSIONATE ABOUT TANZANIA\'S NATURAL HERITAGE.' }}</h2>
-    </div>
-    <div class="story-wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:44px;">
-      <div class="reveal-left" style="overflow:hidden;border-radius:8px;aspect-ratio:4/3;">
-        <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_800/v1783621533/Tanzania_Daily_Tours_and_Safari_guide-Picsart-AiImageEnhancer_qisc5z.png" alt="{{ $contents['about_story_label']->value ?? 'Our Story' }}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" />
-      </div>
-      <div class="reveal-right prose">
+      <div class="story-prose prose">
         {!! $contents['about_story_text']->value ?? '<p>Founded by local guides with deep knowledge of Tanzania\'s parks and cultures, Tanzania Daily Tours was born from a love of sharing our incredible homeland with visitors from around the world.</p><p>What started as a small team of passionate safari guides has grown into one of the most trusted tour operators in the region. We\'ve spent over a decade crafting unforgettable experiences, from Kilimanjaro\'s summit to the Serengeti\'s endless plains.</p><p>Our mission is simple: to show you the real Tanzania. Not just the postcard views, but the warmth of our people, the depth of our cultures, and the raw beauty of our wilderness.</p>' !!}
+      </div>
+    </div>
+    <div class="story-media reveal-right">
+      <div class="story-frame">
+        <img src="https://res.cloudinary.com/aenplcpl/image/upload/f_auto,q_auto,w_800/v1783621533/Tanzania_Daily_Tours_and_Safari_guide-Picsart-AiImageEnhancer_qisc5z.png" alt="{{ $contents['about_story_label']->value ?? 'Our Story' }}" />
+        <span class="story-badge"><strong>15+</strong>Years of Trust</span>
       </div>
     </div>
   </div>

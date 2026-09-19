@@ -272,6 +272,19 @@ h1,h2,h3,h4,h5{font-family:var(--font-display);font-weight:700;line-height:1.08;
 .intro-badge{position:absolute;top:38%;left:-10px;background:var(--secondary);color:var(--white);padding:14px 18px;font-family:var(--font-display);font-weight:700;font-size:1.1rem;line-height:1.1;z-index:4;box-shadow:var(--shadow-md);border-radius:4px;transform:rotate(-4deg)}
 .intro-badge small{display:block;font-family:var(--font-body);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;opacity:.85;margin-top:4px}
 
+/* ============================== OUR STORY (ABOUT) ============================== */
+.story-prose{margin-top:26px}
+.story-prose p{font-size:1rem;color:var(--muted);line-height:1.85;margin-bottom:16px;max-width:none}
+.story-prose > p:first-child{font-size:1.12rem;font-weight:600;color:var(--primary);line-height:1.75}
+.story-prose > p:last-child{border-left:4px solid var(--accent);background:var(--white);padding:18px 24px;border-radius:0 10px 10px 0;box-shadow:var(--shadow);color:var(--primary);font-size:1.02rem;font-style:italic;line-height:1.8;margin-top:24px}
+.story-media{position:relative}
+.story-media::before{content:"";position:absolute;top:-18px;right:-18px;width:140px;height:140px;border:2px dashed rgba(254,175,91,.55);border-radius:50%;z-index:0}
+.story-frame{position:relative;height:560px;border-radius:14px;overflow:hidden;box-shadow:var(--shadow-lg);z-index:1}
+.story-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.story-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(12,42,35,.55),transparent 40%)}
+.story-badge{position:absolute;left:20px;bottom:20px;z-index:2;display:flex;align-items:center;gap:12px;background:var(--white);padding:12px 18px;border-radius:9px;box-shadow:var(--shadow-md);font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--primary)}
+.story-badge strong{font-family:var(--font-display);font-size:1.4rem;color:var(--accent);line-height:1}
+
 /* ============================== CATEGORIES ============================== */
 .categories{background:var(--dark);padding:100px 0;color:var(--white);position:relative;overflow:hidden}
 .categories::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(145,64,15,.4),transparent 70%);pointer-events:none}
@@ -770,6 +783,8 @@ h1,h2,h3,h4,h5{font-family:var(--font-display);font-weight:700;line-height:1.08;
   .intro .container{grid-template-columns:1fr;gap:40px}
   .intro-imgs{height:420px}
   .intro-big-num{font-size:8rem}
+  .story-frame{height:420px}
+  .story-media::before{width:110px;height:110px}
 
   .cat-grid{grid-template-columns:1fr 1fr}
   .cat-card:nth-child(1){grid-row:span 1;height:340px}
@@ -815,6 +830,9 @@ h1,h2,h3,h4,h5{font-family:var(--font-display);font-weight:700;line-height:1.08;
   .intro-imgs{height:320px}
   .intro-big-num{font-size:6rem;top:-40px;left:-20px}
   .intro-badge{padding:10px 14px;font-size:.9rem}
+  .story-frame{height:320px}
+  .story-media::before{display:none}
+  .story-prose > p:last-child{padding:16px 18px}
 
   .cat-grid{grid-template-columns:1fr}
   .cat-card{height:280px}
