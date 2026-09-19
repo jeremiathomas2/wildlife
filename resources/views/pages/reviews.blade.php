@@ -106,6 +106,11 @@
           <img src="https://api.goafricabookings.com/api/v1/operators/tanzania-daily-tours-safari/badge.svg" width="240" height="90" alt="GoAfricaBookings" loading="lazy" />
         </a>
       </div>
+      <div class="detail-card reveal">
+        <h2><i class="fab fa-google" style="color:var(--accent);margin-right:10px;"></i>Google Reviews</h2>
+        <p style="color:var(--muted);margin-bottom:22px;">Loved your tour? Rate your experience on our Google Business Profile — it helps fellow travelers discover Tanzania with confidence.</p>
+        <a href="https://share.google/h8wuXNZvpxZORnFZ3" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Rate us on Google</a>
+      </div>
     </div>
   </div>
 </section>
