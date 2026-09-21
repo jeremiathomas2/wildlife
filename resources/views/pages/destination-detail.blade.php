@@ -121,10 +121,10 @@
           <h2><span class="mm">03</span> Detailed Itinerary</h2>
           <p style="color:var(--muted);margin-bottom:24px;">A moment-by-moment breakdown of your journey.</p>
           <div class="itinerary">
-            @foreach($T['itinerary'] as $d)
+            @foreach($T['itinerary'] as $index => $d)
               <div class="itin-item">
                 <div class="itin-head">
-                  <span class="itin-label">{{ $d['label'] }}</span>
+                  <span class="itin-label">{{ $d['label'] ?? 'DAY ' . ($index + 1) }}</span>
                   <span class="itin-title">{{ $d['title'] }}</span>
                 </div>
                 <p class="itin-desc">{{ $d['desc'] }}</p>

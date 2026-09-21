@@ -327,29 +327,29 @@ function iconSelect(selected) {
 }
 
 const builders = {
-    qfactRow: (d) => `
+    qfactRow: (d, index) => `
         <div class="qfact-row rep-row" style="display:flex;gap:10px;margin-bottom:10px;align-items:flex-end;">
-            <div class="field" style="flex:1;margin-bottom:0;"><label>Label</label><input type="text" name="quick_facts[][label]" value="${escAttr(d && d.label)}" placeholder="Duration"></div>
-            <div class="field" style="flex:2;margin-bottom:0;"><label>Value</label><input type="text" name="quick_facts[][value]" value="${escAttr(d && d.value)}" placeholder="1 Day (approx. 7 hours)"></div>
+            <div class="field" style="flex:1;margin-bottom:0;"><label>Label</label><input type="text" name="quick_facts[${index}][label]" value="${escAttr(d && d.label)}" placeholder="Duration"></div>
+            <div class="field" style="flex:2;margin-bottom:0;"><label>Value</label><input type="text" name="quick_facts[${index}][value]" value="${escAttr(d && d.value)}" placeholder="1 Day (approx. 7 hours)"></div>
             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" title="Remove">✕</button>
         </div>`,
-    highlightRow: (d) => `
+    highlightRow: (d, index) => `
         <div class="highlight-row rep-row" style="display:flex;gap:10px;margin-bottom:10px;align-items:flex-end;">
-            <div class="field" style="flex:1;margin-bottom:0;"><label>Icon</label><select name="highlights[][icon]">${iconSelect(d && d.icon)}</select></div>
-            <div class="field" style="flex:3;margin-bottom:0;"><label>Text</label><input type="text" name="highlights[][text]" value="${escAttr(d && d.text)}" placeholder="Materuni Waterfall"></div>
+            <div class="field" style="flex:1;margin-bottom:0;"><label>Icon</label><select name="highlights[${index}][icon]">${iconSelect(d && d.icon)}</select></div>
+            <div class="field" style="flex:3;margin-bottom:0;"><label>Text</label><input type="text" name="highlights[${index}][text]" value="${escAttr(d && d.text)}" placeholder="Materuni Waterfall"></div>
             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" title="Remove">✕</button>
         </div>`,
-    itinRow: (d) => `
+    itinRow: (d, index) => `
         <div class="itin-row rep-row" style="border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;">
             <div class="form-row">
-                <div class="field"><label>Label / time</label><input type="text" name="itinerary[][label]" value="${escAttr(d && d.label)}" placeholder="DAY 01"></div>
-                <div class="field" style="flex:2;"><label>Title</label><input type="text" name="itinerary[][title]" value="${escAttr(d && d.title)}" placeholder="Pickup &amp; drive"></div>
+                <div class="field"><label>Label / time</label><input type="text" name="itinerary[${index}][label]" value="${escAttr(d && d.label)}" placeholder="DAY 01"></div>
+                <div class="field" style="flex:2;"><label>Title</label><input type="text" name="itinerary[${index}][title]" value="${escAttr(d && d.title)}" placeholder="Pickup &amp; drive"></div>
             </div>
-            <div class="field"><label>Description</label><textarea name="itinerary[][desc]" rows="2" placeholder="Hotel pickup and drive to…">${escAttr(d && d.desc)}</textarea></div>
+            <div class="field"><label>Description</label><textarea name="itinerary[${index}][desc]" rows="2" placeholder="Hotel pickup and drive to…">${escAttr(d && d.desc)}</textarea></div>
             <div class="form-row">
-                <div class="field"><label>Activities</label><input type="text" name="itinerary[][activities]" value="${escAttr(d && d.activities)}" placeholder="Transfer"></div>
-                <div class="field"><label>Meals</label><input type="text" name="itinerary[][meals]" value="${escAttr(d && d.meals)}" placeholder="Lunch"></div>
-                <div class="field"><label>Accommodation</label><input type="text" name="itinerary[][accommodation]" value="${escAttr(d && d.accommodation)}" placeholder="Lodge or Tented Camp"></div>
+                <div class="field"><label>Activities</label><input type="text" name="itinerary[${index}][activities]" value="${escAttr(d && d.activities)}" placeholder="Transfer"></div>
+                <div class="field"><label>Meals</label><input type="text" name="itinerary[${index}][meals]" value="${escAttr(d && d.meals)}" placeholder="Lunch"></div>
+                <div class="field"><label>Accommodation</label><input type="text" name="itinerary[${index}][accommodation]" value="${escAttr(d && d.accommodation)}" placeholder="Lodge or Tented Camp"></div>
             </div>
             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" style="margin-top:6px;">✕ Remove this day</button>
         </div>`,
@@ -363,25 +363,25 @@ const builders = {
             <input type="text" name="excluded[]" value="${escAttr(v)}" style="flex:1;" placeholder="Travel insurance">
             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" title="Remove">✕</button>
         </div>`,
-    faqRow: (d) => `
+    faqRow: (d, index) => `
         <div class="faq-row rep-row" style="border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;">
-            <div class="field"><label>Question</label><input type="text" name="faqs[][q]" value="${escAttr(d && d.q)}" placeholder="Is lunch included?"></div>
-            <div class="field"><label>Answer</label><textarea name="faqs[][a]" rows="2" placeholder="Yes, a traditional lunch is included.">${escAttr(d && d.a)}</textarea></div>
+            <div class="field"><label>Question</label><input type="text" name="faqs[${index}][q]" value="${escAttr(d && d.q)}" placeholder="Is lunch included?"></div>
+            <div class="field"><label>Answer</label><textarea name="faqs[${index}][a]" rows="2" placeholder="Yes, a traditional lunch is included.">${escAttr(d && d.a)}</textarea></div>
             <button type="button" class="btn btn-ghost" onclick="removeRow(this)">✕ Remove question</button>
         </div>`,
     galleryRow: (v) => `
         <div class="gallery-row rep-row" style="display:flex;gap:10px;margin-bottom:10px;align-items:center;">
-            <img src="${escAttr(v)}" alt="" onerror="this.style.display='none'" ${v ? 'style="width:70px;height:50px;object-fit:cover;border-radius:8px;flex:none;display:block;"' : 'style="display:none;width:70px;height:50px;object-fit:cover;border-radius:8px;flex:none;"'}>
+            <img src="" alt="" style="width:70px;height:50px;object-fit:cover;border-radius:8px;flex:none;display:none;">
             <input type="text" name="gallery[]" value="${escAttr(v)}" style="flex:1;" placeholder="https://…/photo.jpg" oninput="previewGalleryRow(this)">
             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" title="Remove">✕</button>
         </div>`,
-    reviewRow: (d) => `
+    reviewRow: (d, index) => `
         <div class="review-row rep-row" style="border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;">
             <div class="form-row">
-                <div class="field"><label>Author</label><input type="text" name="reviews[][author]" value="${escAttr(d && d.author)}" placeholder="Mark &amp; Julia T."></div>
-                <div class="field"><label>Country</label><input type="text" name="reviews[][country]" value="${escAttr(d && d.country)}" placeholder="Germany"></div>
+                <div class="field"><label>Author</label><input type="text" name="reviews[${index}][author]" value="${escAttr(d && d.author)}" placeholder="Mark &amp; Julia T."></div>
+                <div class="field"><label>Country</label><input type="text" name="reviews[${index}][country]" value="${escAttr(d && d.country)}" placeholder="Germany"></div>
             </div>
-            <div class="field"><label>Review text</label><textarea name="reviews[][text]" rows="3" placeholder="Superbly organised. The crater was a highlight of our entire trip.">${escAttr(d && d.text)}</textarea></div>
+            <div class="field"><label>Review text</label><textarea name="reviews[${index}][text]" rows="3" placeholder="Superbly organised. The crater was a highlight of our entire trip.">${escAttr(d && d.text)}</textarea></div>
             <button type="button" class="btn btn-ghost" onclick="removeRow(this)">✕ Remove review</button>
         </div>`,
 };
@@ -389,9 +389,11 @@ const builders = {
 function addRow(type, containerId, data) {
     const builder = builders[type];
     if (!builder) return;
+    const container = document.getElementById(containerId);
+    const index = container.children.length;
     const temp = document.createElement('div');
-    temp.innerHTML = builder(data);
-    document.getElementById(containerId).appendChild(temp.firstElementChild);
+    temp.innerHTML = builder(data, index);
+    container.appendChild(temp.firstElementChild);
 }
 
 function fillRepeater(containerId, type, rows) {
@@ -506,6 +508,18 @@ function openDestinationModal(id = null) {
         }
     }
     openModal('destModalBackdrop');
+
+    // Set editing flag and start session heartbeat when modal opens
+    fetch('/live/editing-destination', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+        },
+        body: JSON.stringify({}),
+        credentials: 'same-origin'
+    }).catch(() => {});
+    startSessionHeartbeat();
 }
 
 function editDestination(id) {
@@ -636,6 +650,53 @@ function executeDelete() {
     }
     closeModal('confirmModalBackdrop');
 }
+
+// Keep session alive while editing destination
+let sessionHeartbeat;
+function startSessionHeartbeat() {
+    // Ping every 4 minutes (240 seconds) to keep session alive
+    sessionHeartbeat = setInterval(() => {
+        fetch('/live/currency-switch', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+            },
+            body: JSON.stringify({ currency: 'USD' }),
+            credentials: 'same-origin'
+        }).catch(() => {
+            // Silently fail - this is just a heartbeat
+        });
+    }, 240000); // 4 minutes
+}
+
+function stopSessionHeartbeat() {
+    if (sessionHeartbeat) {
+        clearInterval(sessionHeartbeat);
+        sessionHeartbeat = null;
+    }
+}
+
+// Override closeModal to stop heartbeat and clear editing flag when destination modal closes
+const originalCloseModal = window.closeModal;
+window.closeModal = function(modalId) {
+    if (modalId === 'destModalBackdrop') {
+        stopSessionHeartbeat();
+        // Clear editing flag when modal closes
+        fetch('/live/editing-destination/clear', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+            },
+            body: JSON.stringify({}),
+            credentials: 'same-origin'
+        }).catch(() => {});
+    }
+    if (originalCloseModal) {
+        originalCloseModal(modalId);
+    }
+};
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {

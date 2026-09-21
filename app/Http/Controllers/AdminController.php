@@ -91,6 +91,18 @@ class AdminController extends Controller
         return response()->json(['success' => true, 'currency' => $validated['currency']]);
     }
 
+    public function setEditingDestination(Request $request)
+    {
+        session(['admin_editing_destination' => true]);
+        return response()->json(['success' => true]);
+    }
+
+    public function clearEditingDestination(Request $request)
+    {
+        session()->forget('admin_editing_destination');
+        return response()->json(['success' => true]);
+    }
+
     public function dashboard()
     {
         $totalBookings = Booking::count();
@@ -248,6 +260,9 @@ class AdminController extends Controller
 
         $currentAdmin = session('admin_user_id') ? AdminUser::find(session('admin_user_id')) : null;
 
+        // Set editing flag to prevent session timeout
+        session(['admin_editing_destination' => true]);
+
         return view('admin.destination-edit', $this->layoutData([
             'dest' => $dest,
             'merged' => $merged,
@@ -345,7 +360,6 @@ class AdminController extends Controller
         $structural = [
             'quick_facts' => 'normalizeQuickFactRows',
             'highlights' => 'normalizeHighlightRows',
-            'itinerary' => 'normalizeItineraryRows',
         ];
         foreach ($structural as $field => $method) {
             if (array_key_exists($field, $validated)) {
@@ -361,6 +375,9 @@ class AdminController extends Controller
         }
 
         $dest = Destination::create($validated);
+
+        // Clear editing flag after saving
+        session()->forget('admin_editing_destination');
 
         if ($request->expectsJson()) {
             return response()->json(['success' => true, 'destination' => $dest, 'message' => 'Destination added!']);
@@ -471,7 +488,6 @@ class AdminController extends Controller
         $structural = [
             'quick_facts' => 'normalizeQuickFactRows',
             'highlights' => 'normalizeHighlightRows',
-            'itinerary' => 'normalizeItineraryRows',
         ];
         foreach ($structural as $field => $method) {
             if (array_key_exists($field, $validated)) {
@@ -487,6 +503,9 @@ class AdminController extends Controller
         }
 
         $dest->save();
+
+        // Clear editing flag after saving
+        session()->forget('admin_editing_destination');
 
         if ($request->expectsJson()) {
             return response()->json(['success' => true, 'destination' => $dest, 'message' => 'Destination updated!']);

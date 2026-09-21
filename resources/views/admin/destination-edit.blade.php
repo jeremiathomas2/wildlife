@@ -131,15 +131,15 @@ $iconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users','fa-u
                     <label>Quick facts</label>
                 </div>
                 <div id="qfactRows">
-                    @forelse($dest->quick_facts ?: [] as $fact)
+                    @forelse($dest->quick_facts ?: [] as $index => $q)
                         <div class="qfact-row rep-row" style="display:flex;gap:10px;margin-bottom:10px;align-items:flex-end;">
                             <div class="field" style="flex:1;margin-bottom:0;">
                                 <label>Label</label>
-                                <input type="text" name="quick_facts[][label]" value="{{ $fact['label'] ?? '' }}" placeholder="Duration">
+                                <input type="text" name="quick_facts[{{ $index }}][label]" value="{{ $q['label'] ?? '' }}" placeholder="Duration">
                             </div>
                             <div class="field" style="flex:2;margin-bottom:0;">
                                 <label>Value</label>
-                                <input type="text" name="quick_facts[][value]" value="{{ $fact['value'] ?? '' }}" placeholder="1 Day (approx. 7 hours)">
+                                <input type="text" name="quick_facts[{{ $index }}][value]" value="{{ $q['value'] ?? '' }}" placeholder="1 Day (approx. 7 hours)">
                             </div>
                             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" title="Remove">✕</button>
                         </div>
@@ -147,11 +147,11 @@ $iconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users','fa-u
                         <div class="qfact-row rep-row" style="display:flex;gap:10px;margin-bottom:10px;align-items:flex-end;">
                             <div class="field" style="flex:1;margin-bottom:0;">
                                 <label>Label</label>
-                                <input type="text" name="quick_facts[][label]" placeholder="Duration">
+                                <input type="text" name="quick_facts[0][label]" placeholder="Duration">
                             </div>
                             <div class="field" style="flex:2;margin-bottom:0;">
                                 <label>Value</label>
-                                <input type="text" name="quick_facts[][value]" placeholder="1 Day (approx. 7 hours)">
+                                <input type="text" name="quick_facts[0][value]" placeholder="1 Day (approx. 7 hours)">
                             </div>
                             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" title="Remove">✕</button>
                         </div>
@@ -169,11 +169,11 @@ $iconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users','fa-u
             </div>
             <div style="padding:18px;">
                 <div id="highlightRows">
-                    @forelse($dest->highlights ?: [] as $h)
+                    @forelse($dest->highlights ?: [] as $index => $h)
                         <div class="highlight-row rep-row" style="display:flex;gap:10px;margin-bottom:10px;align-items:flex-end;">
                             <div class="field" style="flex:1;margin-bottom:0;">
                                 <label>Icon</label>
-                                <select name="highlights[][icon]">
+                                <select name="highlights[{{ $index }}][icon]">
                                     @foreach($iconOptions as $icon)
                                         <option value="{{ $icon }}" @selected(($h['icon'] ?? '') === $icon)>{{ $icon }}</option>
                                     @endforeach
@@ -181,7 +181,7 @@ $iconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users','fa-u
                             </div>
                             <div class="field" style="flex:3;margin-bottom:0;">
                                 <label>Text</label>
-                                <input type="text" name="highlights[][text]" value="{{ $h['text'] ?? '' }}" placeholder="Materuni Waterfall">
+                                <input type="text" name="highlights[{{ $index }}][text]" value="{{ $h['text'] ?? '' }}" placeholder="Materuni Waterfall">
                             </div>
                             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" title="Remove">✕</button>
                         </div>
@@ -189,7 +189,7 @@ $iconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users','fa-u
                         <div class="highlight-row rep-row" style="display:flex;gap:10px;margin-bottom:10px;align-items:flex-end;">
                             <div class="field" style="flex:1;margin-bottom:0;">
                                 <label>Icon</label>
-                                <select name="highlights[][icon]">
+                                <select name="highlights[0][icon]">
                                     @foreach($iconOptions as $icon)
                                         <option value="{{ $icon }}" @selected($icon === 'fa-leaf')>{{ $icon }}</option>
                                     @endforeach
@@ -197,7 +197,7 @@ $iconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users','fa-u
                             </div>
                             <div class="field" style="flex:3;margin-bottom:0;">
                                 <label>Text</label>
-                                <input type="text" name="highlights[][text]" placeholder="Materuni Waterfall">
+                                <input type="text" name="highlights[0][text]" placeholder="Materuni Waterfall">
                             </div>
                             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" title="Remove">✕</button>
                         </div>
@@ -215,34 +215,34 @@ $iconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users','fa-u
             </div>
             <div style="padding:18px;">
                 <div id="itinRows">
-                    @forelse($dest->itinerary ?: [] as $it)
+                    @forelse($dest->itinerary ?: [] as $index => $it)
                         <div class="itin-row rep-row" style="border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;">
                             <div class="form-row">
                                 <div class="field">
                                     <label>Label / time</label>
-                                    <input type="text" name="itinerary[][label]" value="{{ $it['label'] ?? '' }}" placeholder="09:00 AM">
+                                    <input type="text" name="itinerary[{{ $index }}][label]" value="{{ $it['label'] ?? '' }}" placeholder="09:00 AM">
                                 </div>
                                 <div class="field" style="flex:2;">
                                     <label>Title</label>
-                                    <input type="text" name="itinerary[][title]" value="{{ $it['title'] ?? '' }}" placeholder="Pickup">
+                                    <input type="text" name="itinerary[{{ $index }}][title]" value="{{ $it['title'] ?? '' }}" placeholder="Pickup">
                                 </div>
                             </div>
                             <div class="field">
                                 <label>Description</label>
-                                <textarea name="itinerary[][desc]" rows="2" placeholder="Hotel pickup and drive to…">{{ $it['desc'] ?? '' }}</textarea>
+                                <textarea name="itinerary[{{ $index }}][desc]" rows="2" placeholder="Hotel pickup and drive to…">{{ $it['desc'] ?? '' }}</textarea>
                             </div>
                             <div class="form-row">
                                 <div class="field">
                                     <label>Activities</label>
-                                    <input type="text" name="itinerary[][activities]" value="{{ $it['activities'] ?? '' }}" placeholder="Transfer">
+                                    <input type="text" name="itinerary[{{ $index }}][activities]" value="{{ $it['activities'] ?? '' }}" placeholder="Transfer">
                                 </div>
                                 <div class="field">
                                     <label>Meals</label>
-                                    <input type="text" name="itinerary[][meals]" value="{{ $it['meals'] ?? '' }}" placeholder="Lunch">
+                                    <input type="text" name="itinerary[{{ $index }}][meals]" value="{{ $it['meals'] ?? '' }}" placeholder="Lunch">
                                 </div>
                                 <div class="field">
                                     <label>Accommodation</label>
-                                    <input type="text" name="itinerary[][accommodation]" value="{{ $it['accommodation'] ?? '' }}" placeholder="Lodge or Tented Camp">
+                                    <input type="text" name="itinerary[{{ $index }}][accommodation]" value="{{ $it['accommodation'] ?? '' }}" placeholder="Lodge or Tented Camp">
                                 </div>
                             </div>
                             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" style="margin-top:6px;">✕ Remove this day</button>
@@ -252,29 +252,29 @@ $iconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users','fa-u
                             <div class="form-row">
                                 <div class="field">
                                     <label>Label / time</label>
-                                    <input type="text" name="itinerary[][label]" placeholder="DAY 01">
+                                    <input type="text" name="itinerary[0][label]" placeholder="DAY 01">
                                 </div>
                                 <div class="field" style="flex:2;">
                                     <label>Title</label>
-                                    <input type="text" name="itinerary[][title]" placeholder="Pickup &amp; drive">
+                                    <input type="text" name="itinerary[0][title]" placeholder="Pickup &amp; drive">
                                 </div>
                             </div>
                             <div class="field">
                                 <label>Description</label>
-                                <textarea name="itinerary[][desc]" rows="2" placeholder="Hotel pickup and drive to…"></textarea>
+                                <textarea name="itinerary[0][desc]" rows="2" placeholder="Hotel pickup and drive to…"></textarea>
                             </div>
                             <div class="form-row">
                                 <div class="field">
                                     <label>Activities</label>
-                                    <input type="text" name="itinerary[][activities]" placeholder="Transfer">
+                                    <input type="text" name="itinerary[0][activities]" placeholder="Transfer">
                                 </div>
                                 <div class="field">
                                     <label>Meals</label>
-                                    <input type="text" name="itinerary[][meals]" placeholder="Lunch">
+                                    <input type="text" name="itinerary[0][meals]" placeholder="Lunch">
                                 </div>
                                 <div class="field">
                                     <label>Accommodation</label>
-                                    <input type="text" name="itinerary[][accommodation]" placeholder="Lodge or Tented Camp">
+                                    <input type="text" name="itinerary[0][accommodation]" placeholder="Lodge or Tented Camp">
                                 </div>
                             </div>
                             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" style="margin-top:6px;">✕ Remove this day</button>
@@ -337,15 +337,15 @@ $iconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users','fa-u
             </div>
             <div style="padding:18px;">
                 <div id="faqRows">
-                    @forelse($dest->faqs ?: [] as $faq)
+                    @forelse($dest->faqs ?: [] as $index => $faq)
                         <div class="faq-row rep-row" style="border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;">
                             <div class="field">
                                 <label>Question</label>
-                                <input type="text" name="faqs[][q]" value="{{ $faq['q'] ?? '' }}" placeholder="Is lunch included?">
+                                <input type="text" name="faqs[{{ $index }}][q]" value="{{ $faq['q'] ?? '' }}" placeholder="Is lunch included?">
                             </div>
                             <div class="field">
                                 <label>Answer</label>
-                                <textarea name="faqs[][a]" rows="2" placeholder="Yes, a traditional lunch is included.">{{ $faq['a'] ?? '' }}</textarea>
+                                <textarea name="faqs[{{ $index }}][a]" rows="2" placeholder="Yes, a traditional lunch is included.">{{ $faq['a'] ?? '' }}</textarea>
                             </div>
                             <button type="button" class="btn btn-ghost" onclick="removeRow(this)">✕ Remove question</button>
                         </div>
@@ -353,11 +353,11 @@ $iconOptions = ['fa-leaf','fa-water','fa-mountain','fa-mug-hot','fa-users','fa-u
                         <div class="faq-row rep-row" style="border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;">
                             <div class="field">
                                 <label>Question</label>
-                                <input type="text" name="faqs[][q]" placeholder="Is lunch included?">
+                                <input type="text" name="faqs[0][q]" placeholder="Is lunch included?">
                             </div>
                             <div class="field">
                                 <label>Answer</label>
-                                <textarea name="faqs[][a]" rows="2" placeholder="Yes, a traditional lunch is included."></textarea>
+                                <textarea name="faqs[0][a]" rows="2" placeholder="Yes, a traditional lunch is included."></textarea>
                             </div>
                             <button type="button" class="btn btn-ghost" onclick="removeRow(this)">✕ Remove question</button>
                         </div>
@@ -512,29 +512,29 @@ function iconSelect(selected = 'fa-leaf') {
 }
 
 const builders = {
-    qfactRow: () => `
+    qfactRow: (index) => `
         <div class="qfact-row rep-row" style="display:flex;gap:10px;margin-bottom:10px;align-items:flex-end;">
-            <div class="field" style="flex:1;margin-bottom:0;"><label>Label</label><input type="text" name="quick_facts[][label]" placeholder="Duration"></div>
-            <div class="field" style="flex:2;margin-bottom:0;"><label>Value</label><input type="text" name="quick_facts[][value]" placeholder="1 Day (approx. 7 hours)"></div>
+            <div class="field" style="flex:1;margin-bottom:0;"><label>Label</label><input type="text" name="quick_facts[${index}][label]" placeholder="Duration"></div>
+            <div class="field" style="flex:2;margin-bottom:0;"><label>Value</label><input type="text" name="quick_facts[${index}][value]" placeholder="1 Day (approx. 7 hours)"></div>
             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" title="Remove">✕</button>
         </div>`,
-    highlightRow: () => `
+    highlightRow: (index) => `
         <div class="highlight-row rep-row" style="display:flex;gap:10px;margin-bottom:10px;align-items:flex-end;">
-            <div class="field" style="flex:1;margin-bottom:0;"><label>Icon</label><select name="highlights[][icon]">${iconSelect()}</select></div>
-            <div class="field" style="flex:3;margin-bottom:0;"><label>Text</label><input type="text" name="highlights[][text]" placeholder="Materuni Waterfall"></div>
+            <div class="field" style="flex:1;margin-bottom:0;"><label>Icon</label><select name="highlights[${index}][icon]">${iconSelect()}</select></div>
+            <div class="field" style="flex:3;margin-bottom:0;"><label>Text</label><input type="text" name="highlights[${index}][text]" placeholder="Materuni Waterfall"></div>
             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" title="Remove">✕</button>
         </div>`,
-    itinRow: () => `
+    itinRow: (index) => `
         <div class="itin-row rep-row" style="border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;">
             <div class="form-row">
-                <div class="field"><label>Label / time</label><input type="text" name="itinerary[][label]" placeholder="DAY 01"></div>
-                <div class="field" style="flex:2;"><label>Title</label><input type="text" name="itinerary[][title]" placeholder="Pickup &amp; drive"></div>
+                <div class="field"><label>Label / time</label><input type="text" name="itinerary[${index}][label]" placeholder="DAY 01"></div>
+                <div class="field" style="flex:2;"><label>Title</label><input type="text" name="itinerary[${index}][title]" placeholder="Pickup &amp; drive"></div>
             </div>
-            <div class="field"><label>Description</label><textarea name="itinerary[][desc]" rows="2" placeholder="Hotel pickup and drive to…"></textarea></div>
+            <div class="field"><label>Description</label><textarea name="itinerary[${index}][desc]" rows="2" placeholder="Hotel pickup and drive to…"></textarea></div>
             <div class="form-row">
-                <div class="field"><label>Activities</label><input type="text" name="itinerary[][activities]" placeholder="Transfer"></div>
-                <div class="field"><label>Meals</label><input type="text" name="itinerary[][meals]" placeholder="Lunch"></div>
-                <div class="field"><label>Accommodation</label><input type="text" name="itinerary[][accommodation]" placeholder="Lodge or Tented Camp"></div>
+                <div class="field"><label>Activities</label><input type="text" name="itinerary[${index}][activities]" placeholder="Transfer"></div>
+                <div class="field"><label>Meals</label><input type="text" name="itinerary[${index}][meals]" placeholder="Lunch"></div>
+                <div class="field"><label>Accommodation</label><input type="text" name="itinerary[${index}][accommodation]" placeholder="Lodge or Tented Camp"></div>
             </div>
             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" style="margin-top:6px;">✕ Remove this day</button>
         </div>`,
@@ -548,10 +548,10 @@ const builders = {
             <input type="text" name="excluded[]" style="flex:1;" placeholder="Travel insurance">
             <button type="button" class="btn btn-ghost" onclick="removeRow(this)" title="Remove">✕</button>
         </div>`,
-    faqRow: () => `
+    faqRow: (index) => `
         <div class="faq-row rep-row" style="border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;">
-            <div class="field"><label>Question</label><input type="text" name="faqs[][q]" placeholder="Is lunch included?"></div>
-            <div class="field"><label>Answer</label><textarea name="faqs[][a]" rows="2" placeholder="Yes, a traditional lunch is included."></textarea></div>
+            <div class="field"><label>Question</label><input type="text" name="faqs[${index}][q]" placeholder="Is lunch included?"></div>
+            <div class="field"><label>Answer</label><textarea name="faqs[${index}][a]" rows="2" placeholder="Yes, a traditional lunch is included."></textarea></div>
             <button type="button" class="btn btn-ghost" onclick="removeRow(this)">✕ Remove question</button>
         </div>`,
     galleryRow: () => `
@@ -574,10 +574,44 @@ const builders = {
 function addRow(type, containerId) {
     const builder = builders[type];
     if (!builder) return;
+    const container = document.getElementById(containerId);
+    const index = container.children.length;
     const temp = document.createElement('div');
-    temp.innerHTML = builder();
-    document.getElementById(containerId).appendChild(temp.firstElementChild);
+    temp.innerHTML = builder(index);
+    container.appendChild(temp.firstElementChild);
 }
+
+// Keep session alive while editing destination
+let sessionHeartbeat;
+function startSessionHeartbeat() {
+    // Ping every 4 minutes (240 seconds) to keep session alive
+    sessionHeartbeat = setInterval(() => {
+        fetch('/live/currency-switch', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+            },
+            body: JSON.stringify({ currency: 'USD' }),
+            credentials: 'same-origin'
+        }).catch(() => {
+            // Silently fail - this is just a heartbeat
+        });
+    }, 240000); // 4 minutes
+}
+
+function stopSessionHeartbeat() {
+    if (sessionHeartbeat) {
+        clearInterval(sessionHeartbeat);
+        sessionHeartbeat = null;
+    }
+}
+
+// Start heartbeat when page loads
+startSessionHeartbeat();
+
+// Stop heartbeat when leaving the page
+window.addEventListener('beforeunload', stopSessionHeartbeat);
 </script>
 
 @if(session('success'))

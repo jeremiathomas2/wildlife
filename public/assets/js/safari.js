@@ -216,9 +216,7 @@
   function stopHero() { if (heroTimer) { clearInterval(heroTimer); heroTimer = null; } }
   function startHero() {
     stopHero();
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      heroTimer = setInterval(heroNext, 10000);
-    }
+    heroTimer = setInterval(heroNext, 10000);
   }
   function initHero() {
     renderHero();

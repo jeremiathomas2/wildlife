@@ -310,6 +310,8 @@ Route::prefix('live')->name('admin.')->middleware(AdminAuth::class)->group(funct
     Route::put('/profile', [AdminController::class, 'updateProfile'])->name('profile.update');
 
     Route::post('/currency-switch', [AdminController::class, 'currencySwitch'])->name('currency.switch');
+    Route::post('/editing-destination', [AdminController::class, 'setEditingDestination'])->name('editing-destination.set');
+    Route::post('/editing-destination/clear', [AdminController::class, 'clearEditingDestination'])->name('editing-destination.clear');
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
 });
 
