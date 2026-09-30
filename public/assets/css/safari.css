@@ -28,7 +28,7 @@
   --shadow-lg:0 40px 80px -20px rgba(35,18,7,0.38);
   --t:cubic-bezier(.25,.46,.45,.94);
   --header-h:72px;
-  --safe-bot:0px;
+  --bar-h:0px;
 }
 
 /* ============================== RESET ============================== */
@@ -733,6 +733,15 @@ h1,h2,h3,h4,h5{font-family:var(--font-display);font-weight:700;line-height:1.08;
 .wa-float::after{content:'';position:absolute;inset:-4px;border:2px solid #25D366;border-radius:50%;opacity:.5;animation:waPulse 2s infinite}
 @keyframes waPulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.4);opacity:0}}
 
+/* ============================== LIVE CHAT (tawk.to) ============================== */
+/* tawk's public JS API cannot reposition its own launcher, so we suppress that launcher
+   and drive the widget from our own button instead. Hidden until JS gets Tawk_API.onLoad. */
+#tawk-container>a{display:none}
+.tawk-float{position:fixed;bottom:96px;left:28px;width:56px;height:56px;background:var(--primary);color:var(--accent);border-radius:50%;display:none;align-items:center;justify-content:center;font-size:1.35rem;z-index:1550;box-shadow:0 10px 28px rgba(35,18,7,.35);transition:transform .3s,background .3s,color .3s}
+.tawk-float.ready{display:flex}
+.tawk-float:hover{transform:scale(1.1);box-shadow:0 14px 34px rgba(35,18,7,.45)}
+.tawk-float.active{background:var(--accent);color:var(--primary-dark)}
+
 /* ============================== BACK TO TOP ============================== */
 .to-top{position:fixed;bottom:28px;right:28px;width:54px;height:54px;background:var(--accent);color:var(--primary-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.05rem;z-index:1500;box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;transform:translateY(20px);transition:all .35s}
 .to-top.show{opacity:1;visibility:visible;transform:translateY(0)}
@@ -899,15 +908,18 @@ h1,h2,h3,h4,h5{font-family:var(--font-display);font-weight:700;line-height:1.08;
   .tour-hero{height:240px}
   .tour-subnav button{padding:13px 14px;font-size:.6rem}
 
-  .wa-float{bottom:18px;left:18px;width:50px;height:50px;font-size:1.4rem}
-  .to-top{bottom:90px;right:18px;width:48px;height:48px}
-  .toast-wrap{left:16px;right:16px;bottom:90px}
+  /* The mobile bar already offers WhatsApp, so the FAB is dropped here and
+     .tawk-float takes over the bottom-left gutter. */
+  .wa-float{display:none}
+  .tawk-float{bottom:calc(var(--bar-h) + 18px);left:18px;width:50px;height:50px;font-size:1.2rem}
+  .to-top{bottom:calc(var(--bar-h) + 18px);right:18px;width:48px;height:48px}
+  .toast-wrap{left:16px;right:16px;bottom:calc(var(--bar-h) + 18px)}
   .toast{max-width:100%}
 
   /* Mobile action bar */
-  body{padding-bottom:var(--safe-bot)}
+  body{padding-bottom:var(--bar-h)}
   .mobile-bar{display:flex}
-  .wa-float,.to-top{display:flex}
+  .to-top{display:flex}
   .lb-counter{bottom:0;position:static;margin-top:10px}
   .lb-caption{margin-top:10px}
 }

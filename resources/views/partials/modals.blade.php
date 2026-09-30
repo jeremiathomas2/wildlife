@@ -195,6 +195,11 @@
   <i class="fab fa-whatsapp"></i>
 </a>
 
+<!-- LIVE CHAT (tawk.to) - replaces tawk's own launcher, which JS cannot reposition -->
+<button type="button" class="tawk-float" id="tawkFloat" aria-label="Chat with us live" aria-expanded="false" aria-controls="tawk-container">
+  <i class="fas fa-comment-dots"></i>
+</button>
+
 <!-- MOBILE ACTION BAR -->
 <div class="mobile-bar" aria-label="Quick actions">
   <button id="mobileSearch" class="mba-search" aria-label="Search tours"><i class="fas fa-search"></i>Search</button>

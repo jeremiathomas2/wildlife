@@ -806,8 +806,43 @@
     gtag('js', new Date());
     gtag('config', SITE.ga, { anonymize_ip: true });
   }
+  /* tawk.to positions its own launcher and the public JS API cannot move it, so the launcher
+     is suppressed and #tawkFloat drives the widget instead. */
+  function tawkBtn() { return $('#tawkFloat'); }
+  function setTawkActive(on) {
+    var b = tawkBtn();
+    if (!b) return;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-expanded', on ? 'true' : 'false');
+  }
+  function initTawkLauncher() {
+    var btn = tawkBtn();
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var api = window.Tawk_API;
+      if (!api) return;
+      if (api.isChatMaximized()) { api.minimize(); return; }
+      api.showWidget();
+      api.maximize();
+    });
+  }
   function loadTawk() {
     if (document.getElementById('tawk-script') || window.Tawk_API) return;
+    var api = window.Tawk_API = window.Tawk_API || {};
+    /* customStyle must be set before the widget script downloads. Sits above the mobile
+       action bar (z-index 1600) but below modals and the lightbox (5000). */
+    api.customStyle = { zIndex: 2100 };
+    api.onBeforeLoad = function () { api.hideWidget(); };
+    api.onLoad = function () {
+      var b = tawkBtn();
+      if (b) b.classList.add('ready');
+      setTawkActive(api.isChatMaximized());
+    };
+    api.onChatMaximized = function () { setTawkActive(true); };
+    api.onChatMinimized = function () {
+      setTawkActive(false);
+      if (!api.isChatHidden()) api.hideWidget();
+    };
     var s = document.createElement('script');
     s.id = 'tawk-script';
     s.async = true;
@@ -1015,6 +1050,27 @@
     var yr = $('#footerYear'); if (yr) yr.textContent = new Date().getFullYear();
   }
 
+  /* ============================== MOBILE ACTION BAR ============================== */
+  /* The bar is position:fixed, so its height is measured and published as --bar-h for
+     everything that has to clear it. Off desktop it is display:none and measures 0, which
+     switches the mobile offsets back off on their own. */
+  var lastBarH = -1;
+  function syncBarHeight() {
+    var bar = $('.mobile-bar');
+    if (!bar) return;
+    var h = bar.offsetHeight;
+    if (h === lastBarH) return;
+    lastBarH = h;
+    document.documentElement.style.setProperty('--bar-h', h + 'px');
+  }
+  function initBarHeight() {
+    syncBarHeight();
+    var bar = $('.mobile-bar');
+    if (bar && window.ResizeObserver) new ResizeObserver(syncBarHeight).observe(bar);
+    window.addEventListener('resize', syncBarHeight);
+    window.addEventListener('orientationchange', syncBarHeight);
+  }
+
   /* ============================== INIT ============================== */
   function init() {
     bindMobileNav();
@@ -1028,6 +1084,8 @@
     observeReveals();
     setTimeout(animateCounters, 400);
     loadRates();
+    initBarHeight();
+    initTawkLauncher();
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
