@@ -477,72 +477,7 @@ class SafariContent
                 'reviews' => [['author' => 'David K.', 'country' => 'USA', 'text' => 'Perfect introduction to Kilimanjaro. Well-paced and our guide was excellent.']],
             ],
 
-            '3-day-tarangire-ngorongoro-safari' => [
-                'id' => 'tarangire-ngorongoro-3day',
-                'category' => 'safari',
-                'location' => 'Tarangire • Ngorongoro • Lake Manyara',
-                'durationDays' => 3,
-                'price' => 650,
-                'rating' => '4.9',
-                'popularity' => 98,
-                'db' => null,
-                'overview' => 'A classic northern circuit safari covering Tarangire National Park, the Ngorongoro Crater and a Lake Manyara viewpoint with optional Mto wa Mbu cultural visit. Departs from Moshi or Arusha.',
-                'quickFacts' => ['Duration' => '3 Days / 2 Nights', 'Location' => 'Tarangire • Ngorongoro • Lake Manyara', 'Activity Level' => 'Easy', 'Group Type' => 'Private 4x4', 'Best Time' => 'June–October, Jan–Feb', 'Start Point' => 'Moshi or Arusha'],
-                'highlights' => [['icon' => 'fa-elephant', 'text' => 'Tarangire Elephants'], ['icon' => 'fa-mountain', 'text' => 'Ngorongoro Crater'], ['icon' => 'fa-binoculars', 'text' => 'Big Five'], ['icon' => 'fa-users', 'text' => 'Mto wa Mbu Culture'], ['icon' => 'fa-camera', 'text' => 'Scenic Viewpoints'], ['icon' => 'fa-truck-monster', 'text' => 'Private 4x4']],
-                'itinerary' => [
-                    ['label' => 'DAY 01', 'title' => 'Moshi / Arusha → Tarangire National Park', 'desc' => 'Morning pickup and drive to Tarangire, famous for its elephant herds and baobabs. Full afternoon game drive. Dinner and overnight at your lodge/camp.', 'activities' => 'Game drive', 'meals' => 'Lunch, Dinner', 'accommodation' => 'Lodge or Tented Camp'],
-                    ['label' => 'DAY 02', 'title' => 'Ngorongoro Crater', 'desc' => 'Early descent into the Ngorongoro Crater for a full day of wildlife viewing — lions, elephants, rhino and more. Picnic lunch on the crater floor. Overnight near Karatu or the crater rim.', 'activities' => 'Crater tour, game drive', 'meals' => 'Breakfast, Lunch, Dinner', 'accommodation' => 'Lodge or Tented Camp'],
-                    ['label' => 'DAY 03', 'title' => 'Lake Manyara Viewpoint / Mto wa Mbu → Moshi / Arusha', 'desc' => 'Morning visit to a Lake Manyara viewpoint and optional Mto wa Mbu cultural walk. Return to Moshi or Arusha by evening.', 'activities' => 'Viewpoint, cultural walk', 'meals' => 'Breakfast, Lunch', 'accommodation' => '—'],
-                ],
-                'included' => ['Private 4x4 safari vehicle with pop-up roof', 'Professional English-speaking guide', 'All park entry fees', 'Ngorongoro Crater service fee', '2 nights accommodation (lodge or tented camp)', 'Meals as per itinerary', 'Drinking water in vehicle', 'Government taxes'],
-                'excluded' => ['International flights', 'Visa fees', 'Travel insurance', 'Tips for guide and cook', 'Alcoholic beverages', 'Personal expenses', 'Optional activities (balloon safari, etc.)'],
-                'faqs' => [
-                    ['q' => 'Can the safari start in Moshi?', 'a' => 'Yes, we offer pickup from both Moshi and Arusha at no extra cost.'],
-                    ['q' => 'Can accommodation be upgraded?', 'a' => 'Yes, we can upgrade to luxury lodges on request. Please contact us for pricing.'],
-                    ['q' => 'Is the safari private?', 'a' => 'Yes, this is a private safari — only your group in the vehicle.'],
-                    ['q' => 'Are park fees included?', 'a' => 'Yes, all park fees and the Ngorongoro Crater service fee are included.'],
-                    ['q' => 'Can the itinerary be customized?', 'a' => 'Yes. We can extend to the Serengeti, add days or adjust the route to suit your interests.'],
-                    ['q' => 'What animals can we expect to see?', 'a' => 'Tarangire: elephants, giraffes, zebras, lions. Ngorongoro: lions, elephants, rhino, hippos, flamingos. Wildlife sightings are never guaranteed, but the northern circuit offers excellent odds.'],
-                ],
-                'gallery' => ['safariNgorongoro', 'safariSerengeti', 'galleryWildlife2'],
-                'reviews' => [
-                    ['author' => 'Mark & Julia T.', 'country' => 'Germany', 'text' => 'Superbly organised. The crater was a highlight of our entire trip.'],
-                    ['author' => 'Priya S.', 'country' => 'India', 'text' => 'Our guide was amazing — so knowledgeable. Highly recommend this safari.'],
-                ],
-            ],
 
-            'serengeti-ngorongoro-safari' => [
-                'id' => 'serengeti-safari',
-                'category' => 'safari',
-                'location' => 'Serengeti • Ngorongoro',
-                'durationDays' => 5,
-                'price' => 1250,
-                'rating' => '5.0',
-                'popularity' => 96,
-                'db' => ['id' => 5, 'adult' => 800, 'child' => 400],
-                'overview' => 'The ultimate northern circuit safari. Tarangire, the Serengeti plains and the Ngorongoro Crater — five days of extraordinary wildlife viewing with a private guide and 4x4 vehicle.',
-                'quickFacts' => ['Duration' => '5 Days / 4 Nights', 'Location' => 'Serengeti • Ngorongoro • Tarangire', 'Activity Level' => 'Easy', 'Group Type' => 'Private 4x4', 'Best Time' => 'June–October', 'Start Point' => 'Moshi or Arusha'],
-                'highlights' => [['icon' => 'fa-lion', 'text' => 'Big Cats'], ['icon' => 'fa-paw', 'text' => 'Great Migration'], ['icon' => 'fa-mountain', 'text' => 'Ngorongoro Crater'], ['icon' => 'fa-elephant', 'text' => 'Tarangire'], ['icon' => 'fa-camera', 'text' => 'Photography'], ['icon' => 'fa-sun', 'text' => 'Sundowners']],
-                'itinerary' => [
-                    ['label' => 'DAY 01', 'title' => 'Moshi / Arusha → Tarangire', 'desc' => 'Pickup and drive to Tarangire National Park for an afternoon game drive.', 'activities' => 'Game drive', 'meals' => 'Lunch, Dinner', 'accommodation' => 'Lodge/Tented Camp'],
-                    ['label' => 'DAY 02', 'title' => 'Tarangire → Serengeti', 'desc' => 'Drive to the Serengeti via Naabi Hill, with game viewing en route.', 'activities' => 'Game drive', 'meals' => 'Breakfast, Lunch, Dinner', 'accommodation' => 'Serengeti Lodge/Camp'],
-                    ['label' => 'DAY 03', 'title' => 'Full Day Serengeti', 'desc' => 'Full day exploring the Serengeti plains — big cats, herds and endless horizons.', 'activities' => 'Game drive', 'meals' => 'Breakfast, Lunch, Dinner', 'accommodation' => 'Serengeti Lodge/Camp'],
-                    ['label' => 'DAY 04', 'title' => 'Serengeti → Ngorongoro', 'desc' => 'Morning game drive, then transfer to the Ngorongoro highlands.', 'activities' => 'Game drive, transfer', 'meals' => 'Breakfast, Lunch, Dinner', 'accommodation' => 'Ngorongoro Lodge/Camp'],
-                    ['label' => 'DAY 05', 'title' => 'Ngorongoro Crater → Moshi / Arusha', 'desc' => 'Descend into the crater for a full morning of wildlife viewing before returning.', 'activities' => 'Crater tour', 'meals' => 'Breakfast, Lunch', 'accommodation' => '—'],
-                ],
-                'included' => ['Private 4x4 safari vehicle', 'Professional guide', 'All park entry fees', 'Ngorongoro Crater service fee', '4 nights accommodation', 'Meals as per itinerary', 'Drinking water', 'Government taxes'],
-                'excluded' => ['International flights', 'Visa fees', 'Travel insurance', 'Tips', 'Alcoholic beverages', 'Personal expenses', 'Optional balloon safari'],
-                'faqs' => [
-                    ['q' => 'Is this safari private?', 'a' => 'Yes, fully private for your group.'],
-                    ['q' => 'Can I add Zanzibar?', 'a' => 'Yes — we can add a Zanzibar beach extension after the safari.'],
-                    ['q' => 'Are park fees included?', 'a' => 'Yes, all park fees and crater service fees are included.'],
-                    ['q' => 'What is the best time for the migration?', 'a' => 'The Great Migration is typically in the Serengeti from June to October, and calving season is January to February.'],
-                    ['q' => 'Can children join?', 'a' => 'Yes, we welcome families. Please contact us for age-appropriate recommendations.'],
-                    ['q' => 'Can the itinerary be customized?', 'a' => 'Absolutely — this is a starting point. Tell us your interests and we\'ll tailor it.'],
-                ],
-                'gallery' => ['safariSerengeti', 'safariNgorongoro', 'galleryWildlife2'],
-                'reviews' => [['author' => 'Amelia R.', 'country' => 'UK', 'text' => 'Truly unforgettable. Every detail was handled beautifully.']],
-            ],
 
             'ngorongoro-crater-safari' => [
                 'id' => 'ngorongoro-safari',
@@ -573,70 +508,8 @@ class SafariContent
                 'reviews' => [['author' => 'Rob H.', 'country' => 'Australia', 'text' => 'The crater is magical. We saw four of the Big Five in one morning.']],
             ],
 
-            'zanzibar-escape' => [
-                'id' => 'zanzibar-escape',
-                'category' => 'beach',
-                'location' => 'Zanzibar',
-                'durationDays' => 4,
-                'price' => 520,
-                'rating' => '4.9',
-                'popularity' => 85,
-                'db' => null,
-                'overview' => 'A relaxed Zanzibar escape — historic Stone Town, spice farms, a sunset dhow cruise and plenty of beach time on the Indian Ocean.',
-                'quickFacts' => ['Duration' => '4 Days / 3 Nights', 'Location' => 'Zanzibar', 'Activity Level' => 'Easy', 'Group Type' => 'Private', 'Best Time' => 'June–October', 'Start Point' => 'Zanzibar Airport'],
-                'highlights' => [['icon' => 'fa-umbrella-beach', 'text' => 'Beaches'], ['icon' => 'fa-landmark', 'text' => 'Stone Town'], ['icon' => 'fa-seedling', 'text' => 'Spice Tour'], ['icon' => 'fa-ship', 'text' => 'Sunset Dhow'], ['icon' => 'fa-fish', 'text' => 'Snorkelling'], ['icon' => 'fa-camera', 'text' => 'Photography']],
-                'itinerary' => [
-                    ['label' => 'DAY 01', 'title' => 'Arrive Zanzibar', 'desc' => 'Airport pickup and transfer to your beach resort.', 'activities' => 'Transfer', 'meals' => 'Dinner', 'accommodation' => 'Beach Resort'],
-                    ['label' => 'DAY 02', 'title' => 'Stone Town & Spice Tour', 'desc' => 'Guided tour of Stone Town and a spice farm.', 'activities' => 'Guided tour', 'meals' => 'Breakfast, Lunch', 'accommodation' => 'Beach Resort'],
-                    ['label' => 'DAY 03', 'title' => 'Snorkelling & Sunset Dhow', 'desc' => 'Snorkelling trip and a sunset dhow cruise.', 'activities' => 'Snorkelling, dhow', 'meals' => 'Breakfast, Lunch', 'accommodation' => 'Beach Resort'],
-                    ['label' => 'DAY 04', 'title' => 'Departure', 'desc' => 'Transfer to the airport.', 'activities' => 'Transfer', 'meals' => 'Breakfast', 'accommodation' => '—'],
-                ],
-                'included' => ['Airport transfers', '3 nights beach resort accommodation', 'Daily breakfast', 'Stone Town & spice tour', 'Snorkelling trip', 'Sunset dhow cruise', 'Government taxes'],
-                'excluded' => ['International flights', 'Visa', 'Insurance', 'Tips', 'Drinks', 'Personal expenses', 'Optional activities'],
-                'faqs' => [
-                    ['q' => 'Can this combine with a safari?', 'a' => 'Yes — the perfect combination is a northern circuit safari followed by a Zanzibar beach escape.'],
-                    ['q' => 'What is the best time to visit?', 'a' => 'June to October offers the driest and most comfortable weather.'],
-                    ['q' => 'Is it family friendly?', 'a' => 'Yes, Zanzibar is a great destination for families.'],
-                    ['q' => 'Do I need a visa?', 'a' => 'Most nationalities require a Tanzania visa. Please check with your local embassy.'],
-                    ['q' => 'Are meals included?', 'a' => 'Breakfast is included daily. Other meals can be added on request.'],
-                ],
-                'gallery' => ['zanzibarBeach', 'galleryLandscape1', 'galleryPeople1'],
-                'reviews' => [['author' => 'Sophie L.', 'country' => 'France', 'text' => 'The perfect end to our Tanzania trip. Stone Town was fascinating.']],
-            ],
 
-            'kilimanjaro-trek-machame' => [
-                'id' => 'kilimanjaro-trek',
-                'category' => 'kilimanjaro',
-                'location' => 'Machame Route, Kilimanjaro',
-                'durationDays' => 7,
-                'price' => 1850,
-                'rating' => '5.0',
-                'popularity' => 88,
-                'db' => null,
-                'overview' => 'The Machame Route is the most scenic route on Kilimanjaro, with excellent acclimatisation and a high summit success rate. Seven days through rainforest, moorland, alpine desert and the arctic summit zone.',
-                'quickFacts' => ['Duration' => '7 Days / 6 Nights', 'Location' => 'Machame Route, Kilimanjaro', 'Activity Level' => 'Challenging', 'Group Type' => 'Private or small group', 'Best Time' => 'Jan–Mar, Jun–Oct', 'Start Point' => 'Moshi'],
-                'highlights' => [['icon' => 'fa-mountain', 'text' => 'Uhuru Peak 5,895m'], ['icon' => 'fa-tree', 'text' => 'Rainforest Zone'], ['icon' => 'fa-mountain-sun', 'text' => 'Alpine Desert'], ['icon' => 'fa-snowflake', 'text' => 'Arctic Summit'], ['icon' => 'fa-hiking', 'text' => 'Expert Crews'], ['icon' => 'fa-camera', 'text' => 'Stunning Views']],
-                'itinerary' => [
-                    ['label' => 'DAY 01', 'title' => 'Machame Gate → Machame Camp', 'desc' => 'Begin your trek through the rainforest (1,830m to 3,000m).', 'activities' => 'Trekking', 'meals' => 'All meals', 'accommodation' => 'Machame Camp'],
-                    ['label' => 'DAY 02', 'title' => 'Machame Camp → Shira Camp', 'desc' => 'Trek through moorland to Shira Plateau (3,840m).', 'activities' => 'Trekking', 'meals' => 'All meals', 'accommodation' => 'Shira Camp'],
-                    ['label' => 'DAY 03', 'title' => 'Shira Camp → Lava Tower → Barranco', 'desc' => 'Acclimatisation day via Lava Tower (4,630m).', 'activities' => 'Trekking', 'meals' => 'All meals', 'accommodation' => 'Barranco Camp'],
-                    ['label' => 'DAY 04', 'title' => 'Barranco Camp → Karanga Camp', 'desc' => 'Trek through alpine desert to Karanga (4,035m).', 'activities' => 'Trekking', 'meals' => 'All meals', 'accommodation' => 'Karanga Camp'],
-                    ['label' => 'DAY 05', 'title' => 'Karanga Camp → Barafu Camp', 'desc' => 'Trek to Barafu Base Camp (4,673m), prepare for summit.', 'activities' => 'Trekking', 'meals' => 'All meals', 'accommodation' => 'Barafu Camp'],
-                    ['label' => 'DAY 06', 'title' => 'Summit Day → Mweka Camp', 'desc' => 'Reach Uhuru Peak (5,895m) at sunrise, then descend to Mweka.', 'activities' => 'Summit, descent', 'meals' => 'All meals', 'accommodation' => 'Mweka Camp'],
-                    ['label' => 'DAY 07', 'title' => 'Mweka Camp → Moshi', 'desc' => 'Descend through rainforest and receive your summit certificate.', 'activities' => 'Trekking, transfer', 'meals' => 'Breakfast', 'accommodation' => '—'],
-                ],
-                'included' => ['Park fees and rescue fees', 'Professional mountain guides', 'Porters and cook', 'Camping equipment (tents, mats)', 'All meals on the mountain', 'Drinking water', 'Transfers', 'Summit certificate'],
-                'excluded' => ['International flights', 'Visa', 'Insurance', 'Personal hiking gear', 'Tips for crew', 'Personal expenses'],
-                'faqs' => [
-                    ['q' => 'How difficult is the Machame Route?', 'a' => 'It\'s a challenging trek suitable for reasonably fit hikers. The main challenge is altitude, which is why we use a 7-day itinerary for better acclimatisation.'],
-                    ['q' => 'Do I need previous hiking experience?', 'a' => 'No, but a good level of fitness and some training is strongly recommended.'],
-                    ['q' => 'What gear do I need?', 'a' => 'Warm layers, waterproof jacket, hiking boots, sleeping bag, headlamp, sun protection and personal medication.'],
-                    ['q' => 'What is the success rate?', 'a' => 'The Machame Route has a high summit success rate, especially on the 7-day itinerary.'],
-                    ['q' => 'Is travel insurance required?', 'a' => 'Yes, comprehensive travel insurance with high-altitude coverage is mandatory.'],
-                ],
-                'gallery' => ['safariKilimanjaro', 'tourKiliDay', 'galleryLandscape2'],
-                'reviews' => [['author' => 'James H.', 'country' => 'USA', 'text' => 'Summiting at sunrise was the experience of a lifetime. The crew was outstanding.']],
-            ],
+
         ];
     }
 
@@ -675,9 +548,12 @@ class SafariContent
             } elseif (isset($bySlug[$key])) {
                 $d = $bySlug[$key];
             }
-            if ($d) {
-                $claimed[(int) $d->id] = true;
+            // No CMS row means this entry must not become a tour: the CMS is the only source
+            // of truth for which tours exist. Static content may enrich a row, never invent one.
+            if (! $d) {
+                continue;
             }
+            $claimed[(int) $d->id] = true;
             $tours[] = self::mergeTour($key, $t, $d);
         }
 

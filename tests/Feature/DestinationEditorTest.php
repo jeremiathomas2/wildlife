@@ -294,17 +294,44 @@ class DestinationEditorTest extends TestCase
         $this->assertNotEmpty($tour['faqs']);
     }
 
-    public function test_code_only_tours_keep_null_db_and_static_content(): void
+    public function test_static_only_tours_are_not_rendered_without_a_cms_row(): void
     {
         $this->createDestination(['slug' => 'unrelated-tour', 'name' => 'Unrelated']);
 
         $tours = SafariContent::buildTours(Destination::where('status', 'Published')->get());
+        $slugs = collect($tours)->pluck('slug');
 
-        $zanzibar = collect($tours)->first(fn ($t) => $t['slug'] === 'zanzibar-escape');
-        $this->assertNotNull($zanzibar);
-        $this->assertNull($zanzibar['db']);
-        $this->assertNotEmpty($zanzibar['itinerary']);
-        $this->assertSame('beach', $zanzibar['category']);
+        // Static content may enrich a CMS row, but must never create a tour on its own.
+        $this->assertFalse($slugs->contains('zanzibar-escape'));
+        $this->assertFalse($slugs->contains('kilimanjaro-trek-machame'));
+        $this->assertFalse($slugs->contains('3-day-tarangire-ngorongoro-safari'));
+        $this->assertFalse($slugs->contains('serengeti-ngorongoro-safari'));
+
+        $this->assertTrue($slugs->contains('unrelated-tour'));
+        $this->assertTrue($slugs->contains('custom-safari'));
+    }
+
+    public function test_static_only_tours_are_matched_by_slug_once_a_cms_row_exists(): void
+    {
+        $this->createDestination([
+            'slug' => 'zanzibar-escape',
+            'name' => 'Zanzibar Escape',
+            'category' => 'beach',
+        ]);
+
+        $tour = $this->builtTour('zanzibar-escape');
+
+        $this->assertNotNull($tour);
+        $this->assertNotNull($tour['db']);
+        $this->assertNotEmpty($tour['itinerary']);
+        $this->assertSame('beach', $tour['category']);
+    }
+
+    public function test_static_detail_pages_404_without_a_cms_row(): void
+    {
+        $this->createDestination(['slug' => 'unrelated-tour', 'name' => 'Unrelated']);
+
+        $this->get('/destinations/zanzibar-escape')->assertNotFound();
     }
 
     public function test_admin_only_destinations_are_appended_to_listings(): void

@@ -47,9 +47,9 @@
           <li><a href="{{ route('destination.detail', 'materuni-waterfall-coffee-tour') }}">Materuni Waterfall</a></li>
           <li><a href="{{ route('destination.detail', 'chemka-hot-springs') }}">Chemka Hot Springs</a></li>
           <li><a href="{{ route('destination.detail', 'kilimanjaro-day-hike') }}">Kilimanjaro Day Hike</a></li>
-          <li><a href="{{ route('destination.detail', '3-day-tarangire-ngorongoro-safari') }}">Tarangire & Ngorongoro</a></li>
+          <li><a href="{{ route('destination.detail', 'ngorongoro-crater') }}">Ngorongoro Crater</a></li>
           <li><a href="{{ route('destination.detail', 'serengeti-safari') }}">Serengeti Safari</a></li>
-          <li><a href="{{ route('destination.detail', 'zanzibar-escape') }}">Zanzibar Escape</a></li>
+          <li><a href="{{ route('destination.detail', 'zanzibar-day-trip') }}">Zanzibar Day Trip</a></li>
         </ul>
       </div>
       <div class="footer-contact">

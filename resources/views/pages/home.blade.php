@@ -456,7 +456,7 @@
         <span>Sunset Dhow</span>
         <span>Beach Resorts</span>
       </div>
-      <a class="btn btn-primary" href="{{ route('destination.detail', 'zanzibar-escape') }}">DISCOVER ZANZIBAR</a>
+      <a class="btn btn-primary" href="{{ route('destination.detail', 'zanzibar-day-trip') }}">DISCOVER ZANZIBAR</a>
     </div>
   </div>
 </section>
